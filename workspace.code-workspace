@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.defaultLanguage": ".bas",
+		"telemetry.enableCrashReporter": false,
+		"editor.tokenColorCustomizations": {
+			"comments": "#2ccf2c",
+			"numbers": "#e06565",
+			"keywords": "#f1db14",
+			"functions": "#13ad34"
+		},
+		"files.associations": {
+			"stdio.h": "c",
+			"zxn.h": "c",
+			"stdbool.h": "c",
+			"adt.h": "c",
+			"p_list.h": "c",
+			"p_forward_list.h": "c",
+			"stdint.h": "c"
+		}
+	}
+}
