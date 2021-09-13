@@ -31,8 +31,14 @@ void dungeon_map_init();
 // Prints the dungeon map to the ULA screen
 void dungeon_map_print();
 
-// redrawa  single tile
-void dungeon_map_print_tile(uint8_t y, uint8_t x);
+// redraw a single dungeon tile 
+void dungeon_map_print_tile(uint8_t dy, uint8_t dx);
+
+// draw an entity at y, x 
+void dungeon_map_print_entity(uint8_t y, uint8_t x, char c);
+
+// scroll dungeon map 
+void dungeon_map_scroll(int8_t dy, int8_t dx );
 
 //  return 
 //      1   passable

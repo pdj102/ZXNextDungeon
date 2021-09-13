@@ -148,7 +148,23 @@ void player_turn()
             break;
         case 'D':
             move(entity_player_ptr, 0, 1);
-            break;                  
+            break;
+        case '4':
+            dungeon_map_scroll(0, -1);
+            print_dungeon();            
+            break;
+        case '6':
+            dungeon_map_scroll(0, 1);
+            print_dungeon();
+            break;
+        case '8':
+            dungeon_map_scroll(-1, 0);
+            print_dungeon();
+            break;
+        case '2':
+            dungeon_map_scroll(1, 0);
+            print_dungeon();
+            break;                        
     }
 }
 

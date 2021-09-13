@@ -10,6 +10,8 @@
 #include <adt/p_forward_list.h> // linked list
 #include <stdio.h>
 
+#include "dungeon_map.h"
+
 #define printAt(row, col)    printf("\x16%c%c", (col)+1, (row)+1)
 
 /***************************************************
@@ -58,8 +60,7 @@ void entity_print()
     // print entities
     for (entity_ptr = p_forward_list_front(&entities); entity_ptr; entity_ptr = p_forward_list_next(entity_ptr))
     {
-        printAt(entity_ptr->y, entity_ptr->x);
-        printf("%c", entity_ptr->c);
+        dungeon_map_print_entity(entity_ptr->y, entity_ptr->x, entity_ptr->c);
     }
 }
 
