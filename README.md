@@ -1,8 +1,8 @@
-#1 Dungeon - A rogue like for the ZX Spectrum Next
+# Dungeon - A rogue like for the ZX Spectrum Next
 
 Note: this project is in development
 
-#2 To compile
+## To compile
 
 Compile using z88dk C compiler
 
@@ -23,7 +23,7 @@ zcc +zxn -vn -SO3 -clib=sdcc_iy -startup=1 --max-allocs-per-node200000 .\src\mai
 - -create-app   Run the create-app to create an executable 
 - -subtype=new  Create a nex executable file - can be loaded by emulator
 
-#2 z88dk compiler notes
+## z88dk compiler notes
 
 CRT targets are documented here
  https://github.com/z88dk/z88dk/blob/master/libsrc/_DEVELOPMENT/target/zxn/zxn_crt.asm.m4
