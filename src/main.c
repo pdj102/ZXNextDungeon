@@ -13,6 +13,7 @@
 
 #include "entity.h"
 #include "dungeon_map.h"
+#include "tilemap.h"
 
 
 /***************************************************
@@ -56,6 +57,8 @@ void init_game()
 
     entity_init();
     entity_player_ptr = entity_player();
+
+    tilemap_init();
  
 }
 
@@ -72,7 +75,7 @@ bool is_square_empty(uint8_t y, uint8_t x)
     }
     return true;
 }
-
+   
 uint8_t move(entity_t *entity_ptr, int8_t dy, int8_t dx)
 {
     if (is_square_empty(entity_ptr->y+dy, entity_ptr->x+dx)) {

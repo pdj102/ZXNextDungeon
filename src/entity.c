@@ -1,6 +1,8 @@
 /***************************************************
     Dungeon - ZX Spectrum Next 
-    Paul Johnson 
+    Paul Johnson
+
+    An entity represents an item, effect or creature
 
  ***************************************************/
 #include "entity.h"
