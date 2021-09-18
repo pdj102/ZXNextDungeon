@@ -20,7 +20,8 @@
 			"adt.h": "c",
 			"p_list.h": "c",
 			"p_forward_list.h": "c",
-			"stdint.h": "c"
+			"stdint.h": "c",
+			"inttypes.h": "c"
 		}
 	}
 }

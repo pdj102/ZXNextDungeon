@@ -93,8 +93,8 @@ void hit(uint8_t x, uint8_t y)
     if (entity_ptr == NULL) return;
 
     if (entity_ptr->type == creature) {
-        entity_ptr->creature_ptr->hp--;
-        if (entity_ptr->creature_ptr->hp <= 0 )
+        entity_ptr->creature_ptr->curr_hp--;
+        if (entity_ptr->creature_ptr->curr_hp <= 0 )
         {
             //entity_ptr->c = 'x';
             entity_remove(entity_ptr);

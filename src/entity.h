@@ -1,6 +1,8 @@
 /***************************************************
     Dungeon - ZX Spectrum Next 
-    Paul Johnson 
+    Paul Johnson
+
+    Manage entities. An entity represents an item, effect or creature 
 
  ***************************************************/
 
@@ -8,12 +10,13 @@
     #define ENTITY_H 
 
 #include <inttypes.h>
+#include "entity_creature.h"
 
 /***************************************************
  * types
  ***************************************************/
 enum entity_type {item, effect, creature};
-enum creature_state {asleep, attacking};
+
 
 typedef struct item {
     uint8_t i;
@@ -23,17 +26,14 @@ typedef struct effect {
     uint8_t i;
 } effect_t;
 
-typedef struct creature {
-    uint8_t hp;    
-    enum creature_state state;
-} creature_t;
+
 
 typedef struct entity {
     void *next;     // p_forward_list next
 
     uint8_t x;
     uint8_t y; 
-    unsigned char c;
+    uint8_t c;
 
     uint8_t current_energy;
     uint8_t turn_energy;

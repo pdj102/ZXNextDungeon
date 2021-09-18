@@ -29,3 +29,7 @@ There are in turn two versions of the New library, sdcc_ix and sdcc_iy
 Use the sdcc_iy library as it produces smaller faster code. The compiler will use IX as its frame pointer
 The sdcc_iy library is selected with -clib=sdcc_iy
 
+For information on memory banking
+https://www.z88dk.org/forum/viewtopic.php?t=9995
+https://www.z88dk.org/forum/viewtopic.php?t=10464
+

@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     Paul Johnson
 
-    An entity represents an item, effect or creature
+    Manage entities. An entity represents an item, effect or creature
 
  ***************************************************/
 #include "entity.h"
@@ -14,6 +14,7 @@
 
 #include "dungeon_map.h"
 #include "tile_defns.h"
+#include "entity_creature.h"
 
 
 /***************************************************
@@ -31,15 +32,15 @@
 
 static p_forward_list_t entities;
 
-creature_t creature1 = {8, asleep};
-creature_t creature2 = {8, attacking};
+creature_t *creature1;
+creature_t *creature2;
 
 item_t item1 = {1};
 
-entity_t entity1 = {NULL, 5,5,  TILE_PLAYER, 0,10,  1, creature, NULL       ,NULL };
-entity_t entity2 = {NULL, 2,2,  TILE_SNAKE, 0,20,  1, creature, &creature1 ,NULL};
-entity_t entity3 = {NULL, 11,11,TILE_SNAKE, 0,20,  1, creature, &creature2 ,NULL};
-entity_t entity4 = {NULL, 13,13,TILE_BOX, 0,20,  0, item,    NULL,       &item1};
+entity_t entity1 = {NULL, 5,5,  TILE_PLAYER, 0,10,  1, creature, NULL   ,NULL };
+entity_t entity2 = {NULL, 2,2,  TILE_SNAKE, 0,20,   1, creature, NULL   ,NULL};
+entity_t entity3 = {NULL, 11,11,TILE_SNAKE, 0,20,   1, creature, NULL   ,NULL};
+entity_t entity4 = {NULL, 13,13,TILE_BOX, 0,20,     0, item,    NULL,   &item1};
 
 /***************************************************
  * functions
@@ -47,6 +48,12 @@ entity_t entity4 = {NULL, 13,13,TILE_BOX, 0,20,  0, item,    NULL,       &item1}
 
 void entity_init()
 {
+    creature1 = entity_creature_create(snake);
+    entity2.creature_ptr = creature1;
+    creature2 = entity_creature_create(snake);
+    entity3.creature_ptr = creature2;    
+
+    
     p_forward_list_init(&entities);      // init entities p_forward_list
 
     p_forward_list_push_front(&entities,&entity4);    
