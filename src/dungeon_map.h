@@ -9,6 +9,9 @@
 
 #include <inttypes.h>
 
+#define DUNGEON_TILE_FLOOR  0
+#define DUNGEON_TILE_WALL   1
+
 /***************************************************
  * types
  ***************************************************/
@@ -32,18 +35,18 @@ void dungeon_map_init();
 void dungeon_map_print();
 
 // redraw a single dungeon tile 
-void dungeon_map_print_tile(uint8_t dy, uint8_t dx);
+void dungeon_map_print_tile(uint8_t dungeon_x, uint8_t dungeon_y);
 
 // draw an entity at y, x 
-void dungeon_map_print_entity(uint8_t y, uint8_t x, char c);
+void dungeon_map_print_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile);
 
 // scroll dungeon map 
-void dungeon_map_scroll(int8_t dy, int8_t dx );
+void dungeon_map_scroll(int8_t dx, int8_t dy);
 
 //  return 
 //      1   passable
 //      0   not passable
-uint8_t dungeon_map_passable(uint8_t y, uint8_t x);
+uint8_t dungeon_map_passable(uint8_t dungeon_x, uint8_t dungeon_y);
 
 
 #endif

@@ -11,6 +11,9 @@
 
 #include <inttypes.h>
 
+#define TILE_MAP_WIDTH  40
+#define TILE_MAP_HEIGHT 32
+
 /***************************************************
  * public types
  ***************************************************/

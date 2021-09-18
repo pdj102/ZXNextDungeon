@@ -17,7 +17,11 @@
 /***************************************************
  * types
  ***************************************************/
-
+typedef struct
+{
+    uint8_t tile;
+    uint8_t passable;
+} dungeon_tile_t;
 
 /***************************************************
  * function prototypes
@@ -26,107 +30,92 @@
 /***************************************************
  * variables
  ***************************************************/
+dungeon_tile_t dungeon_tiles[] =
+{
+    {1, 1},     // DUNGEON_TILE_FLOOR
+    {2, 0}      // DUNGEON_TILE_WALL
+};
 
+// dungeon map [x][y] [0][0] top left
+dungeon_tile_t dungeon_map[DUNGEON_MAP_WIDTH][DUNGEON_MAP_HEIGHT];
 
-// dungeon map [y][x] [0][0] top left
-char dungeon_map[DUNGEON_MAP_HEIGHT][DUNGEON_MAP_WIDTH];
-
-uint8_t ys = 0;
-uint8_t xs = 0;
-uint8_t h = 20;
-uint8_t w = 20;
+// window is the moveable area within the dungeon selected for display
+uint8_t window_y = 0;
+uint8_t window_x = 0;
+uint8_t window_h = 30;
+uint8_t window_w = 20;
 
 /***************************************************
  * functions
  ***************************************************/
 
-void dungeon_map_scroll(int8_t dy, int8_t dx )
+void dungeon_map_scroll(int8_t dx, int8_t dy )
 {
     // TO DO check bounds
-    ys += dy;
-    xs += dx;
+    window_y += dy;
+    window_x += dx;
 }
 
-void fill(uint8_t ys, uint8_t xs, uint8_t h, uint8_t w, char c)
+void fill(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, uint8_t tile)
 {
     // TODO check bounds
-    for (uint8_t y = ys; y < h+ys; y++ ) {
-        for (uint8_t x = xs; x < w+xs; x++)
-            dungeon_map[y][x] = c;
+    for (uint8_t y = dungeon_y; y < dungeon_h+dungeon_y; y++ ) {
+        for (uint8_t x = dungeon_x; x < dungeon_w+dungeon_x; x++)
+            dungeon_map[x][y] = dungeon_tiles[tile];
     }
 }
 
 void dungeon_map_init()
 {
-    fill(0, 0, DUNGEON_MAP_HEIGHT, DUNGEON_MAP_WIDTH, '#');
-    fill(2, 2, 5, 7, '.');
-    fill(10, 10, 5, 4, '.');
+    fill(0, 0, DUNGEON_MAP_WIDTH, DUNGEON_MAP_HEIGHT, DUNGEON_TILE_WALL);
+    fill(2, 2, 7, 5, DUNGEON_TILE_FLOOR);
+    fill(10, 10, 4, 5, DUNGEON_TILE_FLOOR);
 
-    fill(4, 9, 1, 3, '.');
-    fill(4, 12, 6, 1, '.');    
+    fill(9, 4, 3, 1, DUNGEON_TILE_FLOOR);
+    fill(12, 4, 1, 6, DUNGEON_TILE_FLOOR);    
 }
 
 void dungeon_map_print()
 {
-    // NB ys + h and xs + w must not go beyond map edge
-    uint8_t dy = ys;
-    uint8_t dx = xs;
+    // NB window_y + h and window_x + w must not go beyond map edge
+    uint8_t dungeon_y = window_y;
+    uint8_t dungeon_x = window_x;
 
-    for (uint8_t y = 0; y < h ; y++) {
-        for (uint8_t x = 0; x < w; x++) {
-
-            switch (dungeon_map[dy][dx])
-            {
-                case '#' :
-                    tilemap_set_tile(x, y, 0x2);
-                    break;
-                case '.' :
-                    tilemap_set_tile(x, y, 0x1);
-                    break;
-            }            
-            dx++;
+    for (uint8_t screen_y = 0; screen_y < window_h ; screen_y++) {
+        for (uint8_t screen_x = 0; screen_x < window_w; screen_x++) {
+            tilemap_set_tile(screen_x, screen_y, dungeon_map[dungeon_x][dungeon_y].tile);
+            dungeon_x++;
         }
-        dx = xs;
-        dy++;
+        dungeon_x = window_x;
+        dungeon_y++;
     }
 }
 
-void dungeon_map_print_tile(uint8_t dy, uint8_t dx)
+void dungeon_map_print_tile(uint8_t dungeon_x, uint8_t dungeon_y)
 {
     // check tile is within viewable area
-    if ( (dy >= ys && dy < ys + h) && (dx >= xs && dx < xs+w) )
+    if ( (dungeon_y >= window_y && dungeon_y < window_y + window_h) && (dungeon_x >= window_x && dungeon_x < window_x+window_w) )
     {
-        uint8_t x = dx - xs;
-        uint8_t y = dy - ys;
+        uint8_t screen_x = dungeon_x - window_x;
+        uint8_t screen_y = dungeon_y - window_y;
 
-        switch (dungeon_map[dy][dx])
-        {
-            case '#' :
-                tilemap_set_tile(x, y, 0x2);
-                break;
-            case '.' :
-                 tilemap_set_tile(x, y, 0x1);
-                 break;
-        }
+        tilemap_set_tile(screen_x, screen_y, dungeon_map[dungeon_x][dungeon_y].tile);
     }
 }
 
-void dungeon_map_print_entity(uint8_t y, uint8_t x, char c)
+void dungeon_map_print_entity(uint8_t x, uint8_t y, uint8_t tile)
 {
     // check tile is within viewable area
-    if ( (y >= ys && y < ys + h) && (x >= xs && x < xs+w) )
+    if ( (y >= window_y && y < window_y + window_h) && (x >= window_x && x < window_x+window_w) )
     {
-        x = x - xs;
-        y = y - ys;
+        x = x - window_x;
+        y = y - window_y;
 
-        tilemap_set_tile(x, y, 0x0);
+        tilemap_set_tile(x, y, tile);
     }
 }
 
-uint8_t dungeon_map_passable(uint8_t y, uint8_t x) 
+uint8_t dungeon_map_passable(uint8_t x, uint8_t y) 
 {
-    if (dungeon_map[y][x] == '#') {
-        return 0;
-    }
-    return 1;
+    return dungeon_map[x][y].passable;
 }

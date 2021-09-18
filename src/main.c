@@ -18,7 +18,7 @@
 /***************************************************
  * function prototypes
  ***************************************************/
-void hit(uint8_t y, uint8_t x);
+void hit(uint8_t x, uint8_t y);
 
 
 /***************************************************
@@ -54,10 +54,10 @@ void init_game()
 }
 
 // returns TRUE (1) if dungeon tile is empty
-bool is_square_empty(uint8_t y, uint8_t x)
+bool is_square_empty(uint8_t x, uint8_t y)
 {
     // Is dungeon square passable
-    if (!dungeon_map_passable(y, x)) {
+    if (!dungeon_map_passable(x, y)) {
         return false;
     }
 
@@ -69,9 +69,9 @@ bool is_square_empty(uint8_t y, uint8_t x)
    
 uint8_t move(entity_t *entity_ptr, int8_t dy, int8_t dx)
 {
-    if (is_square_empty(entity_ptr->y+dy, entity_ptr->x+dx)) {
+    if (is_square_empty(entity_ptr->x+dx, entity_ptr->y+dy)) {
         // redraw dungeon tile
-        dungeon_map_print_tile(entity_ptr->y, entity_ptr->x);
+        dungeon_map_print_tile(entity_ptr->x, entity_ptr->y);
         entity_ptr->y +=dy;
         entity_ptr->x +=dx;
         entity_ptr->current_energy = 0;
@@ -79,13 +79,13 @@ uint8_t move(entity_t *entity_ptr, int8_t dy, int8_t dx)
     }
     else 
     {
-        hit(entity_ptr->y+dy, entity_ptr->x+dx);
+        hit(entity_ptr->x+dx, entity_ptr->y+dy);
         entity_ptr->current_energy = 0;
     }
     return 0;
 }
 
-void hit(uint8_t y, uint8_t x)
+void hit(uint8_t x, uint8_t y)
 {
     entity_t *entity_ptr;
     entity_ptr = entity_at(y, x);
@@ -96,11 +96,10 @@ void hit(uint8_t y, uint8_t x)
         entity_ptr->creature_ptr->hp--;
         if (entity_ptr->creature_ptr->hp <= 0 )
         {
-            entity_ptr->c = 'x';
+            //entity_ptr->c = 'x';
             entity_remove(entity_ptr);
         }
     }
-
 }
 
 void snake_turn(entity_t *entity_ptr)
@@ -144,19 +143,19 @@ void player_turn()
             move(entity_player_ptr, 0, 1);
             break;
         case '4':
-            dungeon_map_scroll(0, -1);
+            dungeon_map_scroll(-1, 0);
             print_dungeon();            
             break;
         case '6':
-            dungeon_map_scroll(0, 1);
+            dungeon_map_scroll(1, 0);
             print_dungeon();
             break;
         case '8':
-            dungeon_map_scroll(-1, 0);
+            dungeon_map_scroll(0, -1);
             print_dungeon();
             break;
         case '2':
-            dungeon_map_scroll(1, 0);
+            dungeon_map_scroll(0, 1);
             print_dungeon();
             break;                        
     }

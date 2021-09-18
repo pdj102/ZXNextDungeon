@@ -23,7 +23,7 @@
 /***************************************************
  * private variables
  ***************************************************/
-int volatile * const tilemap_base_p = (int *) 0x6000;
+uint8_t volatile * const tilemap_base_p = (uint8_t *) 0x6000;
 
 
 /***************************************************
@@ -34,7 +34,7 @@ void tilemap_init()
 {
     // initialise palette
     palette_init();
-    
+
     // initialise tile definitions 
     tile_defns_init();
 
@@ -48,12 +48,7 @@ void tilemap_init()
 
 
     // TEST - set tilemap to brick and write two tiles to tilemap
-    tilemap_clear(0x2 );
-/*
-    tilemap_set_tile(0,0,1);
-    tilemap_set_tile(1,1,1);
-    tilemap_set_rect(10, 5, 10, 5, 1);    
-*/
+    tilemap_clear(TILE_WALL);
 
     //0x6B Tilemap Control
     // Turn on the tilemap layer, 40x32, attributes enabled
@@ -64,16 +59,14 @@ void tilemap_init()
     // bits 3-2 = Reserved set to 0
     // bit 1    = 1 to activate 512 tile mode
     // bit 0    = 1 to force tilemap on top of ULA    
-
     ZXN_WRITE_REG(0x6B, 0b10000000);
-
 }
 
 void tilemap_clear(uint8_t tile)
 {
     uint8_t *p = tilemap_base_p;
 
-    for (uint16_t s = 0; s < 40*32; s++) {
+    for (uint16_t s = 0; s < TILE_MAP_WIDTH * TILE_MAP_HEIGHT; s++) {
         *(p) = tile;
         *(p+1) = 0x0;
         p = p+2;
@@ -84,7 +77,7 @@ void tilemap_clear(uint8_t tile)
 // TODO support tile attributes
 void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile)
 {
-    uint16_t pos = (y*40)+x;
+    uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
     uint8_t *p = tilemap_base_p + pos;
 
     *p = tile;
@@ -96,10 +89,10 @@ void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile)
 void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile)
 {
 
-    uint16_t pos = (y*40)+x;
+    uint16_t pos = (y * TILE_MAP_WIDTH) + x;
     uint8_t *p = tilemap_base_p + pos;
     uint8_t dx, dy;
-    uint8_t next_row = (40 - x) * 2;
+    uint8_t next_row = (TILE_MAP_WIDTH - x) * 2;
 
     for(dy = 0; dy < h; dy++)
     {
@@ -110,10 +103,5 @@ void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile)
             p = p + 2;
         }
     p += next_row; 
-    }
-        
+    }        
 }
-
-
-
-

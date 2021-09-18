@@ -13,8 +13,8 @@
 #include <stdio.h>
 
 #include "dungeon_map.h"
+#include "tile_defns.h"
 
-#define printAt(row, col)    printf("\x16%c%c", (col)+1, (row)+1)
 
 /***************************************************
  * types
@@ -36,10 +36,10 @@ creature_t creature2 = {8, attacking};
 
 item_t item1 = {1};
 
-entity_t entity1 = {NULL, 5,5,  '@', 0,10,  1, creature, NULL       ,NULL };
-entity_t entity2 = {NULL, 2,2,  's', 0,20,  1, creature, &creature1 ,NULL};
-entity_t entity3 = {NULL, 11,11,'s', 0,20,  1, creature, &creature2 ,NULL};
-entity_t entity4 = {NULL, 13,13,'r', 0,20,  0, item,    NULL,       &item1};
+entity_t entity1 = {NULL, 5,5,  TILE_PLAYER, 0,10,  1, creature, NULL       ,NULL };
+entity_t entity2 = {NULL, 2,2,  TILE_SNAKE, 0,20,  1, creature, &creature1 ,NULL};
+entity_t entity3 = {NULL, 11,11,TILE_SNAKE, 0,20,  1, creature, &creature2 ,NULL};
+entity_t entity4 = {NULL, 13,13,TILE_BOX, 0,20,  0, item,    NULL,       &item1};
 
 /***************************************************
  * functions
@@ -62,7 +62,7 @@ void entity_print()
     // print entities
     for (entity_ptr = p_forward_list_front(&entities); entity_ptr; entity_ptr = p_forward_list_next(entity_ptr))
     {
-        dungeon_map_print_entity(entity_ptr->y, entity_ptr->x, entity_ptr->c);
+        dungeon_map_print_entity(entity_ptr->x, entity_ptr->y, entity_ptr->c);
     }
 }
 
