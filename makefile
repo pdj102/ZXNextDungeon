@@ -3,7 +3,7 @@ CC=zcc
 AS=zcc
 TARGET=+zxn
 VERBOSITY=-vn
-CRT=1
+CRT=31
 PRAGMA_FILE=zpragma.inc
 
 # compiler optimisation parameters 

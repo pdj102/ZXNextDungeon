@@ -5,7 +5,6 @@
  ***************************************************/
 
 #include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions
-#include <stdio.h> 
 #include <stdint.h>             // standard names for ints with no ambiguity 
 #include <input.h>
 #include <ctype.h>              // character classification e.g. toupper()
@@ -35,12 +34,6 @@ unsigned char key;
 entity_t *entity_player_ptr;
 
 
-// Define some macros to make use of tty_z88dk control codes
-// Program must be compiled with a CRT that supports tty_z88dk e.g. -startup=1
-#define printInk(k)          printf("\x10%c", '0'+(k))
-#define printPaper(k)        printf("\x11%c", '0'+(k))
-#define printAt(row, col)    printf("\x16%c%c", (col)+1, (row)+1)
-
 void print_dungeon()
 {
     dungeon_map_print();
@@ -51,8 +44,6 @@ void print_dungeon()
 
 void init_game()
 {
-    // init
-
     dungeon_map_init();
 
     entity_init();

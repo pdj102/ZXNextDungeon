@@ -9,8 +9,7 @@
 #include <inttypes.h>
 #include <stdio.h> 
 
-
-#define printAt(row, col)    printf("\x16%c%c", (col)+1, (row)+1)
+#include "tilemap.h"
 
 #define DUNGEON_MAP_WIDTH   40
 #define DUNGEON_MAP_HEIGHT  40
@@ -50,7 +49,7 @@ void dungeon_map_scroll(int8_t dy, int8_t dx )
 
 void fill(uint8_t ys, uint8_t xs, uint8_t h, uint8_t w, char c)
 {
-    // TO DO check bounds
+    // TODO check bounds
     for (uint8_t y = ys; y < h+ys; y++ ) {
         for (uint8_t x = xs; x < w+xs; x++)
             dungeon_map[y][x] = c;
@@ -75,8 +74,16 @@ void dungeon_map_print()
 
     for (uint8_t y = 0; y < h ; y++) {
         for (uint8_t x = 0; x < w; x++) {
-            printAt(y,x);
-            printf("%c", dungeon_map[dy][dx]);
+
+            switch (dungeon_map[dy][dx])
+            {
+                case '#' :
+                    tilemap_set_tile(x, y, 0x2);
+                    break;
+                case '.' :
+                    tilemap_set_tile(x, y, 0x1);
+                    break;
+            }            
             dx++;
         }
         dx = xs;
@@ -92,8 +99,15 @@ void dungeon_map_print_tile(uint8_t dy, uint8_t dx)
         uint8_t x = dx - xs;
         uint8_t y = dy - ys;
 
-        printAt(y,x);
-        printf("%c", dungeon_map[dy][dx]);
+        switch (dungeon_map[dy][dx])
+        {
+            case '#' :
+                tilemap_set_tile(x, y, 0x2);
+                break;
+            case '.' :
+                 tilemap_set_tile(x, y, 0x1);
+                 break;
+        }
     }
 }
 
@@ -105,8 +119,7 @@ void dungeon_map_print_entity(uint8_t y, uint8_t x, char c)
         x = x - xs;
         y = y - ys;
 
-        printAt(y,x);
-        printf("%c", c);
+        tilemap_set_tile(x, y, 0x0);
     }
 }
 

@@ -9,6 +9,9 @@
 
 #include <arch/zxn.h>
 
+#include "palette.h"
+#include "tile_defns.h"
+
 /***************************************************
  * private types
  ***************************************************/
@@ -22,46 +25,6 @@
  ***************************************************/
 int volatile * const tilemap_base_p = (int *) 0x6000;
 
-int volatile * const tile_def_base_p = (int *) 0x6A00;
-
-
-// tile definitions
-static const uint16_t tile_pattern[] = 
-{
-    // 3412 3412 pixel position left to right
-
-    // 0x0 coloured square
-    0x0000, 0x1111,
-    0x2222, 0x3333,
-    0x4444, 0x5555,
-    0x6666, 0x7777,
-    0x8888, 0x9999,
-    0xAAAA, 0xBBBB,
-    0xCCCC, 0xDDDD,
-    0xEEEE, 0xFFFF,
-
-    // 0x1 box
-    0xFFFF, 0xFFFF,
-    0x00F0, 0x0F00,
-    0x00F0, 0x0F00,
-    0x00F0, 0x0F00,
-    0x00F0, 0x0F00,
-    0x00F0, 0x0F00,
-    0x00F0, 0x0F00,
-    0xFFFF, 0xFFFF,
-
-    // 0x2 red brick
-    0X1111, 0x1111,
-    0x2212, 0x2222,
-    0x2212, 0x2222,
-    0x1111, 0x1111,
-    0x2222, 0x1222,
-    0x2222, 0x1222,
-    0x2222, 0x1222,
-    0x1111, 0x1111
-};
-
-
 
 /***************************************************
  * functions definitions
@@ -69,6 +32,12 @@ static const uint16_t tile_pattern[] =
 
 void tilemap_init()
 {
+    // initialise palette
+    palette_init();
+    
+    // initialise tile definitions 
+    tile_defns_init();
+
     // 0x6E - Tilemap base address
     // sets the tilemap base address offset within bank 5 (bank 5 is at 0x4000)
     // The ULA screen is located 0x4000 - 0x5FFF (7 KiB) so setting tilemap base address to 0x6000 avoids it
@@ -77,28 +46,14 @@ void tilemap_init()
     // 40 x 32 tilemap is 2,560 bytes
     ZXN_NEXTREG(0x6E, 32);
 
-    // 0x6F - Tile definitions base address
-    // sets the tile definitions base address offset within bank 5 (bank 5 is at 0x4000)
-    // The tilemap is 2,560 bytes so setting the base address to 0x6A00 avoids it
-    // 0x6F is set with the MSB which represents an n x 256 byte offset. (0x6A00 - 0x4000) / 0x100 = 42
-    ZXN_NEXTREG(0x6F, 42);
 
-    // write tile defs
-    for (uint8_t i = 0; i < 32*3; i++)
-    {
-        *(tile_def_base_p+i) = tile_pattern[i];
-    }
-
-    // TEST write tile 0 and attribute 0 
-    for (uint16_t i = 0; i < 40*32; i++) {
-        *(tilemap_base_p+i) = 0x0;
-    }
-
-    *(tilemap_base_p+0) = (0b0 << 0) + (0b0000 << 12);
-    *(tilemap_base_p+1) = (0b0 << 0) + (0b0001 << 12);
-    *(tilemap_base_p+2) = (0b0 << 0) + (0b0010 << 12);
-    *(tilemap_base_p+3) = (0b0 << 0) + (0b0011 << 12);          
-
+    // TEST - set tilemap to brick and write two tiles to tilemap
+    tilemap_clear(0x2 );
+/*
+    tilemap_set_tile(0,0,1);
+    tilemap_set_tile(1,1,1);
+    tilemap_set_rect(10, 5, 10, 5, 1);    
+*/
 
     //0x6B Tilemap Control
     // Turn on the tilemap layer, 40x32, attributes enabled
@@ -114,17 +69,51 @@ void tilemap_init()
 
 }
 
+void tilemap_clear(uint8_t tile)
+{
+    uint8_t *p = tilemap_base_p;
+
+    for (uint16_t s = 0; s < 40*32; s++) {
+        *(p) = tile;
+        *(p+1) = 0x0;
+        p = p+2;
+    }
+}
+
+// TODO check bounds
+// TODO support tile attributes
 void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile)
 {
-    uint8_t attr;
-    uint16_t addr;
+    uint16_t pos = (y*40)+x;
+    uint8_t *p = tilemap_base_p + pos;
 
-    attr = 0b001 << 4;
-
-    addr = (y*32) + x * 2;
-
-    *(tilemap_base_p+addr) = tile;
-
-
+    *p = tile;
+    *(p+1) = 0x0;
 }
+
+// TODO check bounds
+// TODO support tile attributes
+void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile)
+{
+
+    uint16_t pos = (y*40)+x;
+    uint8_t *p = tilemap_base_p + pos;
+    uint8_t dx, dy;
+    uint8_t next_row = (40 - x) * 2;
+
+    for(dy = 0; dy < h; dy++)
+    {
+        for(dx = 0; dx < w; dx++)
+        {
+            *p = tile;
+            *(p+1) = 0x0;
+            p = p + 2;
+        }
+    p += next_row; 
+    }
+        
+}
+
+
+
 
