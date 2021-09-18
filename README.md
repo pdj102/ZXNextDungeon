@@ -4,24 +4,14 @@ Note: this project is in development
 
 ## To compile
 
-Compile using z88dk C compiler
+Compile using z88dk C compiler and GNU make
 
 Set the z88dk compiler paths for the library and config files
 - set z88dk to point to the z88dk directory
 - $Env:Z80_OZFILES=$Env:z88dk+"\Lib\"
 - $Env:ZCCCFG=$Env:z88dk+"\Lib\Config"
 
-Target ZX Spectrum with NEW library and using zsdcc compiler
-zcc +zxn -vn -SO3 -clib=sdcc_iy -startup=1 --max-allocs-per-node200000 .\src\main.c .\src\dungeon_map.c -create-app -subtype=nex
-
-- +zx           Choose zx spectrum as target
-- -SO3          Optimization level 3
-- -vn           verbose off. -v verbose on
-- -startup      select the C Run Time to run before main is called. 0 setups IO streams. 31 no iostreams to save memory  
-- -clib=sdcc_iy Compile using the sdcc_iy library (will use zsdcc compiler)
-- --max-allocs-per-node200000 Optimisation
-- -create-app   Run the create-app to create an executable 
-- -subtype=new  Create a nex executable file - can be loaded by emulator
+Run 'make all'
 
 ## z88dk compiler notes
 
