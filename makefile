@@ -46,4 +46,8 @@ $(PROGRAM) : $(OFILES)
 
 .PHONY: clean
 clean:
-	rm -f *.o *.bin *.nex *.map zcc_opt.def 
+	rm -f $(OBJDIR)*.o 
+	rm -f $(BINDIR)*.bin
+	rm -f $(BINDIR)*.nex 
+	rm -f *.map 
+	rm -f zcc_opt.def 
