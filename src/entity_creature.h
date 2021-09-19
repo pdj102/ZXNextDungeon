@@ -25,6 +25,14 @@ typedef struct {
     uint8_t ac;
     uint8_t dmg;
 
+    uint8_t lvl;
+    uint16_t exp;
+
+    uint8_t speed;
+
+    uint8_t tile;
+    uint8_t blocking; 
+
     creature_state_t state;
 } creature_t;
 
@@ -44,5 +52,21 @@ typedef struct {
  */
 creature_t *entity_creature_create(creature_type_t e);
 
+/**
+ * Prints creature stat block to screen
+ * 
+ * @param *c  pointer to creature
+ * @return void
+ */
+void entity_creature_draw_stat_block(creature_t *c);
+
+/**
+ * Move creature
+ */ 
+
+/**
+ * Delete creature and free all memory
+ */ 
+void entity_creature_delete(creature_t *creature_ptr);
 
 #endif

@@ -10,9 +10,14 @@
 #include <stdio.h> 
 
 #include "tilemap.h"
+#include "tile_defns.h"
 
 #define DUNGEON_MAP_WIDTH   40
 #define DUNGEON_MAP_HEIGHT  40
+
+#define DUNGEON_MAP_IMPASSABLE 0
+#define DUNGEON_MAP_PASSABLE 1
+
 
 /***************************************************
  * types
@@ -32,8 +37,8 @@ typedef struct
  ***************************************************/
 dungeon_tile_t dungeon_tiles[] =
 {
-    {1, 1},     // DUNGEON_TILE_FLOOR
-    {2, 0}      // DUNGEON_TILE_WALL
+    {TILE_FLOOR, DUNGEON_MAP_PASSABLE},     // DUNGEON_TILE_FLOOR
+    {TILE_WALL,  DUNGEON_MAP_IMPASSABLE}    // DUNGEON_TILE_WALL
 };
 
 // dungeon map [x][y] [0][0] top left
@@ -42,8 +47,8 @@ dungeon_tile_t dungeon_map[DUNGEON_MAP_WIDTH][DUNGEON_MAP_HEIGHT];
 // window is the moveable area within the dungeon selected for display
 uint8_t window_y = 0;
 uint8_t window_x = 0;
-uint8_t window_h = 30;
-uint8_t window_w = 20;
+uint8_t window_h = 24;
+uint8_t window_w = 24;
 
 /***************************************************
  * functions
@@ -75,7 +80,7 @@ void dungeon_map_init()
     fill(12, 4, 1, 6, DUNGEON_TILE_FLOOR);    
 }
 
-void dungeon_map_print()
+void dungeon_map_draw()
 {
     // NB window_y + h and window_x + w must not go beyond map edge
     uint8_t dungeon_y = window_y;
@@ -91,7 +96,7 @@ void dungeon_map_print()
     }
 }
 
-void dungeon_map_print_tile(uint8_t dungeon_x, uint8_t dungeon_y)
+void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y)
 {
     // check tile is within viewable area
     if ( (dungeon_y >= window_y && dungeon_y < window_y + window_h) && (dungeon_x >= window_x && dungeon_x < window_x+window_w) )
@@ -103,7 +108,7 @@ void dungeon_map_print_tile(uint8_t dungeon_x, uint8_t dungeon_y)
     }
 }
 
-void dungeon_map_print_entity(uint8_t x, uint8_t y, uint8_t tile)
+void dungeon_map_draw_entity(uint8_t x, uint8_t y, uint8_t tile)
 {
     // check tile is within viewable area
     if ( (y >= window_y && y < window_y + window_h) && (x >= window_x && x < window_x+window_w) )
@@ -115,7 +120,7 @@ void dungeon_map_print_entity(uint8_t x, uint8_t y, uint8_t tile)
     }
 }
 
-uint8_t dungeon_map_passable(uint8_t x, uint8_t y) 
+uint8_t dungeon_map_tile_passable(uint8_t x, uint8_t y) 
 {
     return dungeon_map[x][y].passable;
 }

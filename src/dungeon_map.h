@@ -32,13 +32,13 @@ extern uint8_t dungeon_map_height;
 void dungeon_map_init();
 
 // Prints the dungeon map to the ULA screen
-void dungeon_map_print();
+void dungeon_map_draw();
 
 // redraw a single dungeon tile 
-void dungeon_map_print_tile(uint8_t dungeon_x, uint8_t dungeon_y);
+void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y);
 
 // draw an entity at y, x 
-void dungeon_map_print_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile);
+void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile);
 
 // scroll dungeon map 
 void dungeon_map_scroll(int8_t dx, int8_t dy);
@@ -46,7 +46,7 @@ void dungeon_map_scroll(int8_t dx, int8_t dy);
 //  return 
 //      1   passable
 //      0   not passable
-uint8_t dungeon_map_passable(uint8_t dungeon_x, uint8_t dungeon_y);
+uint8_t dungeon_map_tile_passable(uint8_t dungeon_x, uint8_t dungeon_y);
 
 
 #endif

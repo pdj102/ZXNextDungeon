@@ -4,6 +4,9 @@
 
     Manage entities. An entity represents an item, effect or creature
 
+    Provides functions that can be used on any type of entity.
+    Entity type specific functions are provided in specific module e.g. entity_creature
+
  ***************************************************/
 #include "entity.h"
 
@@ -11,65 +14,125 @@
 #include <inttypes.h>
 #include <adt/p_forward_list.h> // linked list
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "dungeon_map.h"
-#include "tile_defns.h"
 #include "entity_creature.h"
+#include "entity_item.h"
 
 
 /***************************************************
- * types
+ * private types
  ***************************************************/
 
 
 /***************************************************
- * function prototypes
+ * private function prototypes
  ***************************************************/
 
 /***************************************************
- * variables
+ * private variables
  ***************************************************/
-
+// Single linked list of all entities
 static p_forward_list_t entities;
 
-creature_t *creature1;
-creature_t *creature2;
-
-item_t item1 = {1};
-
-entity_t entity1 = {NULL, 5,5,  TILE_PLAYER, 0,10,  1, creature, NULL   ,NULL };
-entity_t entity2 = {NULL, 2,2,  TILE_SNAKE, 0,20,   1, creature, NULL   ,NULL};
-entity_t entity3 = {NULL, 11,11,TILE_SNAKE, 0,20,   1, creature, NULL   ,NULL};
-entity_t entity4 = {NULL, 13,13,TILE_BOX, 0,20,     0, item,    NULL,   &item1};
-
 /***************************************************
- * functions
+ * function definitions
  ***************************************************/
 
 void entity_init()
 {
-    creature1 = entity_creature_create(snake);
-    entity2.creature_ptr = creature1;
-    creature2 = entity_creature_create(snake);
-    entity3.creature_ptr = creature2;    
-
-    
     p_forward_list_init(&entities);      // init entities p_forward_list
-
-    p_forward_list_push_front(&entities,&entity4);    
-    p_forward_list_push_front(&entities,&entity3);
-    p_forward_list_push_front(&entities,&entity2);    
-    p_forward_list_push_front(&entities,&entity1);  // player first in list
 }
 
-void entity_print()
+entity_t *entity_create_creature(uint8_t x, uint8_t y, creature_type_t c_type)
+{
+    entity_t *entity_ptr;
+    //TODO validate inputs
+
+    //TODO check for NULL
+    // create creature
+    creature_t *creature_ptr = entity_creature_create(c_type);
+
+    // create entity of type creature
+    entity_ptr = entity_create(x, y, creature_ptr->tile, creature_ptr->blocking, creature, creature_ptr, NULL);
+    
+    return entity_ptr;
+}
+
+entity_t *entity_create_item(uint8_t x, uint8_t y, item_type_t i_type)
+{
+    entity_t *entity_ptr;
+    //TODO validate inputs
+
+    //TODO check for NULL
+    // create item
+    item_t *item_ptr = entity_item_create(i_type);
+
+    // create entity of type item
+    entity_ptr = entity_create(x, y, item_ptr->tile, item_ptr->blocking, item, NULL, item_ptr);
+    
+    return entity_ptr;
+}
+
+entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t blocking, entity_type_t type, creature_t *creature_ptr, item_t *item_ptr)
+{
+    //TODO validate inputs
+
+    entity_t *entity_ptr = (entity_t *) malloc(sizeof(entity_t));
+    //TODO check for NULL
+
+    entity_ptr->x = x;
+    entity_ptr->y = y;
+    entity_ptr->tile=tile;
+    entity_ptr->blocking=blocking;
+    entity_ptr->type = type;
+    entity_ptr->creature_ptr = creature_ptr;
+    entity_ptr->item_ptr = item_ptr;
+
+    entity_ptr->current_energy = 0;
+
+    p_forward_list_push_front(&entities, entity_ptr);
+
+    return entity_ptr;
+}
+
+void entity_delete_entity(entity_t *entity_ptr)
+{
+    entity_delete(entity_ptr);
+
+    if (entity_ptr->creature_ptr)
+    {
+        entity_creature_delete(entity_ptr->creature_ptr);
+        entity_ptr->creature_ptr = NULL;
+    }
+
+    if (entity_ptr->item_ptr)
+    {
+        //entity_item_delete(entity_ptr->item_ptr);
+        entity_ptr->item_ptr = NULL;
+    }
+    free(entity_ptr);
+}
+
+entity_t *entity_front()
+{
+    return p_forward_list_front(&entities);
+}
+
+entity_t *entity_next(entity_t *entity_ptr)
+{
+    return p_forward_list_next(entity_ptr);
+}
+
+void entity_draw_all()
 {
     entity_t *entity_ptr;
 
     // print entities
     for (entity_ptr = p_forward_list_front(&entities); entity_ptr; entity_ptr = p_forward_list_next(entity_ptr))
     {
-        dungeon_map_print_entity(entity_ptr->x, entity_ptr->y, entity_ptr->c);
+        dungeon_map_draw_entity(entity_ptr->x, entity_ptr->y, entity_ptr->tile);
     }
 }
 
@@ -87,30 +150,19 @@ uint8_t entity_passable(uint8_t y, uint8_t x)
     return 1;
 }
 
-entity_t *entity_player()
+entity_t* entity_at(uint8_t y, uint8_t x, entity_t *entity_ptr)
 {
-    return p_forward_list_front(&entities);
-}
-
-entity_t *entity_next(entity_t *entity_ptr)
-{
-    return p_forward_list_next(entity_ptr);
-}
-
-entity_t* entity_at(uint8_t y, uint8_t x)
-{
-    entity_t *entity_ptr;
-
-    for (entity_ptr = p_forward_list_front(&entities); entity_ptr; entity_ptr = p_forward_list_next(entity_ptr))
+    while( entity_ptr)
     {
-        if (entity_ptr->y == y && entity_ptr->x == x) {
+        if (entity_ptr->x == x && entity_ptr->y == y) {
             return entity_ptr;
         }
+        entity_ptr = entity_next(entity_ptr);
     }
     return NULL;
 }
 
-void entity_remove(entity_t *entity_ptr)
+void entity_delete(entity_t *entity_ptr)
 {
     p_forward_list_remove(&entities, entity_ptr);
 }

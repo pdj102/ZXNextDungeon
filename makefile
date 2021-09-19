@@ -3,7 +3,8 @@ CC=zcc
 AS=zcc
 TARGET=+zxn
 VERBOSITY=-vn
-CRT=31
+#CRT=31 no stdin stdout stderr streams setup
+CRT=1 
 PRAGMA_FILE=zpragma.inc
 
 # compiler optimisation parameters 

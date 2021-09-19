@@ -47,8 +47,8 @@ void tilemap_init()
     ZXN_NEXTREG(0x6E, 32);
 
 
-    // TEST - set tilemap to brick and write two tiles to tilemap
-    tilemap_clear(TILE_WALL);
+    // Set the tilemap to all transparent tiles
+    tilemap_clear(TILE_TRANS);
 
     //0x6B Tilemap Control
     // Turn on the tilemap layer, 40x32, attributes enabled

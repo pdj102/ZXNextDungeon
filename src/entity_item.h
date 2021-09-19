@@ -2,24 +2,24 @@
     Dungeon - ZX Spectrum Next 
     Paul Johnson
 
-    Tile definitions
+    Item entity
 
  ***************************************************/
 
-#ifndef TILE_DEFNS_H 
-    #define TILE_DEFNS_H 
+#ifndef ITEM_CREATURE_H 
+    #define ITEM_CREATURE_H 
 
-#define TILE_COLOURS    0
-#define TILE_TRANS      1
-#define TILE_FLOOR      2
-#define TILE_WALL       3
-#define TILE_BOX        4
-#define TILE_PLAYER     5
-#define TILE_SNAKE      6
+#include <inttypes.h>
 
 /***************************************************
  * public types
  ***************************************************/
+typedef enum {ring } item_type_t;
+
+typedef struct {
+    uint8_t tile;
+    uint8_t blocking; 
+} item_t;
 
 /***************************************************
  * public variable declarations
@@ -30,11 +30,28 @@
  ***************************************************/
 
 /**
- * Initialise tile definitions. Must be called before using tilemap
+ * Returns an item of type i
  * 
+ * @param i  item type
+ * @return pointer to item
+ */
+item_t *entity_item_create(item_type_t i);
+
+/**
+ * Prints item stat block to screen
+ * 
+ * @param *item_ptr  pointer to creature
  * @return void
  */
-void tile_defns_init();
+void entity_item_draw_stat_block(item_t *item_ptr);
 
+/**
+ * Move item
+ */ 
+
+/**
+ * Delete item and free all memory
+ */ 
+void entity_item_delete(item_t *item_ptr);
 
 #endif
