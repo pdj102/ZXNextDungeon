@@ -37,8 +37,9 @@ typedef struct
  ***************************************************/
 dungeon_tile_t dungeon_tiles[] =
 {
-    {TILE_FLOOR, DUNGEON_MAP_PASSABLE},     // DUNGEON_TILE_FLOOR
-    {TILE_WALL,  DUNGEON_MAP_IMPASSABLE}    // DUNGEON_TILE_WALL
+    {TILE_FLOOR_1, DUNGEON_MAP_PASSABLE},      // DUNGEON_TILE_FLOOR
+    {TILE_WALL_1, DUNGEON_MAP_IMPASSABLE},     // DUNGEON_TILE_WALL_1
+    {TILE_CEILING,  DUNGEON_MAP_IMPASSABLE}    // DUNGEON_TILE_CEILING
 };
 
 // dungeon map [x][y] [0][0] top left
@@ -70,14 +71,24 @@ void fill(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dunge
     }
 }
 
+void create_room(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h)
+{
+    fill(dungeon_x, dungeon_y, dungeon_w, dungeon_h, DUNGEON_TILE_FLOOR_1);
+    fill(dungeon_x, dungeon_y-1 ,dungeon_w, 1, DUNGEON_TILE_WALL_1);
+}
+
 void dungeon_map_init()
 {
-    fill(0, 0, DUNGEON_MAP_WIDTH, DUNGEON_MAP_HEIGHT, DUNGEON_TILE_WALL);
-    fill(2, 2, 7, 5, DUNGEON_TILE_FLOOR);
-    fill(10, 10, 4, 5, DUNGEON_TILE_FLOOR);
+    fill(0, 0, DUNGEON_MAP_WIDTH, DUNGEON_MAP_HEIGHT, DUNGEON_TILE_CEILING);
 
-    fill(9, 4, 3, 1, DUNGEON_TILE_FLOOR);
-    fill(12, 4, 1, 6, DUNGEON_TILE_FLOOR);    
+    create_room(2, 2, 7, 5);
+    create_room(10, 10, 4, 5);
+
+//    fill(2, 2, 7, 5, DUNGEON_TILE_FLOOR_1);
+//    fill(10, 10, 4, 5, DUNGEON_TILE_FLOOR_1);
+
+    fill(9, 4, 3, 1, DUNGEON_TILE_FLOOR_1);
+    fill(12, 4, 1, 6, DUNGEON_TILE_FLOOR_1);    
 }
 
 void dungeon_map_draw()
@@ -124,3 +135,4 @@ uint8_t dungeon_map_tile_passable(uint8_t x, uint8_t y)
 {
     return dungeon_map[x][y].passable;
 }
+ 

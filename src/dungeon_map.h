@@ -9,8 +9,11 @@
 
 #include <inttypes.h>
 
-#define DUNGEON_TILE_FLOOR  0
-#define DUNGEON_TILE_WALL   1
+#define DUNGEON_TILE_FLOOR_1    0
+#define DUNGEON_TILE_WALL_1     1
+#define DUNGEON_TILE_CEILING    2
+
+
 
 /***************************************************
  * types

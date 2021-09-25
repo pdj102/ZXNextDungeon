@@ -93,4 +93,4 @@ void entity_creature_draw_stat_block(creature_t *c)
 void entity_creature_delete(creature_t *creature_ptr)
 {
     free(creature_ptr);
-}
+} 

@@ -41,7 +41,25 @@ static const uint8_t tile_palette[] =
     0x0,
     0x0,    
     0x0,
-    0x0        // default transparent index
+    0x0,        // default transparent index
+
+// wall palette
+    0x24,       
+    0x29,       
+    0x44,       
+    0x41,       
+    0x6e,       
+    0x97,       
+    0xFF,       
+    0x0,       
+    0x0,
+    0x0,
+    0x0,    
+    0x0,
+    0x0,
+    0x0,    
+    0x0,
+    0x0        // default transparent index    
 };
 
 /***************************************************
@@ -60,7 +78,7 @@ void palette_init()
 
     // 041 Palette Value (8 bit colour)
     // Write palette
-    for (uint8_t i = 0 ; i < 16; i++) {
+    for (uint8_t i = 0 ; i < sizeof tile_palette / sizeof tile_palette[0]; i++) {
         //ZXN_WRITE_REG(0x41,i);
         ZXN_WRITE_REG(0x41, tile_palette[i]);
     }

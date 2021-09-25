@@ -81,7 +81,7 @@ void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile)
     uint8_t *p = tilemap_base_p + pos;
 
     *p = tile;
-    *(p+1) = 0x0;
+    *(p+1) = 0b00010000;
 }
 
 // TODO check bounds
@@ -99,7 +99,7 @@ void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile)
         for(dx = 0; dx < w; dx++)
         {
             *p = tile;
-            *(p+1) = 0x0;
+            *(p+1) = 0b00010000;    // bits 15-12 palette offset
             p = p + 2;
         }
     p += next_row; 
