@@ -41,7 +41,7 @@ item_t *entity_item_create(item_type_t i)
     {
         case ring :
             item_ptr->tile     = TILE_RING;
-            item_ptr->tile_attr = 0b00010000;
+            item_ptr->tile_attr = 0b01000000; // set palette offset
             item_ptr->blocking = 0;
             break;
     }

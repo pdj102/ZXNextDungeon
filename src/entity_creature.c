@@ -56,7 +56,7 @@ creature_t *entity_creature_create(creature_type_t e)
             c->state    = attacking;
 
             c->tile     = TILE_PLAYER;
-            c->tile_attr = 0b00010000;
+            c->tile_attr = 0b00010000; // paletter offset 1
             c->blocking = 1;
             break;
         case snake :
@@ -70,7 +70,7 @@ creature_t *entity_creature_create(creature_type_t e)
             c->state    = attacking;
 
             c->tile     = TILE_SNAKE;
-            c->tile_attr = 0b01000000;
+            c->tile_attr = 0b00100000; // palette offset 2
             c->blocking = 1;            
     }
 

@@ -75,7 +75,43 @@ void fill(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dunge
 void create_room(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h)
 {
     fill(dungeon_x, dungeon_y, dungeon_w, dungeon_h, DUNGEON_TILE_FLOOR_1);
-    fill(dungeon_x, dungeon_y-1 ,dungeon_w, 1, DUNGEON_TILE_WALL_1);
+    // fill(dungeon_x, dungeon_y-1 ,dungeon_w, 1, DUNGEON_TILE_WALL_1);
+}
+
+void dungeon_map_embelish_walls() {
+    // scan from the bottom to top. 
+    // Do not scan row 0 as some rules write to the row-1 
+    // Do not scan column 0 as some rules write to column-1
+    for (uint8_t y = DUNGEON_MAP_HEIGHT; y > 0 ; y-- ) {
+        for (uint8_t x = 1; x < DUNGEON_MAP_WIDTH - 1; x++)
+        {
+            // if tile is a floor with ceiling in row above change ceiling to wall
+            if( (dungeon_map[x][y].tile == TILE_FLOOR_1) && (dungeon_map[x][y-1].tile == TILE_CEILING) )
+            {
+                dungeon_map[x][y-1].tile = TILE_WALL_1;
+            }
+            // if tile is wall with ceiling in row above change ceiling to bottom blue line outline
+            if ( (dungeon_map[x][y].tile == TILE_WALL_1 ) && (dungeon_map[x][y-1].tile == TILE_CEILING) )
+            {
+                dungeon_map[x][y-1].tile = TILE_3_3; //bottom blue line
+            }
+            // if tile is ceiling with floor in row above change ceiling to top blue line outline
+            if ( (dungeon_map[x][y].tile == TILE_CEILING ) && (dungeon_map[x][y-1].tile == TILE_FLOOR_1) )
+            {
+                dungeon_map[x][y].tile = TILE_3_1; //top blue line
+            }
+            // if tile is ceiling with floor to the right change ceiling to right blue line outline
+            if ( (dungeon_map[x][y].tile == TILE_CEILING ) && (dungeon_map[x+1][y].tile == TILE_FLOOR_1) )
+            {
+                dungeon_map[x][y].tile = TILE_4_1; // right blue line
+            }
+            // if tile is ceiling with floor to the left change ceiling to left blue line outline
+            if ( (dungeon_map[x][y].tile == TILE_CEILING ) && (dungeon_map[x-1][y].tile == TILE_FLOOR_1) )
+            {
+                dungeon_map[x][y].tile = TILE_4_3; // left blue line
+            }
+        }
+    }   
 }
 
 void dungeon_map_init()
@@ -85,11 +121,10 @@ void dungeon_map_init()
     create_room(2, 2, 7, 5);
     create_room(10, 10, 4, 5);
 
-//    fill(2, 2, 7, 5, DUNGEON_TILE_FLOOR_1);
-//    fill(10, 10, 4, 5, DUNGEON_TILE_FLOOR_1);
-
     fill(9, 4, 3, 1, DUNGEON_TILE_FLOOR_1);
-    fill(12, 4, 1, 6, DUNGEON_TILE_FLOOR_1);    
+    fill(12, 4, 1, 6, DUNGEON_TILE_FLOOR_1);
+
+    dungeon_map_embelish_walls();
 }
 
 void dungeon_map_draw()
