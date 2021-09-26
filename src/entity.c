@@ -173,7 +173,6 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
         }
         target_entity_ptr = entity_next_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy, target_entity_ptr );
     } 
-    printf("nothing there!");
     return 0;
 }
 
