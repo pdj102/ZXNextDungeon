@@ -51,5 +51,6 @@ void dungeon_map_scroll(int8_t dx, int8_t dy);
 //      0   not passable
 uint8_t dungeon_map_tile_passable(uint8_t dungeon_x, uint8_t dungeon_y);
 
+uint8_t dungeon_map_is_square_empty(uint8_t x, uint8_t y);
 
 #endif

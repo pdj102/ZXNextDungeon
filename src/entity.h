@@ -99,6 +99,36 @@ entity_t *entity_create_item(uint8_t x, uint8_t y, item_type_t i_type);
 entity_t *entity_front();
 
 /**
+ * Move entity or if blocked stike
+ * 
+ * @param entity_ptr entity pointer
+ * @param dx x movement e.g. +1 or -1
+ * @param dy y movement e.g. +1 or -1
+ * @return 0 could not move and nothing to strike
+ */
+uint8_t entity_move_or_strike(entity_t *entity_ptr, int8_t dx, int8_t dy);
+
+/**
+ * Move entity. Checks if square is passable before moving
+ * 
+ * @param entity_ptr entity pointer
+ * @param dx move direction e.g. +1 or -1
+ * @param dy move direction e.g. +1 or -1
+ * @return 0 square is blocked, or 1 success
+ */
+uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy);
+
+/**
+ * Strike.
+ * 
+ * @param attacker_entity_ptr attacker entity pointer
+ * @param dx attack direction  e.g. +1 or -1
+ * @param dy attack direction  e.g. +1 or -1 
+ * @return 0 nothing to strike, or 1 attempted a strike 
+ */
+uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy);
+
+/**
  * Draws all entities on the tilemap
  * 
   * @return void
@@ -113,14 +143,22 @@ void entity_draw_all();
 uint8_t entity_passable(uint8_t y, uint8_t x);
 
 /**
- * Returns entity if it is at dungeon position or next entity in list at dungeon position.
+ * Returns first entity at dungeon position.
+ * Call entity_next_at to find subsequent entities at the position
+ * @param x dungeon x cord
+ * @param y dungeon y cord
+ * @return entity at dungeon position or NULL
+ */
+entity_t *entity_first_at(uint8_t x, uint8_t y);
+
+/**
+ * Returns next entity  at dungeon position.
  * Can be called repeatably to find all entities at dungeon location
  * @param x dungeon x cord
  * @param y dungeon y cord
- * 
- * @return returns entity, or next entity in list, at dungeon location
+ * @return next entity at position or NULL
  */
-entity_t* entity_at(uint8_t y, uint8_t x, entity_t *entity_ptr);
+entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr);
 
 /**
  * Returns next entity in list

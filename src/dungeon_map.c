@@ -11,6 +11,7 @@
 
 #include "tilemap.h"
 #include "tile_defns.h"
+#include "entity.h"
 
 #define DUNGEON_MAP_WIDTH   40
 #define DUNGEON_MAP_HEIGHT  40
@@ -171,4 +172,17 @@ uint8_t dungeon_map_tile_passable(uint8_t x, uint8_t y)
 {
     return dungeon_map[x][y].passable;
 }
-  
+
+// returns 1 if dungeon tile is empty
+uint8_t dungeon_map_is_square_empty(uint8_t x, uint8_t y)
+{
+    // Is dungeon square passable
+    if (!dungeon_map_tile_passable(x, y)) {
+        return 0;
+    }
+
+    if(!entity_passable(y, x)) {
+        return 0;
+    }
+    return 1;
+}

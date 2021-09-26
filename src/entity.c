@@ -126,6 +126,58 @@ entity_t *entity_next(entity_t *entity_ptr)
     return p_forward_list_next(entity_ptr);
 }
 
+uint8_t entity_move_or_strike(entity_t *entity_ptr, int8_t dx, int8_t dy)
+{
+    if (!entity_move(entity_ptr, dx, dy))
+    {
+        return (strike(entity_ptr, dx, dy));
+    }
+    return 1;
+}
+
+uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy)
+{
+    uint8_t effort;
+
+    if (dungeon_map_is_square_empty(entity_ptr->x+dx, entity_ptr->y+dy)) {
+        // redraw dungeon tile
+        dungeon_map_draw_tile(entity_ptr->x, entity_ptr->y);
+        entity_ptr->y +=dy;
+        entity_ptr->x +=dx;
+
+        // decrease entity energy by 10 - speed. 
+        effort = (10 - entity_ptr->creature_ptr->speed);
+        entity_ptr->current_energy = entity_ptr->current_energy - effort;
+        return 1;
+    }
+    return 0;
+}
+
+
+uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
+{
+    entity_t *target_entity_ptr = entity_first_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy );
+
+    while (target_entity_ptr != NULL)
+    {
+        if (target_entity_ptr->type == creature) {
+            // TODO reduce energy by attack speed
+            attacker_entity_ptr->current_energy = 0;
+            target_entity_ptr->creature_ptr->curr_hp--;
+            if (target_entity_ptr->creature_ptr->curr_hp <= 0 )
+            {
+                //entity_ptr->c = 'x';
+                entity_delete(target_entity_ptr);
+            }
+            return 1;
+        }
+        target_entity_ptr = entity_next_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy, target_entity_ptr );
+    } 
+    printf("nothing there!");
+    return 0;
+}
+
+
 void entity_draw_all()
 {
     entity_t *entity_ptr;
@@ -151,14 +203,27 @@ uint8_t entity_passable(uint8_t y, uint8_t x)
     return 1;
 }
 
-entity_t* entity_at(uint8_t y, uint8_t x, entity_t *entity_ptr)
+entity_t *entity_first_at(uint8_t x, uint8_t y)
 {
-    while( entity_ptr)
+    entity_t *entity_ptr = entity_front();
+
+    while ( entity_ptr)
     {
         if (entity_ptr->x == x && entity_ptr->y == y) {
             return entity_ptr;
         }
         entity_ptr = entity_next(entity_ptr);
+    }
+    return NULL; 
+}
+
+entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr)
+{
+    while( entity_ptr = entity_next(entity_ptr) )
+    {
+        if (entity_ptr->x == x && entity_ptr->y == y) {
+            return entity_ptr;
+        }
     }
     return NULL;
 }
