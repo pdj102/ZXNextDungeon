@@ -31,6 +31,7 @@ typedef struct entity {
     uint8_t x;
     uint8_t y; 
     uint8_t tile;
+    uint8_t tile_attr;
 
     uint8_t current_energy;
 
@@ -60,6 +61,7 @@ void entity_init();
  * @param x dungeon x cord
  * @param y dungeon y cord
  * @param tile tile definition of entity
+ * @param tile_attr tile attributes
  * @param blocking 1=passable 0=unpassable
  * @param type creature or item
  * @param *creature_ptr pointer to creature struct 
@@ -67,7 +69,7 @@ void entity_init();
  * 
  * @return pointer to new entity
  */
-entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t blocking, entity_type_t type, creature_t *creature_ptr, item_t *item_ptr);
+entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, uint8_t blocking, entity_type_t type, creature_t *creature_ptr, item_t *item_ptr);
 
 /**
  * Create a creature entity

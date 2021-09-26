@@ -31,6 +31,7 @@ typedef struct {
     uint8_t speed;
 
     uint8_t tile;
+    uint8_t tile_attr; 
     uint8_t blocking; 
 
     creature_state_t state;

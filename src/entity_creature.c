@@ -56,8 +56,8 @@ creature_t *entity_creature_create(creature_type_t e)
             c->state    = attacking;
 
             c->tile     = TILE_PLAYER;
+            c->tile_attr = 0b00010000;
             c->blocking = 1;
-    uint8_t blocking; 
             break;
         case snake :
             c->max_hp   = 4;
@@ -70,6 +70,7 @@ creature_t *entity_creature_create(creature_type_t e)
             c->state    = attacking;
 
             c->tile     = TILE_SNAKE;
+            c->tile_attr = 0b01000000;
             c->blocking = 1;            
     }
 

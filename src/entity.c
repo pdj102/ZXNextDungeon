@@ -55,7 +55,7 @@ entity_t *entity_create_creature(uint8_t x, uint8_t y, creature_type_t c_type)
     creature_t *creature_ptr = entity_creature_create(c_type);
 
     // create entity of type creature
-    entity_ptr = entity_create(x, y, creature_ptr->tile, creature_ptr->blocking, creature, creature_ptr, NULL);
+    entity_ptr = entity_create(x, y, creature_ptr->tile, creature_ptr->tile_attr,creature_ptr->blocking, creature, creature_ptr, NULL);
     
     return entity_ptr;
 }
@@ -70,12 +70,12 @@ entity_t *entity_create_item(uint8_t x, uint8_t y, item_type_t i_type)
     item_t *item_ptr = entity_item_create(i_type);
 
     // create entity of type item
-    entity_ptr = entity_create(x, y, item_ptr->tile, item_ptr->blocking, item, NULL, item_ptr);
+    entity_ptr = entity_create(x, y, item_ptr->tile, item_ptr->tile_attr, item_ptr->blocking, item, NULL, item_ptr);
     
     return entity_ptr;
 }
 
-entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t blocking, entity_type_t type, creature_t *creature_ptr, item_t *item_ptr)
+entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, uint8_t blocking, entity_type_t type, creature_t *creature_ptr, item_t *item_ptr)
 {
     //TODO validate inputs
 
@@ -85,6 +85,7 @@ entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t blocking, en
     entity_ptr->x = x;
     entity_ptr->y = y;
     entity_ptr->tile=tile;
+    entity_ptr->tile_attr=tile_attr;
     entity_ptr->blocking=blocking;
     entity_ptr->type = type;
     entity_ptr->creature_ptr = creature_ptr;
@@ -132,7 +133,7 @@ void entity_draw_all()
     // print entities
     for (entity_ptr = p_forward_list_front(&entities); entity_ptr; entity_ptr = p_forward_list_next(entity_ptr))
     {
-        dungeon_map_draw_entity(entity_ptr->x, entity_ptr->y, entity_ptr->tile);
+        dungeon_map_draw_entity(entity_ptr->x, entity_ptr->y, entity_ptr->tile, entity_ptr->tile_attr);
     }
 }
 

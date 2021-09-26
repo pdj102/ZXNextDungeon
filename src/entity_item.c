@@ -40,7 +40,8 @@ item_t *entity_item_create(item_type_t i)
     switch (i)
     {
         case ring :
-            item_ptr->tile     = TILE_BOX;
+            item_ptr->tile     = TILE_RING;
+            item_ptr->tile_attr = 0b00010000;
             item_ptr->blocking = 0;
             break;
     }

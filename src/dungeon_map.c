@@ -25,6 +25,7 @@
 typedef struct
 {
     uint8_t tile;
+    uint8_t tile_attr;
     uint8_t passable;
 } dungeon_tile_t;
 
@@ -37,9 +38,9 @@ typedef struct
  ***************************************************/
 dungeon_tile_t dungeon_tiles[] =
 {
-    {TILE_FLOOR_1, DUNGEON_MAP_PASSABLE},      // DUNGEON_TILE_FLOOR
-    {TILE_WALL_1, DUNGEON_MAP_IMPASSABLE},     // DUNGEON_TILE_WALL_1
-    {TILE_CEILING,  DUNGEON_MAP_IMPASSABLE}    // DUNGEON_TILE_CEILING
+    {TILE_FLOOR_1, 0b00000000, DUNGEON_MAP_PASSABLE},      // DUNGEON_TILE_FLOOR
+    {TILE_WALL_1, 0b00000000, DUNGEON_MAP_IMPASSABLE},     // DUNGEON_TILE_WALL_1
+    {TILE_CEILING, 0b00000000, DUNGEON_MAP_IMPASSABLE}    // DUNGEON_TILE_CEILING
 };
 
 // dungeon map [x][y] [0][0] top left
@@ -99,7 +100,7 @@ void dungeon_map_draw()
 
     for (uint8_t screen_y = 0; screen_y < window_h ; screen_y++) {
         for (uint8_t screen_x = 0; screen_x < window_w; screen_x++) {
-            tilemap_set_tile(screen_x, screen_y, dungeon_map[dungeon_x][dungeon_y].tile);
+            tilemap_set_tile(screen_x, screen_y, dungeon_map[dungeon_x][dungeon_y].tile, dungeon_map[dungeon_x][dungeon_y].tile_attr);
             dungeon_x++;
         }
         dungeon_x = window_x;
@@ -115,11 +116,11 @@ void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y)
         uint8_t screen_x = dungeon_x - window_x;
         uint8_t screen_y = dungeon_y - window_y;
 
-        tilemap_set_tile(screen_x, screen_y, dungeon_map[dungeon_x][dungeon_y].tile);
+        tilemap_set_tile(screen_x, screen_y, dungeon_map[dungeon_x][dungeon_y].tile, dungeon_map[dungeon_x][dungeon_y].tile_attr);
     }
 }
 
-void dungeon_map_draw_entity(uint8_t x, uint8_t y, uint8_t tile)
+void dungeon_map_draw_entity(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr)
 {
     // check tile is within viewable area
     if ( (y >= window_y && y < window_y + window_h) && (x >= window_x && x < window_x+window_w) )
@@ -127,7 +128,7 @@ void dungeon_map_draw_entity(uint8_t x, uint8_t y, uint8_t tile)
         x = x - window_x;
         y = y - window_y;
 
-        tilemap_set_tile(x, y, tile);
+        tilemap_set_tile(x, y, tile, tile_attr);
     }
 }
 
@@ -135,4 +136,4 @@ uint8_t dungeon_map_tile_passable(uint8_t x, uint8_t y)
 {
     return dungeon_map[x][y].passable;
 }
- 
+  

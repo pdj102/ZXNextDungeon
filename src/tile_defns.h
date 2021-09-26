@@ -9,44 +9,46 @@
 #ifndef TILE_DEFNS_H 
     #define TILE_DEFNS_H 
 
-#define TILE_WALL_1     0
-#define TILE_WALL_2     1
+#define TILE_WALL_1     4
+#define TILE_WALL_2     5
+#define TILE_WALL_3     6
+#define TILE_WALL_4     7
 
-#define TILE_FLOOR_1    4
-#define TILE_CEILING    5
-#define TILE_6          6
-#define TILE_7          7
+#define TILE_FLOOR_1    8
+#define TILE_CEILING    9
+#define TILE_FLOOR_2    10
+#define TILE_1_4        11
 
-#define TILE_8          8
-#define TILE_9          9
-#define TILE_10         10
-#define TILE_11         11
+#define TILE_2_1        12
+#define TILE_2_2        13
+#define TILE_2_3        14
+#define TILE_2_4        15
 
-#define TILE_12         12
-#define TILE_13         13
-#define TILE_14         14
-#define TILE_15         15
+#define TILE_3_1        16
+#define TILE_3_2        17
+#define TILE_3_3        18
+#define TILE_3_4        19
 
-#define TILE_16         16
-#define TILE_17         17
-#define TILE_18         18
-#define TILE_19         19
+#define TILE_4_1        20
+#define TILE_4_2        21
+#define TILE_4_3        22
+#define TILE_4_4        23
 
-#define TILE_20         20
-#define TILE_21         21
-#define TILE_22         22
-#define TILE_23         23
+#define TILE_5_1        24
+#define TILE_5_2        25
+#define TILE_5_3        26
+#define TILE_5_4        27
 
-#define TILE_24         24
-#define TILE_25         25
-#define TILE_26         26
-#define TILE_27         27
+#define TILE_6_1        28
+#define TILE_6_2        29
+#define TILE_6_3        30
+#define TILE_6_4        31
 
-#define TILE_PLAYER     24
-#define TILE_SNAKE      25
+#define TILE_PLAYER     28
+#define TILE_SNAKE      28
 
-#define TILE_COLOURS    0
-#define TILE_TRANS      1
+#define TILE_RING       28
+#define TILE_TRANS      0      
 
 
 /***************************************************

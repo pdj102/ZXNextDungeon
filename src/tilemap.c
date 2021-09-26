@@ -75,18 +75,18 @@ void tilemap_clear(uint8_t tile)
 
 // TODO check bounds
 // TODO support tile attributes
-void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile)
+void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr)
 {
     uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
     uint8_t *p = tilemap_base_p + pos;
 
     *p = tile;
-    *(p+1) = 0b00010000;
+    *(p+1) = tile_attr;
 }
 
 // TODO check bounds
 // TODO support tile attributes
-void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile)
+void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile, uint8_t tile_attr)
 {
 
     uint16_t pos = (y * TILE_MAP_WIDTH) + x;
@@ -99,7 +99,7 @@ void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile)
         for(dx = 0; dx < w; dx++)
         {
             *p = tile;
-            *(p+1) = 0b00010000;    // bits 15-12 palette offset
+            *(p+1) = tile_attr;    // bits 15-12 palette offset
             p = p + 2;
         }
     p += next_row; 

@@ -41,7 +41,7 @@ void dungeon_map_draw();
 void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y);
 
 // draw an entity at y, x 
-void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile);
+void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile, uint8_t tile_attr);
 
 // scroll dungeon map 
 void dungeon_map_scroll(int8_t dx, int8_t dy);

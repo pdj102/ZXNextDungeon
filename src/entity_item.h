@@ -18,6 +18,7 @@ typedef enum {ring } item_type_t;
 
 typedef struct {
     uint8_t tile;
+    uint8_t tile_attr;
     uint8_t blocking; 
 } item_t;
 

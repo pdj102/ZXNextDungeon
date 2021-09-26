@@ -43,9 +43,10 @@ void tilemap_clear(uint8_t tile);
  * @param x     x position
  * @param y     y position     
  * @param tile  tile pattern number
+ * @param tile_attr tile attributes
  * @return void
  */
-void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile);
+void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr);
 
 /**
  * Set tilemap rectangle area to tile
@@ -54,8 +55,9 @@ void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile);
  * @param w     width
  * @param h     height  
  * @param tile  tile pattern number
+ * @param tile_attr tile attributes 
  * @return void
  */
-void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile);
+void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile, uint8_t tile_attr);
 
 #endif
