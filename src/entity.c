@@ -19,6 +19,8 @@
 #include "dungeon_map.h"
 #include "entity_creature.h"
 #include "entity_item.h"
+#include "dice.h"
+#include "messages.h"
 
 
 /***************************************************
@@ -153,22 +155,45 @@ uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy)
     return 0;
 }
 
-
 uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
 {
     entity_t *target_entity_ptr = entity_first_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy );
 
+    uint8_t attack_roll;
+
+    char message[21];
+    char hit[] = "Hit!";
+    char missed[] = "Missed!";
+    char killed[] = "Killed!";    
+
     while (target_entity_ptr != NULL)
     {
         if (target_entity_ptr->type == creature) {
-            // TODO reduce energy by attack speed
-            attacker_entity_ptr->current_energy = 0;
-            target_entity_ptr->creature_ptr->curr_hp--;
-            if (target_entity_ptr->creature_ptr->curr_hp <= 0 )
+            // decrease energy by speed
+            attacker_entity_ptr->current_energy = (10 - attacker_entity_ptr->creature_ptr->speed) ;
+
+            // attack roll
+            attack_roll = dice_1d20();
+
+            if (attack_roll > target_entity_ptr->creature_ptr->ac)
             {
-                //entity_ptr->c = 'x';
-                entity_delete(target_entity_ptr);
+                target_entity_ptr->creature_ptr->curr_hp -= attacker_entity_ptr->creature_ptr->dmg;
+                sprintf(message, "%s hit for %u points\n", attacker_entity_ptr->creature_ptr->name, attacker_entity_ptr->creature_ptr->dmg);
+                messages_print(message);
+
+                if (target_entity_ptr->creature_ptr->curr_hp <= 0)
+                {
+                    entity_delete(target_entity_ptr);
+                    sprintf(message, "%s is killed!\n", target_entity_ptr->creature_ptr->name);
+                    messages_print(message);
+                }
+                else
+                {
+                    // entity_event_hit();
+                }
             }
+            sprintf(message, "%s misses\n", attacker_entity_ptr->creature_ptr->name);
+            messages_print(message);
             return 1;
         }
         target_entity_ptr = entity_next_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy, target_entity_ptr );

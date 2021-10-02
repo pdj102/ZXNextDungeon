@@ -19,20 +19,31 @@ typedef enum {player, snake} creature_type_t;
 typedef enum {asleep, attacking} creature_state_t;
 
 typedef struct {
-    uint8_t max_hp;
-    uint8_t curr_hp;
+    char        name[10];
+    char        creature[10];  
 
-    uint8_t ac;
-    uint8_t dmg;
+    uint8_t     lvl;
+    uint16_t    exp;
+    uint16_t    nxt;
 
-    uint8_t lvl;
-    uint16_t exp;
+    uint8_t     str;
+    uint8_t     inte;
+    uint8_t     wis;
+    uint8_t     dex;
+    uint8_t     con;
 
-    uint8_t speed;
+    uint8_t     ac;
+    
+    uint8_t     max_hp;
+    int8_t      curr_hp;
 
-    uint8_t tile;
-    uint8_t tile_attr; 
-    uint8_t blocking; 
+    uint8_t     dmg;
+
+    uint8_t     speed;
+
+    uint8_t     tile;
+    uint8_t     tile_attr; 
+    uint8_t     blocking; 
 
     creature_state_t state;
 } creature_t;
