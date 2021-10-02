@@ -16,6 +16,7 @@
 #include "tilemap.h"
 #include "tile_defns.h"
 #include "entity_creature.h"
+#include "messages.h"
 
 #define printAt(row, col)    printf("\x16%c%c", row, col)
 
@@ -51,8 +52,7 @@ void print_dungeon()
 
     entity_draw_all();
 
-
-
+    messages_display();
 }
 
 void init_game()
@@ -62,6 +62,8 @@ void init_game()
     entity_init();
     
     tilemap_init();
+
+    messages_init();
 
     entity_create_creature(11, 11, snake);
     entity_create_creature(2, 2, snake);
