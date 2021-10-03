@@ -11,7 +11,8 @@
 #include <arch/zxn.h>
 
 
-#define NUM_SPRITES 11 * 4
+// Set NUM_SPRITES to number of sprites exported x 4 
+#define NUM_SPRITES 40 * 4
 
 /***************************************************
  * private types
