@@ -52,7 +52,7 @@ void print_dungeon()
 
     entity_draw_all();
 
-    messages_display();
+    messages_display(); 
 }
 
 void init_game()

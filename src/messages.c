@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     Paul Johnson
 
-    <Module description>
+    Messages buffer
 
  ***************************************************/
 #include "messages.h"
@@ -15,6 +15,8 @@
 
 #define MAX_MESSAGES 3
 #define MESSAGE_LENGTH 30
+
+// TODO change to using the tile map and longer messages
 
 /***************************************************
  * private types
@@ -30,7 +32,7 @@
 
 char messages[MAX_MESSAGES][MESSAGE_LENGTH+1];
 
-uint8_t head = 0;
+uint8_t head = 0;   // points to next message slot in circular buffer
 
 /***************************************************
  * functions definitions    
@@ -38,48 +40,49 @@ uint8_t head = 0;
 
 void messages_init()
 {
-    messages_print("023456789012345678901234567890");
-    messages_print("123456789012345678901234567890");
-    messages_print("223456789012345678901234567890");    
+                //  12345678901234567890123456789
+    messages_print("Welcome to Dungeon");
+    messages_print("You are on level 1");
+    messages_print("------------------");
 }
 
 void messages_display()
 {
-    uint8_t pos = head;
+    uint8_t pos;
+    uint8_t row;
 
-    printAt(1, 23);
-    //puts("21");
-    puts(messages[pos]);
-    if (pos==0)
+    // clear message display area
+    for (row = 21; row <= 23; row++)
     {
-        pos = MAX_MESSAGES-1;
+        printAt(1, row);
+        printf("                             ");
     }
-    else
+    
+    // print messages from circular message buffer
+    pos = head;
+    for (row = 23; row >= 21; row--)
     {
-        pos--;
+        // walk backwards through circular messages buffer
+        if (pos == 0)
+        {
+            pos = MAX_MESSAGES-1;
+        }
+        else
+        {
+            pos--;
+        }
+
+        printAt(1, row);
+        printf(messages[pos]);
     }
-    printAt(1, 22);
-    //puts("22");
-    puts(messages[pos]);
-    if (pos==0)
-    {
-        pos = MAX_MESSAGES-1;
-    }
-    else
-    {
-        pos--;
-    }    
-    printAt(1, 21);
-    //puts("23");
-    puts(messages[pos]);
 }
 void messages_print(char message[])
 {
-    head++;
-    if (head == MAX_MESSAGES-1) head = 0;
-
    // to do truncate message to message length
     strcpy(messages[head], message);
+
+    head++;
+    if (head == MAX_MESSAGES) head = 0;
     
     messages_display();
 }

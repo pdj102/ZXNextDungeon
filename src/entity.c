@@ -102,7 +102,9 @@ entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, u
 
 void entity_delete_entity(entity_t *entity_ptr)
 {
-    entity_delete(entity_ptr);
+    dungeon_map_draw_tile(entity_ptr->x, entity_ptr->y);
+
+    p_forward_list_remove(&entities, entity_ptr);
 
     if (entity_ptr->creature_ptr)
     {
@@ -160,11 +162,10 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
     entity_t *target_entity_ptr = entity_first_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy );
 
     uint8_t attack_roll;
+    uint8_t dmg_roll;
 
     char message[21];
-    char hit[] = "Hit!";
-    char missed[] = "Missed!";
-    char killed[] = "Killed!";    
+  
 
     while (target_entity_ptr != NULL)
     {
@@ -175,26 +176,46 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
             // attack roll
             attack_roll = dice_1d20();
 
+            // 012345678901234567890123456789
+            // AAAAAAAAAA strikes TTTTTTTTTT
+            sprintf(message, "%s strikes %s\n", attacker_entity_ptr->creature_ptr->name, target_entity_ptr->creature_ptr->name);
+            messages_print(message);
+
+            // Sucessful hit?
             if (attack_roll > target_entity_ptr->creature_ptr->ac)
             {
-                target_entity_ptr->creature_ptr->curr_hp -= attacker_entity_ptr->creature_ptr->dmg;
-                sprintf(message, "%s hit for %u points\n", attacker_entity_ptr->creature_ptr->name, attacker_entity_ptr->creature_ptr->dmg);
+                // todo roll for damage
+                dmg_roll = attacker_entity_ptr->creature_ptr->dmg;
+                target_entity_ptr->creature_ptr->curr_hp -= dmg_roll;
+
+                // 012345678901234567890123456789
+                // DD points damage
+                sprintf(message, "%u points damage\n", dmg_roll);
                 messages_print(message);
 
+                // Is target dead?
                 if (target_entity_ptr->creature_ptr->curr_hp <= 0)
                 {
-                    entity_delete(target_entity_ptr);
+                    // 012345678901234567890123456789
+                    // TTTTTTTTTT is killed!
                     sprintf(message, "%s is killed!\n", target_entity_ptr->creature_ptr->name);
                     messages_print(message);
+
+                    entity_delete_entity(target_entity_ptr);
                 }
                 else
                 {
-                    // entity_event_hit();
+                    // todo entity_event_hit();
                 }
             }
-            sprintf(message, "%s misses\n", attacker_entity_ptr->creature_ptr->name);
-            messages_print(message);
-            return 1;
+            else
+            {
+                // Miss!
+                sprintf(message, "%s misses\n", attacker_entity_ptr->creature_ptr->name);
+                messages_print(message);
+                return 1;
+            }
+
         }
         target_entity_ptr = entity_next_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy, target_entity_ptr );
     } 
@@ -252,8 +273,4 @@ entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr)
     return NULL;
 }
 
-void entity_delete(entity_t *entity_ptr)
-{
-    p_forward_list_remove(&entities, entity_ptr);
-}
 
