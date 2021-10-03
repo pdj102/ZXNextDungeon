@@ -24,17 +24,29 @@ BINDIR=./bin
 # use wildcard to select all .c files in src directory
 CFILES=$(wildcard $(SRCDIR)/*.c)
 
+# use wildcard to select all .asm files in src directory
+AFILES=$(wildcard $(SRCDIR)/*.asm)
+
 # use patsubst to name .o file for each .c file name in CFILES
-OFILES=$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(CFILES))
+OFILESC=$(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(CFILES))
+
+# use patsubst to name .o file for each .asm file name in AFILES
+OFILESA=$(patsubst $(SRCDIR)/%.asm,$(OBJDIR)/%.o,$(AFILES))
+
+# consolidate list of .o files for C and ASM
+OFILES = $(OFILESC) $(OFILESA)
+
 
 # program output name
 PROGRAM=dungeon.nex
 
 # target for *.o - call C compiler
+# example to compile ./src/test.c execute "make ./obj/test.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) -o $@ $<
 
 # target for *.o - call assembler
+# example to compile ./src/test2.asm execute "make ./obj/test2.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
