@@ -20,7 +20,7 @@
 #include "dice.h"
 #include "text.h"
 
-#define printAt(row, col)    printf("\x16%c%c", row, col)
+//#define printAt(row, col)    printf("\x16%c%c", row, col)
 
 
 /***************************************************
@@ -41,24 +41,18 @@ unsigned char key;
 
 entity_t *entity_player_ptr;
 
-creature_t *creature0;
-creature_t *creature1;
-creature_t *creature2;
-
-item_t item1 = {1};
-
 
 void print_dungeon()
 {
+    
+    zx_border(PAPER_BLACK);
+    zx_cls_attr(PAPER_BLACK);
 
-    char text[] = { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71 };
     dungeon_map_draw();
 
     entity_draw_all();
 
     messages_display(); 
-    //text_print(0, 24, text);
-    //text_print(0, 25, "HELLO WORLD!");
 }
 
 void init_game()
@@ -174,8 +168,6 @@ void play_game()
 
 int main()
 {
-    uint8_t b = 1;
-
     init_game();
 
     print_dungeon();
@@ -184,9 +176,6 @@ int main()
         play_game();
         entity_draw_all();
         entity_creature_draw_stat_block(entity_player_ptr->creature_ptr);
-
-        zx_border(b);
-        b = b==1 ? 0 : 1;
     };  
     return 0;
 }

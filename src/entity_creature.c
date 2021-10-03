@@ -14,8 +14,9 @@
 
 #include "tile_defns.h"
 #include "dice.h"
+#include "text.h"
 
-#define printAt(col, row)    printf("\x16%c%c", col, row)
+//#define printAt(col, row)    printf("\x16%c%c", col, row)
 
 /***************************************************
  * private types
@@ -106,6 +107,50 @@ creature_t *entity_creature_create(creature_type_t e)
 
 void entity_creature_draw_stat_block(creature_t *c)
 {
+    char s[] = "25500";
+
+    text_print(24, 0, c->name);
+    text_print(24, 1, c->creature);
+    text_print(24, 2, "LEVEL");
+    text_print(24, 3, "EXP");
+
+    text_print(24, 5, "STR:");
+    text_print(24, 6, "INT:");
+    text_print(24, 7, "WIS:");
+    text_print(24, 8, "DEX:");
+    text_print(24, 9, "CON:");
+
+    text_print(24, 11, "AC:");
+    text_print(24, 12, "HP:");
+
+    text_print(24, 13, "SPEED:");
+
+    itoa(c->lvl, s, 10);
+    text_print(30, 2, s);
+
+    itoa(c->exp, s, 10);
+    text_print(30, 3, s);
+
+    itoa(c->str, s, 10);
+    text_print(30, 5, s);
+    itoa(c->inte, s, 10);
+    text_print(30, 6, s);
+    itoa(c->wis, s, 10);
+    text_print(30, 7, s);
+    itoa(c->dex, s, 10);
+    text_print(30, 8, s);
+    itoa(c->con, s, 10);
+    text_print(30, 9, s);
+    
+    itoa(c->ac, s, 10);
+    text_print(30, 11, s);
+    itoa(c->curr_hp, s, 10);
+    text_print(30, 12, s);
+
+    itoa(c->speed, s, 10);
+    text_print(30, 13, s);
+
+    /*
     printAt(21, 1);
     printf("%s", c->name);
     printAt(21, 2);
@@ -133,6 +178,7 @@ void entity_creature_draw_stat_block(creature_t *c)
 
     printAt(21, 14);
     printf("SPEED: %2u", c->speed);
+    */
 }
 
 void entity_creature_delete(creature_t *creature_ptr)

@@ -13,7 +13,7 @@
 
 #include "tile_defns.h"
 
-#define printAt(row, col)    printf("\x16%c%c", row, col)
+//#define printAt(row, col)    printf("\x16%c%c", row, col)
 
 /***************************************************
  * private types
@@ -51,8 +51,8 @@ item_t *entity_item_create(item_type_t i)
 
 void entity_item_draw_stat_block(item_t *item_ptr)
 {
-    printAt(21, 1);
-    printf("ITEM:");
+    //printAt(21, 1);
+    //printf("ITEM:");
 }
 
 void entity_item_delete(item_t *item_ptr)
