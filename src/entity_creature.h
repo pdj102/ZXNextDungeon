@@ -11,6 +11,8 @@
 
 #include <inttypes.h>
 
+#include "dice.h"
+
 /***************************************************
  * public types
  ***************************************************/
@@ -38,6 +40,7 @@ typedef struct {
     int8_t      curr_hp;
 
     uint8_t     dmg;
+    dice_t      *dmg_die_p;
 
     uint8_t     speed;
 

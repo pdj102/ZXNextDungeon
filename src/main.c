@@ -17,6 +17,7 @@
 #include "tile_defns.h"
 #include "entity_creature.h"
 #include "messages.h"
+#include "dice.h"
 
 #define printAt(row, col)    printf("\x16%c%c", row, col)
 
@@ -57,6 +58,8 @@ void print_dungeon()
 
 void init_game()
 {
+    dice_init();
+
     dungeon_map_init();
 
     entity_init();

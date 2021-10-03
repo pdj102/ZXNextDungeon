@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "tile_defns.h"
+#include "dice.h"
 
 #define printAt(col, row)    printf("\x16%c%c", col, row)
 
@@ -61,7 +62,7 @@ creature_t *entity_creature_create(creature_type_t e)
             c->max_hp   = 8;
             c->curr_hp  = 8;
 
-            c->dmg      = 6;
+            c->dmg_die_p   = dice_1d6_p;
 
             c->speed    = 5;
 
@@ -89,7 +90,7 @@ creature_t *entity_creature_create(creature_type_t e)
             c->max_hp   = 4;
             c->curr_hp  = 4;
 
-            c->dmg      = 2;
+            c->dmg_die_p    = dice_1d2_p;
 
             c->speed    = 2;
 

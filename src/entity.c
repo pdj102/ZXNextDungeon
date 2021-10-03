@@ -174,7 +174,7 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
             attacker_entity_ptr->current_energy = (10 - attacker_entity_ptr->creature_ptr->speed) ;
 
             // attack roll
-            attack_roll = dice_1d20();
+            attack_roll = dice_roll_1d20();
 
             // 012345678901234567890123456789
             // AAAAAAAAAA strikes TTTTTTTTTT
@@ -185,7 +185,7 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
             if (attack_roll > target_entity_ptr->creature_ptr->ac)
             {
                 // todo roll for damage
-                dmg_roll = attacker_entity_ptr->creature_ptr->dmg;
+                dmg_roll = dice_roll(attacker_entity_ptr->creature_ptr->dmg_die_p);
                 target_entity_ptr->creature_ptr->curr_hp -= dmg_roll;
 
                 // 012345678901234567890123456789
