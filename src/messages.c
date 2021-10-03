@@ -11,10 +11,12 @@
 #include <inttypes.h>
 #include <string.h>
 
-#define printAt(col, row)    printf("\x16%c%c", col, row)
+#include "text.h"
 
-#define MAX_MESSAGES 3
-#define MESSAGE_LENGTH 30
+// #define printAt(col, row)    printf("\x16%c%c", col, row)
+
+#define MAX_MESSAGES 5
+#define MESSAGE_LENGTH 40
 
 // TODO change to using the tile map and longer messages
 
@@ -34,15 +36,18 @@ char messages[MAX_MESSAGES][MESSAGE_LENGTH+1];
 
 uint8_t head = 0;   // points to next message slot in circular buffer
 
+            //  1234567890123456789012345678901234567890
+char blank[] = "                                        ";
+
 /***************************************************
  * functions definitions    
  ***************************************************/
 
 void messages_init()
 {
-                //  12345678901234567890123456789
-    messages_print("Welcome to Dungeon");
-    messages_print("You are on level 1");
+                //  1234567890123456789012345678901234567890
+    messages_print("WELCOME TO DUNGEON");
+    messages_print("YOU ARE ON LEVEL 1");
     messages_print("------------------");
 }
 
@@ -50,17 +55,10 @@ void messages_display()
 {
     uint8_t pos;
     uint8_t row;
-
-    // clear message display area
-    for (row = 21; row <= 23; row++)
-    {
-        printAt(1, row);
-        printf("                             ");
-    }
     
     // print messages from circular message buffer
     pos = head;
-    for (row = 23; row >= 21; row--)
+    for (row = 24 + MAX_MESSAGES - 1; row >= 24; row--)
     {
         // walk backwards through circular messages buffer
         if (pos == 0)
@@ -72,8 +70,8 @@ void messages_display()
             pos--;
         }
 
-        printAt(1, row);
-        printf(messages[pos]);
+        text_print(0, row, blank);
+        text_print(0, row, messages[pos]);
     }
 }
 void messages_print(char message[])

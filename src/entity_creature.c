@@ -44,8 +44,8 @@ creature_t *entity_creature_create(creature_type_t e)
     switch (e)
     {
         case player :
-            strcpy(c->name, "Paul");
-            strcpy(c->creature, "Human");
+            strcpy(c->name, "PAUL");
+            strcpy(c->creature, "HUMAN");
 
             c->lvl      = 1;
             c->exp      = 0;
@@ -73,8 +73,8 @@ creature_t *entity_creature_create(creature_type_t e)
             c->blocking = 1;
             break;
         case snake :
-            strcpy(c->name, "Snake");
-            strcpy(c->creature, "Snake");
+            strcpy(c->name, "SNAKE");
+            strcpy(c->creature, "SNAKE");
             c->lvl      = 1;
             c->exp      = 0;
             c->nxt      = 100;

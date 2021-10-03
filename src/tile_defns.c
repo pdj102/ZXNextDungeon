@@ -12,7 +12,7 @@
 
 
 // Set NUM_SPRITES to number of sprites exported x 4 
-#define NUM_SPRITES 40 * 4
+#define NUM_SPRITES 40 * 4  //40
 
 /***************************************************
  * private types

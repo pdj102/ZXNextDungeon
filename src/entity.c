@@ -164,7 +164,7 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
     uint8_t attack_roll;
     uint8_t dmg_roll;
 
-    char message[21];
+    char message[40];
   
 
     while (target_entity_ptr != NULL)
@@ -177,8 +177,8 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
             attack_roll = dice_roll_1d20();
 
             // 012345678901234567890123456789
-            // AAAAAAAAAA strikes TTTTTTTTTT
-            sprintf(message, "%s strikes %s\n", attacker_entity_ptr->creature_ptr->name, target_entity_ptr->creature_ptr->name);
+            // AAAAAAAAAA STRIKES TTTTTTTTTT
+            sprintf(message, "%s STRIKES %s", attacker_entity_ptr->creature_ptr->name, target_entity_ptr->creature_ptr->name);
             messages_print(message);
 
             // Sucessful hit?
@@ -190,7 +190,7 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
 
                 // 012345678901234567890123456789
                 // DD points damage
-                sprintf(message, "%u points damage\n", dmg_roll);
+                sprintf(message, "%u POINTS DAMAGE", dmg_roll);
                 messages_print(message);
 
                 // Is target dead?
@@ -198,7 +198,7 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
                 {
                     // 012345678901234567890123456789
                     // TTTTTTTTTT is killed!
-                    sprintf(message, "%s is killed!\n", target_entity_ptr->creature_ptr->name);
+                    sprintf(message, "%s IS KILLED!", target_entity_ptr->creature_ptr->name);
                     messages_print(message);
 
                     entity_delete_entity(target_entity_ptr);
@@ -211,7 +211,7 @@ uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
             else
             {
                 // Miss!
-                sprintf(message, "%s misses\n", attacker_entity_ptr->creature_ptr->name);
+                sprintf(message, "%s MISSES", attacker_entity_ptr->creature_ptr->name);
                 messages_print(message);
                 return 1;
             }

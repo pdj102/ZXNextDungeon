@@ -18,6 +18,7 @@
 #include "entity_creature.h"
 #include "messages.h"
 #include "dice.h"
+#include "text.h"
 
 #define printAt(row, col)    printf("\x16%c%c", row, col)
 
@@ -49,11 +50,15 @@ item_t item1 = {1};
 
 void print_dungeon()
 {
+
+    char text[] = { 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71 };
     dungeon_map_draw();
 
     entity_draw_all();
 
     messages_display(); 
+    //text_print(0, 24, text);
+    //text_print(0, 25, "HELLO WORLD!");
 }
 
 void init_game()
