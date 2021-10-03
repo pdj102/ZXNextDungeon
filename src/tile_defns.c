@@ -11,6 +11,7 @@
 #include <arch/zxn.h>
 
 
+#define NUM_SPRITES 11 * 4
 
 /***************************************************
  * private types
@@ -25,6 +26,10 @@
  ***************************************************/
 uint8_t volatile * const tile_def_base_p = (uint8_t *) 0x6A00;
 
+extern uint8_t tile_pattern[];
+
+
+/*
 // tile definitions
 static const uint8_t tile_pattern[] = 
 {
@@ -393,6 +398,7 @@ static const uint8_t tile_pattern[] =
 	 0xff, 0xff, 0xff, 0xff
 
 };
+*/
 
 
 /***************************************************
@@ -408,7 +414,12 @@ void tile_defns_init()
     ZXN_NEXTREG(0x6F, 42);
 
     // write tile defs to tile definitions base address
-    for (uint16_t i = 0; i < sizeof tile_pattern / sizeof tile_pattern[0]; i++)
+    //for (uint16_t i = 0; i < sizeof tile_pattern / sizeof tile_pattern[0]; i++)
+    //{
+    //    *(tile_def_base_p+i) = tile_pattern[i];
+    //}
+
+    for (uint16_t i = 0; i < NUM_SPRITES * 4 * 8; i++)
     {
         *(tile_def_base_p+i) = tile_pattern[i];
     }
