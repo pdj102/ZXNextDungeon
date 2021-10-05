@@ -49,10 +49,10 @@ void tile_defns_init()
     //    *(tile_def_base_p+i) = tile_pattern[i];
     //}
 
-    for (uint16_t i = 0; i < NUM_SPRITES * 4 * 8; i++)
-    {
-        *(tile_def_base_p+i) = tile_pattern[i];
-    }
+    //for (uint16_t i = 0; i < NUM_SPRITES * 4 * 8; i++)
+    //{
+    //   *(tile_def_base_p+i) = tile_pattern[i];
+    //}
 
 }
   
