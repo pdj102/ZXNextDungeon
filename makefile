@@ -2,7 +2,7 @@
 CC=zcc
 AS=zcc
 TARGET=+zxn
-VERBOSITY=-vn
+VERBOSITY=-vn		# verbose off -vn on -v
 
 # CRT=31 no stdin stdout stderr streams setup
 CRT=31 
@@ -42,6 +42,9 @@ OFILES = $(OFILESC) $(OFILESA)
 # program output name
 PROGRAM=dungeon.nex
 
+# program output name
+ASSEMBLEY=dungeon.asm
+
 # target for *.o - call C compiler
 # example to compile ./src/test.c execute "make ./obj/test.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(PRAGMA_FILE)
@@ -55,14 +58,19 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.asm
 # target for all : $program
 all : $(PROGRAM)
 
-# target for $program : all object files
+# target for $program : dependency is all object files
 $(PROGRAM) : $(OFILES)
 	 $(CC) $(LDFLAGS) -startup=$(CRT) $(OFILES) -o $(BINDIR)/$(PROGRAM) -create-app -subtype=nex
 
+# target for assembley : dependency all 
+# assembley : $(ASSEMBLEY)
+
+# target for $assembley : dependency all object files
+# $(ASSEMBLEY) : $(OFILES)
+#	 $(CC) $(LDFLAGS) -startup=$(CRT) $(OFILES) -a $(BINDIR)/$(ASSEMBLEY)
+
 .PHONY: clean
 clean:
-	rm -f $(OBJDIR)*.o 
-	rm -f $(BINDIR)*.bin
-	rm -f $(BINDIR)*.nex 
-	rm -f *.map 
-	rm -f zcc_opt.def 
+	del .\obj\*.o 
+	del .\bin\*.bin
+	del .\bin\*.nex 
