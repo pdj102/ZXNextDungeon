@@ -45,8 +45,8 @@ entity_t *entity_player_ptr;
 void print_dungeon()
 {
     
-    zx_border(PAPER_BLACK);
-    zx_cls_attr(PAPER_BLACK);
+    // zx_border(PAPER_BLACK);
+    // zx_cls_attr(PAPER_BLACK);
 
     dungeon_map_draw();
 

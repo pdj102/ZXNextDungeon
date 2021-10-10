@@ -25,7 +25,7 @@
 /***************************************************
  * private variables
  ***************************************************/
-uint8_t volatile * const tile_def_base_p = (uint8_t *) 0x6000; // 0x4a00
+uint8_t volatile * const tile_def_base_p = (uint8_t *) 0x4a00; // 0x4a00 0x6000
 
 // tile_pattern is defined in tile_defns_data.asm
 extern uint8_t tile_pattern[];
@@ -47,11 +47,12 @@ void tile_defns_init()
      * Loading the tile definitions at or above 0x4A00 avoids it
      * 0x6F is set with the MSB which represents an n x 256 byte offset. (0x4A00 - 0x4000) / 0x100 = 10 decimal 
      * 
-     * TODO 
+     * BUG FIX 
      * when loading at 0x4a00 some tile defns seem to be corrupted, possibly something is writing to the ULA screen?
      * loading at 0x6000 avoids the issue but leaves memory unused (0x6000 - 0x4000) / 0x100 = 32
+     * FIXED - main was clearing ULA screen 
      */
-    ZXN_NEXTREG(0x6F, 32);
+    ZXN_NEXTREG(0x6F, 10);
 
     // write tile defs to tile definitions base address
     //for (uint16_t i = 0; i < sizeof tile_pattern / sizeof tile_pattern[0]; i++)
