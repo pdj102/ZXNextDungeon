@@ -39,10 +39,10 @@
 #define TILE_5_2        22
 #define TILE_5_3        23
 
-#define TILE_6_0        24 // inner bottom left corner
-#define TILE_6_1        25
-#define TILE_6_2        26
-#define TILE_6_3        27
+#define TILE_6_0        24 // bottom left corner
+#define TILE_6_1        25 // top right corner
+#define TILE_6_2        26 // left line
+#define TILE_6_3        27 // top left corner
 
 #define TILE_7_0        28  // player palette offset 1
 #define TILE_7_1        29

@@ -83,33 +83,65 @@ void dungeon_map_embelish_walls() {
     // scan from the bottom to top. 
     // Do not scan row 0 as some rules write to the row-1 
     // Do not scan column 0 as some rules write to column-1
+
+    // add walls first
     for (uint8_t y = DUNGEON_MAP_HEIGHT; y > 0 ; y-- ) {
         for (uint8_t x = 1; x < DUNGEON_MAP_WIDTH - 1; x++)
         {
-            // if tile is a floor with ceiling in row above change ceiling to wall
-            if( (dungeon_map[x][y].tile == TILE_FLOOR_1) && (dungeon_map[x][y-1].tile == TILE_CEILING) )
+            // wall - if tile is a ceiling with floor in row below 
+            if( (dungeon_map[x][y].tile == TILE_CEILING) && (dungeon_map[x][y+1].tile == TILE_FLOOR_1) )
             {
-                dungeon_map[x][y-1].tile = TILE_WALL_1;
+                dungeon_map[x][y].tile = TILE_WALL_1;
             }
-            // if tile is wall with ceiling in row above change ceiling to bottom blue line outline
-            if ( (dungeon_map[x][y].tile == TILE_WALL_1 ) && (dungeon_map[x][y-1].tile == TILE_CEILING) )
+        }
+    }
+
+    // add blue lines
+    for (uint8_t y = DUNGEON_MAP_HEIGHT - 1; y > 0 ; y-- ) {
+        for (uint8_t x = 1; x < DUNGEON_MAP_WIDTH - 1; x++)
+        {
+            if ( dungeon_map[x][y].tile == TILE_CEILING ) 
             {
-                dungeon_map[x][y-1].tile = TILE_3_3; //bottom blue line
-            }
-            // if tile is ceiling with floor in row above change ceiling to top blue line outline
-            if ( (dungeon_map[x][y].tile == TILE_CEILING ) && (dungeon_map[x][y-1].tile == TILE_FLOOR_1) )
-            {
-                dungeon_map[x][y].tile = TILE_3_1; //top blue line
-            }
-            // if tile is ceiling with floor to the right change ceiling to right blue line outline
-            if ( (dungeon_map[x][y].tile == TILE_CEILING ) && (dungeon_map[x+1][y].tile == TILE_FLOOR_1) )
-            {
-                dungeon_map[x][y].tile = TILE_4_1; // right blue line
-            }
-            // if tile is ceiling with floor to the left change ceiling to left blue line outline
-            if ( (dungeon_map[x][y].tile == TILE_CEILING ) && (dungeon_map[x-1][y].tile == TILE_FLOOR_1) )
-            {
-                dungeon_map[x][y].tile = TILE_4_3; // left blue line
+                // bottom blue line - if tile is ceiling with wall in the row below 
+                if ( dungeon_map[x][y+1].tile ==  TILE_WALL_1 )
+                {
+                    dungeon_map[x][y].tile = TILE_3_3; //bottom blue line
+                }
+                // top blue line - if tile is ceiling with floor in row above 
+                if ( dungeon_map[x][y-1].tile == TILE_FLOOR_1 )
+                {
+                    dungeon_map[x][y].tile = TILE_3_1; //top blue line
+                }
+                // right blue line - if tile is ceiling with floor or wall to the right 
+                if ( (dungeon_map[x+1][y].tile == TILE_FLOOR_1) || (dungeon_map[x+1][y].tile == TILE_WALL_1) )
+                {
+                    dungeon_map[x][y].tile = TILE_4_1; // right blue line
+                }
+                // left blue line - if tile is ceiling with floor or wall to the left 
+                if ( (dungeon_map[x-1][y].tile == TILE_FLOOR_1) || (dungeon_map[x-1][y].tile == TILE_WALL_1) ) 
+                {
+                    dungeon_map[x][y].tile = TILE_4_3; // left blue line
+                }
+                // small top right corner - if tile is ceiling, tile above is ceiling, tile to right is ceiling and tile diagonally up/right is floor
+                if ( (dungeon_map[x][y-1].tile == TILE_CEILING) && (dungeon_map[x+1][y].tile == TILE_CEILING) && (dungeon_map[x+1][y-1].tile == TILE_FLOOR_1) )
+                {
+                    dungeon_map[x][y].tile = TILE_6_1; // top right corner
+                }
+                // small top left corner - if tile is ceiling, tile above is ceiling, tile to left is top line and tile diagonally up/left is floor
+                if ( (dungeon_map[x][y-1].tile == TILE_CEILING) && (dungeon_map[x-1][y].tile == TILE_3_1) && (dungeon_map[x-1][y-1].tile == TILE_FLOOR_1) )
+                {
+                    dungeon_map[x][y].tile = TILE_6_3; // top left corner
+                }
+                // small bottom right corner - if tile is ceiling, tile below is right line, tile to right is tile ceiling and tile diagonally right/down is wall
+                if ( (dungeon_map[x][y+1].tile == TILE_4_1) && (dungeon_map[x+1][y].tile == TILE_CEILING) && (dungeon_map[x+1][y+1].tile == TILE_WALL_1) )
+                {
+                    dungeon_map[x][y].tile = TILE_5_0; // bottom right corner
+                }
+                // small bottom left corner - if tile is ceiling, tile below is left line, tile to left is bottom line and tile diagonally left/down is wall
+                if ( (dungeon_map[x][y+1].tile == TILE_4_3) && (dungeon_map[x-1][y].tile == TILE_3_3) && (dungeon_map[x-1][y+1].tile == TILE_WALL_1) )
+                {
+                   dungeon_map[x][y].tile = TILE_6_0; // bottom left corner
+                }
             }
         }
     }   
