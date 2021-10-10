@@ -12,6 +12,8 @@
 #include "palette.h"
 #include "tile_defns.h"
 
+#define TILEMAP_BASE 0x4000
+
 /***************************************************
  * private types
  ***************************************************/
@@ -23,8 +25,7 @@
 /***************************************************
  * private variables
  ***************************************************/
-uint8_t volatile * const tilemap_base_p = (uint8_t *) 0x6000;
-
+uint8_t volatile * const tilemap_base_p = (uint8_t *) TILEMAP_BASE;
 
 /***************************************************
  * functions definitions
@@ -32,19 +33,38 @@ uint8_t volatile * const tilemap_base_p = (uint8_t *) 0x6000;
 
 void tilemap_init()
 {
+     /* 0x68 - ULA Control
+     *
+     * bit 7    =  1 to disable ULA output
+     * bit 6    = 0 to select the ULA colour for blending in SLU modes 6 & 7
+     *          = 1 to select the ULA/tilemap mix for blending in SLU modes 6 & 7
+     * bits 5-1 = Reserved must be 0
+     * bit 0 = 1 to enable stencil mode when both the ULA and tilemap are enabled
+     * 
+     * Disable the ULA screen
+     */
+    ZXN_NEXTREG(0x68, 0b10000000);
+
     // initialise palette
     palette_init();
 
     // initialise tile definitions 
     tile_defns_init();
 
-    // 0x6E - Tilemap base address
-    // sets the tilemap base address offset within bank 5 (bank 5 is at 0x4000)
-    // The ULA screen is located 0x4000 - 0x5FFF (7 KiB) so setting tilemap base address to 0x6000 avoids it
-    // If ULA screen is not required it could be turned off and the tilemap written at 0x4000
-    // 0x6E is set with the MSB which represents an n x 256 byte offset. (0x6000 - 0x4000) / 0x100 = 32
-    // 40 x 32 tilemap is 2,560 bytes
-    ZXN_NEXTREG(0x6E, 32);
+    /* 0x6E - Tilemap base address
+    * Sets the tilemap base address offset within bank 5 
+    * 
+    * Bank 5 is located at 0x4000 - 0x7fff
+    * The ULA screen is located 0x4000 - 0x5FFF (7 KiB) 
+    * The ULA screen is not required and has been disabled so we can write the tilemap at 0x4000 
+    * The tilemap is 40 * 32 tiles * 2 bytes per tile = 0xA00 (2,560) bytes 
+    * 
+    * 0x6E is set with the MSB which represents an n x 256 byte offset within bank 5
+    * For example, to load the tilemap at 0x6000 the offset would be 32 decimal (0x6000 - 0x4000) / 0x100 = 0x20 (32)
+    * 
+    * Write the tilemap to 0x4000 - 0x49FF (offset 0 in bank 5)
+    */
+    ZXN_NEXTREG(0x6E, 0);
 
 
     // Set the tilemap to all transparent tiles

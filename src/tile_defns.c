@@ -25,7 +25,7 @@
 /***************************************************
  * private variables
  ***************************************************/
-uint8_t volatile * const tile_def_base_p = (uint8_t *) 0x6A00;
+uint8_t volatile * const tile_def_base_p = (uint8_t *) 0x6000; // 0x4a00
 
 // tile_pattern is defined in tile_defns_data.asm
 extern uint8_t tile_pattern[];
@@ -37,11 +37,21 @@ extern uint8_t tile_pattern[];
 
 void tile_defns_init()
 {
-    // 0x6F - Tile definitions base address
-    // sets the tile definitions base address offset within bank 5 (bank 5 is at 0x4000)
-    // The tilemap is 2,560 bytes so setting the base address to 0x6A00 avoids it
-    // 0x6F is set with the MSB which represents an n x 256 byte offset. (0x6A00 - 0x4000) / 0x100 = 42
-    ZXN_NEXTREG(0x6F, 42);
+    /* 0x6F - Tile definitions base address
+     *
+     * sets the tile definitions base address offset within bank 5 
+     * Bank 5 is located at 0x4000 - 0x7fff
+     * The ULA screen is located 0x4000 - 0x5FFF (7 KiB) 
+     * The ULA screen is not required and has been disabled so we can write the tilemap at 0x4000
+     * The tilemap is 2,560 (0xa00) bytes so occupies 0x4000 - 0x49ff
+     * Loading the tile definitions at or above 0x4A00 avoids it
+     * 0x6F is set with the MSB which represents an n x 256 byte offset. (0x4A00 - 0x4000) / 0x100 = 10 decimal 
+     * 
+     * TODO 
+     * when loading at 0x4a00 some tile defns seem to be corrupted, possibly something is writing to the ULA screen?
+     * loading at 0x6000 avoids the issue but leaves memory unused (0x6000 - 0x4000) / 0x100 = 32
+     */
+    ZXN_NEXTREG(0x6F, 32);
 
     // write tile defs to tile definitions base address
     //for (uint16_t i = 0; i < sizeof tile_pattern / sizeof tile_pattern[0]; i++)

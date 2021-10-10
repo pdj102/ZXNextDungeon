@@ -24,7 +24,7 @@
  ***************************************************/
 
 // offset into tileset for ASCII characters
-uint8_t tile_map_offset = 36;
+uint8_t tile_map_offset = 36;  //36
 
 /***************************************************
  * functions definitions
@@ -41,3 +41,4 @@ void text_print(uint8_t x, uint8_t y, char text[])
         x++;
     }
 }
+ 
