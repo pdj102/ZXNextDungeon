@@ -16,8 +16,8 @@
 #define DUNGEON_MAP_WIDTH   40
 #define DUNGEON_MAP_HEIGHT  40
 
-#define DUNGEON_MAP_IMPASSABLE 0
-#define DUNGEON_MAP_PASSABLE 1
+#define DUNGEON_MAP_TILE_FLOOR  0
+#define DUNGEON_MAP_TILE_WALL   1
 
 
 /***************************************************
@@ -27,7 +27,7 @@ typedef struct
 {
     uint8_t tile;
     uint8_t tile_attr;
-    uint8_t passable;
+    uint8_t t;
 } dungeon_tile_t;
 
 /***************************************************
@@ -39,9 +39,9 @@ typedef struct
  ***************************************************/
 dungeon_tile_t dungeon_tiles[] =
 {
-    {TILE_FLOOR_1, 0b00000000, DUNGEON_MAP_PASSABLE},      // DUNGEON_TILE_FLOOR
-    {TILE_WALL_1, 0b00000000, DUNGEON_MAP_IMPASSABLE},     // DUNGEON_TILE_WALL_1
-    {TILE_CEILING, 0b00000000, DUNGEON_MAP_IMPASSABLE}    // DUNGEON_TILE_CEILING
+    {TILE_FLOOR_1, 0b00000000, DUNGEON_MAP_TILE_FLOOR}, // DUNGEON_TILE_FLOOR
+    {TILE_WALL_1, 0b00000000, DUNGEON_MAP_TILE_WALL},   // DUNGEON_TILE_WALL_1
+    {TILE_CEILING, 0b00000000, DUNGEON_MAP_TILE_WALL}   // DUNGEON_TILE_CEILING
 };
 
 // dungeon map [x][y] [0][0] top left
@@ -59,9 +59,37 @@ uint8_t window_w = 24;
 
 void dungeon_map_scroll(int8_t dx, int8_t dy )
 {
-    // TO DO check bounds
-    window_y += dy;
-    window_x += dx;
+    int8_t tmp_x;
+    int8_t tmp_y;
+
+    tmp_x = window_x + dx;
+    tmp_y = window_y + dy;
+
+    if (tmp_x < 0)  
+    {
+        window_x = 0;
+    }
+    else if (tmp_x > DUNGEON_MAP_WIDTH - window_w)
+    {
+        window_x = DUNGEON_MAP_WIDTH - window_w;
+    }
+    else
+    {
+        window_x = tmp_x;
+    }
+
+    if (tmp_y < 0)  
+    {
+        window_y = 0;
+    }
+    else if (tmp_y >= DUNGEON_MAP_HEIGHT - window_h)
+    {
+        window_y = DUNGEON_MAP_HEIGHT - window_h;
+    }
+    else
+    {
+        window_y = tmp_y;
+    }       
 }
 
 void fill(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, uint8_t tile)
@@ -88,8 +116,8 @@ void dungeon_map_embelish_walls() {
     for (uint8_t y = DUNGEON_MAP_HEIGHT; y > 0 ; y-- ) {
         for (uint8_t x = 1; x < DUNGEON_MAP_WIDTH - 1; x++)
         {
-            // wall - if tile is a ceiling with floor in row below 
-            if( (dungeon_map[x][y].tile == TILE_CEILING) && (dungeon_map[x][y+1].tile == TILE_FLOOR_1) )
+            // brick wall - if tile is a wall with floor in row below 
+            if( (dungeon_map[x][y].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x][y+1].tile == DUNGEON_MAP_TILE_FLOOR) )
             {
                 dungeon_map[x][y].tile = TILE_WALL_1;
             }
@@ -100,48 +128,68 @@ void dungeon_map_embelish_walls() {
     for (uint8_t y = DUNGEON_MAP_HEIGHT - 1; y > 0 ; y-- ) {
         for (uint8_t x = 1; x < DUNGEON_MAP_WIDTH - 1; x++)
         {
-            if ( dungeon_map[x][y].tile == TILE_CEILING ) 
+            if ( dungeon_map[x][y].t == DUNGEON_MAP_TILE_WALL ) 
             {
-                // bottom blue line - if tile is ceiling with wall in the row below 
-                if ( dungeon_map[x][y+1].tile ==  TILE_WALL_1 )
+                // bottom blue line - if tile is wall with floor in the row below 
+                if ( dungeon_map[x][y+1].t == DUNGEON_MAP_TILE_FLOOR )
                 {
                     dungeon_map[x][y].tile = TILE_3_3; //bottom blue line
                 }
-                // top blue line - if tile is ceiling with floor in row above 
-                if ( dungeon_map[x][y-1].tile == TILE_FLOOR_1 )
+                // top blue line - if tile is wall with floor in row above 
+                if ( dungeon_map[x][y-1].t == DUNGEON_MAP_TILE_FLOOR )
                 {
                     dungeon_map[x][y].tile = TILE_3_1; //top blue line
                 }
-                // right blue line - if tile is ceiling with floor or wall to the right 
-                if ( (dungeon_map[x+1][y].tile == TILE_FLOOR_1) || (dungeon_map[x+1][y].tile == TILE_WALL_1) )
+                // right blue line - if tile is wall with floor to the right 
+                if (dungeon_map[x+1][y].t == DUNGEON_MAP_TILE_FLOOR ) 
                 {
                     dungeon_map[x][y].tile = TILE_4_1; // right blue line
                 }
-                // left blue line - if tile is ceiling with floor or wall to the left 
-                if ( (dungeon_map[x-1][y].tile == TILE_FLOOR_1) || (dungeon_map[x-1][y].tile == TILE_WALL_1) ) 
+                // left blue line - if tile is wall with floor to the left 
+                if (dungeon_map[x-1][y].t == DUNGEON_MAP_TILE_FLOOR ) 
                 {
                     dungeon_map[x][y].tile = TILE_4_3; // left blue line
                 }
-                // small top right corner - if tile is ceiling, tile above is ceiling, tile to right is ceiling and tile diagonally up/right is floor
-                if ( (dungeon_map[x][y-1].tile == TILE_CEILING) && (dungeon_map[x+1][y].tile == TILE_CEILING) && (dungeon_map[x+1][y-1].tile == TILE_FLOOR_1) )
+                // small top right corner - if tile is wall, tile above is wall, tile to right is wall and tile diagonally up/right is floor
+                if ( (dungeon_map[x][y-1].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x+1][y].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x+1][y-1].t == DUNGEON_MAP_TILE_FLOOR) )
                 {
                     dungeon_map[x][y].tile = TILE_6_1; // top right corner
                 }
-                // small top left corner - if tile is ceiling, tile above is ceiling, tile to left is top line and tile diagonally up/left is floor
-                if ( (dungeon_map[x][y-1].tile == TILE_CEILING) && (dungeon_map[x-1][y].tile == TILE_3_1) && (dungeon_map[x-1][y-1].tile == TILE_FLOOR_1) )
+                // small top left corner - if tile is wall, tile above is wall, tile to left is wall and tile diagonally up/left is floor
+                if ( (dungeon_map[x][y-1].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x-1][y].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x-1][y-1].t == DUNGEON_MAP_TILE_FLOOR) )
                 {
                     dungeon_map[x][y].tile = TILE_6_3; // top left corner
                 }
-                // small bottom right corner - if tile is ceiling, tile below is right line, tile to right is tile ceiling and tile diagonally right/down is wall
-                if ( (dungeon_map[x][y+1].tile == TILE_4_1) && (dungeon_map[x+1][y].tile == TILE_CEILING) && (dungeon_map[x+1][y+1].tile == TILE_WALL_1) )
+                // small bottom right corner - if tile is wall, tile below is wall, tile to right is wall and tile diagonally right/down is floor
+                if ( (dungeon_map[x][y+1].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x+1][y].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x+1][y+1].t == DUNGEON_MAP_TILE_FLOOR) )
                 {
                     dungeon_map[x][y].tile = TILE_5_0; // bottom right corner
                 }
-                // small bottom left corner - if tile is ceiling, tile below is left line, tile to left is bottom line and tile diagonally left/down is wall
-                if ( (dungeon_map[x][y+1].tile == TILE_4_3) && (dungeon_map[x-1][y].tile == TILE_3_3) && (dungeon_map[x-1][y+1].tile == TILE_WALL_1) )
+                // small bottom left corner - if tile is wall, tile below is wall, tile to left is wall and tile diagonally left/down is floor
+                if ( (dungeon_map[x][y+1].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x-1][y].t == DUNGEON_MAP_TILE_WALL) && (dungeon_map[x-1][y+1].t == DUNGEON_MAP_TILE_FLOOR) )
                 {
                    dungeon_map[x][y].tile = TILE_6_0; // bottom left corner
                 }
+                //  top right corner - if tile is wall, tile to left is floor, tile below is floor 
+                if ( (dungeon_map[x-1][y].t == DUNGEON_MAP_TILE_FLOOR) && (dungeon_map[x][y+1].t == DUNGEON_MAP_TILE_FLOOR) )
+                {
+                   dungeon_map[x][y].tile = TILE_3_2; // top right  corner
+                }
+                //  top left corner - if tile is wall, tile to right is floor, tile below is floor 
+                if ( (dungeon_map[x+1][y].t == DUNGEON_MAP_TILE_FLOOR) && (dungeon_map[x][y+1].t == DUNGEON_MAP_TILE_FLOOR) )
+                {
+                   dungeon_map[x][y].tile = TILE_4_2; // top left corner
+                }
+                //  bottom right corner - if tile is wall, tile to left is floor, tile above is floor 
+                if ( (dungeon_map[x-1][y].t == DUNGEON_MAP_TILE_FLOOR) && (dungeon_map[x][y-1].t == DUNGEON_MAP_TILE_FLOOR) )
+                {
+                   dungeon_map[x][y].tile = TILE_3_0; // bottom right corner
+                }
+                //  bottom left corner - if tile is wall, tile to right is floor, tile above is floor 
+                if ( (dungeon_map[x+1][y].t == DUNGEON_MAP_TILE_FLOOR) && (dungeon_map[x][y-1].t == DUNGEON_MAP_TILE_FLOOR) )
+                {
+                   dungeon_map[x][y].tile = TILE_4_0; // bottom left corner
+                }                
             }
         }
     }   
@@ -153,9 +201,13 @@ void dungeon_map_init()
 
     create_room(2, 2, 7, 5);
     create_room(10, 10, 4, 5);
+    create_room(20, 2, 7, 5);
+    create_room(3, 17, 5, 5);
 
     fill(9, 4, 3, 1, DUNGEON_TILE_FLOOR_1);
     fill(12, 4, 1, 6, DUNGEON_TILE_FLOOR_1);
+    fill(12, 4, 8, 1, DUNGEON_TILE_FLOOR_1);
+    fill(4, 7, 1, 10, DUNGEON_TILE_FLOOR_1);    
 
     dungeon_map_embelish_walls();
 }
@@ -202,7 +254,13 @@ void dungeon_map_draw_entity(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_at
 
 uint8_t dungeon_map_tile_passable(uint8_t x, uint8_t y) 
 {
-    return dungeon_map[x][y].passable;
+    switch( dungeon_map[x][y].t ) 
+    {
+        case DUNGEON_MAP_TILE_FLOOR: 
+            return 1;
+        default:
+            return 0;
+    }
 }
 
 // returns 1 if dungeon tile is empty
