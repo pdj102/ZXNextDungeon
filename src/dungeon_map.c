@@ -16,8 +16,9 @@
 #define DUNGEON_MAP_WIDTH   40
 #define DUNGEON_MAP_HEIGHT  40
 
-#define DUNGEON_MAP_TILE_FLOOR  0
-#define DUNGEON_MAP_TILE_WALL   1
+#define DUNGEON_MAP_TILE_FLOOR      0
+#define DUNGEON_MAP_TILE_WALL       1
+#define DUNGEON_MAP_TILE_CEILING   2
 
 
 /***************************************************
@@ -103,8 +104,7 @@ void fill(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dunge
 
 void create_room(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h)
 {
-    fill(dungeon_x, dungeon_y, dungeon_w, dungeon_h, DUNGEON_TILE_FLOOR_1);
-    // fill(dungeon_x, dungeon_y-1 ,dungeon_w, 1, DUNGEON_TILE_WALL_1);
+    fill(dungeon_x, dungeon_y, dungeon_w, dungeon_h, DUNGEON_MAP_TILE_FLOOR);
 }
 
 void dungeon_map_embelish_walls() {
@@ -197,17 +197,17 @@ void dungeon_map_embelish_walls() {
 
 void dungeon_map_init()
 {
-    fill(0, 0, DUNGEON_MAP_WIDTH, DUNGEON_MAP_HEIGHT, DUNGEON_TILE_CEILING);
+    fill(0, 0, DUNGEON_MAP_WIDTH, DUNGEON_MAP_HEIGHT, DUNGEON_MAP_TILE_CEILING);
 
     create_room(2, 2, 7, 5);
     create_room(10, 10, 4, 5);
     create_room(20, 2, 7, 5);
     create_room(3, 17, 5, 5);
 
-    fill(9, 4, 3, 1, DUNGEON_TILE_FLOOR_1);
-    fill(12, 4, 1, 6, DUNGEON_TILE_FLOOR_1);
-    fill(12, 4, 8, 1, DUNGEON_TILE_FLOOR_1);
-    fill(4, 7, 1, 10, DUNGEON_TILE_FLOOR_1);    
+    fill(9, 4, 3, 1, DUNGEON_MAP_TILE_FLOOR);
+    fill(12, 4, 1, 6, DUNGEON_MAP_TILE_FLOOR);
+    fill(12, 4, 8, 1, DUNGEON_MAP_TILE_FLOOR);
+    fill(4, 7, 1, 10, DUNGEON_MAP_TILE_FLOOR);    
 
     dungeon_map_embelish_walls();
 }
