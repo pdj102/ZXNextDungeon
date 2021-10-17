@@ -9,8 +9,13 @@
 
 #include <inttypes.h>
 
-#define DUNGEON_MAP_WIDTH   50
+#define DUNGEON_MAP_WIDTH   40
 #define DUNGEON_MAP_HEIGHT  40
+
+
+#define DUNGEON_MAP_TILE_FLOOR      0
+#define DUNGEON_MAP_TILE_WALL       1
+#define DUNGEON_MAP_TILE_CEILING    2
 
 
 /***************************************************
@@ -70,7 +75,13 @@ void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y);
  */
 void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile, uint8_t tile_attr);
 
-// scroll dungeon map 
+/**
+ * Move dungeon window by dx dy
+ * 
+ * @param dx delta x
+ * @param dy delta y
+ * @return void
+ */
 void dungeon_map_scroll(int8_t dx, int8_t dy);
 
 /**

@@ -33,9 +33,7 @@
  ***************************************************/
 // Some handy dungeon tiles
 
-#define DUNGEON_MAP_TILE_FLOOR      0
-#define DUNGEON_MAP_TILE_WALL       1
-#define DUNGEON_MAP_TILE_CEILING    2
+
 
 dungeon_tile_t dungeon_tiles[] =
 {
@@ -172,3 +170,4 @@ void dungeon_map_generate()
 
     dungeon_map_embelish_walls();
 }
+ 

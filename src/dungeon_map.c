@@ -14,12 +14,6 @@
 #include "entity.h"
 #include "dungeon_map_generator.h"
 
-#define DUNGEON_MAP_WIDTH   50
-#define DUNGEON_MAP_HEIGHT  40
-
-#define DUNGEON_MAP_TILE_FLOOR      0
-#define DUNGEON_MAP_TILE_WALL       1
-#define DUNGEON_MAP_TILE_CEILING   2
 
 
 /***************************************************
@@ -149,4 +143,4 @@ uint8_t dungeon_map_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y)
         return 1;
     }
     return 0;
-}
+}   
