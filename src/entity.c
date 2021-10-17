@@ -143,7 +143,7 @@ uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy)
 {
     uint8_t effort;
 
-    if (dungeon_map_is_square_empty(entity_ptr->x+dx, entity_ptr->y+dy)) {
+    if (!dungeon_map_is_blocked(entity_ptr->x+dx, entity_ptr->y+dy)) {
         // redraw dungeon tile
         dungeon_map_draw_tile(entity_ptr->x, entity_ptr->y);
         entity_ptr->y +=dy;

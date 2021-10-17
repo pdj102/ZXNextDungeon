@@ -21,7 +21,9 @@
 			"p_list.h": "c",
 			"p_forward_list.h": "c",
 			"stdint.h": "c",
-			"inttypes.h": "c"
+			"inttypes.h": "c",
+			"dungeon_map.h": "c",
+			"entity.h": "c"
 		}
 	}
 }
