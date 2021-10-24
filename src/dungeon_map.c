@@ -30,7 +30,12 @@
  ***************************************************/
 
 // dungeon map [x][y] [0][0] top left
-dungeon_tile_t dungeon_map[DUNGEON_MAP_WIDTH][DUNGEON_MAP_HEIGHT];
+// dungeon_tile_t dungeon_map[DUNGEON_MAP_WIDTH][DUNGEON_MAP_HEIGHT];
+
+    //void* ptr=(void*)0x0;
+    //dungeon_tile_t* dungeon_map = (dungeon_tile_t* )ptr;
+    //dungeon_tile_t* dungeon_map;
+
 
 // window is the moveable area within the dungeon selected for display
 uint8_t window_y = 0;
@@ -79,6 +84,12 @@ void dungeon_map_scroll(int8_t dx, int8_t dy )
 
 void dungeon_map_init()
 {
+    // Map bank X into ZX Spectrum 8k slot 0
+    ZXN_WRITE_REG(0x50, 16);    // Map 8k bank 16 into 8k slot 0
+
+    // dungeon_map is defined in dungeon_map_data.asm Bank 16 
+    
+    // generate dungeon map
     dungeon_map_generate();
 }
 

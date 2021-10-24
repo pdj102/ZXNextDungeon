@@ -13,6 +13,33 @@ Set the z88dk compiler paths for the library and config files
 
 Run 'make all'
 
+## Memory map
+The game uses Spectrum Next memory banking to access more then 64Kb
+
+8k Slots    Memory              8k Bank     Use and notes
+Slot 0      0x0000 - 0x1fff     16          Dungeon Map 
+                                            (default ROM is mapped out)
+
+Slot 1      0x2000 - 0x3fff     ROM (255)   Not used
+                                            (by default mapped to ROM)
+
+Slot 2      0x4000 - 0x5fff     10          Tilemap located at 0x4000 - 0x49ff
+                                            Tile definitions at 0x4a00 - 4f20 (assuming 41 tile definitions at 4 * 8 bytes each)
+                                            (default use ULA screen. Game disables ULA screen)
+
+Slot 3      0x6000 - 0x7fff     11          Not used 
+                                            (default is contended ram. Could be used by game. Turn off contended memory first with next reg 0x08)
+
+Slot 4      0x8000 - 0x9fff     4           Common game code (not banked out)
+
+Slot 5      0xa000 - 0xbfff     5           Common game code (not banked out)
+                                            Top of stack located at 0xbfff (set by pragma)
+
+Slot 6      0xc000 - 0xfddd     17-31       Banked game code & data
+                                            (banks 16 to 31 are extra RAM on Spectrum Next)
+
+Slot 7      0xe000 - 0xfff      17-31       Banked game code & data
+
 ## z88dk compiler notes
 
 CRT targets are documented here
@@ -33,3 +60,11 @@ For information on memory banking
 https://www.z88dk.org/forum/viewtopic.php?t=9995
 https://www.z88dk.org/forum/viewtopic.php?t=10464
 
+
+## Moving stack notes
+
+From forums: The default setting for CLIB_MALLOC_HEAP_SIZE (-1) will try to create a heap between the end of BSS and the bottom of the stack. But since you moved your stack below BSS, the crt computes a negative heap size and silently causes the program to exit, which will cause a crash if you move your SP down low enough.
+
+Another setting is to specify a size > 14 bytes. If that's done the heap will be created in the BSS section.
+
+And a third option is to specify the top address of the heap so that the heap is created between the end of BSS and that address. In this case, the top address is given as a negative value. Eg if you set CLIB_MALLOC_HEAP_SIZE = -0xffff, then the heap will extend from the end of BSS up to and including address 0xffff.

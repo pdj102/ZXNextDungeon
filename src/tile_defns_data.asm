@@ -1,9 +1,5 @@
-
-;SECTION rodata_user
-
 SECTION BANK_5 
 org 0x4A00
-; org 0x6000
 
 PUBLIC _tile_pattern
 
