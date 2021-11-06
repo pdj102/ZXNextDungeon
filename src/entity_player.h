@@ -22,7 +22,8 @@
  * public variable declarations - extern
  ***************************************************/
 
-extern creature_t *player_ptr;
+extern creature_t *creature_player_ptr;
+extern entity_t *entity_player_ptr;
 
 /***************************************************
  * public function prototypes
@@ -37,5 +38,12 @@ extern creature_t *player_ptr;
  */
 void entity_player_create(uint8_t x, uint8_t y);
 
+
+/**
+ * Players turn
+ * 
+ * @return void
+ */
+void entity_player_turn();
 
 #endif

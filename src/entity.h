@@ -97,7 +97,7 @@ entity_t *entity_front();
 uint8_t entity_move_or_strike(entity_t *entity_ptr, int8_t dx, int8_t dy);
 
 /**
- * Move entity. Checks if square is passable before moving
+ * Move entity. Checks if square is not blocked before moving
  * 
  * @param entity_ptr entity pointer
  * @param dx move direction e.g. +1 or -1
@@ -105,6 +105,15 @@ uint8_t entity_move_or_strike(entity_t *entity_ptr, int8_t dx, int8_t dy);
  * @return 0 square is blocked, or 1 success
  */
 uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy);
+
+/**
+ * Reduce entity energy level by effort
+ * 
+ * @param entity_ptr entity pointer
+ * @param effort    amount to reduce energy level by
+ * @return void
+ */
+void entity_reduce_energy(entity_t *entity_ptr, uint8_t effort);
 
 /**
  * Strike.

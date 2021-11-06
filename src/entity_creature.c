@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "entity.h"
+#include "entity_player.h"
 #include "tile_defns.h"
 #include "dice.h"
 #include "text.h"
@@ -45,7 +46,7 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 
     entity_t *e = entity_create();
 
-    c->entity_p = e;
+    c->entity_ptr = e;
 
     e->type      = creature;
     e->ptr = (void*)c;
@@ -113,8 +114,6 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
             c->speed    = 2;
 
             c->state    = ATTACKING;
-
-            //c->entity = entity_p;
 
             e->tile     = TILE_SNAKE;
             e->tile_attr = 0b00100000; // palette offset 2
@@ -204,32 +203,128 @@ void entity_creature_draw_stat_block(creature_t *c)
 
 void entity_creature_turn(creature_t *creature_ptr)
 {
-    if (creature_ptr->state == asleep ) {
+    if (creature_ptr->state == ASLEEP ) {
         // do nothing
     }
 
-    if (creature_ptr->state == attacking ) {
+    if (creature_ptr->state == ATTACKING ) {
         if (creature_ptr->entity_ptr->y > entity_player_ptr->y) {
-            if (entity_creature_move_or_strike(entity_ptr, 0, -1)) return;
+            if (entity_creature_move_or_strike(creature_ptr, 0, -1)) return;
         }
         if (creature_ptr->entity_ptr->y < entity_player_ptr->y) {
-            if (entity__creature_move_or_strike(entity_ptr, 0, 1)) return;
+            if (entity_creature_move_or_strike(creature_ptr, 0, 1)) return;
         }
         if (creature_ptr->entity_ptr->x > entity_player_ptr->x) {
-            if (entity__creature_move_or_strike(entity_ptr, -1, 0)) return;
+            if (entity_creature_move_or_strike(creature_ptr, -1, 0)) return;
         }
         if (creature_ptr->entity_ptr->x < entity_player_ptr->x) {
-            if (entity__creature_move_or_strike(entity_ptr, 1, 0)) return;
+            if (entity_creature_move_or_strike(creature_ptr, 1, 0)) return;
         }
     }
 }
 
 uint8_t entity_creature_move_or_strike(creature_t *creature_ptr, int8_t dx, int8_t dy)
 {
-    return 1;
+    if (entity_move(creature_ptr->entity_ptr, dx, dy))
+    {
+        // success move
+        return 1;
+    }
+    // try striking 
+    return (entity_creature_strike(creature_ptr, dx, dy));
+}
+
+uint8_t entity_creature_move(creature_t *creature_ptr, int8_t dx, int8_t dy)
+{
+    uint8_t effort;
+
+    if(entity_move(creature_ptr->entity_ptr, dx, dy))
+    {
+        // decrease entity energy by 10 - speed
+        effort = (10 - creature_ptr->speed);
+        entity_reduce_energy(creature_ptr->entity_ptr, effort);
+        return 1;
+    }
+    return 0;
+}
+
+creature_t *entity_creature_at(uint8_t x, uint8_t y)
+{
+    
+}
+
+uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int8_t dy)
+{
+    uint8_t attack_roll;
+    uint8_t dmg_roll;
+    uint8_t attempted_strike = 0;
+
+    char message[40];
+
+    creature_t *target_creature_ptr;
+  
+    entity_t *target_entity_ptr = entity_first_at( attacker_creature_ptr->entity_ptr->x+dx, attacker_creature_ptr->entity_ptr->y+dy );
+
+    while (target_entity_ptr != NULL)
+    {
+        if (target_entity_ptr->type == creature) {
+            target_creature_ptr = (creature_t *)target_entity_ptr->ptr;
+
+            // Attempt strike on creature
+            attempted_strike = 1;
+            // decrease energy by speed
+            attacker_creature_ptr->entity_ptr->current_energy = (10 - attacker_creature_ptr->speed) ;
+
+            // attack roll
+            attack_roll = dice_roll_1d20();
+
+            // 012345678901234567890123456789
+            // AAAAAAAAAA STRIKES TTTTTTTTTT
+            sprintf(message, "%s STRIKES %s", attacker_creature_ptr->name, target_creature_ptr->name);
+            messages_print(message);
+
+            // Sucessful hit?
+            if (attack_roll > target_creature_ptr->ac)
+            {
+                // todo roll for damage
+                dmg_roll = dice_roll(attacker_creature_ptr->dmg_die_p);
+                target_creature_ptr->curr_hp -= dmg_roll;
+
+                // 012345678901234567890123456789
+                // DD points damage
+                sprintf(message, "%u POINTS DAMAGE", dmg_roll);
+                messages_print(message);
+
+                // Is target dead?
+                if (target_creature_ptr->curr_hp <= 0)
+                {
+                    // 012345678901234567890123456789
+                    // TTTTTTTTTT is killed!
+                    sprintf(message, "%s IS KILLED!", target_creature_ptr->name);
+                    messages_print(message);
+
+                    entity_creature_delete(target_creature_ptr);
+                }
+                else
+                {
+                    // todo entity_event_hit();
+                }
+            }
+            else
+            {
+                // Miss!
+                sprintf(message, "%s MISSES", attacker_entity_ptr->creature_ptr->name);
+                messages_print(message);
+            }
+
+        }
+        target_entity_ptr = entity_next_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy, target_entity_ptr );
+    } 
+    return attempted_strike;
 }
 
 void entity_creature_delete(creature_t *creature_ptr)
 {
+    entity_delete(creature_ptr->entity_ptr);
     free(creature_ptr);
 }  

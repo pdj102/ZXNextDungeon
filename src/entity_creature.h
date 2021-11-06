@@ -38,7 +38,7 @@ typedef enum {NONE, STRIKE, BITE, ARROW} attack_t;
 typedef struct {
 
     // pointer back to entity
-    entity_t    *entity_p;
+    entity_t    *entity_ptr;
 
     // Stat block
     char        name[10];
@@ -103,10 +103,31 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 void entity_creature_draw_stat_block(creature_t *c);
 
 /**
- * Move creature
+ * Attmept to move creature in direction or if blocked strike creature
+ * @param *creature_ptr creature to move
+ * @param dx move delta x 
+ * @param dy move delta y
+ * @return 1 if success 0 if unable to move or strike
  */
 uint8_t entity_creature_move_or_strike(creature_t *creature_ptr, int8_t dx, int8_t dy);
 
+/**
+ * Attmept to move creature in direction
+ * @param *creature_ptr creature to move
+ * @param dx move delta x 
+ * @param dy move delta y
+ * @return 1 success 0 if unable to move
+ */
+uint8_t entity_creature_move(creature_t *creature_ptr, int8_t dx, int8_t dy);
+
+/**
+ * Attempt to strike in direction
+ * @param *creature_ptr creature to move
+ * @param dx strike in direction delta x 
+ * @param dy strike in direction  delta y
+ * @return 1 if attempted a strike 0 if nothing to strike
+ */
+uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int8_t dy);
 
 /**
  * Delete creature and free all memory

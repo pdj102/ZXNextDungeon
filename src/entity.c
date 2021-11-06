@@ -113,7 +113,7 @@ entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, u
 }
 */
 
-void entity_delete_entity(entity_t *entity_ptr)
+void entity_delete(entity_t *entity_ptr)
 {
     dungeon_map_draw_tile(entity_ptr->x, entity_ptr->y);
 
@@ -132,99 +132,31 @@ entity_t *entity_next(entity_t *entity_ptr)
     return p_forward_list_next(entity_ptr);
 }
 
-uint8_t entity_move_or_strike(entity_t *entity_ptr, int8_t dx, int8_t dy)
-{
-    if (!entity_move(entity_ptr, dx, dy))
-    {
-        return (strike(entity_ptr, dx, dy));
-    }
-    return 1;
-}
 
-/*
 uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy)
 {
-    uint8_t effort;
-
     if (!dungeon_map_is_blocked(entity_ptr->x+dx, entity_ptr->y+dy)) {
         // redraw dungeon tile
         dungeon_map_draw_tile(entity_ptr->x, entity_ptr->y);
         entity_ptr->y +=dy;
         entity_ptr->x +=dx;
-
-        // decrease entity energy by 10 - speed. 
-        effort = (10 - entity_ptr->creature_ptr->speed);
-        entity_ptr->current_energy = entity_ptr->current_energy - effort;
         return 1;
     }
     return 0;
 }
 
-uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy)
+void entity_reduce_energy(entity_t *entity_ptr, uint8_t effort)
 {
-    entity_t *target_entity_ptr = entity_first_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy );
-
-    uint8_t attack_roll;
-    uint8_t dmg_roll;
-
-    char message[40];
-  
-
-    while (target_entity_ptr != NULL)
+    if (entity_ptr->current_energy < effort)
     {
-        if (target_entity_ptr->type == creature) {
-            // decrease energy by speed
-            attacker_entity_ptr->current_energy = (10 - attacker_entity_ptr->creature_ptr->speed) ;
-
-            // attack roll
-            attack_roll = dice_roll_1d20();
-
-            // 012345678901234567890123456789
-            // AAAAAAAAAA STRIKES TTTTTTTTTT
-            sprintf(message, "%s STRIKES %s", attacker_entity_ptr->creature_ptr->name, target_entity_ptr->creature_ptr->name);
-            messages_print(message);
-
-            // Sucessful hit?
-            if (attack_roll > target_entity_ptr->creature_ptr->ac)
-            {
-                // todo roll for damage
-                dmg_roll = dice_roll(attacker_entity_ptr->creature_ptr->dmg_die_p);
-                target_entity_ptr->creature_ptr->curr_hp -= dmg_roll;
-
-                // 012345678901234567890123456789
-                // DD points damage
-                sprintf(message, "%u POINTS DAMAGE", dmg_roll);
-                messages_print(message);
-
-                // Is target dead?
-                if (target_entity_ptr->creature_ptr->curr_hp <= 0)
-                {
-                    // 012345678901234567890123456789
-                    // TTTTTTTTTT is killed!
-                    sprintf(message, "%s IS KILLED!", target_entity_ptr->creature_ptr->name);
-                    messages_print(message);
-
-                    entity_delete_entity(target_entity_ptr);
-                }
-                else
-                {
-                    // todo entity_event_hit();
-                }
-            }
-            else
-            {
-                // Miss!
-                sprintf(message, "%s MISSES", attacker_entity_ptr->creature_ptr->name);
-                messages_print(message);
-                return 1;
-            }
-
-        }
-        target_entity_ptr = entity_next_at( attacker_entity_ptr->x+dx, attacker_entity_ptr->y+dy, target_entity_ptr );
-    } 
-    return 0;
+        entity_ptr->current_energy = 0;
+        return;
+    }
+    entity_ptr->current_energy = entity_ptr->current_energy - effort;
 }
-*/
+        
+
+
 
 void entity_draw_all()
 {

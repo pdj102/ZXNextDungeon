@@ -23,10 +23,11 @@
  ***************************************************/
 
 /***************************************************
- * private variables
+ * variables
  ***************************************************/
 
-creature_t *player_ptr;
+creature_t *creature_player_ptr;
+creature_t *entity_player_ptr;
 
 /***************************************************
  * functions definitions
@@ -35,28 +36,29 @@ creature_t *player_ptr;
 
 void entity_player_create(uint8_t x, uint8_t y)
 {
-    player_ptr = entity_creature_create(PLAYER, x, y);
+    creature_player_ptr = entity_creature_create(PLAYER, x, y);
+    entity_player_ptr = creature_player_ptr->entity_ptr;
 }
 
 void entity_player_turn()
 {
     unsigned char key;
-    
+
     while ((key = in_inkey()) == 0) ;   // loop while no key pressed
     in_wait_nokey();    // wait no key
 
     switch(toupper(key)) {
         case 'S':
-            entity_creature_move_or_strike(player_ptr, 0, 1);
+            entity_creature_move_or_strike(creature_player_ptr, 0, 1);
             break;
         case 'W':
-            entity_creature_move_or_strike(player_ptr, 0, -1);
+            entity_creature_move_or_strike(creature_player_ptr, 0, -1);
             break;
         case 'A':
-            entity_creature_move_or_strike(player_ptr, -1, 0);
+            entity_creature_move_or_strike(creature_player_ptr, -1, 0);
             break;
         case 'D':
-            entity_creature_move_or_strike(player_ptr, 1, 0);
+            entity_creature_move_or_strike(creature_player_ptr, 1, 0);
             break;
         case '4':
             dungeon_map_scroll(-1, 0);
