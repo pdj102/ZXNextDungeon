@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "entity.h"
 #include "tile_defns.h"
 #include "dice.h"
 #include "text.h"
@@ -22,7 +23,7 @@
  * private types
  ***************************************************/
 
-
+  
 
 
 /***************************************************
@@ -38,16 +39,29 @@
  ***************************************************/
 
 
-creature_t *entity_creature_create(creature_type_t e)
+creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uint8_t y)
 {
-    creature_t *c = (creature_t *) malloc(sizeof(creature_t));
+    creature_t *c = (creature_t *) malloc(sizeof(creature_t)); 
 
-    switch (e)
+    entity_t *e = entity_create();
+
+    c->entity_p = e;
+
+    e->type      = creature;
+    e->ptr = (void*)c;
+    e->current_energy = 0;   
+    e->x = x;
+    e->y = y;
+    e->blocking = 1;    
+
+    switch (creature_type)
     {
-        case player :
+        case PLAYER :
             strcpy(c->name, "PAUL");
             strcpy(c->creature, "HUMAN");
 
+            c->size = MEDIUM; 
+             
             c->lvl      = 1;
             c->exp      = 0;
             c->nxt      = 100;
@@ -67,13 +81,16 @@ creature_t *entity_creature_create(creature_type_t e)
 
             c->speed    = 5;
 
-            c->state    = attacking;
+            c->state    = ATTACKING;
 
-            c->tile     = TILE_PLAYER;
-            c->tile_attr = 0b00010000; // palette offset 1
-            c->blocking = 1;
+
+
+        
+            e->tile     = TILE_PLAYER;
+            e->tile_attr = 0b00010000; // palette offset 1
+
             break;
-        case snake :
+        case SNAKE :
             strcpy(c->name, "SNAKE");
             strcpy(c->creature, "SNAKE");
             c->lvl      = 1;
@@ -95,12 +112,16 @@ creature_t *entity_creature_create(creature_type_t e)
 
             c->speed    = 2;
 
-            c->state    = attacking;
+            c->state    = ATTACKING;
 
-            c->tile     = TILE_SNAKE;
-            c->tile_attr = 0b00100000; // palette offset 2
-            c->blocking = 1;            
+            //c->entity = entity_p;
+
+            e->tile     = TILE_SNAKE;
+            e->tile_attr = 0b00100000; // palette offset 2
+           
     }
+
+    // create entity
 
     return c;
 }
@@ -179,6 +200,33 @@ void entity_creature_draw_stat_block(creature_t *c)
     printAt(21, 14);
     printf("SPEED: %2u", c->speed);
     */
+}
+
+void entity_creature_turn(creature_t *creature_ptr)
+{
+    if (creature_ptr->state == asleep ) {
+        // do nothing
+    }
+
+    if (creature_ptr->state == attacking ) {
+        if (creature_ptr->entity_ptr->y > entity_player_ptr->y) {
+            if (entity_creature_move_or_strike(entity_ptr, 0, -1)) return;
+        }
+        if (creature_ptr->entity_ptr->y < entity_player_ptr->y) {
+            if (entity__creature_move_or_strike(entity_ptr, 0, 1)) return;
+        }
+        if (creature_ptr->entity_ptr->x > entity_player_ptr->x) {
+            if (entity__creature_move_or_strike(entity_ptr, -1, 0)) return;
+        }
+        if (creature_ptr->entity_ptr->x < entity_player_ptr->x) {
+            if (entity__creature_move_or_strike(entity_ptr, 1, 0)) return;
+        }
+    }
+}
+
+uint8_t entity_creature_move_or_strike(creature_t *creature_ptr, int8_t dx, int8_t dy)
+{
+    return 1;
 }
 
 void entity_creature_delete(creature_t *creature_ptr)

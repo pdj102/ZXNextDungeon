@@ -6,9 +6,9 @@
 
 #include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions
 #include <stdint.h>             // standard names for ints with no ambiguity 
-#include <input.h>
+
 #include <stdio.h>
-#include <ctype.h>              // character classification e.g. toupper()
+
 #include <stdbool.h>            // define true and false 
 
 #include "entity.h"
@@ -37,14 +37,13 @@ void hit(uint8_t x, uint8_t y);
 /***************************************************
  * variables
  ***************************************************/
-unsigned char key;
 
-entity_t *entity_player_ptr;
+
+
 
 
 void print_dungeon()
-{
-    
+{  
     dungeon_map_draw();
 
     entity_draw_all();
@@ -64,73 +63,19 @@ void init_game()
 
     messages_init();
 
-    entity_create_creature(11, 11, snake);
-    entity_create_creature(2, 2, snake);
-    entity_create_item(13, 13, ring);
-    entity_player_ptr = entity_create_creature(5, 5, player);
+    entity_creature_create(SNAKE, 11, 11);
+    entity_creature_create(SNAKE, 2, 2);
+    //entity_create_item(13, 13, ring);
+
+    entity_player_create(5, 5);
  
 }
 
 
 
-void snake_turn(entity_t *entity_ptr)
-{
-    if (entity_ptr->creature_ptr->state == asleep ) {
-        // do nothing
-    }
 
-    if (entity_ptr->creature_ptr->state == attacking ) {
-        if (entity_ptr->y > entity_player_ptr->y) {
-            if (entity_move_or_strike(entity_ptr, 0, -1)) return;
-        }
-        if (entity_ptr->y < entity_player_ptr->y) {
-            if (entity_move_or_strike(entity_ptr, 0, 1)) return;
-        }
-        if (entity_ptr->x > entity_player_ptr->x) {
-            if (entity_move_or_strike(entity_ptr, -1, 0)) return;
-        }
-        if (entity_ptr->x < entity_player_ptr->x) {
-            if (entity_move_or_strike(entity_ptr, 1, 0)) return;
-        }
-    }
-}
 
-void player_turn()
-{
-    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
-    in_wait_nokey();    // wait no key
 
-    switch(toupper(key)) {
-        case 'S':
-            entity_move_or_strike(entity_player_ptr, 0, 1);
-            break;
-        case 'W':
-            entity_move_or_strike(entity_player_ptr, 0, -1);
-            break;
-        case 'A':
-            entity_move_or_strike(entity_player_ptr, -1, 0);
-            break;
-        case 'D':
-            entity_move_or_strike(entity_player_ptr, 1, 0);
-            break;
-        case '4':
-            dungeon_map_scroll(-1, 0);
-            print_dungeon();            
-            break;
-        case '6':
-            dungeon_map_scroll(1, 0);
-            print_dungeon();
-            break;
-        case '8':
-            dungeon_map_scroll(0, -1);
-            print_dungeon();
-            break;
-        case '2':
-            dungeon_map_scroll(0, 1);
-            print_dungeon();
-            break;                        
-    }
-}
 
 void play_game()
 {

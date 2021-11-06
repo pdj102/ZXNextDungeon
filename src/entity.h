@@ -10,8 +10,6 @@
     #define ENTITY_H 
 
 #include <inttypes.h>
-#include "entity_creature.h"
-#include "entity_item.h"
 
 /***************************************************
  * types
@@ -38,11 +36,8 @@ typedef struct entity {
     uint8_t blocking; 
 
     entity_type_t type;
-    creature_t *creature_ptr;
-    item_t *item_ptr;    
-
+    void *ptr;  // pointer to creature, item or effect 
 } entity_t;
-
 
 /***************************************************
  * function prototypes
@@ -58,18 +53,11 @@ void entity_init();
 /**
  * Create an entity
  * 
- * @param x dungeon x cord
- * @param y dungeon y cord
- * @param tile tile definition of entity
- * @param tile_attr tile attributes
- * @param blocking 1=passable 0=unpassable
- * @param type creature or item
- * @param *creature_ptr pointer to creature struct 
- * @return *item_ptr pointer to item struct
- * 
  * @return pointer to new entity
  */
-entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, uint8_t blocking, entity_type_t type, creature_t *creature_ptr, item_t *item_ptr);
+// entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, uint8_t blocking, entity_type_t type, void *ptr);
+entity_t *entity_create();
+
 
 /**
  * Create a creature entity
@@ -79,7 +67,7 @@ entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, u
  * @param c_type Creature type
  * @return entity_ptr
  */
-entity_t *entity_create_creature(uint8_t x, uint8_t y, creature_type_t c_type);
+//entity_t *entity_create_creature(uint8_t x, uint8_t y, creature_type_t c_type);
 
 /**
  * Create a item entity
@@ -89,7 +77,7 @@ entity_t *entity_create_creature(uint8_t x, uint8_t y, creature_type_t c_type);
  * @param i_type Item type
  * @return entity_ptr 
  */
-entity_t *entity_create_item(uint8_t x, uint8_t y, item_type_t i_type);
+//entity_t *entity_create_item(uint8_t x, uint8_t y, item_type_t i_type);
 
 /**
  * Returns first entity in list
