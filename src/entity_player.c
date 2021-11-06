@@ -10,9 +10,11 @@
 #include <stdint.h>             // standard names for ints with no ambiguity 
 #include <input.h>
 #include <ctype.h>              // character classification e.g. toupper() 
+#include <stddef.h>             // NULL
 
 #include "entity_creature.h"
 #include "dungeon_map.h"
+#include "messages.h"
 
 /***************************************************
  * private types
@@ -27,7 +29,7 @@
  ***************************************************/
 
 creature_t *creature_player_ptr;
-creature_t *entity_player_ptr;
+entity_t *entity_player_ptr;
 
 /***************************************************
  * functions definitions

@@ -12,6 +12,7 @@
 #include <stdbool.h>            // define true and false 
 
 #include "entity.h"
+#include "entity_player.h"
 #include "dungeon_map.h"
 #include "tilemap.h"
 #include "tile_defns.h"
@@ -71,12 +72,6 @@ void init_game()
  
 }
 
-
-
-
-
-
-
 void play_game()
 {
 
@@ -97,9 +92,9 @@ void play_game()
         // TODO change energy system so can current energy decreases each turn, can take action when current energy is 0 and the action adds to the current energy
         if (entity_ptr->current_energy >= 10) {
             if (entity_ptr == entity_player_ptr) {
-                player_turn();
+                entity_player_turn();
             } else if (entity_ptr->type == creature) {
-                snake_turn(entity_ptr);
+                entity_creature_turn((creature_t *)entity_ptr->ptr);
             }
         }
     entity_ptr = entity_next(entity_ptr);
@@ -117,7 +112,7 @@ int main()
     while(entity_player_ptr) {
         play_game();
         entity_draw_all();
-        entity_creature_draw_stat_block(entity_player_ptr->creature_ptr);
+        entity_creature_draw_stat_block(creature_player_ptr);
     };  
     return 0;
 }

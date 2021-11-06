@@ -45,73 +45,15 @@ void entity_init()
     p_forward_list_init(&entities);      // init entities p_forward_list
 }
 
-/*
-entity_t *entity_create_creature(uint8_t x, uint8_t y, creature_type_t c_type)
-{
-    entity_t *entity_ptr;
-    //TODO validate inputs
-
-    entity_ptr = entity_create();
-    //TODO check for NULL
-
-    // create creature
-    creature_t *creature_ptr = entity_creature_create(c_type, entity_ptr);
-    //TODO check for NULL
-
-
-    // create entity of type creature
-    // entity_ptr = entity_create(x, y, creature_ptr->tile, creature_ptr->tile_attr,creature_ptr->blocking, creature, creature_ptr, NULL);
-    
-    return entity_ptr;
-}
-
-entity_t *entity_create_item(uint8_t x, uint8_t y, item_type_t i_type)
-{
-    entity_t *entity_ptr;
-    //TODO validate inputs
-
-    //TODO check for NULL
-    // create item
-    item_t *item_ptr = entity_item_create(i_type);
-
-    // create entity of type item
-    entity_ptr = entity_create(x, y, item_ptr->tile, item_ptr->tile_attr, item_ptr->blocking, item, NULL, item_ptr);
-    
-    return entity_ptr;
-}
-*/
 
 entity_t *entity_create()
 {
     entity_t *entity_ptr = (entity_t *) malloc(sizeof(entity_t));
     //TODO check for NULL
 
-    return entity_ptr;
-}
-/*
-entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, uint8_t blocking, entity_type_t type, void *ptr)
-{
-    //TODO validate inputs
-
-    entity_t *entity_ptr = (entity_t *) malloc(sizeof(entity_t));
-    //TODO check for NULL
-
-    entity_ptr->x = x;
-    entity_ptr->y = y;
-    entity_ptr->tile=tile;
-    entity_ptr->tile_attr=tile_attr;
-    entity_ptr->blocking=blocking;
-    entity_ptr->type = type;
-
-    entity_ptr->ptr = ptr;
-    
-    entity_ptr->current_energy = 0;
-
     p_forward_list_push_front(&entities, entity_ptr);
-
     return entity_ptr;
 }
-*/
 
 void entity_delete(entity_t *entity_ptr)
 {

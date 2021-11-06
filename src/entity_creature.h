@@ -103,6 +103,14 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 void entity_creature_draw_stat_block(creature_t *c);
 
 /**
+ * Creature turn
+ * 
+ * @param *creature_ptr  pointer to creature
+ * @return void
+ */
+void entity_creature_turn(creature_t *creature_ptr);
+
+/**
  * Attmept to move creature in direction or if blocked strike creature
  * @param *creature_ptr creature to move
  * @param dx move delta x 

@@ -36,7 +36,6 @@ void messages_init();
  */
 void messages_print(char message[]);
 
-
 /**
  * Display the messages buffer on the screen
  * 
