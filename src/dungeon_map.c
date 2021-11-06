@@ -150,7 +150,7 @@ uint8_t dungeon_map_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y)
         return 1;
     }
 
-    if(!entity_passable(dungeon_y, dungeon_x)) {
+    if(entity_is_blocking_at(dungeon_x, dungeon_y)) {
         return 1;
     }
     return 0;

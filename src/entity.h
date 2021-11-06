@@ -14,15 +14,19 @@
 /***************************************************
  * types
  ***************************************************/
+
+/**
+ * @brief Enumeration of entity types
+ * 
+ */
 typedef enum {item, effect, creature} entity_type_t;
 
-/*
-typedef struct effect {
-    uint8_t i;
-} effect_t;
-*/
-
-
+/**
+ * @brief The entity contains the common attributes of creatures, effects and items
+ * 
+ * @struct entity 
+ * 
+ */
 typedef struct entity {
     void *next;     // p_forward_list next
 
@@ -44,7 +48,7 @@ typedef struct entity {
  ***************************************************/
 
 /**
- * Initialises entity list. Entity list must be called before use
+ * Initialises entity list. Must be called before using the entity_ functions
  * 
   * @return void
  */
@@ -53,48 +57,16 @@ void entity_init();
 /**
  * Create an entity
  * 
- * @return pointer to new entity
+ * @return pointer to new entity or NULL on error
  */
-// entity_t *entity_create(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr, uint8_t blocking, entity_type_t type, void *ptr);
 entity_t *entity_create();
 
-
 /**
- * Create a creature entity
+ * Returns first entity in list 
  * 
- * @param x dungeon x cord
- * @param y dungeon y cord
- * @param c_type Creature type
- * @return entity_ptr
- */
-//entity_t *entity_create_creature(uint8_t x, uint8_t y, creature_type_t c_type);
-
-/**
- * Create a item entity
- * 
- * @param x dungeon x cord
- * @param y dungeon y cord
- * @param i_type Item type
- * @return entity_ptr 
- */
-//entity_t *entity_create_item(uint8_t x, uint8_t y, item_type_t i_type);
-
-/**
- * Returns first entity in list
- * 
-  * @return entity_t first entity in list
+  * @return entity_t first entity in list or NULL if list is empty
  */
 entity_t *entity_front();
-
-/**
- * Move entity or if blocked stike
- * 
- * @param entity_ptr entity pointer
- * @param dx x movement e.g. +1 or -1
- * @param dy y movement e.g. +1 or -1
- * @return 0 could not move and nothing to strike
- */
-uint8_t entity_move_or_strike(entity_t *entity_ptr, int8_t dx, int8_t dy);
 
 /**
  * Move entity. Checks if square is not blocked before moving
@@ -102,7 +74,7 @@ uint8_t entity_move_or_strike(entity_t *entity_ptr, int8_t dx, int8_t dy);
  * @param entity_ptr entity pointer
  * @param dx move direction e.g. +1 or -1
  * @param dy move direction e.g. +1 or -1
- * @return 0 square is blocked, or 1 success
+ * @return 1 if move succesfull or 0 if blocked
  */
 uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy);
 
@@ -116,28 +88,20 @@ uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy);
 void entity_reduce_energy(entity_t *entity_ptr, uint8_t effort);
 
 /**
- * Strike.
- * 
- * @param attacker_entity_ptr attacker entity pointer
- * @param dx attack direction  e.g. +1 or -1
- * @param dy attack direction  e.g. +1 or -1 
- * @return 0 nothing to strike, or 1 attempted a strike 
- */
-uint8_t strike(entity_t *attacker_entity_ptr, int8_t dx, int8_t dy);
-
-/**
- * Draws all entities on the tilemap
+ * Draws all entities onto the tilemap
  * 
   * @return void
  */
 void entity_draw_all();
 
 /**
- * Is the dungeon position occupied by a unpassable entity?
+ * Is there a blocking entity at the dungeon position?
  * 
-  * @return 1=passable 0=unpassable
+ * @param   x   dungeon x cord
+ * @param   y   dungeon y cord
+ * @return 1 = blocking 0 = not blocked
  */
-uint8_t entity_passable(uint8_t y, uint8_t x);
+uint8_t entity_is_blocking_at(uint8_t x, uint8_t y);
 
 /**
  * Returns first entity at dungeon position.
@@ -149,7 +113,7 @@ uint8_t entity_passable(uint8_t y, uint8_t x);
 entity_t *entity_first_at(uint8_t x, uint8_t y);
 
 /**
- * Returns next entity  at dungeon position.
+ * Returns next entity at dungeon position.
  * Can be called repeatably to find all entities at dungeon location
  * @param x dungeon x cord
  * @param y dungeon y cord
@@ -166,7 +130,7 @@ entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr);
 entity_t *entity_next(entity_t *entity_ptr);
 
 /**
- * Removes entity from list and frees up memory
+ * Delete entity from list and frees up memory
  * @param entity_ptr entity 
  * 
  * @return void

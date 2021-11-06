@@ -96,43 +96,41 @@ void entity_reduce_energy(entity_t *entity_ptr, uint8_t effort)
     }
     entity_ptr->current_energy = entity_ptr->current_energy - effort;
 }
-        
-
-
 
 void entity_draw_all()
 {
     entity_t *entity_ptr;
 
     // print entities
-    for (entity_ptr = p_forward_list_front(&entities); entity_ptr; entity_ptr = p_forward_list_next(entity_ptr))
+    for (entity_ptr = entity_front(); entity_ptr; entity_ptr = entity_next(entity_ptr))
     {
         dungeon_map_draw_entity(entity_ptr->x, entity_ptr->y, entity_ptr->tile, entity_ptr->tile_attr);
     }
 }
 
-uint8_t entity_passable(uint8_t y, uint8_t x)
+uint8_t entity_is_blocking_at(uint8_t x, uint8_t y)
 {
-    entity_t *entity_ptr;
+    entity_t *entity_ptr = entity_front();
 
-    // Does a unpassable entity occupy square
-    for (entity_ptr = p_forward_list_front(&entities); entity_ptr; entity_ptr = p_forward_list_next(entity_ptr))
+    while (entity_ptr)
     {
         if (entity_ptr->y == y && entity_ptr->x == x && entity_ptr->blocking == 1) {
-            return 0;
+            return 1;   // found a blocking entity
         }
+        entity_ptr = entity_next(entity_ptr);
     }
-    return 1;
+    // no blocking entity
+    return 0;   
 }
 
 entity_t *entity_first_at(uint8_t x, uint8_t y)
 {
     entity_t *entity_ptr = entity_front();
 
-    while ( entity_ptr)
+    while (entity_ptr)
     {
         if (entity_ptr->x == x && entity_ptr->y == y) {
-            return entity_ptr;
+            return entity_ptr;  // found entity at x y
         }
         entity_ptr = entity_next(entity_ptr);
     }
@@ -146,6 +144,7 @@ entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr)
         if (entity_ptr->x == x && entity_ptr->y == y) {
             return entity_ptr;
         }
+        entity_ptr = entity_next(entity_ptr);
     }
     return NULL;
 }

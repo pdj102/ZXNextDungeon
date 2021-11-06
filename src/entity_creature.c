@@ -114,21 +114,19 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
             c->state    = ATTACKING;
 
             e->tile     = TILE_SNAKE;
-            e->tile_attr = 0b00100000; // palette offset 2
-           
+            e->tile_attr = 0b00100000; // palette offset 2      
     }
 
     // create entity
-
     return c;
 }
 
-void entity_creature_draw_stat_block(creature_t *c)
+void entity_creature_draw_stat_block(creature_t *creature_ptr)
 {
-    char s[] = "25500";
+    char s[] = "25500";     // string buffer for converting numbers to strings
 
-    text_print(24, 0, c->name);
-    text_print(24, 1, c->creature);
+    text_print(24, 0, creature_ptr->name);
+    text_print(24, 1, creature_ptr->creature);
     text_print(24, 2, "LEVEL");
     text_print(24, 3, "EXP");
 
@@ -143,29 +141,29 @@ void entity_creature_draw_stat_block(creature_t *c)
 
     text_print(24, 13, "SPEED:");
 
-    itoa(c->lvl, s, 10);
+    itoa(creature_ptr->lvl, s, 10);
     text_print(30, 2, s);
 
-    itoa(c->exp, s, 10);
+    itoa(creature_ptr->exp, s, 10);
     text_print(30, 3, s);
 
-    itoa(c->str, s, 10);
+    itoa(creature_ptr->str, s, 10);
     text_print(30, 5, s);
-    itoa(c->inte, s, 10);
+    itoa(creature_ptr->inte, s, 10);
     text_print(30, 6, s);
-    itoa(c->wis, s, 10);
+    itoa(creature_ptr->wis, s, 10);
     text_print(30, 7, s);
-    itoa(c->dex, s, 10);
+    itoa(creature_ptr->dex, s, 10);
     text_print(30, 8, s);
-    itoa(c->con, s, 10);
+    itoa(creature_ptr->con, s, 10);
     text_print(30, 9, s);
     
-    itoa(c->ac, s, 10);
+    itoa(creature_ptr->ac, s, 10);
     text_print(30, 11, s);
-    itoa(c->curr_hp, s, 10);
+    itoa(creature_ptr->curr_hp, s, 10);
     text_print(30, 12, s);
 
-    itoa(c->speed, s, 10);
+    itoa(creature_ptr->speed, s, 10);
     text_print(30, 13, s);
 }
 

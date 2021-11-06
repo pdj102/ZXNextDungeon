@@ -97,13 +97,13 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 /**
  * Prints creature stat block to screen
  * 
- * @param *c  pointer to creature
+ * @param creature_ptr  pointer to creature
  * @return void
  */
-void entity_creature_draw_stat_block(creature_t *c);
+void entity_creature_draw_stat_block(creature_t *creature_ptr);
 
 /**
- * Creature turn
+ * Creature takes a turn
  * 
  * @param *creature_ptr  pointer to creature
  * @return void
@@ -111,8 +111,8 @@ void entity_creature_draw_stat_block(creature_t *c);
 void entity_creature_turn(creature_t *creature_ptr);
 
 /**
- * Attmept to move creature in direction or if blocked strike creature
- * @param *creature_ptr creature to move
+ * Attempt to move creature in direction or if way is blocked by a creature strike it
+ * @param creature_ptr creature to move
  * @param dx move delta x 
  * @param dy move delta y
  * @return 1 if success 0 if unable to move or strike
@@ -121,19 +121,19 @@ uint8_t entity_creature_move_or_strike(creature_t *creature_ptr, int8_t dx, int8
 
 /**
  * Attmept to move creature in direction
- * @param *creature_ptr creature to move
+ * @param creature_ptr creature to move
  * @param dx move delta x 
  * @param dy move delta y
- * @return 1 success 0 if unable to move
+ * @return 1 moved or 0 if unable to move
  */
 uint8_t entity_creature_move(creature_t *creature_ptr, int8_t dx, int8_t dy);
 
 /**
  * Attempt to strike in direction
- * @param *creature_ptr creature to move
+ * @param creature_ptr creature to move
  * @param dx strike in direction delta x 
  * @param dy strike in direction  delta y
- * @return 1 if attempted a strike 0 if nothing to strike
+ * @return 1 if attempted a strike or 0 if nothing to strike at
  */
 uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int8_t dy);
 
