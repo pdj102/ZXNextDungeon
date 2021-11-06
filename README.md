@@ -17,11 +17,16 @@ Run 'make all'
 The game uses Spectrum Next memory banking to access more then 64Kb
 
 8k Slots    Memory              8k Bank     Use and notes
+
 Slot 0      0x0000 - 0x1fff     16          Dungeon Map 
                                             (default ROM is mapped out)
 
-Slot 1      0x2000 - 0x3fff     ROM (255)   Not used
+Slot 1      0x2000 - 0x3fff     17          Entities, Creatures, Items and Effects
                                             (by default mapped to ROM)
+
+            0x2000 - 0x23ff                 Entities use first 1k of slot 1
+
+            0x2400 - 0x2bff                 Creatures use next 2k of slot 1
 
 Slot 2      0x4000 - 0x5fff     10          Tilemap located at 0x4000 - 0x49ff
                                             Tile definitions at 0x4a00 - 4f20 (assuming 41 tile definitions at 4 * 8 bytes each)

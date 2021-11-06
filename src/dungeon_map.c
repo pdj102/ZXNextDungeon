@@ -84,8 +84,8 @@ void dungeon_map_scroll(int8_t dx, int8_t dy )
 
 void dungeon_map_init()
 {
-    // Map bank X into ZX Spectrum 8k slot 0
-    ZXN_WRITE_REG(0x50, 16);    // Map 8k bank 16 into 8k slot 0
+    // Map bank 16 into ZX Spectrum 8k MMU slot 0
+    ZXN_WRITE_REG(0x50, 16);    
 
     // dungeon_map is defined in dungeon_map_data.asm Bank 16 
     

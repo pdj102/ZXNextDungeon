@@ -19,14 +19,11 @@
 #include "text.h"
 #include "messages.h"
 
-//#define printAt(col, row)    printf("\x16%c%c", col, row)
+//#define printAt(col, row)    printf("\x16%c%c", col, row) 
 
 /***************************************************
  * private types
  ***************************************************/
-
-  
-
 
 /***************************************************
  * private function prototypes

@@ -28,7 +28,8 @@ typedef enum {item, effect, creature} entity_type_t;
  * 
  */
 typedef struct entity {
-    void *next;     // p_forward_list next
+    void *next;         // p_forward_list next
+    uint8_t record;     // record number (first record is 1). 0 if record is available
 
     uint8_t x;
     uint8_t y; 

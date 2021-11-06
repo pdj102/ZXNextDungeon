@@ -30,11 +30,17 @@
  * private function prototypes
  ***************************************************/
 
+
 /***************************************************
  * private variables
  ***************************************************/
 // Single linked list of all entities
 static p_forward_list_t entities;
+
+// Pointer to base memory address for entities
+static entity_t *entity_base_ptr;
+
+const uint8_t max_entity_records = 40;          // Ensure sizeof(entity_t) * max_entity_records fits within allocated memory!
 
 /***************************************************
  * function definitions
@@ -42,17 +48,37 @@ static p_forward_list_t entities;
 
 void entity_init()
 {
+    // Map bank 17 into ZX Spectrum 8k MMU slot 1
+    ZXN_WRITE_REG(0x51, 17);    // Map 8k bank 16 into 8k slot 0
+
     p_forward_list_init(&entities);      // init entities p_forward_list
+
+    entity_base_ptr = (entity_t *)0x2000;    // entities are stored starting at address 0x2000
+
+     for(uint8_t n = 0; n < max_entity_records; n++)
+    {
+        entity_base_ptr[n].record = 0;
+    }
 }
 
 
 entity_t *entity_create()
 {
-    entity_t *entity_ptr = (entity_t *) malloc(sizeof(entity_t));
-    //TODO check for NULL
-
-    p_forward_list_push_front(&entities, entity_ptr);
-    return entity_ptr;
+    //entity_t *entity_ptr = (entity_t *) malloc(sizeof(entity_t));
+    
+    // Find a free entity record 
+    for(uint8_t n = 0; n < max_entity_records; n++)
+    {
+        if (entity_base_ptr[n].record == 0 )
+        {
+            entity_base_ptr[n].record = n + 1; // mark record as in use
+            entity_t *entity_ptr = &entity_base_ptr[n];
+            p_forward_list_push_front(&entities, entity_ptr);
+            return entity_ptr;
+        }
+    }
+    messages_print("FAILED TO CREATE ENTITY");
+    return NULL;
 }
 
 void entity_delete(entity_t *entity_ptr)
@@ -61,7 +87,7 @@ void entity_delete(entity_t *entity_ptr)
 
     p_forward_list_remove(&entities, entity_ptr);
 
-    free(entity_ptr);
+    entity_ptr->record = 0;      // mark record as free
 }
 
 entity_t *entity_front()
