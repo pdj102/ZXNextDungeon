@@ -1,8 +1,8 @@
 /***************************************************
     Dungeon - ZX Spectrum Next 
-    Paul Johnson
+    @author Paul Johnson
 
-    <Module description>
+    @brief <Module description>
 
  ***************************************************/
 #include "blank.h"

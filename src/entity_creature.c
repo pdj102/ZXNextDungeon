@@ -1,6 +1,6 @@
 /***************************************************
     Dungeon - ZX Spectrum Next 
-    Paul Johnson
+    @author Paul Johnson
 
     Creature entity
 
@@ -18,8 +18,10 @@
 #include "dice.h"
 #include "text.h"
 #include "messages.h"
+#include "memory_map.h"
 
-//#define printAt(col, row)    printf("\x16%c%c", col, row) 
+#define DEBUG 
+
 
 /***************************************************
  * private types
@@ -32,17 +34,68 @@
 /***************************************************
  * private variables
  ***************************************************/
+// Pointer to base memory address for entities
+static creature_t *entity_creature_base_ptr;
+
+// Ensure sizeof(entity_t) * max_entity_records fits within allocated memory!
+static uint8_t max_entity_creature_records; 
 
 /***************************************************
  * function definitions
  ***************************************************/
 
+void entity_creature_init()
+{
+    // creatures are stored in memory at CREATURE_BASE address
+    entity_creature_base_ptr = (creature_t *)CREATURE_BASE;
+
+    // set max number of entities 
+    max_entity_creature_records = CREATURE_SIZE / sizeof(creature_t);
+
+    #ifdef DEBUG
+    messages_print_s_uint8("MAX CREATURE: ",max_entity_creature_records);
+    #endif
+
+     for(uint8_t n = 0; n < max_entity_creature_records; n++)
+    {
+        entity_creature_base_ptr[n].record = 0;
+    }
+}
+
+creature_t *entity_creature_new()
+{
+   // Find a free creature record 
+    for(uint8_t n = 0; n < max_entity_creature_records; n++)
+    {
+        if (entity_creature_base_ptr[n].record == 0 )
+        {
+            entity_creature_base_ptr[n].record = n + 1; // mark record as in use
+            return &entity_creature_base_ptr[n];
+        }
+    }
+    messages_print("FAILED TO CREATE CREATURE");
+    return NULL;
+
+}
 
 creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uint8_t y)
 {
-    creature_t *c = (creature_t *) malloc(sizeof(creature_t)); 
+    // creature_t *c = (creature_t *) malloc(sizeof(creature_t)); 
+    creature_t *c; 
 
     entity_t *e = entity_create();
+    if (e == NULL) 
+    {
+        // Failed to create entity
+        return NULL;
+    }
+
+    c = entity_creature_new();
+    if (c == NULL)
+    {
+        // Failed to create creature
+        return NULL;
+    }
 
     c->entity_ptr = e;
 
@@ -296,5 +349,6 @@ uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int
 void entity_creature_delete(creature_t *creature_ptr)
 {
     entity_delete(creature_ptr->entity_ptr);
-    free(creature_ptr);
+    
+    creature_ptr->record = 0;   // mark record as free
 }  

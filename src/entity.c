@@ -1,12 +1,9 @@
 /***************************************************
-    Dungeon - ZX Spectrum Next 
-    Paul Johnson
-
-    Manage entities. An entity represents an item, effect or creature
-
-    Provides functions that can be used on any type of entity.
-    Entity type specific functions are provided in specific module e.g. entity_creature
-
+ * Dungeon - ZX Spectrum Next 
+ * @author Paul Johnson
+ * 
+ * An entity represents an item, effect or creature within the dungeon
+ * 
  ***************************************************/
 #include "entity.h"
 
@@ -19,6 +16,9 @@
 #include "dungeon_map.h"
 #include "dice.h"
 #include "messages.h"
+#include "memory_map.h"
+
+#define DEBUG  
 
 
 /***************************************************
@@ -40,7 +40,8 @@ static p_forward_list_t entities;
 // Pointer to base memory address for entities
 static entity_t *entity_base_ptr;
 
-const uint8_t max_entity_records = 40;          // Ensure sizeof(entity_t) * max_entity_records fits within allocated memory!
+// Ensure sizeof(entity_t) * max_entity_records fits within allocated memory!
+static uint8_t max_entity_records;          
 
 /***************************************************
  * function definitions
@@ -49,11 +50,20 @@ const uint8_t max_entity_records = 40;          // Ensure sizeof(entity_t) * max
 void entity_init()
 {
     // Map bank 17 into ZX Spectrum 8k MMU slot 1
-    ZXN_WRITE_REG(0x51, 17);    // Map 8k bank 16 into 8k slot 0
+    ZXN_WRITE_REG(0x51, ENTITY_MEMORY_BANK);    
 
-    p_forward_list_init(&entities);      // init entities p_forward_list
+    // init entities p_forward_list 
+    p_forward_list_init(&entities);      
 
-    entity_base_ptr = (entity_t *)0x2000;    // entities are stored starting at address 0x2000
+    // entities are stored in memory at ENTITY_BASE address
+    entity_base_ptr = (entity_t *)ENTITY_BASE;
+
+    // set max number of entities 
+    max_entity_records = ENTITY_SIZE / sizeof(entity_t);
+
+    #ifdef DEBUG
+    messages_print_s_uint8("MAX ENTITY: ",max_entity_records);
+    #endif
 
      for(uint8_t n = 0; n < max_entity_records; n++)
     {

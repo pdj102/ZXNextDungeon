@@ -37,8 +37,9 @@ typedef enum {NONE, STRIKE, BITE, ARROW} attack_t;
 
 typedef struct {
 
-    // pointer back to entity
-    entity_t    *entity_ptr;
+    uint8_t record;         /**< 0 if record is available for use or array index + 1 if in use. */
+
+    entity_t    *entity_ptr;    /**< pointer back to entity */
 
     // Stat block
     char        name[10];
@@ -83,6 +84,13 @@ typedef struct {
 /***************************************************
  * public function prototypes
  ***************************************************/
+
+/**
+ * @brief Init creatures
+ *
+ * @return void
+ */
+void entity_creature_init();
 
 /**
  * Creates and returns a creature of type creature_type_t

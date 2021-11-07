@@ -9,6 +9,8 @@
 #ifndef MESSAGES_H 
     #define MESSAGES_H 
 
+#include <inttypes.h>
+
 /***************************************************
  * public types
  ***************************************************/
@@ -43,5 +45,6 @@ void messages_print(char message[]);
  */
 void messages_display();
 
+void messages_print_s_uint8(char message[], uint8_t num);
 
 #endif

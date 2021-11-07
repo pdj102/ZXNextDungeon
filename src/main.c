@@ -59,6 +59,7 @@ void init_game()
     dungeon_map_init();
 
     entity_init();
+    entity_creature_init();
     
     tilemap_init();
 

@@ -1,9 +1,15 @@
 /***************************************************
-    Dungeon - ZX Spectrum Next 
-    Paul Johnson
-
-    Manage entities. An entity represents an item, effect or creature 
-
+ * Dungeon - ZX Spectrum Next 
+ * @author Paul Johnson
+ * 
+ * @brief represents an item, effect or creature within the dungeon
+ * 
+ * The Entity type contains the common attributes of items, effects or creates within the dungeon e.g. x and y position, tile
+ * 
+ * Memory management 
+ * Entites are stored within a fixed number of records within a dedicated 1k memory block at 0x2000
+ * 
+ * 
  ***************************************************/
 
 #ifndef ENTITY_H 
@@ -28,20 +34,20 @@ typedef enum {item, effect, creature} entity_type_t;
  * 
  */
 typedef struct entity {
-    void *next;         // p_forward_list next
-    uint8_t record;     // record number (first record is 1). 0 if record is available
+    void *next;             /**< single linked list of entities. */
+    uint8_t record;         /**< 0 if record is available for use or array index + 1 if in use. */
 
-    uint8_t x;
-    uint8_t y; 
-    uint8_t tile;
-    uint8_t tile_attr;
+    uint8_t x;              /**< dungeon x cord */
+    uint8_t y;              /**< dungeon y cord */
+    uint8_t tile;           /**< tile number */
+    uint8_t tile_attr;      /**< tile attribute */
 
-    uint8_t current_energy;
+    uint8_t current_energy; /**< current energy */
 
-    uint8_t blocking; 
+    uint8_t blocking;       /**< 1 if blocks square or 0 if non blocking */
 
-    entity_type_t type;
-    void *ptr;  // pointer to creature, item or effect 
+    entity_type_t type;     /**< entity type e.g. ITEM, EFFECT, CREATURE */
+    void *ptr;              /**< pointer to creature, item or effect struct */
 } entity_t;
 
 /***************************************************

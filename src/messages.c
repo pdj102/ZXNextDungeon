@@ -9,7 +9,8 @@
 
 #include <stdio.h>
 #include <inttypes.h>
-#include <string.h>
+#include <string.h>     // strcpy()
+#include <stdlib.h>     // iota()
 
 #include "text.h"
 
@@ -83,4 +84,14 @@ void messages_print(char message[])
     if (head == MAX_MESSAGES) head = 0;
     
     messages_display();
+}
+
+void messages_print_s_uint8(char message[], uint8_t num)
+{
+    char s[4];
+    itoa(num, s, 10);
+
+    messages_print(message);
+    messages_print(s);
+
 }
