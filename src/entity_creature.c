@@ -80,7 +80,6 @@ creature_t *entity_creature_new()
 
 creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uint8_t y)
 {
-    // creature_t *c = (creature_t *) malloc(sizeof(creature_t)); 
     creature_t *c; 
 
     entity_t *e = entity_create();
@@ -142,6 +141,9 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
         case SNAKE :
             strcpy(c->name, "SNAKE");
             strcpy(c->creature, "SNAKE");
+
+            c->size = SMALL; 
+
             c->lvl      = 1;
             c->exp      = 0;
             c->nxt      = 100;

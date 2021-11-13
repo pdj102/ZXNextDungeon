@@ -25,7 +25,7 @@
  * @brief Enumeration of entity types
  * 
  */
-typedef enum {item, effect, creature} entity_type_t;
+typedef enum entity_type {item, effect, creature} entity_type_t;
 
 /**
  * @brief The entity contains the common attributes of creatures, effects and items
@@ -55,28 +55,30 @@ typedef struct entity {
  ***************************************************/
 
 /**
- * Initialises entity list. Must be called before using the entity_ functions
+ * @brief Initialises entity list. Must be called before using the entity_ functions
  * 
-  * @return void
+ * @return void
  */
 void entity_init();
 
 /**
- * Create an entity
+ * @brief Create an entity
+ * 
+ * There are a fixed number of entity slots
  * 
  * @return pointer to new entity or NULL on error
  */
 entity_t *entity_create();
 
 /**
- * Returns first entity in list 
+ * @brief Returns first entity in list 
  * 
   * @return entity_t first entity in list or NULL if list is empty
  */
 entity_t *entity_front();
 
 /**
- * Move entity. Checks if square is not blocked before moving
+ * @brief Move entity. Checks if square is not blocked before moving
  * 
  * @param entity_ptr entity pointer
  * @param dx move direction e.g. +1 or -1
@@ -86,7 +88,7 @@ entity_t *entity_front();
 uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy);
 
 /**
- * Reduce entity energy level by effort
+ * @brief Reduce entity energy level by effort
  * 
  * @param entity_ptr entity pointer
  * @param effort    amount to reduce energy level by
@@ -95,14 +97,14 @@ uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy);
 void entity_reduce_energy(entity_t *entity_ptr, uint8_t effort);
 
 /**
- * Draws all entities onto the tilemap
+ * @brief Draws all entities onto the tilemap
  * 
-  * @return void
+ * @return void
  */
 void entity_draw_all();
 
 /**
- * Is there a blocking entity at the dungeon position?
+ * @brief Is there a blocking entity at the dungeon position?
  * 
  * @param   x   dungeon x cord
  * @param   y   dungeon y cord
@@ -111,8 +113,10 @@ void entity_draw_all();
 uint8_t entity_is_blocking_at(uint8_t x, uint8_t y);
 
 /**
- * Returns first entity at dungeon position.
+ * @brief Returns first entity at dungeon position.
+ * 
  * Call entity_next_at to find subsequent entities at the position
+ * 
  * @param x dungeon x cord
  * @param y dungeon y cord
  * @return entity at dungeon position or NULL
@@ -120,8 +124,10 @@ uint8_t entity_is_blocking_at(uint8_t x, uint8_t y);
 entity_t *entity_first_at(uint8_t x, uint8_t y);
 
 /**
- * Returns next entity at dungeon position.
+ * @brief Returns next entity at dungeon position.
+ * 
  * Can be called repeatably to find all entities at dungeon location
+ * 
  * @param x dungeon x cord
  * @param y dungeon y cord
  * @return next entity at position or NULL
@@ -129,7 +135,8 @@ entity_t *entity_first_at(uint8_t x, uint8_t y);
 entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr);
 
 /**
- * Returns next entity in list
+ * @brief Returns next entity in list
+ * 
  * @param entity_ptr entity 
  * 
  * @return next entity
@@ -137,7 +144,8 @@ entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr);
 entity_t *entity_next(entity_t *entity_ptr);
 
 /**
- * Delete entity from list and frees up memory
+ * @brief Delete entity and free entity slot for use
+ * 
  * @param entity_ptr entity 
  * 
  * @return void

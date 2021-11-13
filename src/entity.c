@@ -18,7 +18,7 @@
 #include "messages.h"
 #include "memory_map.h"
 
-#define DEBUG  
+#define DEBUG   
 
 
 /***************************************************

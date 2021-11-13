@@ -1,8 +1,8 @@
 /***************************************************
     Dungeon - ZX Spectrum Next 
-    Paul Johnson
+    @author Paul Johnson
 
-    Creature entity
+    @brief Creature entity
 
  ***************************************************/
 
@@ -18,9 +18,9 @@
  * public types
  ***************************************************/
 
-typedef enum {LARGE, MEDIUM, SMALL} creature_size_t;
+typedef enum creature_size {LARGE, MEDIUM, SMALL} creature_size_t;
 
-typedef enum creature_types
+typedef enum creature_type
 {
     ANT, DOG, SNAKE,            // 0
     GIANT_RAT, GIANT_SPIDER,    // 1
@@ -31,9 +31,9 @@ typedef enum creature_types
 }
  creature_type_t;
 
-typedef enum {ASLEEP, RESTING, WANDERING, ATTACKING} creature_state_t;
+typedef enum creature_state {ASLEEP, RESTING, WANDERING, ATTACKING} creature_state_t;
 
-typedef enum {NONE, STRIKE, BITE, ARROW} attack_t;
+typedef enum creature_attack {NONE, STRIKE, BITE, ARROW} attack_t;
 
 typedef struct {
 
@@ -93,7 +93,9 @@ typedef struct {
 void entity_creature_init();
 
 /**
- * Creates and returns a creature of type creature_type_t
+ * @brief Creates and returns a creature of type creature_type
+ * 
+ * There are a fixed number of creature slots
  * 
  * @param creature_type  creature type
  * @param x dungeon x position
@@ -103,7 +105,7 @@ void entity_creature_init();
 creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uint8_t y);
 
 /**
- * Prints creature stat block to screen
+ * @brief Prints creature stat block to screen
  * 
  * @param creature_ptr  pointer to creature
  * @return void
@@ -111,7 +113,7 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 void entity_creature_draw_stat_block(creature_t *creature_ptr);
 
 /**
- * Creature takes a turn
+ * @brief Creature takes a turn
  * 
  * @param *creature_ptr  pointer to creature
  * @return void
@@ -119,7 +121,8 @@ void entity_creature_draw_stat_block(creature_t *creature_ptr);
 void entity_creature_turn(creature_t *creature_ptr);
 
 /**
- * Attempt to move creature in direction or if way is blocked by a creature strike it
+ * @brief Attempt to move creature in direction or if way is blocked try strike action
+ * 
  * @param creature_ptr creature to move
  * @param dx move delta x 
  * @param dy move delta y
@@ -128,25 +131,33 @@ void entity_creature_turn(creature_t *creature_ptr);
 uint8_t entity_creature_move_or_strike(creature_t *creature_ptr, int8_t dx, int8_t dy);
 
 /**
- * Attmept to move creature in direction
+ * @brief Attempt to move creature in direction
+ * 
  * @param creature_ptr creature to move
  * @param dx move delta x 
  * @param dy move delta y
- * @return 1 moved or 0 if unable to move
+ * 
+ * @return 1 if successfully moved or 0 if unable to move
  */
 uint8_t entity_creature_move(creature_t *creature_ptr, int8_t dx, int8_t dy);
 
 /**
- * Attempt to strike in direction
- * @param creature_ptr creature to move
+ * @brief Attempt to strike in direction
+ * 
+ * @param creature_ptr creature that performs the strike
  * @param dx strike in direction delta x 
  * @param dy strike in direction  delta y
+ * 
  * @return 1 if attempted a strike or 0 if nothing to strike at
  */
 uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int8_t dy);
 
 /**
- * Delete creature and free all memory
+ * @brief Delete creature and free creature slot for use
+ * 
+ * Also frees the associated entity slot
+ * 
+ * @return void
  */ 
 void entity_creature_delete(creature_t *creature_ptr);
 
