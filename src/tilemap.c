@@ -12,7 +12,7 @@
 #include "palette.h"
 #include "tile_defns.h"
 
-#define TILEMAP_BASE 0x4000
+#include "memory_map.h"
 
 /***************************************************
  * private types

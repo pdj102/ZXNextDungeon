@@ -45,10 +45,18 @@ PROGRAM=dungeon.nex
 # program output name
 ASSEMBLEY=dungeon.asm
 
+# PAGE_18
+# target for dungeon_map_generator.o - call C compiler
+# example to compile ./src/test.c execute "make ./obj/test.o"
+$(OBJDIR)/dungeon_map_generator.o: $(SRCDIR)/dungeon_map_generator.c $(SRCDIR)/dungeon_map_generator.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_18 --constsegPAGE_18 -o $@ $<
+
+
 # target for *.o - call C compiler
 # example to compile ./src/test.c execute "make ./obj/test.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) -o $@ $<
+
 
 # target for *.o - call assembler
 # example to compile ./src/test2.asm execute "make ./obj/test2.o"
@@ -62,12 +70,6 @@ all : $(PROGRAM)
 $(PROGRAM) : $(OFILES)
 	 $(CC) $(LDFLAGS) -startup=$(CRT) $(OFILES) -o $(BINDIR)/$(PROGRAM) -create-app -subtype=nex
 
-# target for assembley : dependency all 
-# assembley : $(ASSEMBLEY)
-
-# target for $assembley : dependency all object files
-# $(ASSEMBLEY) : $(OFILES)
-#	 $(CC) $(LDFLAGS) -startup=$(CRT) $(OFILES) -a $(BINDIR)/$(ASSEMBLEY)
 
 .PHONY: clean
 clean:
