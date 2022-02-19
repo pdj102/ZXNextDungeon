@@ -2,6 +2,15 @@
 
 Note: this project is in development
 
+## Development environment
+
+- Visual Studio IDE
+- github source code repository 
+- z88dk compiler
+- CSpect spectrum next emulator
+- https://zx.remysharp.com/sprites/#sprite-editor
+
+
 ## To compile
 
 Compile using z88dk C compiler and GNU make
@@ -13,7 +22,25 @@ Set the z88dk compiler paths for the library and config files
 
 Run 'make all'
 
-## Memory map
+The executable is a .nex file called dungeon.nex
+
+## To run
+
+Run dungeon.nex using the CSpect emulator
+
+- Start CSpect
+- F2 to select file to run
+- Select dungeon.nex
+
+## sprites
+
+To lead the sprites in the  editor 
+- Toggle 8x8 on
+- Select 4bit
+- upload .spr file
+- upload palette file
+
+## Memory map notes
 The game uses Spectrum Next memory banking to access more then 64Kb
 
 MMU slots 6 & 7 are used for banked game code and data. 
