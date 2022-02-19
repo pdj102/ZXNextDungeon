@@ -23,7 +23,8 @@
 			"stdint.h": "c",
 			"inttypes.h": "c",
 			"dungeon_map.h": "c",
-			"entity.h": "c"
+			"entity.h": "c",
+			"dungeon_map_generator.h": "c"
 		}
 	}
 }

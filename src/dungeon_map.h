@@ -13,19 +13,17 @@
 #define DUNGEON_MAP_HEIGHT  40
 
 
-#define DUNGEON_MAP_TILE_FLOOR      0
-#define DUNGEON_MAP_TILE_WALL       1
-#define DUNGEON_MAP_TILE_CEILING    2
-
-
 /***************************************************
  * types
  ***************************************************/
+
+typedef enum tile_type {FLOOR, WALL, CEILING} tile_type_t;
+
 typedef struct
 {
-    uint8_t tile;
-    uint8_t tile_attr;
-    uint8_t t;
+    uint8_t tile_defn_graphic;
+    uint8_t tile_defn_attr;
+    tile_type_t tile;
 } dungeon_tile_t;
 
 
@@ -69,11 +67,11 @@ void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y);
  * 
  * @param dungeon_x x position
  * @param dungeon_y y position
- * @param tile tile definition
- * @param tile_attr tile attributes
+ * @param tile_defn_graphic tile definition
+ * @param tile_defn_attr tile attributes
  * @return void
  */
-void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile, uint8_t tile_attr);
+void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile_defn_graphic, uint8_t tile_defn_attr);
 
 /**
  * Move dungeon window by dx dy
