@@ -170,17 +170,10 @@ void dungeon_map_generate()
     
     uint8_t x, y;
 
-    /*
-    uint8_t x2, y2, w2, h2;
-    uint8_t max_rooms = 5;
-    uint8_t max_tries = 30;
-    uint8_t n = 0;
-    uint8_t room = 0;
-    */
-
     // clear the dungeon map to all ceiling
     fill(0, 0, DUNGEON_MAP_WIDTH, DUNGEON_MAP_HEIGHT, CEILING);
 
+    // Create a 5 x 5 grid of rooms of size 8 x 8 tiles
     for (x = 0; x < 40; x+=8)
     {
         for (y = 0; y < 40; y+=8)
@@ -188,7 +181,21 @@ void dungeon_map_generate()
             create_room(x+1, y+1, 6, 6);
         }
     }
-    create_room(7, 4, 2, 1);
+
+    // add horizontal connecting corridors
+    create_room(2, 4, 36, 1);
+    create_room(2, 8+4, 36, 1);
+    create_room(2, 16+4, 36, 1);
+    create_room(2, 24+4, 36, 1);
+    create_room(2, 32+4, 36, 1);
+
+    // add vertical connecting corridors
+    create_room(4, 2, 1, 36);
+    create_room(8+4, 2, 1, 36);
+    create_room(16+4, 2, 1, 36);
+    create_room(24+4, 2, 1, 36);
+    create_room(32+4, 2, 1, 36);
+
 /*
     while(n < max_tries || room < max_rooms)
     {
