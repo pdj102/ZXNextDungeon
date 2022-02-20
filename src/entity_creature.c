@@ -102,7 +102,8 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 
     e->type      = creature;
     e->ptr = (void*)c;
-    e->current_energy = 0;   
+    e->current_energy = 0;
+    e->location = dungeon;    
     e->x = x;
     e->y = y;
     e->blocking = 1;    

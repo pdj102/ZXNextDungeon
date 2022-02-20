@@ -141,7 +141,11 @@ void entity_draw_all()
     // print entities
     for (entity_ptr = entity_front(); entity_ptr; entity_ptr = entity_next(entity_ptr))
     {
-        dungeon_map_draw_entity(entity_ptr->x, entity_ptr->y, entity_ptr->tile, entity_ptr->tile_attr);
+        if (entity_ptr->location == dungeon) 
+        {
+            dungeon_map_draw_entity(entity_ptr->x, entity_ptr->y, entity_ptr->tile, entity_ptr->tile_attr);
+        }
+        
     }
 }
 

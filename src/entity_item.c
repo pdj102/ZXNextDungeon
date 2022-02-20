@@ -98,6 +98,7 @@ item_t *entity_item_create(item_type_t item_type, uint8_t x, uint8_t y)
     e->type      = item;
     e->ptr = (void*)i;
     e->current_energy = 0;   
+    e->location = dungeon;
     e->x = x;
     e->y = y;
     e->blocking = 0;      

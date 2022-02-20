@@ -28,6 +28,12 @@
 typedef enum entity_type {item, effect, creature} entity_type_t;
 
 /**
+ * @brief Enumeration of entity location types
+ * 
+ */
+typedef enum entity_location_type {dungeon, inventory} entity_location_t;
+
+/**
  * @brief The entity contains the common attributes of creatures, effects and items
  * 
  * @struct entity 
@@ -37,6 +43,7 @@ typedef struct entity {
     void *next;             /**< single linked list of entities. */
     uint8_t record;         /**< 0 if record is available for use or array index + 1 if in use. */
 
+    entity_location_t location;       /**< location of the entity e.g. dungeon, player inventory etc */
     uint8_t x;              /**< dungeon x cord */
     uint8_t y;              /**< dungeon y cord */
     uint8_t tile;           /**< tile number */
@@ -97,7 +104,7 @@ uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy);
 void entity_reduce_energy(entity_t *entity_ptr, uint8_t effort);
 
 /**
- * @brief Draws all entities onto the tilemap
+ * @brief Draws all entities whose location is dungeon onto the tilemap
  * 
  * @return void
  */

@@ -69,7 +69,7 @@ void entity_player_turn()
         case '4':
             dungeon_map_scroll(-1, 0);
             dungeon_map_draw();
-            entity_draw_all();            
+            entity_draw_all();    
             break;
         case '6':
             dungeon_map_scroll(1, 0);
