@@ -11,15 +11,21 @@
 
 #include <inttypes.h>
 
+#include "entity.h"
+
 /***************************************************
  * public types
  ***************************************************/
-typedef enum {ring } item_type_t;
+typedef enum { RING } item_type_t;
 
 typedef struct {
-    uint8_t tile;
-    uint8_t tile_attr;
-    uint8_t blocking; 
+    uint8_t record;             /**< if 0  record is available for use or array index + 1 if in use. */
+
+    entity_t    *entity_ptr;    /**< pointer back to entity */
+    uint8_t     dummy;
+    uint8_t     dummy2;
+    uint8_t     dummy3;
+
 } item_t;
 
 /***************************************************
@@ -31,12 +37,19 @@ typedef struct {
  ***************************************************/
 
 /**
+ * @brief Init items
+ *
+ * @return void
+ */
+void entity_item_init();
+
+/**
  * Returns an item of type i
  * 
  * @param i  item type
  * @return pointer to item
  */
-item_t *entity_item_create(item_type_t i);
+item_t *entity_item_create(item_type_t item_type, uint8_t x, uint8_t y);
 
 /**
  * Prints item stat block to screen
@@ -51,7 +64,9 @@ void entity_item_draw_stat_block(item_t *item_ptr);
  */ 
 
 /**
- * Delete item and free all memory
+ * @brief Delete item and free item slot for use
+ * 
+ * Also frees the associated entity slot
  */ 
 void entity_item_delete(item_t *item_ptr);
 

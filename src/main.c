@@ -17,6 +17,7 @@
 #include "tilemap.h"
 #include "tile_defns.h"
 #include "entity_creature.h"
+#include "entity_item.h"
 #include "messages.h"
 #include "dice.h"
 #include "text.h"
@@ -61,6 +62,7 @@ void init_game()
 
     entity_init();
     entity_creature_init();
+    entity_item_init();
     
     tilemap_init();
 
@@ -68,7 +70,7 @@ void init_game()
 
     entity_creature_create(SNAKE, 11, 11);
     entity_creature_create(SNAKE, 2, 2);
-    //entity_create_item(13, 13, ring);
+    entity_item_create(RING, 13, 13);
 
     entity_player_create(5, 5);
  

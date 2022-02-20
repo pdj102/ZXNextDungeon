@@ -13,6 +13,7 @@
 #include <stddef.h>             // NULL
 
 #include "entity_creature.h"
+#include "entity_creature_move.h"
 #include "dungeon_map.h"
 #include "messages.h"
 

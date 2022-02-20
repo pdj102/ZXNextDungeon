@@ -16,7 +16,7 @@
 
 // #define printAt(col, row)    printf("\x16%c%c", col, row)
 
-#define MAX_MESSAGES 5
+#define MAX_MESSAGES 8
 #define MESSAGE_LENGTH 40
 
 // TODO change to using the tile map and longer messages

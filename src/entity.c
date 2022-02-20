@@ -113,6 +113,7 @@ entity_t *entity_next(entity_t *entity_ptr)
 
 uint8_t entity_move(entity_t *entity_ptr, int8_t dx, int8_t dy)
 {
+    // TODO get rid of block check - some entities should not be blocked eg. spell effect
     if (!dungeon_map_is_blocked(entity_ptr->x+dx, entity_ptr->y+dy)) {
         // redraw dungeon tile
         dungeon_map_draw_tile(entity_ptr->x, entity_ptr->y);
