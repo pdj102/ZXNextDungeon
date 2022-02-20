@@ -31,13 +31,19 @@ typedef enum creature_type
 }
  creature_type_t;
 
-typedef enum creature_state {ASLEEP, RESTING, WANDERING, ATTACKING} creature_state_t;
+typedef enum creature_state_e {ASLEEP, RESTING, WANDERING, ATTACKING} creature_state_t;
 
-typedef enum creature_attack {NONE, STRIKE, BITE, ARROW} attack_t;
+typedef enum damage_kind_e {NONE, ACID, COLD, FIRE, LIGHTNING, POISON, SLASHING} damage_kind_t;
+
+typedef struct {
+    int8_t          proficiency_mod;
+    damage_kind_t   damage_kind;
+    dice_t          dmg_die;
+} attack_t;
 
 typedef struct {
 
-    uint8_t record;         /**< 0 if record is available for use or array index + 1 if in use. */
+    uint8_t record;         /**< if 0  record is available for use or array index + 1 if in use. */
 
     entity_t    *entity_ptr;    /**< pointer back to entity */
 
@@ -52,19 +58,19 @@ typedef struct {
     uint16_t    exp;
     uint16_t    nxt;
 
-    uint8_t     str;
-    uint8_t     inte;
-    uint8_t     wis;
-    uint8_t     dex;
-    uint8_t     con;
+    uint8_t     strength;
+    uint8_t     dexerity;    
+    uint8_t     constitution;    
+    uint8_t     intelligence;
+    uint8_t     wisdom;
+    uint8_t     charisma;    
+
+
 
     uint8_t     ac;
     
     uint8_t     max_hp;
     int8_t      curr_hp;
-
-    uint8_t     dmg;
-    dice_t      *dmg_die_p;
 
     uint8_t     speed;
     creature_state_t state;    
@@ -121,36 +127,23 @@ void entity_creature_draw_stat_block(creature_t *creature_ptr);
 void entity_creature_turn(creature_t *creature_ptr);
 
 /**
- * @brief Attempt to move creature in direction or if way is blocked try strike action
+ * @brief Returns the ability modifier for a given ability score
  * 
- * @param creature_ptr creature to move
- * @param dx move delta x 
- * @param dy move delta y
- * @return 1 if success 0 if unable to move or strike
+ * @param ability score
+ * 
+ * @return modifier
  */
-uint8_t entity_creature_move_or_strike(creature_t *creature_ptr, int8_t dx, int8_t dy);
+int8_t ability_modifier(uint8_t ability);
 
 /**
- * @brief Attempt to move creature in direction
+ * @brief Returns the first creature at dungeon position x, y or NULL is no creature
  * 
- * @param creature_ptr creature to move
- * @param dx move delta x 
- * @param dy move delta y
+ * @param x position x
+ * @param y position y
  * 
- * @return 1 if successfully moved or 0 if unable to move
+ * @return creature_t 
  */
-uint8_t entity_creature_move(creature_t *creature_ptr, int8_t dx, int8_t dy);
-
-/**
- * @brief Attempt to strike in direction
- * 
- * @param creature_ptr creature that performs the strike
- * @param dx strike in direction delta x 
- * @param dy strike in direction  delta y
- * 
- * @return 1 if attempted a strike or 0 if nothing to strike at
- */
-uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int8_t dy);
+creature_t *entity_creature_at(uint8_t x, uint8_t y);
 
 /**
  * @brief Delete creature and free creature slot for use

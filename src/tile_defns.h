@@ -50,7 +50,7 @@
 #define TILE_7_3        31
 
 #define TILE_8_0        32  // enemy palette offset 2
-#define TILE_8_1        33
+#define TILE_8_1        33  // snake palette offset 2
 #define TILE_8_2        34
 #define TILE_8_3        35
 
@@ -60,7 +60,7 @@
 #define TILE_9_3        39
 
 #define TILE_PLAYER     28
-#define TILE_SNAKE      32
+#define TILE_SNAKE      33
 
 #define TILE_TRANS      0      
 

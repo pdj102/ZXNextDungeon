@@ -54,7 +54,6 @@ void print_dungeon()
 
 void init_game()
 {
-    dice_init();
 
     // Map bank 18 into ZX Spectrum 8k MMU slot 6
     ZXN_WRITE_REG(0x56, 18);

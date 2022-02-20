@@ -7,6 +7,8 @@
  ***************************************************/
 #include "entity_creature.h"
 
+#include "entity_creature_move.h"
+
 #include <inttypes.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -117,18 +119,23 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
             c->exp      = 0;
             c->nxt      = 100;
 
-            c->str      = 12;
-            c->inte      = 12;
-            c->wis      = 12;
-            c->dex      = 12;
-            c->con      = 12;
+            c->strength      = 12;
+            c->dexerity      = 12;            
+            c->constitution      = 12;
+            c->intelligence      = 12;
+            c->wisdom      = 12;
+            c->charisma      = 12;
 
             c->ac       = 10;            
 
             c->max_hp   = 8;
             c->curr_hp  = 8;
 
-            c->dmg_die_p   = dice_1d6_p;
+            c->melee_attack_1.damage_kind = SLASHING;
+            c->melee_attack_1.proficiency_mod = 2;
+            c->melee_attack_1.dmg_die.n = 1;
+            c->melee_attack_1.dmg_die.d = 6;
+            c->melee_attack_1.dmg_die.modifier = 0;
 
             c->speed    = 5;
 
@@ -148,18 +155,23 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
             c->exp      = 0;
             c->nxt      = 100;
 
-            c->str      = 5;
-            c->inte     = 5;
-            c->wis      = 5;
-            c->dex      = 5;
-            c->con      = 5;
+            c->strength         = 10;
+            c->dexerity         = 5;            
+            c->constitution     = 12;
+            c->intelligence     = 1;            
+            c->wisdom           = 10;
+            c->charisma         = 3;
 
             c->ac       = 4;            
 
             c->max_hp   = 4;
             c->curr_hp  = 4;
 
-            c->dmg_die_p    = dice_1d2_p;
+            c->melee_attack_1.damage_kind = SLASHING;
+            c->melee_attack_1.proficiency_mod = 2;            
+            c->melee_attack_1.dmg_die.n = 1;
+            c->melee_attack_1.dmg_die.d = 4;
+            c->melee_attack_1.dmg_die.modifier = 0;
 
             c->speed    = 2;
 
@@ -187,6 +199,7 @@ void entity_creature_draw_stat_block(creature_t *creature_ptr)
     text_print(24, 7, "WIS:");
     text_print(24, 8, "DEX:");
     text_print(24, 9, "CON:");
+    text_print(24, 10, "CHA:");    
 
     text_print(24, 11, "AC:");
     text_print(24, 12, "HP:");
@@ -199,16 +212,18 @@ void entity_creature_draw_stat_block(creature_t *creature_ptr)
     itoa(creature_ptr->exp, s, 10);
     text_print(30, 3, s);
 
-    itoa(creature_ptr->str, s, 10);
+    itoa(creature_ptr->strength, s, 10);
     text_print(30, 5, s);
-    itoa(creature_ptr->inte, s, 10);
+    itoa(creature_ptr->intelligence, s, 10);
     text_print(30, 6, s);
-    itoa(creature_ptr->wis, s, 10);
+    itoa(creature_ptr->wisdom, s, 10);
     text_print(30, 7, s);
-    itoa(creature_ptr->dex, s, 10);
+    itoa(creature_ptr->dexerity, s, 10);
     text_print(30, 8, s);
-    itoa(creature_ptr->con, s, 10);
+    itoa(creature_ptr->constitution, s, 10);
     text_print(30, 9, s);
+    itoa(creature_ptr->charisma, s, 10);
+    text_print(30, 10, s);    
     
     itoa(creature_ptr->ac, s, 10);
     text_print(30, 11, s);
@@ -241,31 +256,56 @@ void entity_creature_turn(creature_t *creature_ptr)
     }
 }
 
-uint8_t entity_creature_move_or_strike(creature_t *creature_ptr, int8_t dx, int8_t dy)
+int8_t ability_modifier(uint8_t ability)
 {
-    if (entity_creature_move(creature_ptr, dx, dy))
+    switch (ability)
     {
-        // succeeded in moving 
+    case 0 :
+    case 1 :
+        return -5;
+        break;
+    case 2 :
+    case 3 :
+        return -4;
+        break;
+    case 4 :
+    case 5 :
+        return -3;
+        break;
+    case 6 :
+    case 7 :
+        return -2;
+        break;
+    case 8 :
+    case 9 :
+        return -1;
+        break;
+    case 10 :
+    case 11 :
+        return 0;
+        break;
+    case 12 :
+    case 13 :
         return 1;
+        break;
+    case 14 :
+    case 15 :
+        return 2;
+        break;
+    case 16 :
+    case 17 :
+        return 3;
+        break;
+    case 18 :
+    case 19 :
+        return 4;
+        break;
+    default:
+        return 4;
+        break;
     }
-    // try striking instead
-    return (entity_creature_strike(creature_ptr, dx, dy));
 }
 
-uint8_t entity_creature_move(creature_t *creature_ptr, int8_t dx, int8_t dy)
-{
-    uint8_t effort;
-
-    if(entity_move(creature_ptr->entity_ptr, dx, dy))
-    {
-        // decrease entity energy by 10 - speed
-        effort = (10 - creature_ptr->speed);
-        entity_reduce_energy(creature_ptr->entity_ptr, effort);
-        //messages_print("decrease energy");
-        return 1;
-    }
-    return 0;
-}
 
 creature_t *entity_creature_at(uint8_t x, uint8_t y)
 {
@@ -282,71 +322,7 @@ creature_t *entity_creature_at(uint8_t x, uint8_t y)
     return NULL;
 }
 
-uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int8_t dy)
-{
-    uint8_t attack_roll;
-    uint8_t dmg_roll;
 
-    char message[40];
-
-    creature_t *target_creature_ptr;
-  
-    target_creature_ptr = entity_creature_at( attacker_creature_ptr->entity_ptr->x+dx, attacker_creature_ptr->entity_ptr->y+dy );
-
-    if (target_creature_ptr == NULL)
-    {
-        // no creature to strike at
-        return 0;
-    }
-
-    // Attempt strike on creature
-
-    // decrease energy by speed
-    attacker_creature_ptr->entity_ptr->current_energy = (10 - attacker_creature_ptr->speed);
-
-    // attack roll
-    attack_roll = dice_roll_1d20();
-
-    // 012345678901234567890123456789
-    // AAAAAAAAAA STRIKES TTTTTTTTTT
-    sprintf(message, "%s STRIKES %s", attacker_creature_ptr->name, target_creature_ptr->name);
-    messages_print(message);
-
-    // Sucessful hit?
-    if (attack_roll > target_creature_ptr->ac)
-    {
-        // todo roll for damage
-        dmg_roll = dice_roll(attacker_creature_ptr->dmg_die_p);
-        target_creature_ptr->curr_hp -= dmg_roll;
-
-        // 012345678901234567890123456789
-        // DD points damage
-        sprintf(message, "%u POINTS DAMAGE", dmg_roll);
-        messages_print(message);
-
-        // Is target dead?
-        if (target_creature_ptr->curr_hp <= 0)
-        {
-            // 012345678901234567890123456789
-            // TTTTTTTTTT is killed!
-            sprintf(message, "%s IS KILLED!", target_creature_ptr->name);
-            messages_print(message);
-
-            entity_creature_delete(target_creature_ptr);
-        }
-        else
-        {
-            // todo entity_event_hit();
-        }
-    }
-    else
-    {
-        // Miss!
-        sprintf(message, "%s MISSES", attacker_creature_ptr->name);
-        messages_print(message);
-    }
-    return 1;
-}
 
 void entity_creature_delete(creature_t *creature_ptr)
 {
