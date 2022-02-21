@@ -12,7 +12,7 @@
 #include <inttypes.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <string.h>     // strcpy()
 
 #include "entity.h"
 #include "entity_player.h"
@@ -75,7 +75,7 @@ creature_t *entity_creature_new()
             return &entity_creature_base_ptr[n];
         }
     }
-    messages_print("FAILED TO CREATE CREATURE");
+    messages_println("FAILED TO CREATE CREATURE");
     return NULL;
 
 }

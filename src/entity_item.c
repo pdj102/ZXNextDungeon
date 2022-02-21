@@ -10,6 +10,7 @@
 #include <inttypes.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>     // strcpy()
 
 #include "tile_defns.h"
 
@@ -70,7 +71,7 @@ item_t *entity_item_new()
             return &entity_item_base_ptr[n];
         }
     }
-    messages_print("FAILED TO CREATE ITEM");
+    messages_println("FAILED TO CREATE ITEM");
     return NULL;
 
 }
@@ -106,6 +107,7 @@ item_t *entity_item_create(item_type_t item_type, uint8_t x, uint8_t y)
     switch (item_type)
     {
         case RING :
+            strcpy(i->name, "RING");
             e->tile     = TILE_POTION;
             e->tile_attr = 0b01000000; // palette offset 2
 

@@ -72,7 +72,7 @@ uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int
     // 01234567890123456789012345678901
     // AAAAAAAAAA STRIKES AT TTTTTTTTTT
     sprintf(message, "%s STRIKES AT %s", attacker_creature_ptr->name, target_creature_ptr->name);
-    messages_print(message);
+    messages_println(message);
 
     // Sucessful hit?
     if ((uint8_t) attack_roll > target_creature_ptr->ac)
@@ -91,7 +91,7 @@ uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int
         // 012345678901234567890123456789
         // DD points damage
         sprintf(message, "%u POINTS DAMAGE", dmg_roll);
-        messages_print(message);
+        messages_println(message);
 
         // Is target dead?
         if (target_creature_ptr->curr_hp <= 0)
@@ -99,7 +99,7 @@ uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int
             // 012345678901234567890123456789
             // TTTTTTTTTT is killed!
             sprintf(message, "%s IS KILLED!", target_creature_ptr->name);
-            messages_print(message);
+            messages_println(message);
 
             entity_creature_delete(target_creature_ptr);
         }
@@ -112,7 +112,7 @@ uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int
     {
         // Miss!
         sprintf(message, "MISS");
-        messages_print(message);
+        messages_println(message);
     }
     return 1;
 }

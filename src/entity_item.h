@@ -22,6 +22,7 @@ typedef struct {
     uint8_t record;             /**< if 0  record is available for use or array index + 1 if in use. */
 
     entity_t    *entity_ptr;    /**< pointer back to entity */
+    char        name[15];
     uint8_t     dummy;
     uint8_t     dummy2;
     uint8_t     dummy3;

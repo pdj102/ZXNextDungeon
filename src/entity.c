@@ -85,7 +85,7 @@ entity_t *entity_create()
             return entity_ptr;
         }
     }
-    messages_print("FAILED TO CREATE ENTITY");
+    messages_println("FAILED TO CREATE ENTITY");
     return NULL;
 }
 

@@ -41,8 +41,10 @@ uint8_t entity_creature_pickup(creature_t *creature_ptr)
 
     if (item)
     {
-        messages_print("Pick up");
         // pickup item
+        messages_print("PICKED UP ");
+        messages_println(item->name);
+
         
         item->entity_ptr->location = PLAYER;
         item->entity_ptr->x = 255;
