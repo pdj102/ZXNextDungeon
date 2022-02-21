@@ -68,6 +68,7 @@ void init_game()
 
     messages_init();
 
+    entity_creature_create(SNAKE, 19, 19);
     entity_creature_create(SNAKE, 11, 11);
     entity_creature_create(SNAKE, 2, 2);
     entity_item_create(RING, 13, 13);
