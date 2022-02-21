@@ -74,8 +74,6 @@ void entity_init()
 
 entity_t *entity_create()
 {
-    //entity_t *entity_ptr = (entity_t *) malloc(sizeof(entity_t));
-    
     // Find a free entity record 
     for(uint8_t n = 0; n < max_entity_records; n++)
     {
@@ -155,7 +153,7 @@ uint8_t entity_is_blocking_at(uint8_t x, uint8_t y)
 
     while (entity_ptr)
     {
-        if (entity_ptr->y == y && entity_ptr->x == x && entity_ptr->blocking == 1) {
+        if (entity_ptr->y == y && entity_ptr->x == x  && entity_ptr->location == dungeon && entity_ptr->blocking == 1) {
             return 1;   // found a blocking entity
         }
         entity_ptr = entity_next(entity_ptr);
@@ -170,7 +168,7 @@ entity_t *entity_first_at(uint8_t x, uint8_t y)
 
     while (entity_ptr)
     {
-        if (entity_ptr->x == x && entity_ptr->y == y) {
+        if (entity_ptr->x == x && entity_ptr->y == y && entity_ptr->location == dungeon) {
             return entity_ptr;  // found entity at x y
         }
         entity_ptr = entity_next(entity_ptr);
@@ -182,10 +180,9 @@ entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr)
 {
     while( entity_ptr = entity_next(entity_ptr) )
     {
-        if (entity_ptr->x == x && entity_ptr->y == y) {
+        if (entity_ptr->x == x && entity_ptr->y == y && entity_ptr->location == dungeon) {
             return entity_ptr;
         }
-        entity_ptr = entity_next(entity_ptr);
     }
     return NULL;
 }

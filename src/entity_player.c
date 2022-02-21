@@ -14,6 +14,7 @@
 
 #include "entity_creature.h"
 #include "entity_creature_move.h"
+#include "entity_creature_pickup.h"
 #include "dungeon_map.h"
 #include "messages.h"
 
@@ -66,6 +67,9 @@ void entity_player_turn()
         case 'D':
             entity_creature_move_or_strike(creature_player_ptr, 1, 0);
             break;
+        case 'P':
+            entity_creature_pickup(creature_player_ptr);
+            break;            
         case '4':
             dungeon_map_scroll(-1, 0);
             dungeon_map_draw();

@@ -116,3 +116,25 @@ item_t *entity_item_create(item_type_t item_type, uint8_t x, uint8_t y)
 }
 
 
+item_t *entity_item_at(uint8_t x, uint8_t y)
+{
+    entity_t *target_entity_ptr = entity_first_at( x, y);
+
+    while(target_entity_ptr != NULL)
+    {
+        if (target_entity_ptr->type == item)
+        {
+            return (item_t *)target_entity_ptr->ptr;
+        }
+      
+        target_entity_ptr = entity_next_at( x, y, target_entity_ptr );
+    }
+    return NULL;
+}
+
+void entity_item_delete(item_t *item_ptr)
+{
+    entity_delete(item_ptr->entity_ptr);
+    
+    item_ptr->record = 0;   // mark record as free
+}
