@@ -24,19 +24,27 @@
  ***************************************************/
 
 /**
- * Init messages buffer
+ * @brief Init messages buffer
  * 
  * @return void
  */
 void messages_init();
 
 /**
- * Adds a message to the message display buffer. Also calls messages_display to update screen
+ * @brief Prints message to message area. Also calls messages_display to update screen
  * 
  * @param message  pointer to message string
  * @return void
  */
 void messages_print(char message[]);
+
+/**
+ * @brief Prints message to message area. Moves to new line. Also calls messages_display to update screen
+ * 
+ * @param message  pointer to message string
+ * @return void
+ */
+void messages_println(char message[]);
 
 /**
  * Display the messages buffer on the screen

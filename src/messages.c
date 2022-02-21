@@ -36,6 +36,7 @@
 char messages[MAX_MESSAGES][MESSAGE_LENGTH+1];
 
 uint8_t head = 0;   // points to next message slot in circular buffer
+uint8_t column = 0; // position of the next character to be printed on the line 
 
             //  1234567890123456789012345678901234567890
 char blank[] = "                                        ";
@@ -47,9 +48,9 @@ char blank[] = "                                        ";
 void messages_init()
 {
                 //  1234567890123456789012345678901234567890
-    messages_print("WELCOME TO DUNGEON");
-    messages_print("YOU ARE ON LEVEL 1");
-    messages_print("------------------");
+    messages_println("WELCOME TO DUNGEON");
+    messages_println("YOU ARE ON LEVEL 1");
+    messages_println("------------------");
 }
 
 void messages_display()
@@ -75,12 +76,30 @@ void messages_display()
         text_print(0, row, messages[pos]);
     }
 }
+
 void messages_print(char message[])
 {
-   // to do truncate message to message length
-    strcpy(messages[head], message);
+    uint8_t length = strlen(message);
+    uint8_t message_pos = 0;
 
+    while(message_pos < length)
+    {
+        messages[head][column] = message[message_pos];
+        message_pos++;
+        column++;
+        if (column == MESSAGE_LENGTH + 1)
+             break;   // TO DO move to next line and continue printing
+    }
+    messages[head][column] = '\0';  // terminate line
+}
+
+void messages_println(char message[])
+{
+    messages_print(message);
+
+    // new line
     head++;
+    column = 0;
     if (head == MAX_MESSAGES) head = 0;
     
     messages_display();
@@ -92,6 +111,6 @@ void messages_print_s_uint8(char message[], uint8_t num)
     itoa(num, s, 10);
 
     messages_print(message);
-    messages_print(s);
+    messages_println(s);
 
 }
