@@ -1,4 +1,5 @@
-SECTION BANK_5 
+; SECTION BANK_5
+SECTION PAGE_10 
 org 0x4A00
 
 PUBLIC _tile_pattern
@@ -9,8 +10,15 @@ PUBLIC _tile_pattern
 ; select sprites
 ; select 8x8
 ; bytes per line 4
-; NB a tile defintion is 4 bytes * 8 bytes (each byte = 2 pixels)
-; NB each sprite is 4 tile definitions
+; each sprite is 16 bytes * 8 bytes and contains 4 tile definitions
+; each tile definition is 16*16 pixels held as 16 bytes * 2 bytes (each byte = 2 pixels)
+
+; 64 sprites = 8,192 = 8KiB 
+
+; TO DO as the org is 0x4a00 some of the sprite defs do not fit in section page 10
+; they overflow into page 11
+; if more sprites are required the data needs to go in the next memory page
+
 ._tile_pattern
 
 
