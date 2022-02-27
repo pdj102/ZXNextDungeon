@@ -65,20 +65,26 @@
 // Memory page 4 (8KiB) - common code not banked out
 
 // By default z88dk will place code starting at 0x8000
+// NB keep main code to 16KiB minus room for stack
 
 // ------------------- MMU SLOT 5 (0xa000) -------------------
 // Memory page 5 (8KiB) - common code not banked out
 // Top of stack located at 0xbfff (set by pragma)
 
+// By default z88dk will place code starting at 0x8000
+// NB keep main code to 16KiB minus room for stack
+
 // ------------------- MMU SLOT 6 (0xc000) -------------------
 // Memory pages 18 to 21 - used for banked code and data
 
-// NB keep main code to 16KiB
+// Memory page 18 (8KiB) - dungeon map generator
+
+// Memory page 19 (8KiB) - creature ai
 
 // ------------------- MMU SLOT 7 (0xe000) -------------------
 // Memory pages 18 to 21 - used for banked code and data
 
-// Memory page 18 (8KiB) - dungeon map generator
+
 
 
 

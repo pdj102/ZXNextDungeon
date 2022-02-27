@@ -21,6 +21,7 @@
 #include "messages.h"
 #include "dice.h"
 #include "text.h"
+#include "creature_pathfind.h"
 
 //#define printAt(row, col)    printf("\x16%c%c", row, col)
 
@@ -74,6 +75,10 @@ void init_game()
     entity_item_create(RING, 13, 13);
 
     entity_player_create(5, 5);
+
+    // Map bank 19 into ZX Spectrum 8k MMU slot 6
+    ZXN_WRITE_REG(0x56, 19);
+    creature_pathfind(5, 5);  
  
 }
 

@@ -46,10 +46,16 @@ PROGRAM=dungeon.nex
 ASSEMBLEY=dungeon.asm
 
 # PAGE_18
-# target for dungeon_map_generator.o - call C compiler
-# example to compile ./src/test.c execute "make ./obj/test.o"
+# Target for dungeon map generator code and data
+# - dungeon_map_generator.o 
 $(OBJDIR)/dungeon_map_generator.o: $(SRCDIR)/dungeon_map_generator.c $(SRCDIR)/dungeon_map_generator.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_18 --constsegPAGE_18 -o $@ $<
+
+# PAGE_19
+# target for creature ai 
+# - creature_pathfind
+$(OBJDIR)/creature_pathfind.o: $(SRCDIR)/creature_pathfind.c $(SRCDIR)/creature_pathfind.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_19 --constsegPAGE_19 -o $@ $<
 
 
 # target for *.o - call C compiler

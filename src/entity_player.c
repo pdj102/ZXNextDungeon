@@ -16,6 +16,7 @@
 #include "entity_creature_move.h"
 #include "entity_creature_pickup.h"
 #include "dungeon_map.h"
+#include "creature_pathfind.h"
 #include "messages.h"
 
 /***************************************************
@@ -57,6 +58,7 @@ void entity_player_turn()
     switch(toupper(key)) {
         case 'S':
             entity_creature_move_or_strike(creature_player_ptr, 0, 1);
+            creature_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);  
             break;
         case 'W':
             entity_creature_move_or_strike(creature_player_ptr, 0, -1);
