@@ -94,7 +94,10 @@ void creature_pathfind(uint8_t x, uint8_t y)
     while(pop_frontier(&current))
     {
         neighbor = 0;
-        while (get_next_neighbor(&current, &next))  // TO DO add from
+        // TO DO add from so path can be determined
+        // TO DO add limit to depth of search 
+        // TO DO move reached flag to the dungeon array
+        while (get_next_neighbor(&current, &next))  
         {
                 // messages_print_s_uint8("X", next.x);
                 // messages_print_s_uint8("Y", next.y);
@@ -120,7 +123,7 @@ void push_frontier(coord_t *coord)
         frontier[frontier_pos].x = coord->x;
         frontier[frontier_pos].y = coord->y;
         frontier_pos++;
-        // messages_println("PUSH");
+        messages_print_s_uint8("PUSH", frontier_pos);
     }
 }
 
