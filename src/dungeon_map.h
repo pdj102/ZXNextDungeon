@@ -19,6 +19,9 @@
 
 typedef enum tile_type {FLOOR, WALL, CEILING} tile_type_t;
 
+// Each dungeon tile has
+//  tile_defn_graphic   tilemap tile number
+//  tile_defn_attr      tilemap tile attribute 
 typedef struct
 {
     uint8_t tile_defn_graphic;

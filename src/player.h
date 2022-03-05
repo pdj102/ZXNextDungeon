@@ -6,8 +6,8 @@
 
  ***************************************************/
 
-#ifndef ENTITY_PLAYER_H 
-    #define ENTITY_PLAYER_H 
+#ifndef PLAYER_H 
+    #define PLAYER_H 
 
 #include <stdint.h>             // standard names for ints with no ambiguity 
    
@@ -36,7 +36,7 @@ extern entity_t *entity_player_ptr;
  * @param y dungeon y position
  * @return void
  */
-void entity_player_create(uint8_t x, uint8_t y);
+void player_create(uint8_t x, uint8_t y);
 
 
 /**
@@ -44,6 +44,6 @@ void entity_player_create(uint8_t x, uint8_t y);
  * 
  * @return void
  */
-void entity_player_turn();
+void player_turn();
 
 #endif

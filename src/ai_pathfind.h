@@ -2,12 +2,12 @@
     Dungeon - ZX Spectrum Next 
     Paul Johnson 
 
-    Creature pathfinder
+    AI pathfinder
 
  ***************************************************/
 
-#ifndef CREATURE_PATHFIND_H 
-    #define CREATURE_PATHFIND_H 
+#ifndef AI_PATHFIND_H 
+    #define AI_PATHFIND_H 
 
 #include <inttypes.h>
 
@@ -30,6 +30,6 @@
  *
  * @return void
  */
-void creature_pathfind(uint8_t x, uint8_t y);
+void ai_pathfind(uint8_t x, uint8_t y);
 
 #endif

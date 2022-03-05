@@ -2,10 +2,10 @@
     Dungeon - ZX Spectrum Next 
     Paul Johnson
 
-   Creature pathfinder
+   AI pathfinder
 
  ***************************************************/
-#include "creature_pathfind.h"
+#include "ai_pathfind.h"
 
 #include <inttypes.h>           
 #include <stdlib.h>             // rand()
@@ -14,15 +14,20 @@
 #include "tile_defns.h"
 #include "messages.h"
 
+#include "text.h"       
+
 #include <input.h>      //  in_WaitForKey()
         
 
 #pragma output CRT_ORG_CODE = 0xC000
 
+#define FRONTIER_SIZE   100
+
 /***************************************************
  * types
  ***************************************************/
 
+typedef enum direction_e {NONE, N, NE, E, SE, S, SW, W, NW} direction_t;
 
 typedef struct
 {
@@ -33,10 +38,8 @@ typedef struct
 typedef struct
 {
     uint8_t reached;
+    uint8_t reached_from;
 } path_t;
-
-
-
 
 
 /***************************************************
@@ -45,19 +48,21 @@ typedef struct
 
 static void push_frontier(coord_t *coord);
 static uint8_t pop_frontier(coord_t *coord); 
-static void mark_reached(coord_t *coord);
+static void mark_reached(coord_t *coord, direction_t direction_from);
 static uint8_t is_reached(coord_t *coord);
-static uint8_t get_next_neighbor_coord(coord_t *current, coord_t *next);
-static uint8_t get_next_neighbor(coord_t* current, coord_t *next);
+static uint8_t get_next_neighbor_coord(coord_t *current, coord_t *next, direction_t *direction_from);
+static uint8_t get_next_neighbor(coord_t* current, coord_t *next, direction_t *direction_from);
 
 /***************************************************
  * variables
  ***************************************************/
 
 // variables are defined in creature_pathfind_data.asm
-extern coord_t frontier[100];
-extern path_t reached[10][10];
-extern uint8_t frontier_pos;
+extern coord_t frontier[FRONTIER_SIZE];
+extern path_t reached[40][40];
+extern uint8_t frontier_head;
+extern uint8_t frontier_tail;
+extern uint8_t frontier_count;
 extern uint8_t x_offset;
 extern uint8_t y_offset;
 extern uint8_t neighbor;
@@ -66,38 +71,40 @@ extern uint8_t neighbor;
  * functions
  ***************************************************/
 
-void creature_pathfind(uint8_t x, uint8_t y)
+void ai_pathfind(uint8_t x, uint8_t y)
 {
     coord_t current;
     coord_t next;
+    direction_t direction_from = NONE;
  
-    frontier_pos = 0;
+    frontier_head = 0;
+    frontier_tail = 0;
+    frontier_count = 0;
 
     next.x = x;
     next.y = y;
 
-    x_offset = x;
-    y_offset = y;
-
-    for(x = 0; x < 10; x++)
+    for(x = 0; x < 40; x++)
     {
-        for (y = 0; y < 10; y++)
+        for (y = 0; y < 40; y++)
         {
             reached[x][y].reached = 0;
+            reached[x][y].reached_from = NONE;
         }
     }
 
     push_frontier(&next);
 
-    mark_reached(&next);
+    mark_reached(&next, direction_from);
 
     while(pop_frontier(&current))
     {
         neighbor = 0;
         // TO DO add from so path can be determined
         // TO DO add limit to depth of search 
+        // TO DO frontier needs to be a FIFO not LIFO
         // TO DO move reached flag to the dungeon array
-        while (get_next_neighbor(&current, &next))  
+        while (get_next_neighbor(&current, &next, &direction_from))  
         {
                 // messages_print_s_uint8("X", next.x);
                 // messages_print_s_uint8("Y", next.y);
@@ -105,67 +112,90 @@ void creature_pathfind(uint8_t x, uint8_t y)
             if(!is_reached(&next))
             {
                 push_frontier(&next);
-                mark_reached(&next);
-                dungeon_map[next.x][next.y].tile_defn_graphic = TILE_8_0;
+                mark_reached(&next, direction_from);
+                if (direction_from == N)
+                {
+                    text_print(next.x, next.y, "N");
+                }
+                if (direction_from == S)
+                {
+                    text_print(next.x, next.y, "S");
+                }
+                if (direction_from == W)
+                {
+                    text_print(next.x, next.y, "W");
+                }
+                if (direction_from == E)
+                {
+                    text_print(next.x, next.y, "E");
+                }                
             }
         }
+        // in_wait_nokey();
+        // in_wait_key();   
     }
 
-    // in_wait_nokey();
-    // in_wait_key();
+
 }
 
 
 void push_frontier(coord_t *coord)
 {
-    if (frontier_pos < sizeof(frontier))
+    if (frontier_count == FRONTIER_SIZE)
     {
-        frontier[frontier_pos].x = coord->x;
-        frontier[frontier_pos].y = coord->y;
-        frontier_pos++;
-        messages_print_s_uint8("PUSH", frontier_pos);
+        // buffer full
+        // messages_print_s("BUFFER FULL");
+        return;
+    }
+
+    frontier[frontier_head].x = coord->x;
+    frontier[frontier_head].y = coord->y;
+    frontier_head++;
+    frontier_count++;
+    if (frontier_head == FRONTIER_SIZE)
+    {
+        frontier_head = 0;
     }
 }
 
 uint8_t pop_frontier(coord_t *coord)
 {
-    if (frontier_pos == 0) return 0;
+    if (frontier_count == 0)
+    {
+        // buffer empty
+        // messages_print_s("BUFFER EMPTY");        
+        return 0;
+    }
+    
+    coord->x = frontier[frontier_tail].x;
+    coord->y = frontier[frontier_tail].y;
+    frontier_tail++;
+    frontier_count--;    
 
-    frontier_pos--;
-    coord->x = frontier[frontier_pos].x;
-    coord->y = frontier[frontier_pos].y;
-    // messages_println("POP");
+    if (frontier_tail == FRONTIER_SIZE)
+    {
+        frontier_tail = 0;
+    }
 
     return 1;
 }
 
-void mark_reached(coord_t *coord)
+void mark_reached(coord_t *coord, direction_t direction_from)
 {
-    int8_t x;
-    int8_t y;
-
-    x = coord->x - x_offset + 5;
-    y = coord->y - y_offset + 5;
-
-    reached[x][y].reached = 1 ;
+    reached[coord->x][coord->y].reached = 1 ;
+    reached[coord->x][coord->y].reached_from = direction_from;
 }
 
 uint8_t is_reached(coord_t *coord)
 {
-    int8_t x;
-    int8_t y;
-
-    x = coord->x - x_offset + 5;
-    y = coord->y - y_offset + 5;
-
-    return ( reached[x][y].reached );
+    return ( reached[coord->x][coord->y].reached );
 }
 
-uint8_t get_next_neighbor(coord_t* current, coord_t *next)
+uint8_t get_next_neighbor(coord_t* current, coord_t *next, direction_t *direction_from)
 {
     uint8_t blocked;
     
-    while (get_next_neighbor_coord(current, next) )
+    while (get_next_neighbor_coord(current, next, direction_from) )
     // while there is another neighbour
     {
         // is it blocked?
@@ -180,7 +210,7 @@ uint8_t get_next_neighbor(coord_t* current, coord_t *next)
     return 0;
 }
 
-uint8_t get_next_neighbor_coord(coord_t *current, coord_t *next)
+uint8_t get_next_neighbor_coord(coord_t *current, coord_t *next, direction_t *direction_from)
 {
     next->x = current->x;
     next->y = current->y;
@@ -191,6 +221,7 @@ uint8_t get_next_neighbor_coord(coord_t *current, coord_t *next)
         if (next->y+1 < DUNGEON_MAP_HEIGHT)
         {
             next->y++;
+            *direction_from = N;
         }
         neighbor++;
         return 1;
@@ -200,6 +231,7 @@ uint8_t get_next_neighbor_coord(coord_t *current, coord_t *next)
         if (next->x+1 < DUNGEON_MAP_WIDTH)
         {
             next->x++;
+            *direction_from = W;            
         }
         neighbor++;
         return 1;
@@ -209,6 +241,7 @@ uint8_t get_next_neighbor_coord(coord_t *current, coord_t *next)
         if (next->y-1 >= 0)
         {
             next->y--;
+            *direction_from = S;              
         }
         neighbor++; 
         return 1;       
@@ -218,6 +251,7 @@ uint8_t get_next_neighbor_coord(coord_t *current, coord_t *next)
         if (next->x-1 >= 0)
         {
             next->x--;
+            *direction_from = E;           
         }
         neighbor++;
         return 1;

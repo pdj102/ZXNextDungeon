@@ -5,7 +5,7 @@
     <Module description>
 
  ***************************************************/
-#include "entity_player.h"
+#include "player.h"
 
 #include <stdint.h>             // standard names for ints with no ambiguity 
 #include <input.h>
@@ -16,7 +16,7 @@
 #include "entity_creature_move.h"
 #include "entity_creature_pickup.h"
 #include "dungeon_map.h"
-#include "creature_pathfind.h"
+#include "ai_pathfind.h"
 #include "messages.h"
 
 /***************************************************
@@ -42,13 +42,13 @@ entity_t *entity_player_ptr;
  ***************************************************/
 
 
-void entity_player_create(uint8_t x, uint8_t y)
+void player_create(uint8_t x, uint8_t y)
 {
     creature_player_ptr = entity_creature_create(PLAYER, x, y);
     entity_player_ptr = creature_player_ptr->entity_ptr;
 }
 
-void entity_player_turn()
+void player_turn()
 {
     unsigned char key;
 
@@ -58,16 +58,19 @@ void entity_player_turn()
     switch(toupper(key)) {
         case 'S':
             entity_creature_move_or_strike(creature_player_ptr, 0, 1);
-            creature_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);  
+            ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);  
             break;
         case 'W':
             entity_creature_move_or_strike(creature_player_ptr, 0, -1);
+            ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
             break;
         case 'A':
             entity_creature_move_or_strike(creature_player_ptr, -1, 0);
+            ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
             break;
         case 'D':
             entity_creature_move_or_strike(creature_player_ptr, 1, 0);
+            ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
             break;
         case 'P':
             entity_creature_pickup(creature_player_ptr);

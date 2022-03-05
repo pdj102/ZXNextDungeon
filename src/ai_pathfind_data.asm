@@ -2,10 +2,13 @@ SECTION PAGE_19
 org 0xC000
 
 
-PUBLIC _frontier
+PUBLIC _frontier_head
+PUBLIC _frontier_tail
+
+PUBLIC _frontier_count
 PUBLIC _reached
 
-PUBLIC _frontier_pos
+PUBLIC _frontier
 
 PUBLIC _x_offset
 
@@ -18,11 +21,17 @@ PUBLIC _neighbor
 ._frontier
 ds 100*2
 
-; Reached 10 * 10 array of 1 byte
+; Reached 40 * 40 array of 2 byte
 ._reached
-ds 10*10*1
+ds 40*40*2
 
-._frontier_pos
+._frontier_head 
+ds 1
+
+._frontier_tail
+ds 1
+
+._frontier_count
 ds 1
 
 ._x_offset
