@@ -15,7 +15,7 @@
 #include <string.h>     // strcpy()
 
 #include "entity.h"
-#include "entity_player.h"
+#include "player.h"
 #include "tile_defns.h"
 #include "dice.h"
 #include "text.h"
@@ -235,27 +235,7 @@ void entity_creature_draw_stat_block(creature_t *creature_ptr)
     text_print(30, 13, s);
 }
 
-void entity_creature_turn(creature_t *creature_ptr)
-{
-    if (creature_ptr->state == ASLEEP ) {
-        // do nothing
-    }
 
-    if (creature_ptr->state == ATTACKING ) {
-        if (creature_ptr->entity_ptr->y > entity_player_ptr->y) {
-            if (entity_creature_move_or_strike(creature_ptr, 0, -1)) return;
-        }
-        if (creature_ptr->entity_ptr->y < entity_player_ptr->y) {
-            if (entity_creature_move_or_strike(creature_ptr, 0, 1)) return;
-        }
-        if (creature_ptr->entity_ptr->x > entity_player_ptr->x) {
-            if (entity_creature_move_or_strike(creature_ptr, -1, 0)) return;
-        }
-        if (creature_ptr->entity_ptr->x < entity_player_ptr->x) {
-            if (entity_creature_move_or_strike(creature_ptr, 1, 0)) return;
-        }
-    }
-}
 
 int8_t ability_modifier(uint8_t ability)
 {

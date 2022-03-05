@@ -118,13 +118,6 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
  */
 void entity_creature_draw_stat_block(creature_t *creature_ptr);
 
-/**
- * @brief Creature takes a turn
- * 
- * @param *creature_ptr  pointer to creature
- * @return void
- */
-void entity_creature_turn(creature_t *creature_ptr);
 
 /**
  * @brief Returns the ability modifier for a given ability score

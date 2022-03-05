@@ -5,23 +5,18 @@
  ***************************************************/
 
 #include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions
-#include <stdint.h>             // standard names for ints with no ambiguity 
 
-#include <stdio.h>
-
-#include <stdbool.h>            // define true and false 
-
-#include "entity.h"
-#include "entity_player.h"
+#include "player.h"
 #include "dungeon_map.h"
 #include "tilemap.h"
-#include "tile_defns.h"
+
+#include "entity.h"
 #include "entity_creature.h"
 #include "entity_item.h"
 #include "messages.h"
-#include "dice.h"
-#include "text.h"
+
 #include "ai_pathfind.h"
+#include "ai.h"
 
 //#define printAt(row, col)    printf("\x16%c%c", row, col)
 
@@ -74,7 +69,7 @@ void init_game()
     entity_creature_create(SNAKE, 2, 2);
     entity_item_create(RING, 13, 13);
 
-    entity_player_create(5, 5);
+    player_create(5, 5);
 
     // Map bank 19 into ZX Spectrum 8k MMU slot 6
     ZXN_WRITE_REG(0x56, 19);
@@ -102,9 +97,9 @@ void play_game()
         // TODO change energy system so can current energy decreases each turn, can take action when current energy is 0 and the action adds to the current energy
         if (entity_ptr->current_energy >= 10) {
             if (entity_ptr == entity_player_ptr) {
-                entity_player_turn();
+                player_turn();
             } else if (entity_ptr->type == creature) {
-                entity_creature_turn((creature_t *)entity_ptr->ptr);
+                ai_turn((creature_t *)entity_ptr->ptr);
             }
         }
     entity_ptr = entity_next(entity_ptr);

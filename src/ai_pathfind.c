@@ -12,9 +12,11 @@
 
 #include "dungeon_map.h"
 #include "tile_defns.h"
-#include "messages.h"
+#include "messages.h"   // to do remove
 
 #include "text.h"       
+
+#include "coord_type.h"
 
 #include <input.h>      //  in_WaitForKey()
         
@@ -27,18 +29,10 @@
  * types
  ***************************************************/
 
-typedef enum direction_e {NONE, N, NE, E, SE, S, SW, W, NW} direction_t;
-
-typedef struct
-{
-    uint8_t x;
-    uint8_t y;
-} coord_t;
-
 typedef struct
 {
     uint8_t reached;
-    uint8_t reached_from;
+    direction_t reached_from;
 } path_t;
 
 
@@ -75,7 +69,7 @@ void ai_pathfind(uint8_t x, uint8_t y)
 {
     coord_t current;
     coord_t next;
-    direction_t direction_from = NONE;
+    direction_t direction_from = NO_DIR;
  
     frontier_head = 0;
     frontier_tail = 0;
@@ -89,7 +83,7 @@ void ai_pathfind(uint8_t x, uint8_t y)
         for (y = 0; y < 40; y++)
         {
             reached[x][y].reached = 0;
-            reached[x][y].reached_from = NONE;
+            reached[x][y].reached_from = NO_DIR;
         }
     }
 
@@ -100,19 +94,38 @@ void ai_pathfind(uint8_t x, uint8_t y)
     while(pop_frontier(&current))
     {
         neighbor = 0;
-        // TO DO add from so path can be determined
         // TO DO add limit to depth of search 
-        // TO DO frontier needs to be a FIFO not LIFO
-        // TO DO move reached flag to the dungeon array
+        // TO DO creatures will not avoid each other. We need to treat a square with a monster on it as passable otherwise the creature cannot move
+        // TO DO implement A* so creatures can avoid each other. Also we can open doors if intelligent etc passing in params to path calculator
+
         while (get_next_neighbor(&current, &next, &direction_from))  
         {
-                // messages_print_s_uint8("X", next.x);
-                // messages_print_s_uint8("Y", next.y);
-                               
+                             
             if(!is_reached(&next))
             {
                 push_frontier(&next);
-                mark_reached(&next, direction_from);
+                mark_reached(&next, direction_from);           
+            }
+        }
+        // in_wait_nokey();
+        // in_wait_key();   
+    } 
+}
+
+void print_path()
+{
+    uint8_t x;
+    uint8_t y;
+    direction_t direction_from;
+    coord_t next;
+
+    for(x = 0; x < 40; x++)
+    {
+        for (y = 0; y < 40; y++)
+        {
+                next.x = x;
+                next.y = y;
+                direction_from = ai_pathfind_direction_to_player(&next);
                 if (direction_from == N)
                 {
                     text_print(next.x, next.y, "N");
@@ -128,14 +141,16 @@ void ai_pathfind(uint8_t x, uint8_t y)
                 if (direction_from == E)
                 {
                     text_print(next.x, next.y, "E");
-                }                
-            }
+                } 
+
         }
-        // in_wait_nokey();
-        // in_wait_key();   
-    }
+    }  
+}
 
-
+direction_t ai_pathfind_direction_to_player(coord_t *coord)
+{
+    //messages_print_s_int8("PATHDIR", reached[coord->x][coord->y].reached_from);
+    return (reached[coord->x][coord->y].reached_from);
 }
 
 
@@ -199,7 +214,8 @@ uint8_t get_next_neighbor(coord_t* current, coord_t *next, direction_t *directio
     // while there is another neighbour
     {
         // is it blocked?
-        blocked = dungeon_map_is_blocked(next->x, next->y);
+        //blocked = dungeon_map_is_blocked(next->x, next->y);
+        blocked = !dungeon_map_tile_passable(next->x, next->y);
         if (!blocked) {
             // not blocked return it
             return 1;

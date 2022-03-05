@@ -34,6 +34,7 @@
  ***************************************************/
 
 
+// TO DO dont attack self if dx dy is 0 0 
 uint8_t entity_creature_strike(creature_t *attacker_creature_ptr, int8_t dx, int8_t dy)
 {
     int8_t attack_roll;

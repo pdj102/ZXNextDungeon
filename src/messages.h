@@ -55,4 +55,6 @@ void messages_display();
 
 void messages_print_s_uint8(char message[], uint8_t num);
 
+void messages_print_s_int8(char message[], int8_t num);
+
 #endif

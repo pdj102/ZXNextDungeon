@@ -52,11 +52,14 @@ $(OBJDIR)/dungeon_map_generator.o: $(SRCDIR)/dungeon_map_generator.c $(SRCDIR)/d
 	$(CC) $(CFLAGS) --codesegPAGE_18 --constsegPAGE_18 -o $@ $<
 
 # PAGE_19
-# target for creature ai 
-# - creature_pathfind
-$(OBJDIR)/creature_pathfind.o: $(SRCDIR)/creature_pathfind.c $(SRCDIR)/creature_pathfind.h $(PRAGMA_FILE)
+# target for ai*
+# - ai_pathfind
+# - ai
+$(OBJDIR)/ai_pathfind.o: $(SRCDIR)/ai_pathfind.c $(SRCDIR)/ai_pathfind.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_19 --constsegPAGE_19 -o $@ $<
 
+$(OBJDIR)/ai.o: $(SRCDIR)/ai.c $(SRCDIR)/ai.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_19 --constsegPAGE_19 -o $@ $<
 
 # target for *.o - call C compiler
 # example to compile ./src/test.c execute "make ./obj/test.o"

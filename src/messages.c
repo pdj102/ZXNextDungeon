@@ -114,3 +114,13 @@ void messages_print_s_uint8(char message[], uint8_t num)
     messages_println(s);
 
 }
+
+void messages_print_s_int8(char message[], int8_t num)
+{
+    char s[4];
+    itoa(num, s, 10);
+
+    messages_print(message);
+    messages_println(s);
+
+}

@@ -2,16 +2,14 @@
     Dungeon - ZX Spectrum Next 
     Paul Johnson 
 
-    AI pathfinder
+    AI 
 
  ***************************************************/
 
-#ifndef AI_PATHFIND_H 
-    #define AI_PATHFIND_H 
+#ifndef AI_H 
+    #define AI_H 
 
-#include <inttypes.h>
-
-#include "coord_type.h"
+#include "entity_creature.h"
 
 
 
@@ -28,20 +26,12 @@
  ***************************************************/
 
 /**
- * @brief Calculates the path towards the player from every reachable dungeon tile using breadth first search
- *
+ * @brief AI creature takes a turn
+ * 
+ * @param *creature_ptr  pointer to creature
  * @return void
  */
-void ai_pathfind(uint8_t x, uint8_t y);
+void ai_turn(creature_t *creature_ptr);
 
-/**
- * @brief Returns the direction towards the player as determined by the last call to ai_pathfind()
- *
- * @return direction_t
- */
-direction_t ai_pathfind_direction_to_player(coord_t *coord);
-
-
-void print_path();
 
 #endif
