@@ -62,11 +62,6 @@ void ai_turn(creature_t *creature_ptr)
         pos.y = creature_ptr->entity_ptr->y;
 
         dir = ai_pathfind_direction_to_player(&pos);
-        messages_print_s_int8("X", pos.x);
-        messages_print_s_int8("Y", pos.y);
-        messages_print_s_int8("DIR", dir);
-        messages_print_s_int8("X", dir_delta[dir][0]);
-        messages_print_s_int8("Y", dir_delta[dir][1]);
 
         entity_creature_move_or_strike(creature_ptr, dir_delta[dir][0], dir_delta[dir][1]);
 
