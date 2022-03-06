@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <string.h>     // strcpy()
 
-#include "tile_defns.h"
+#include "tilemap_tile_defns.h"
 
 #include "messages.h"
 #include "memory_map.h"
@@ -28,7 +28,7 @@
  ***************************************************/
 
 /***************************************************
- * private variables
+ * private variables - static
  ***************************************************/
 // Pointer to base memory address for entities
 static item_t *entity_item_base_ptr;

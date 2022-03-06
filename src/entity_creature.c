@@ -16,7 +16,7 @@
 
 #include "entity.h"
 #include "player.h"
-#include "tile_defns.h"
+#include "tilemap_tile_defns.h"
 #include "dice.h"
 #include "text.h"
 #include "messages.h"
@@ -34,7 +34,7 @@
  ***************************************************/
 
 /***************************************************
- * private variables
+ * private variables - static
  ***************************************************/
 // Pointer to base memory address for entities
 static creature_t *entity_creature_base_ptr;

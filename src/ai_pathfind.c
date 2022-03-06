@@ -11,7 +11,7 @@
 #include <stdlib.h>             // rand()
 
 #include "dungeon_map.h"
-#include "tile_defns.h"
+#include "tilemap_tile_defns.h"
 #include "messages.h"   // to do remove
 
 #include "text.h"       

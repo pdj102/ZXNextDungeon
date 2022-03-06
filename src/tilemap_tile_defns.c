@@ -2,13 +2,13 @@
     Dungeon - ZX Spectrum Next 
     Paul Johnson
 
-    Tile definitions
+    Tilemap tile definitions
 
  ***************************************************/
-#include "tile_defns.h"
+#include "tilemap_tile_defns.h"
 
-#include <stdint.h>             // standard names for ints with no ambiguity
-#include <arch/zxn.h>
+#include <stdint.h>             /* standard names for ints with no ambiguity */
+#include <arch/zxn.h>           /* ZXN_NEXTREG */
 
 
 // Set NUM_SPRITES to number of sprites exported x 4 
@@ -23,21 +23,19 @@
  ***************************************************/
 
 /***************************************************
- * private variables
+ * private variables - static
  ***************************************************/
-uint8_t volatile * const tile_def_base_p = (uint8_t *) 0x4a00; // 0x4a00 
-
-// tile_pattern is defined in tile_defns_data.asm
-extern uint8_t tile_pattern[];
-
 
 /***************************************************
  * functions definitions
  ***************************************************/
 
-void tile_defns_init()
+void tilemap_tile_defns_init()
 {
-    /* 0x6F - Tile definitions base address
+    /*
+     * Set the ZXnext register for the base memory address of the tile definitions
+     * 
+     * 0x6F - Tile definitions base address
      *
      * sets the tile definitions base address offset within bank 5 
      * Bank 5 is located at 0x4000 - 0x7fff

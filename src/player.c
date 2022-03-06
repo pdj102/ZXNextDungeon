@@ -34,7 +34,7 @@ creature_t *creature_player_ptr;
 entity_t *entity_player_ptr;
 
 /***************************************************
- * private variables
+ * private variables - static
  ***************************************************/
 
 /***************************************************

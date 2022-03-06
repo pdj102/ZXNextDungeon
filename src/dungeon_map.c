@@ -10,10 +10,8 @@
 #include <stdio.h> 
 
 #include "tilemap.h"
-#include "tile_defns.h"
+#include "tilemap_tile_defns.h"
 #include "entity.h"
-#include "dungeon_map_generator.h"
-
 
 
 /***************************************************
@@ -76,13 +74,11 @@ void dungeon_map_scroll(int8_t dx, int8_t dy )
 
 void dungeon_map_init()
 {
-    // Map bank 16 into ZX Spectrum 8k MMU slot 0
+    // Map dungeon map data (bank 16) into ZX Spectrum 8k MMU slot 0
     ZXN_WRITE_REG(0x50, 16);    
 
     // dungeon_map is defined in dungeon_map_data.asm Bank 16 
     
-    // generate dungeon map
-    dungeon_map_generate();
 }
 
 void dungeon_map_draw()

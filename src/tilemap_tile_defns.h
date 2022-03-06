@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     Paul Johnson
 
-    Tile definitions
+    Tilemap tile definitions
 
  ***************************************************/
 
@@ -82,7 +82,7 @@
  * 
  * @return void
  */
-void tile_defns_init();
+void tilemap_tile_defns_init();
 
 
 #endif

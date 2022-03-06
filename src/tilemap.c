@@ -10,8 +10,7 @@
 #include <arch/zxn.h>
 
 #include "palette.h"
-#include "tile_defns.h"
-
+#include "tilemap_tile_defns.h"
 #include "memory_map.h"
 
 /***************************************************
@@ -23,9 +22,14 @@
  ***************************************************/
 
 /***************************************************
- * private variables
+ * private variables - static
  ***************************************************/
-uint8_t volatile * const tilemap_base_p = (uint8_t *) TILEMAP_BASE;
+
+/**
+ * @brief Pointer to the base of the ZXnext tilemap 
+ * 
+ */
+static uint8_t volatile * const tilemap_base_p = (uint8_t *) TILEMAP_BASE;
 
 /***************************************************
  * functions definitions
@@ -33,23 +37,26 @@ uint8_t volatile * const tilemap_base_p = (uint8_t *) TILEMAP_BASE;
 
 void tilemap_init()
 {
-     /* 0x68 - ULA Control
+    /*
+     * Set the ZXnext register for the base memory address of the tilemap
+     *
+     * 0x68 - ULA Control
      *
      * bit 7    =  1 to disable ULA output
      * bit 6    = 0 to select the ULA colour for blending in SLU modes 6 & 7
      *          = 1 to select the ULA/tilemap mix for blending in SLU modes 6 & 7
      * bits 5-1 = Reserved must be 0
      * bit 0 = 1 to enable stencil mode when both the ULA and tilemap are enabled
-     * 
+     *
      * Disable the ULA screen
      */
     ZXN_NEXTREG(0x68, 0b10000000);
 
-    // initialise palette
+    /*  initialise palette */
     palette_init();
 
-    // initialise tile definitions 
-    tile_defns_init();
+    /* initialise tile definitions */
+    tilemap_tile_defns_init();
 
     /* 0x6E - Tilemap base address
     * Sets the tilemap base address offset within bank 5 
@@ -67,18 +74,19 @@ void tilemap_init()
     ZXN_NEXTREG(0x6E, 0);
 
 
-    // Set the tilemap to all transparent tiles
+    /* Set the tilemap to all transparent tiles */
     tilemap_clear(TILE_TRANS);
 
-    //0x6B Tilemap Control
-    // Turn on the tilemap layer, 40x32, attributes enabled
-    // bit 7    1 = enable tilemap
-    // bit 6    = 0 for 40x32, 1 for 80x32
-    // bit 5    = 1 to eliminate the attribute entry in the tilemap
-    // bit 4    = palette select
-    // bits 3-2 = Reserved set to 0
-    // bit 1    = 1 to activate 512 tile mode
-    // bit 0    = 1 to force tilemap on top of ULA    
+    /* 0x6B Tilemap Control
+     * Turn on the tilemap layer, 40x32, attributes enabled
+     * bit 7    1 = enable tilemap
+     * bit 6    = 0 for 40x32, 1 for 80x32
+     * bit 5    = 1 to eliminate the attribute entry in the tilemap
+     * bit 4    = palette select
+     * bits 3-2 = Reserved set to 0
+     * bit 1    = 1 to activate 512 tile mode
+     * bit 0    = 1 to force tilemap on top of ULA    
+     */
     ZXN_WRITE_REG(0x6B, 0b10000000);
 }
 
@@ -93,8 +101,8 @@ void tilemap_clear(uint8_t tile)
     }
 }
 
-// TODO check bounds
-// TODO support tile attributes
+/* TODO check bounds */
+/* TODO support tile attributes */
 void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr)
 {
     uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
@@ -104,8 +112,8 @@ void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr)
     *(p+1) = tile_attr;
 }
 
-// TODO check bounds
-// TODO support tile attributes
+/* TODO check bounds */
+/* TODO support tile attributes */
 void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile, uint8_t tile_attr)
 {
 
@@ -119,7 +127,7 @@ void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile, 
         for(dx = 0; dx < w; dx++)
         {
             *p = tile;
-            *(p+1) = tile_attr;    // bits 15-12 palette offset
+            *(p+1) = tile_attr;    /* bits 15-12 palette offset */
             p = p + 2;
         }
     p += next_row; 

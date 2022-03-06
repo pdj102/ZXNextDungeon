@@ -32,7 +32,7 @@
 
 
 /***************************************************
- * private variables
+ * private variables - static
  ***************************************************/
 // Single linked list of all entities
 static p_forward_list_t entities;

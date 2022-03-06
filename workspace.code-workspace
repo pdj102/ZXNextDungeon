@@ -26,7 +26,8 @@
 			"entity.h": "c",
 			"dungeon_map_generator.h": "c",
 			"entity_creature_pickup.h": "c",
-			"entity_creature.h": "c"
+			"entity_creature.h": "c",
+			"tilemap_tile_defns.h": "c"
 		}
 	}
 }

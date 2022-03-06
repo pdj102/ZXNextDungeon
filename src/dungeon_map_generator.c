@@ -12,7 +12,7 @@
 
 #include "dungeon_map.h"
         
-#include "tile_defns.h"         // tile definitions e.g. TILE_FLOOR_1
+#include "tilemap_tile_defns.h"         // tile definitions e.g. TILE_FLOOR_1
 
 
 #pragma output CRT_ORG_CODE = 0xC000
