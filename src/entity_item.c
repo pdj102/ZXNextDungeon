@@ -108,8 +108,8 @@ item_t *entity_item_create(item_type_t item_type, uint8_t x, uint8_t y)
     {
         case RING :
             strcpy(i->name, "RING");
-            e->tile     = TILE_POTION;
-            e->tile_attr = 0b01000000; // palette offset 2
+            e->tilemap_tile.tile_id     = TILE_POTION;
+            e->tilemap_tile.tile_attr = 0b01000000; // palette offset 2
 
         break;
     }
@@ -118,20 +118,64 @@ item_t *entity_item_create(item_type_t item_type, uint8_t x, uint8_t y)
 }
 
 
-item_t *entity_item_at(uint8_t x, uint8_t y)
+item_t *entity_item_first_at(uint8_t x, uint8_t y)
 {
-    entity_t *target_entity_ptr = entity_first_at( x, y);
+    entity_t *entity_ptr = entity_first_at( x, y);
 
-    while(target_entity_ptr != NULL)
+    while(entity_ptr != NULL)
     {
-        if (target_entity_ptr->type == item)
+        if (entity_ptr->type == item)
         {
-            return (item_t *)target_entity_ptr->ptr;
+            return (item_t *)entity_ptr->ptr;
         }
       
-        target_entity_ptr = entity_next_at( x, y, target_entity_ptr );
+        entity_ptr = entity_next_at( x, y, entity_ptr );
     }
     return NULL;
+}
+
+item_t* entity_item_next_at(uint8_t x, uint8_t y, item_t *item_ptr)
+{
+    entity_t *entity_ptr = item_ptr->entity_ptr;
+
+    while( entity_ptr = entity_next_at(x, y, entity_ptr) )
+    {
+        if (entity_ptr->type == item)
+        {
+            return (item_t *)entity_ptr->ptr;
+        }
+    }
+    return NULL;    
+}
+
+item_t *entity_item_first_at_location(entity_location_t location)
+{
+    entity_t *entity_ptr = entity_first_at_location(location);
+
+    while(entity_ptr != NULL)
+    {
+        if (entity_ptr->type == item)
+        {
+            return (item_t *)entity_ptr->ptr;
+        }
+      
+        entity_ptr = entity_next_at_location( location, entity_ptr );
+    }
+    return NULL;
+}
+
+item_t* entity_item_next_at_location(entity_location_t location, item_t *item_ptr)
+{
+    entity_t *entity_ptr = item_ptr->entity_ptr;
+
+    while( entity_ptr = entity_next_at_location(location, entity_ptr) )
+    {
+        if (entity_ptr->type == item)
+        {
+            return (item_t *)entity_ptr->ptr;
+        }
+    }
+    return NULL;    
 }
 
 void entity_item_delete(item_t *item_ptr)

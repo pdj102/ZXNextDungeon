@@ -11,13 +11,18 @@
 #include <input.h>
 #include <ctype.h>              // character classification e.g. toupper() 
 #include <stddef.h>             // NULL
+#include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions
 
 #include "entity_creature.h"
 #include "entity_creature_move.h"
 #include "entity_creature_pickup.h"
 #include "dungeon_map.h"
 #include "ai_pathfind.h"
+
+#include "player_inventory.h"
+
 #include "messages.h"
+#include "text.h"
 
 /***************************************************
  * private types
@@ -48,6 +53,13 @@ void player_create(uint8_t x, uint8_t y)
     entity_player_ptr = creature_player_ptr->entity_ptr;
 }
 
+void player_inventory_display(creature_t *creature_player_ptr)
+{
+    /* Map Player UI (bank 20) into ZX Spectrum 8k MMU slot 6 */
+    ZXN_WRITE_REG(0x56, 20);
+    player_inventory_display_b(creature_player_ptr);
+}
+
 void player_turn()
 {
     unsigned char key;
@@ -56,44 +68,55 @@ void player_turn()
     in_wait_nokey();    // wait no key
 
     switch(toupper(key)) {
-        case 'S':
+        case 54:    //down
             entity_creature_move_or_strike(creature_player_ptr, 0, 1);
+            ZXN_WRITE_REG(0x56, 19); // TODO create AI.c to call banked functions
             ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);  
             break;
-        case 'W':
+        case 55:    //up
             entity_creature_move_or_strike(creature_player_ptr, 0, -1);
+            ZXN_WRITE_REG(0x56, 19); // TODO create AI.c to call banked functions            
             ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
             break;
-        case 'A':
+        case 53:    //left
             entity_creature_move_or_strike(creature_player_ptr, -1, 0);
+            ZXN_WRITE_REG(0x56, 19); // TODO create AI.c to call banked functions            
             ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
             break;
-        case 'D':
+        case 56:    //right
             entity_creature_move_or_strike(creature_player_ptr, 1, 0);
+            ZXN_WRITE_REG(0x56, 19); // TODO create AI.c to call banked functions            
             ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
             break;
+        case 'I':
+            player_inventory_display(creature_player_ptr);
+            break;
+        
         case 'P':
             entity_creature_pickup(creature_player_ptr);
             break;            
-        case '4':
+        case '1':
             dungeon_map_scroll(-1, 0);
             dungeon_map_draw();
             entity_draw_all();    
             break;
-        case '6':
+        case '2':
             dungeon_map_scroll(1, 0);
             dungeon_map_draw();
             entity_draw_all(); 
             break;
-        case '8':
+        case '3':
             dungeon_map_scroll(0, -1);
             dungeon_map_draw();
             entity_draw_all(); 
             break;
-        case '2':
+        case '0':
             dungeon_map_scroll(0, 1);
             dungeon_map_draw();
             entity_draw_all(); 
-            break;                        
+            break;
+        default:
+            text_print_int8(24, 20, key);
+            break;
     }
 }

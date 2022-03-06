@@ -35,20 +35,20 @@
 
 uint8_t entity_creature_pickup(creature_t *creature_ptr)
 {
-    item_t *item;
+    item_t *item_ptr;
 
-    item = entity_item_at(creature_ptr->entity_ptr->x, creature_ptr->entity_ptr->y);
+    item_ptr = entity_item_first_at(creature_ptr->entity_ptr->x, creature_ptr->entity_ptr->y);
 
-    if (item)
+    if (item_ptr)
     {
         // pickup item
         messages_print("PICKED UP ");
-        messages_println(item->name);
+        messages_println(item_ptr->name);
 
         
-        item->entity_ptr->location = PLAYER;
-        item->entity_ptr->x = 255;
-        item->entity_ptr->y = 255;
+        item_ptr->entity_ptr->location = inventory;
+        item_ptr->entity_ptr->x = 255;
+        item_ptr->entity_ptr->y = 255;
         
         return 1;
     }

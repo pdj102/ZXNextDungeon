@@ -72,8 +72,8 @@ void messages_display()
             pos--;
         }
 
-        text_print(0, row, blank);
-        text_print(0, row, messages[pos]);
+        text_print_string(0, row, blank);
+        text_print_string(0, row, messages[pos]);
     }
 }
 

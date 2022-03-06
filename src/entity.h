@@ -138,9 +138,15 @@ entity_t *entity_first_at(uint8_t x, uint8_t y);
  * 
  * @param x dungeon x cord
  * @param y dungeon y cord
+ * @param entity_ptr previously found entity
  * @return next entity at position or NULL
  */
 entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr);
+
+
+entity_t *entity_first_at_location(entity_location_t location);
+
+entity_t* entity_next_at_location(entity_location_t location, entity_t *entity_ptr);
 
 /**
  * @brief Returns next entity in list

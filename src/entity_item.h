@@ -68,7 +68,24 @@ void entity_item_draw_stat_block(item_t *item_ptr);
  * 
  * @return item_t 
  */
-item_t *entity_item_at(uint8_t x, uint8_t y);
+item_t *entity_item_first_at(uint8_t x, uint8_t y);
+
+/**
+ * @brief Returns next item at dungeon position.
+ * 
+ * Can be called repeatably to find all items at dungeon location
+ * 
+ * @param x dungeon x cord
+ * @param y dungeon y cord
+ * @param item_ptr previously found item
+ * @return next item at position or NULL
+ */
+item_t* entity_item_next_at(uint8_t x, uint8_t y, item_t *item_ptr);
+
+
+item_t *entity_item_first_at_location(entity_location_t location);
+item_t* entity_item_next_at_location(entity_location_t location, item_t *item_ptr);
+
 
 /**
  * @brief Delete item and free item slot for use

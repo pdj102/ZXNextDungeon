@@ -81,6 +81,8 @@
 
 // Memory page 19 (8KiB) - creature ai
 
+// Memory page 20 (*KiB) - player_
+
 // ------------------- MMU SLOT 7 (0xe000) -------------------
 // Memory pages 18 to 21 - used for banked code and data
 

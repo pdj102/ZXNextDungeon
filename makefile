@@ -61,6 +61,12 @@ $(OBJDIR)/ai_pathfind.o: $(SRCDIR)/ai_pathfind.c $(SRCDIR)/ai_pathfind.h $(PRAGM
 $(OBJDIR)/ai.o: $(SRCDIR)/ai.c $(SRCDIR)/ai.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_19 --constsegPAGE_19 -o $@ $<
 
+# PAGE 20
+# target for player_*
+$(OBJDIR)/player_inventory.o: $(SRCDIR)/player_inventory.c $(SRCDIR)/player_inventory.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_20 --constsegPAGE_20 -o $@ $<
+
+
 # target for *.o - call C compiler
 # example to compile ./src/test.c execute "make ./obj/test.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(PRAGMA_FILE)

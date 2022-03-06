@@ -10,7 +10,7 @@
 #include "entity_creature_move.h"
 
 #include <inttypes.h>
-#include <stdlib.h>
+
 #include <stdio.h>
 #include <string.h>     // strcpy()
 
@@ -191,51 +191,40 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 
 void entity_creature_draw_stat_block(creature_t *creature_ptr)
 {
-    char s[] = "25500";     // string buffer for converting numbers to strings
+    text_print_string(24, 0, creature_ptr->name);
+    text_print_string(24, 1, creature_ptr->creature);
+    text_print_string(24, 2, "LEVEL");
+    text_print_string(24, 3, "EXP");
 
-    text_print(24, 0, creature_ptr->name);
-    text_print(24, 1, creature_ptr->creature);
-    text_print(24, 2, "LEVEL");
-    text_print(24, 3, "EXP");
+    text_print_string(24, 5, "STR:");
+    text_print_string(24, 6, "INT:");
+    text_print_string(24, 7, "WIS:");
+    text_print_string(24, 8, "DEX:");
+    text_print_string(24, 9, "CON:");
+    text_print_string(24, 10, "CHA:");    
 
-    text_print(24, 5, "STR:");
-    text_print(24, 6, "INT:");
-    text_print(24, 7, "WIS:");
-    text_print(24, 8, "DEX:");
-    text_print(24, 9, "CON:");
-    text_print(24, 10, "CHA:");    
+    text_print_string(24, 11, "AC:");
+    text_print_string(24, 12, "HP:");
 
-    text_print(24, 11, "AC:");
-    text_print(24, 12, "HP:");
+    text_print_string(24, 13, "SPEED:");
 
-    text_print(24, 13, "SPEED:");
+    text_print_uint8(30, 2, creature_ptr->lvl);
 
-    itoa(creature_ptr->lvl, s, 10);
-    text_print(30, 2, s);
+    text_print_uint16(30, 3, creature_ptr->exp);
 
-    itoa(creature_ptr->exp, s, 10);
-    text_print(30, 3, s);
 
-    itoa(creature_ptr->strength, s, 10);
-    text_print(30, 5, s);
-    itoa(creature_ptr->intelligence, s, 10);
-    text_print(30, 6, s);
-    itoa(creature_ptr->wisdom, s, 10);
-    text_print(30, 7, s);
-    itoa(creature_ptr->dexerity, s, 10);
-    text_print(30, 8, s);
-    itoa(creature_ptr->constitution, s, 10);
-    text_print(30, 9, s);
-    itoa(creature_ptr->charisma, s, 10);
-    text_print(30, 10, s);    
+    text_print_uint8(30, 5, creature_ptr->strength);
+    text_print_uint8(30, 6, creature_ptr->intelligence);
+    text_print_uint8(30, 7, creature_ptr->wisdom);
+    text_print_uint8(30, 8, creature_ptr->dexerity);
+    text_print_uint8(30, 9, creature_ptr->constitution);
+    text_print_uint8(30, 10, creature_ptr->charisma);    
     
-    itoa(creature_ptr->ac, s, 10);
-    text_print(30, 11, s);
-    itoa(creature_ptr->curr_hp, s, 10);
-    text_print(30, 12, s);
+    text_print_uint8(30, 11, creature_ptr->ac);
 
-    itoa(creature_ptr->speed, s, 10);
-    text_print(30, 13, s);
+    text_print_uint8(30, 12, creature_ptr->curr_hp);
+
+    text_print_uint8(30, 13, creature_ptr->speed);
 }
 
 

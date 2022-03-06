@@ -45,6 +45,8 @@ void draw_all()
 
 void init_game()
 {
+    /* set CPU speed 28MHz */
+    ZXN_WRITE_REG(0x07, 0b00000011);
 
     /* Init dungeon map data structures */
     dungeon_map_init();
@@ -65,6 +67,7 @@ void init_game()
     entity_creature_create(SNAKE, 11, 11);
     entity_creature_create(SNAKE, 2, 2);
     entity_item_create(RING, 13, 13);
+    entity_item_create(RING, 13, 5);    
 
     player_create(5, 5);
 

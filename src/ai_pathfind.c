@@ -128,19 +128,19 @@ void print_path()
                 direction_from = ai_pathfind_direction_to_player(&next);
                 if (direction_from == N)
                 {
-                    text_print(next.x, next.y, "N");
+                    text_print_char(next.x, next.y, 'N');
                 }
                 if (direction_from == S)
                 {
-                    text_print(next.x, next.y, "S");
+                    text_print_char(next.x, next.y, 'S');
                 }
                 if (direction_from == W)
                 {
-                    text_print(next.x, next.y, "W");
+                    text_print_char(next.x, next.y, 'W');
                 }
                 if (direction_from == E)
                 {
-                    text_print(next.x, next.y, "E");
+                    text_print_char(next.x, next.y, 'E');
                 } 
 
         }

@@ -186,4 +186,29 @@ entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr)
     return NULL;
 }
 
+entity_t *entity_first_at_location(entity_location_t location)
+{
+    entity_t *entity_ptr = entity_front();
+
+    while (entity_ptr)
+    {
+        if (entity_ptr->location == location) {
+            return entity_ptr;  // found entity at x y
+        }
+        entity_ptr = entity_next(entity_ptr);
+    }
+    return NULL; 
+}
+
+entity_t* entity_next_at_location(entity_location_t location, entity_t *entity_ptr)
+{
+    while( entity_ptr = entity_next(entity_ptr) )
+    {
+        if (entity_ptr->location == location) {
+            return entity_ptr;
+        }
+    }
+    return NULL;
+}
+
 
