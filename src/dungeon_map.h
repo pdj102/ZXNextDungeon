@@ -9,6 +9,8 @@
 
 #include <inttypes.h>
 
+#include "tilemap.h"
+
 #define DUNGEON_MAP_WIDTH   40
 #define DUNGEON_MAP_HEIGHT  40
 
@@ -17,16 +19,12 @@
  * types
  ***************************************************/
 
-typedef enum tile_type {FLOOR, WALL, CEILING} tile_type_t;
+typedef enum tile_type {FLOOR, WALL, CEILING} tile_type_e;
 
-// Each dungeon tile has
-//  tile_defn_graphic   tilemap tile number
-//  tile_defn_attr      tilemap tile attribute 
 typedef struct
 {
-    uint8_t tile_defn_graphic;
-    uint8_t tile_defn_attr;
-    tile_type_t tile;
+    tilemap_tile_t      tilemap_tile;
+    tile_type_e         tile;
 } dungeon_tile_t;
 
 
@@ -66,15 +64,14 @@ void dungeon_map_draw();
 void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y);
 
 /**
- * Draw a single tile at dungeon x, y to the tilemap 
+ * Draw a single tilemap tile at dungeon x, y to the tilemap 
  * 
  * @param dungeon_x x position
  * @param dungeon_y y position
- * @param tile_defn_graphic tile definition
- * @param tile_defn_attr tile attributes
+ * @param tile tile_map tile
  * @return void
  */
-void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile_defn_graphic, uint8_t tile_defn_attr);
+void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, tilemap_tile_t *tile);
 
 /**
  * Move dungeon window by dx dy

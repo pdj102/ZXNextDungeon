@@ -7,9 +7,10 @@
  ***************************************************/
 #include "text.h"
 
-#include "string.h"
+#include <string.h>     /* strlen() */
 
 #include "tilemap.h"
+#include "palette.h"
 
 /***************************************************
  * private types
@@ -37,7 +38,7 @@ void text_print(uint8_t x, uint8_t y, char text[])
 
     for (uint8_t i = 0; i < l; i++)
     {
-        tilemap_set_tile(x, y, text[i] + tile_map_offset, 0);
+        tilemap_set_tile2(x, y, text[i] + tile_map_offset, NO_MIRROR | NO_ROTATE | PALETTE_DUNGEON );
         x++;
     }
 }

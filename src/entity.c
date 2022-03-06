@@ -141,9 +141,8 @@ void entity_draw_all()
     {
         if (entity_ptr->location == dungeon) 
         {
-            dungeon_map_draw_entity(entity_ptr->x, entity_ptr->y, entity_ptr->tile, entity_ptr->tile_attr);
-        }
-        
+            dungeon_map_draw_entity(entity_ptr->x, entity_ptr->y, &(entity_ptr->tilemap_tile));
+        }  
     }
 }
 

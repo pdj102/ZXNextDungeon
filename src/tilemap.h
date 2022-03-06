@@ -14,9 +14,23 @@
 #define TILE_MAP_WIDTH  40
 #define TILE_MAP_HEIGHT 32
 
+
+#define NO_MIRROR   0b00000000
+#define NO_ROTATE   0b00000000
+#define MIRROR_X    0b00001000
+#define MIRROR_Y    0b00000100
+#define ROTATE      0b00000010
+
+
 /***************************************************
  * public types
  ***************************************************/
+
+typedef struct tilemap_tile {
+    uint8_t tile_id;
+    uint8_t tile_attr;
+} tilemap_tile_t;
+
 
 /***************************************************
  * public variable declarations
@@ -36,7 +50,16 @@ void tilemap_init();
  * @param tile  tile pattern number
  * @return void
  */
-void tilemap_clear(uint8_t tile);
+void tilemap_clear(tilemap_tile_t *tile);
+
+/**
+ * Set tilemap tile
+ * @param x     x position
+ * @param y     y position     
+ * @param tile  tilemap tile
+ * @return void
+ */
+void tilemap_set_tile(uint8_t x, uint8_t y, tilemap_tile_t *tile);
 
 /**
  * Set tilemap tile
@@ -46,7 +69,7 @@ void tilemap_clear(uint8_t tile);
  * @param tile_attr tile attributes
  * @return void
  */
-void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr);
+void tilemap_set_tile2(uint8_t x, uint8_t y, uint8_t tile_id, uint8_t tile_attr);
 
 /**
  * Set tilemap rectangle area to tile
@@ -58,6 +81,6 @@ void tilemap_set_tile(uint8_t x, uint8_t y, uint8_t tile, uint8_t tile_attr);
  * @param tile_attr tile attributes 
  * @return void
  */
-void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, uint8_t tile, uint8_t tile_attr);
+void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, tilemap_tile_t *tile);
 
 #endif

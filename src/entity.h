@@ -17,6 +17,8 @@
 
 #include <inttypes.h>
 
+#include "tilemap.h"
+
 /***************************************************
  * types
  ***************************************************/
@@ -46,8 +48,7 @@ typedef struct entity {
     entity_location_t location;       /**< location of the entity e.g. dungeon, player inventory etc */
     uint8_t x;              /**< dungeon x cord */
     uint8_t y;              /**< dungeon y cord */
-    uint8_t tile;           /**< tile number */
-    uint8_t tile_attr;      /**< tile attribute */
+    tilemap_tile_t tilemap_tile;    /**< tilemap tile */
 
     uint8_t current_energy; /**< current energy */
 

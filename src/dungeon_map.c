@@ -88,7 +88,7 @@ void dungeon_map_draw()
 
     for (uint8_t screen_y = 0; screen_y < window_h ; screen_y++) {
         for (uint8_t screen_x = 0; screen_x < window_w; screen_x++) {
-            tilemap_set_tile(screen_x, screen_y, dungeon_map[dungeon_x][dungeon_y].tile_defn_graphic, dungeon_map[dungeon_x][dungeon_y].tile_defn_attr);
+            tilemap_set_tile(screen_x, screen_y, &(dungeon_map[dungeon_x][dungeon_y].tilemap_tile));
             dungeon_x++;
         }
         dungeon_x = window_x;
@@ -104,11 +104,11 @@ void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y)
         uint8_t screen_x = dungeon_x - window_x;
         uint8_t screen_y = dungeon_y - window_y;
 
-        tilemap_set_tile(screen_x, screen_y, dungeon_map[dungeon_x][dungeon_y].tile_defn_graphic, dungeon_map[dungeon_x][dungeon_y].tile_defn_attr);
+        tilemap_set_tile(screen_x, screen_y, &(dungeon_map[dungeon_x][dungeon_y].tilemap_tile));
     }
 }
 
-void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile_defn_graphic, uint8_t tile_defn_attr)
+void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, tilemap_tile_t *tile)
 {
     // check tile is within viewable area
     if ( (dungeon_y >= window_y && dungeon_y < window_y + window_h) && (dungeon_x >= window_x && dungeon_x < window_x+window_w) )
@@ -116,7 +116,7 @@ void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t tile_
         dungeon_x = dungeon_x - window_x;
         dungeon_y = dungeon_y - window_y;
 
-        tilemap_set_tile(dungeon_x, dungeon_y, tile_defn_graphic, tile_defn_attr);
+        tilemap_set_tile(dungeon_x, dungeon_y, tile);
     }
 }
 

@@ -16,7 +16,9 @@
 
 #include "entity.h"
 #include "player.h"
+#include "tilemap.h"
 #include "tilemap_tile_defns.h"
+#include "palette.h"
 #include "dice.h"
 #include "text.h"
 #include "messages.h"
@@ -141,9 +143,9 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
             c->speed    = 5;
 
             c->state    = ATTACKING;
-      
-            e->tile     = TILE_PLAYER;
-            e->tile_attr = 0b00010000; // palette offset 1
+
+            e->tilemap_tile.tile_id     = TILE_PLAYER;
+            e->tilemap_tile.tile_attr   = NO_MIRROR | NO_ROTATE | PALETTE_PLAYER ; 
 
             break;
         case SNAKE :
@@ -178,8 +180,9 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 
             c->state    = ATTACKING;
 
-            e->tile     = TILE_SNAKE;
-            e->tile_attr = 0b00100000; // palette offset 2      
+            e->tilemap_tile.tile_id     = TILE_SNAKE;
+            e->tilemap_tile.tile_attr   = NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED; 
+
     }
 
     // create entity
