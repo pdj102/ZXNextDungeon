@@ -60,6 +60,13 @@ void player_inventory_display(creature_t *creature_player_ptr)
     player_inventory_display_b(creature_player_ptr);
 }
 
+void player_inventory_wear(creature_t *creature_player_ptr)
+{
+    /* Map Player UI (bank 20) into ZX Spectrum 8k MMU slot 6 */
+    ZXN_WRITE_REG(0x56, 20);
+    player_inventory_wear_b(creature_player_ptr);
+}
+
 void player_turn()
 {
     unsigned char key;
@@ -94,7 +101,12 @@ void player_turn()
         
         case 'P':
             entity_creature_pickup(creature_player_ptr);
-            break;            
+            break;
+
+        case 'W':
+            player_inventory_wear(creature_player_ptr);
+            break;
+
         case '1':
             dungeon_map_scroll(-1, 0);
             dungeon_map_draw();

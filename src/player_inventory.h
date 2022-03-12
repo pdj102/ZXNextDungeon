@@ -33,5 +33,15 @@
  */
 void player_inventory_display_b(creature_t *creature_ptr);
 
+/**
+ * @brief Clears the right hand display area
+ * 
+ * @return void
+ */
+void player_inventory_blank_display_b();
+
+
+void player_inventory_wear_b(creature_t *creature_ptr);
+void wear_b(uint8_t item_num);
 
 #endif

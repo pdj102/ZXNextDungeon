@@ -33,7 +33,7 @@ typedef enum entity_type {item, effect, creature} entity_type_t;
  * @brief Enumeration of entity location types
  * 
  */
-typedef enum entity_location_type {dungeon, inventory} entity_location_t;
+typedef enum entity_location_type {dungeon, inventory, wearing} entity_location_t;
 
 /**
  * @brief The entity contains the common attributes of creatures, effects and items
