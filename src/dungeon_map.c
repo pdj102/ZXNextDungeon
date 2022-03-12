@@ -108,7 +108,7 @@ void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y)
     }
 }
 
-void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, tilemap_tile_t *tile)
+void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile)
 {
     // check tile is within viewable area
     if ( (dungeon_y >= window_y && dungeon_y < window_y + window_h) && (dungeon_x >= window_x && dungeon_x < window_x+window_w) )

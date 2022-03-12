@@ -11,6 +11,7 @@
 
 #include "tilemap.h"
 
+
 #define DUNGEON_MAP_WIDTH   40
 #define DUNGEON_MAP_HEIGHT  40
 
@@ -71,7 +72,7 @@ void dungeon_map_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y);
  * @param tile tile_map tile
  * @return void
  */
-void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, tilemap_tile_t *tile);
+void dungeon_map_draw_entity(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile);
 
 /**
  * Move dungeon window by dx dy
