@@ -46,7 +46,10 @@ void text_print_string(uint8_t x, uint8_t y, const char text[])
 
 void text_print_char(uint8_t x, uint8_t y, char text)
 {
-    tilemap_set_tile2(x, y, text + tile_map_offset, NO_MIRROR | NO_ROTATE | PALETTE_DUNGEON );
+    tilemap_tile_t tile;
+    tile.tile_attr = NO_MIRROR | NO_ROTATE | PALETTE_DUNGEON;
+    tile.tile_id = text + tile_map_offset;
+    tilemap_set_tile(x, y, &tile );
 }
 
 void text_print_uint8(uint8_t x, uint8_t y, uint8_t i)

@@ -65,17 +65,6 @@ void tilemap_clear(const tilemap_tile_t *tile);
  */
 void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile);
 
-/**
- * Set tilemap tile
- * @param x     x position
- * @param y     y position     
- * @param tile  tile pattern number
- * @param tile_attr tile attributes
- * @return void
- * 
- * TODO get rid of this function
- */
-void tilemap_set_tile2(uint8_t x, uint8_t y, uint8_t tile_id, uint8_t tile_attr);
 
 /**
  * Set tilemap rectangle area to tile

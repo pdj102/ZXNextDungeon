@@ -114,15 +114,6 @@ void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile)
     *(p+1) = tile->tile_attr;
 }
 
-void tilemap_set_tile2(uint8_t x, uint8_t y, uint8_t tile_id, uint8_t tile_attr)
-{
-    uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
-    uint8_t *p = tilemap_base_p + pos;
-
-    *p = tile_id;
-    *(p+1) = tile_attr;    
-}
-
 /* TODO check bounds */
 /* TODO support tile attributes */
 void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const tilemap_tile_t *tile)
