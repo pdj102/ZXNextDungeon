@@ -77,7 +77,7 @@ void messages_display()
     }
 }
 
-void messages_print(char message[])
+void messages_print(const char message[])
 {
     uint8_t length = strlen(message);
     uint8_t message_pos = 0;
@@ -93,7 +93,7 @@ void messages_print(char message[])
     messages[head][column] = '\0';  // terminate line
 }
 
-void messages_println(char message[])
+void messages_println(const char message[])
 {
     messages_print(message);
 
@@ -105,7 +105,7 @@ void messages_println(char message[])
     messages_display();
 }
 
-void messages_print_s_uint8(char message[], uint8_t num)
+void messages_print_s_uint8(const char message[], uint8_t num)
 {
     char s[4];
     itoa(num, s, 10);
@@ -115,7 +115,7 @@ void messages_print_s_uint8(char message[], uint8_t num)
 
 }
 
-void messages_print_s_int8(char message[], int8_t num)
+void messages_print_s_int8(const char message[], int8_t num)
 {
     char s[4];
     itoa(num, s, 10);

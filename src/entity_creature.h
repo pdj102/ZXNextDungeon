@@ -116,7 +116,7 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
  * @param creature_ptr  pointer to creature
  * @return void
  */
-void entity_creature_draw_stat_block(creature_t *creature_ptr);
+void entity_creature_draw_stat_block(const creature_t *creature_ptr);
 
 
 /**

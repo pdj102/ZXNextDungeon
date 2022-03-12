@@ -36,7 +36,7 @@ void messages_init();
  * @param message  pointer to message string
  * @return void
  */
-void messages_print(char message[]);
+void messages_print(const char message[]);
 
 /**
  * @brief Prints message to message area. Moves to new line. Also calls messages_display to update screen
@@ -44,7 +44,7 @@ void messages_print(char message[]);
  * @param message  pointer to message string
  * @return void
  */
-void messages_println(char message[]);
+void messages_println(const char message[]);
 
 /**
  * Display the messages buffer on the screen
@@ -53,8 +53,8 @@ void messages_println(char message[]);
  */
 void messages_display();
 
-void messages_print_s_uint8(char message[], uint8_t num);
+void messages_print_s_uint8(const char message[], uint8_t num);
 
-void messages_print_s_int8(char message[], int8_t num);
+void messages_print_s_int8(const char message[], int8_t num);
 
 #endif

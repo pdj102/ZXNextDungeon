@@ -39,7 +39,7 @@ void ai_pathfind(uint8_t x, uint8_t y);
  *
  * @return direction_t
  */
-direction_t ai_pathfind_direction_to_player(coord_t *coord);
+direction_t ai_pathfind_direction_to_player(const coord_t *coord);
 
 
 void print_path();

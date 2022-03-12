@@ -141,12 +141,28 @@ entity_t *entity_first_at(uint8_t x, uint8_t y);
  * @param entity_ptr previously found entity
  * @return next entity at position or NULL
  */
-entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr);
+entity_t* entity_next_at(uint8_t x, uint8_t y, const entity_t *entity_ptr);
 
-
+/**
+ * @brief Returns first entity at location
+ * 
+ * Call entity_next_at_location to find subsequent entities at the position
+ * 
+ * @param location  location
+ * @return entity at location or NULL
+ */
 entity_t *entity_first_at_location(entity_location_t location);
 
-entity_t* entity_next_at_location(entity_location_t location, entity_t *entity_ptr);
+/**
+ * @brief Returns first entity at location
+ * 
+ * Call entity_next_at_location to find subsequent entities at the position
+ * 
+ * @param location  location
+ * @param entity_ptr previously found entity
+ * @return next entity at location or NULL
+ */
+entity_t* entity_next_at_location(entity_location_t location, const entity_t *entity_ptr);
 
 /**
  * @brief Returns next entity in list
@@ -155,7 +171,7 @@ entity_t* entity_next_at_location(entity_location_t location, entity_t *entity_p
  * 
  * @return next entity
  */
-entity_t *entity_next(entity_t *entity_ptr);
+entity_t *entity_next(const entity_t *entity_ptr);
 
 /**
  * @brief Delete entity and free entity slot for use

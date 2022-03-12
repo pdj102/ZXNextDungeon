@@ -31,7 +31,7 @@
  * @param text[] text to print
  * @return void
  */
-void text_print_string(uint8_t x, uint8_t y, char text[]);
+void text_print_string(uint8_t x, uint8_t y, const char text[]);
 
 /**
  * @brief Print char on tilemap.

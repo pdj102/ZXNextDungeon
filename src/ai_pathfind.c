@@ -147,7 +147,7 @@ void print_path()
     }  
 }
 
-direction_t ai_pathfind_direction_to_player(coord_t *coord)
+direction_t ai_pathfind_direction_to_player(const coord_t *coord)
 {
     //messages_print_s_int8("PATHDIR", reached[coord->x][coord->y].reached_from);
     return (reached[coord->x][coord->y].reached_from);

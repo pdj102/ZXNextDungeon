@@ -55,10 +55,12 @@ item_t *entity_item_create(item_type_t item_type, uint8_t x, uint8_t y);
 /**
  * @brief Prints item stat block to screen
  * 
+ * TODO implement function
+ * 
  * @param *item_ptr  pointer to creature
  * @return void
  */
-void entity_item_draw_stat_block(item_t *item_ptr);
+void entity_item_draw_stat_block(const item_t *item_ptr);
 
 /**
  * @brief Returns the first item at dungeon position x, y or NULL is no item
@@ -80,11 +82,26 @@ item_t *entity_item_first_at(uint8_t x, uint8_t y);
  * @param item_ptr previously found item
  * @return next item at position or NULL
  */
-item_t* entity_item_next_at(uint8_t x, uint8_t y, item_t *item_ptr);
+item_t* entity_item_next_at(uint8_t x, uint8_t y, const item_t *item_ptr);
 
-
+/**
+ * @brief Returns the first item at location or NULL if no item
+ * 
+ * @param location  location
+ * 
+ * @return item_t 
+ */
 item_t *entity_item_first_at_location(entity_location_t location);
-item_t* entity_item_next_at_location(entity_location_t location, item_t *item_ptr);
+
+/**
+ * @brief Returns the next item at location or NULL if no next item
+ * 
+ * @param location  location
+ * @param item_ptr  previously found item
+ * 
+ * @return item_t   next item or NULL
+ */
+item_t* entity_item_next_at_location(entity_location_t location, const item_t *item_ptr);
 
 
 /**

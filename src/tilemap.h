@@ -26,9 +26,13 @@
  * public types
  ***************************************************/
 
+/**
+ * @brief A structure to represent a ZX Next tilemap tile
+ * 
+ */
 typedef struct tilemap_tile {
-    uint8_t tile_id;
-    uint8_t tile_attr;
+    uint8_t tile_id;            /**< the id of the tile definition */
+    uint8_t tile_attr;          /**< the tile attributes */
 } tilemap_tile_t;
 
 
@@ -50,7 +54,7 @@ void tilemap_init();
  * @param tile  tile pattern number
  * @return void
  */
-void tilemap_clear(tilemap_tile_t *tile);
+void tilemap_clear(const tilemap_tile_t *tile);
 
 /**
  * Set tilemap tile
@@ -59,7 +63,7 @@ void tilemap_clear(tilemap_tile_t *tile);
  * @param tile  tilemap tile
  * @return void
  */
-void tilemap_set_tile(uint8_t x, uint8_t y, tilemap_tile_t *tile);
+void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile);
 
 /**
  * Set tilemap tile
@@ -68,6 +72,8 @@ void tilemap_set_tile(uint8_t x, uint8_t y, tilemap_tile_t *tile);
  * @param tile  tile pattern number
  * @param tile_attr tile attributes
  * @return void
+ * 
+ * TODO get rid of this function
  */
 void tilemap_set_tile2(uint8_t x, uint8_t y, uint8_t tile_id, uint8_t tile_attr);
 
@@ -81,6 +87,6 @@ void tilemap_set_tile2(uint8_t x, uint8_t y, uint8_t tile_id, uint8_t tile_attr)
  * @param tile_attr tile attributes 
  * @return void
  */
-void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, tilemap_tile_t *tile);
+void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const tilemap_tile_t *tile);
 
 #endif

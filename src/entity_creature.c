@@ -189,7 +189,7 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
     return c;
 }
 
-void entity_creature_draw_stat_block(creature_t *creature_ptr)
+void entity_creature_draw_stat_block(const creature_t *creature_ptr)
 {
     text_print_string(24, 0, creature_ptr->name);
     text_print_string(24, 1, creature_ptr->creature);

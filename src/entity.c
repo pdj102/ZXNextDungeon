@@ -103,7 +103,7 @@ entity_t *entity_front()
     return p_forward_list_front(&entities);
 }
 
-entity_t *entity_next(entity_t *entity_ptr)
+entity_t *entity_next(const entity_t *entity_ptr)
 {
     return p_forward_list_next(entity_ptr);
 }
@@ -175,12 +175,12 @@ entity_t *entity_first_at(uint8_t x, uint8_t y)
     return NULL; 
 }
 
-entity_t* entity_next_at(uint8_t x, uint8_t y, entity_t *entity_ptr)
+entity_t* entity_next_at(uint8_t x, uint8_t y, const entity_t *entity_ptr)
 {
     while( entity_ptr = entity_next(entity_ptr) )
     {
         if (entity_ptr->x == x && entity_ptr->y == y && entity_ptr->location == dungeon) {
-            return entity_ptr;
+            return (entity_t *)entity_ptr;
         }
     }
     return NULL;
@@ -200,12 +200,12 @@ entity_t *entity_first_at_location(entity_location_t location)
     return NULL; 
 }
 
-entity_t* entity_next_at_location(entity_location_t location, entity_t *entity_ptr)
+entity_t* entity_next_at_location(entity_location_t location, const entity_t *entity_ptr)
 {
     while( entity_ptr = entity_next(entity_ptr) )
     {
         if (entity_ptr->location == location) {
-            return entity_ptr;
+            return (entity_t *)entity_ptr;
         }
     }
     return NULL;

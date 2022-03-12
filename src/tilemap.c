@@ -93,7 +93,7 @@ void tilemap_init()
     ZXN_WRITE_REG(0x6B, 0b10000000);
 }
 
-void tilemap_clear(tilemap_tile_t *tile)
+void tilemap_clear(const tilemap_tile_t *tile)
 {
     uint8_t *p = tilemap_base_p;
 
@@ -105,8 +105,7 @@ void tilemap_clear(tilemap_tile_t *tile)
 }
 
 /* TODO check bounds */
-/* TODO support tile attributes */
-void tilemap_set_tile(uint8_t x, uint8_t y, tilemap_tile_t *tile)
+void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile)
 {
     uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
     uint8_t *p = tilemap_base_p + pos;
@@ -126,7 +125,7 @@ void tilemap_set_tile2(uint8_t x, uint8_t y, uint8_t tile_id, uint8_t tile_attr)
 
 /* TODO check bounds */
 /* TODO support tile attributes */
-void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, tilemap_tile_t *tile)
+void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const tilemap_tile_t *tile)
 {
 
     uint16_t pos = (y * TILE_MAP_WIDTH) + x;

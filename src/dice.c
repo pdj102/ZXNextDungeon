@@ -27,7 +27,7 @@
  * functions definitions
  ***************************************************/
 
-uint8_t dice_roll(dice_t *dice_ptr)
+uint8_t dice_roll(const dice_t *dice_ptr)
 {
     uint8_t roll = 0;
 

@@ -134,7 +134,7 @@ item_t *entity_item_first_at(uint8_t x, uint8_t y)
     return NULL;
 }
 
-item_t* entity_item_next_at(uint8_t x, uint8_t y, item_t *item_ptr)
+item_t* entity_item_next_at(uint8_t x, uint8_t y, const item_t *item_ptr)
 {
     entity_t *entity_ptr = item_ptr->entity_ptr;
 
@@ -164,7 +164,7 @@ item_t *entity_item_first_at_location(entity_location_t location)
     return NULL;
 }
 
-item_t* entity_item_next_at_location(entity_location_t location, item_t *item_ptr)
+item_t* entity_item_next_at_location(entity_location_t location, const item_t *item_ptr)
 {
     entity_t *entity_ptr = item_ptr->entity_ptr;
 

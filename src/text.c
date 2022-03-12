@@ -33,7 +33,7 @@ uint8_t tile_map_offset = 36;  //36
  ***************************************************/
 
 
-void text_print_string(uint8_t x, uint8_t y, char text[])
+void text_print_string(uint8_t x, uint8_t y, const char text[])
 {
     uint8_t l = strlen(text);
 

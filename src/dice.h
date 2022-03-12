@@ -15,10 +15,14 @@
  * public types
  ***************************************************/
 
+/**
+ * @brief A structure to represent dice rolls - n * dice + modifier
+ * 
+ */
 typedef struct {
-    uint8_t n;
-    uint8_t d;
-    uint8_t modifier;
+    uint8_t n;          /**< the number of die to roll */
+    uint8_t d;          /**< the number of sides e.g. d20  */
+    uint8_t modifier;   /**< the modifier to add to the dice roll */
 } dice_t;
 
 /***************************************************
@@ -37,7 +41,7 @@ typedef struct {
  *
  * @return roll
  */
-uint8_t dice_roll(dice_t *dice_ptr);
+uint8_t dice_roll(const dice_t *dice_ptr);
 
 
 /**
