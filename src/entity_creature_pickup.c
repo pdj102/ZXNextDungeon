@@ -35,7 +35,7 @@
 
 uint8_t entity_creature_pickup(creature_t *creature_ptr)
 {
-    item_t *item_ptr;
+    entity_item_t *item_ptr;
 
     item_ptr = entity_item_first_at(creature_ptr->entity_ptr->x, creature_ptr->entity_ptr->y);
 
@@ -52,6 +52,7 @@ uint8_t entity_creature_pickup(creature_t *creature_ptr)
         
         return 1;
     }
+    messages_println("NO ITEM");
     
     return 0;
 }

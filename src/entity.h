@@ -27,7 +27,7 @@
  * @brief Enumeration of entity types
  * 
  */
-typedef enum entity_type {item, effect, creature} entity_type_t;
+typedef enum entity_type {entity_type_item, entity_type_effect, entity_type_creature} entity_type_t;
 
 /**
  * @brief Enumeration of entity location types
@@ -54,7 +54,7 @@ typedef struct entity {
 
     uint8_t blocking;       /**< 1 if blocks square or 0 if non blocking */
 
-    entity_type_t type;     /**< entity type e.g. ITEM, EFFECT, CREATURE */
+    entity_type_t type;     /**< entity type e.g. entity_type_item, entity_type_effect, entity_type_creature */
     void *ptr;              /**< pointer to creature, item or effect struct */
 } entity_t;
 

@@ -102,7 +102,7 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
 
     c->entity_ptr = e;
 
-    e->type      = creature;
+    e->type      = entity_type_creature;
     e->ptr = (void*)c;
     e->current_energy = 0;
     e->location = dungeon;    
@@ -286,7 +286,7 @@ creature_t *entity_creature_at(uint8_t x, uint8_t y)
 
     while(target_entity_ptr != NULL)
     {
-        if (target_entity_ptr->type == creature)
+        if (target_entity_ptr->type == entity_type_creature)
         {
             return (creature_t *)target_entity_ptr->ptr;
         }

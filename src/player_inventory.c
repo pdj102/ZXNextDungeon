@@ -68,7 +68,7 @@ void player_inventory_wear_b(creature_t *creature_ptr)
 void wear_b(uint8_t item_num)
 {
     uint8_t count = 0;
-    item_t *item_ptr;
+    entity_item_t *item_ptr;
 
     item_ptr = entity_item_first_at_location(inventory);
     if (item_ptr == NULL)
@@ -98,7 +98,7 @@ void wear_b(uint8_t item_num)
 
 void player_inventory_display_b(creature_t *creature_ptr)
 {
-    item_t *item_ptr;
+    entity_item_t *item_ptr;
 
     char s[] = "25500";     // string buffer for converting numbers to strings
 

@@ -66,8 +66,10 @@ void init_game()
     entity_creature_create(SNAKE, 19, 19);
     entity_creature_create(SNAKE, 11, 11);
     entity_creature_create(SNAKE, 2, 2);
-    entity_item_create(RING, 13, 13);
-    entity_item_create(RING, 13, 5);    
+    entity_item_create(blue_potion, 13, 5);    
+    entity_item_create(red_potion, 13, 13);
+    entity_item_create(ring_ac, 11, 5);
+    entity_item_create(red_potion, 10, 5);    
 
     player_create(5, 5);
 
@@ -98,7 +100,7 @@ void play_game()
             {
                 player_turn();
             }
-            else if (entity_ptr->type == creature)
+            else if (entity_ptr->type == entity_type_creature)
             {
                 ai_turn((creature_t *)entity_ptr->ptr);
             }
