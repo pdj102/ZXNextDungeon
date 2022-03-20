@@ -30,20 +30,46 @@ typedef enum {
 } item_type_class_t;
 
 typedef enum {
+
+    // weapon_melee_class
+    short_sword,
+    long_sword,
+
+    // weapon_ranged_class
+    short_bow,
+    long_bow,
+    sling,
+
+    // wand_class
+    wand_magic_missile,
+
+    // armour_body_class
+    leather_armour,
+    chain_mail_armour,
+
+    // armor_head_class
+    leather_helmet,
+    metal_helmet,
+
+    // ring_class
+    ring_hp,
+    ring_str,
+    ring_ac,
+
+    // potion_class
     red_potion,
-    blue_potion,
-    ring_ac
+    blue_potion
 } items_t;
 
 
 typedef struct {
-    uint8_t             record;         /**< if 0  record is available for use or array index + 1 if in use. */
+    uint8_t             record;             /**< if 0  record is available for use or array index + 1 if in use. */
 
-    entity_t            *entity_ptr;    /**< pointer back to entity */
-    item_type_class_t   item_class_type;      /**< type of item */
-    char                name[15];
+    entity_t            *entity_ptr;        /**< pointer back to entity */
+    item_type_class_t   item_class;         /**< type of item class*/
+    char                name[15];           /**< description */
 
-    uint8_t             dummy2;
+    items_t             item_type;          /** type of item */
     uint8_t             dummy3;
 } entity_item_t;
 

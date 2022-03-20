@@ -25,7 +25,8 @@
  ***************************************************/
 
 typedef struct {
-    item_type_class_t   type;
+    item_type_class_t   item_class;
+    items_t             item_type;
     char                name[15];
     tilemap_tile_t      tile;
 } item_t;
@@ -47,9 +48,9 @@ static uint8_t max_entity_item_records;
 
 static const item_t items[] =
 {
-    {potion_class, "RED POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}},
-    {potion_class, "BLUE POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}},
-    {ring_class, "RING", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}}
+    {potion_class, red_potion, "RED POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}},
+    {potion_class, blue_potion, "BLUE POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}},
+    {ring_class, ring_ac, "RING AC", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}}
 };
 
 /***************************************************
@@ -127,7 +128,8 @@ entity_item_t *entity_item_create(items_t item, uint8_t x, uint8_t y)
     e->tilemap_tile.tile_attr = NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE;
 */
 
-    i->item_class_type = items[item].type;
+    i->item_class = items[item].item_class;
+    i->item_type = items[item].item_type;    
     strcpy(i->name, items[item].name);
     e->tilemap_tile = items[item].tile;
 

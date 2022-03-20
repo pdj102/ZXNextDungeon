@@ -55,59 +55,69 @@ void equip_ring_b(entity_item_t *item_ptr);
  * functions
  ***************************************************/
 
-// TODO handle empty inventory better
-void player_inventory_wear_b(creature_t *creature_ptr)
+uint8_t select_item(uint8_t max)
 {
-    unsigned char key;
-
-    uint8_t count;
-
-    count = ui_display_inventory();
-
-    messages_println("SELECT ITEM TO EQUIP OR SPACE TO EXIT"); 
+    unsigned char key;    
+    uint8_t index;
 
     while ((key = in_inkey()) == 0) ;   // loop while no key pressed
     in_wait_nokey();    // wait no key
-
     key = toupper(key);
-
 
     if (key == ' ')
     {
-        messages_println("ABORT");
-        return;
-    } 
-
-    if (key >= 'A' && key <= 'Z')
-    {
-        wear_b(key - 'A');      
-    }
-    else
-    {
-        messages_println("INVALID SELECTION");  
+        return 0;
     }
 
+    // A = 1
+    // B = 2 etc
+    index = (key - 'A') + 1;
+
+    if (index > max)
+    {
+        return 0;
+    }
+
+    return index;
 }
 
-void wear_b(uint8_t item_num)
+void player_inventory_wear_b(creature_t *creature_ptr)
 {
-    uint8_t count = 0;
+
+
+    uint8_t max;
+    uint8_t index;
+    uint8_t i = 1;    
     entity_item_t *item_ptr;
 
-    item_ptr = entity_item_first_at_location(inventory);
-    if (item_ptr == NULL)
+
+    max = ui_display_inventory();
+
+    if (max == 0)
     {
+        messages_println("NO ITEMS TO EQUIP");
         return;
     }
 
-    while (count < item_num)
+    messages_println("SELECT ITEM TO EQUIP OR SPACE TO EXIT"); 
+
+    index = select_item(max);
+
+    if (index == 0)
     {
-        count++;
+        return;        
+    }
+
+    item_ptr = entity_item_first_at_location(inventory);
+
+    while (i < index)
+    {
+        i++;
         item_ptr = entity_item_next_at_location(inventory, item_ptr);
 
         if (item_ptr == NULL)
         {   
-            messages_println("INVALID SELECTION");  
+            messages_println("ERROR");  
             /* no such item - return */
             return;
         }
@@ -115,7 +125,7 @@ void wear_b(uint8_t item_num)
 
     /* put the item on */
 
-    switch( item_ptr->item_class_type)
+    switch( item_ptr->item_class)
     {
         case ring_class :
             equip_ring_b(item_ptr);
