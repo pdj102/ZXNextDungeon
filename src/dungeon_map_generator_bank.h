@@ -1,33 +1,33 @@
 /***************************************************
     Dungeon - ZX Spectrum Next 
-    @author Paul Johnson
+    Paul Johnson 
 
-    @brief <Module description>
+    Dungeon map generator
+
+    Banked code. Do not call directly   
 
  ***************************************************/
 
-#ifndef BLANK_H 
-    #define BLANK_H 
+#ifndef DUNGEON_MAP_GENERATOR_BANK_H 
+    #define DUNGEON_MAP_GENERATOR_BANK_H 
+
+#include <inttypes.h>
+
+
 
 /***************************************************
- * public types
+ * types
  ***************************************************/
 
 /***************************************************
- * public variable declarations - extern
+ * variable declarations
  ***************************************************/
 
 /***************************************************
- * public function prototypes
+ * function prototypes
  ***************************************************/
 
-/**
- * @brief function description
- * 
- * @param input1  description
- * @return description
- */
-void function();
-
+// generate a dungeon map 
+void dungeon_map_generate_b();
 
 #endif

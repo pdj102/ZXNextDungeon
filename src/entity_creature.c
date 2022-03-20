@@ -189,43 +189,7 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
     return c;
 }
 
-void entity_creature_draw_stat_block(const creature_t *creature_ptr)
-{
-    text_print_string(24, 0, creature_ptr->name);
-    text_print_string(24, 1, creature_ptr->creature);
-    text_print_string(24, 2, "LEVEL");
-    text_print_string(24, 3, "EXP");
 
-    text_print_string(24, 5, "STR:");
-    text_print_string(24, 6, "INT:");
-    text_print_string(24, 7, "WIS:");
-    text_print_string(24, 8, "DEX:");
-    text_print_string(24, 9, "CON:");
-    text_print_string(24, 10, "CHA:");    
-
-    text_print_string(24, 11, "AC:");
-    text_print_string(24, 12, "HP:");
-
-    text_print_string(24, 13, "SPEED:");
-
-    text_print_uint8(30, 2, creature_ptr->lvl);
-
-    text_print_uint16(30, 3, creature_ptr->exp);
-
-
-    text_print_uint8(30, 5, creature_ptr->strength);
-    text_print_uint8(30, 6, creature_ptr->intelligence);
-    text_print_uint8(30, 7, creature_ptr->wisdom);
-    text_print_uint8(30, 8, creature_ptr->dexerity);
-    text_print_uint8(30, 9, creature_ptr->constitution);
-    text_print_uint8(30, 10, creature_ptr->charisma);    
-    
-    text_print_uint8(30, 11, creature_ptr->ac);
-
-    text_print_uint8(30, 12, creature_ptr->curr_hp);
-
-    text_print_uint8(30, 13, creature_ptr->speed);
-}
 
 
 

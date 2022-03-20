@@ -110,14 +110,6 @@ void entity_creature_init();
  */
 creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uint8_t y);
 
-/**
- * @brief Prints creature stat block to screen
- * 
- * @param creature_ptr  pointer to creature
- * @return void
- */
-void entity_creature_draw_stat_block(const creature_t *creature_ptr);
-
 
 /**
  * @brief Returns the ability modifier for a given ability score

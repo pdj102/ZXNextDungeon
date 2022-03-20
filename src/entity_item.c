@@ -43,7 +43,7 @@ static entity_item_t *entity_item_base_ptr;
 // Ensure sizeof(entity_t) * max_entity_records fits within allocated memory!
 static uint8_t max_entity_item_records;
 
-// Some handy dungeon tiles
+// Some handy items
 
 static const item_t items[] =
 {

@@ -28,7 +28,8 @@
 			"entity_creature_pickup.h": "c",
 			"entity_creature.h": "c",
 			"tilemap_tile_defns.h": "c",
-			"string.h": "c"
+			"string.h": "c",
+			"entity_item.h": "c"
 		}
 	}
 }

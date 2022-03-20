@@ -38,6 +38,8 @@
 creature_t *creature_player_ptr;
 entity_t *entity_player_ptr;
 
+
+
 /***************************************************
  * private variables - static
  ***************************************************/
@@ -53,20 +55,6 @@ void player_create(uint8_t x, uint8_t y)
     entity_player_ptr = creature_player_ptr->entity_ptr;
 }
 
-void player_inventory_display(creature_t *creature_player_ptr)
-{
-    /* Map Player UI (bank 20) into ZX Spectrum 8k MMU slot 6 */
-    ZXN_WRITE_REG(0x56, 20);
-    player_inventory_display_b(creature_player_ptr);
-}
-
-void player_inventory_wear(creature_t *creature_player_ptr)
-{
-    /* Map Player UI (bank 20) into ZX Spectrum 8k MMU slot 6 */
-    ZXN_WRITE_REG(0x56, 20);
-    player_inventory_wear_b(creature_player_ptr);
-}
-
 void player_turn()
 {
     unsigned char key;
@@ -77,23 +65,19 @@ void player_turn()
     switch(toupper(key)) {
         case 54:    //down
             entity_creature_move_or_strike(creature_player_ptr, 0, 1);
-            ZXN_WRITE_REG(0x56, 19); // TODO create AI.c to call banked functions
-            ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);  
+            ai_pathfind(entity_player_ptr->x, entity_player_ptr->y);  
             break;
         case 55:    //up
             entity_creature_move_or_strike(creature_player_ptr, 0, -1);
-            ZXN_WRITE_REG(0x56, 19); // TODO create AI.c to call banked functions            
-            ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
+            ai_pathfind(entity_player_ptr->x, entity_player_ptr->y);             
             break;
         case 53:    //left
-            entity_creature_move_or_strike(creature_player_ptr, -1, 0);
-            ZXN_WRITE_REG(0x56, 19); // TODO create AI.c to call banked functions            
-            ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
+            entity_creature_move_or_strike(creature_player_ptr, -1, 0);       
+            ai_pathfind(entity_player_ptr->x, entity_player_ptr->y);             
             break;
         case 56:    //right
-            entity_creature_move_or_strike(creature_player_ptr, 1, 0);
-            ZXN_WRITE_REG(0x56, 19); // TODO create AI.c to call banked functions            
-            ai_pathfind(creature_player_ptr->entity_ptr->x, creature_player_ptr->entity_ptr->y);             
+            entity_creature_move_or_strike(creature_player_ptr, 1, 0);          
+            ai_pathfind(entity_player_ptr->x, entity_player_ptr->y);             
             break;
         case 'I':
             player_inventory_display(creature_player_ptr);
@@ -103,8 +87,8 @@ void player_turn()
             entity_creature_pickup(creature_player_ptr);
             break;
 
-        case 'W':
-            player_inventory_wear(creature_player_ptr);
+        case 'E':
+            player_inventory_wear(creature_player_ptr);         
             break;
 
         case '1':

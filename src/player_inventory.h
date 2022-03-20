@@ -9,6 +9,7 @@
 #ifndef PLAYER_INVENTORY_H 
     #define PLAYER_INVENTORY_H 
 
+
 #include "entity_creature.h"
 
 
@@ -26,22 +27,19 @@
  ***************************************************/
 
 /**
- * @brief Displays the inventory UI
+ * @brief Command displays inventory
  * 
  * @param *creature_ptr  pointer to creature
  * @return void
  */
-void player_inventory_display_b(creature_t *creature_ptr);
+void player_inventory_display(creature_t *creature_ptr);
 
 /**
- * @brief Clears the right hand display area
+ * @brief Command wear/wield item
  * 
  * @return void
  */
-void player_inventory_blank_display_b();
+void player_inventory_wear(creature_t *creature_ptr);
 
-
-void player_inventory_wear_b(creature_t *creature_ptr);
-void wear_b(uint8_t item_num);
 
 #endif

@@ -14,6 +14,7 @@
 #include "entity.h"
 #include "entity_creature.h"
 #include "entity_item.h"
+#include "ui.h"
 #include "messages.h"
 
 #include "ai_pathfind.h"
@@ -24,7 +25,6 @@
 /***************************************************
  * function prototypes
  ***************************************************/
-void hit(uint8_t x, uint8_t y);
 
 /***************************************************
  * types
@@ -51,8 +51,6 @@ void init_game()
     /* Init dungeon map data structures */
     dungeon_map_init();
 
-    /* Map Dungeon map generator (bank 18) into ZX Spectrum 8k MMU slot 6 */
-    ZXN_WRITE_REG(0x56, 18);
     dungeon_map_generate();    
 
     entity_init();
@@ -73,14 +71,11 @@ void init_game()
 
     player_create(5, 5);
 
-    // Map bank 19 into ZX Spectrum 8k MMU slot 6
-    ZXN_WRITE_REG(0x56, 19);
     ai_pathfind(5, 5);
 }
 
 void play_game()
 {
-
     entity_t *entity_ptr = entity_front();
 
     // step through each entity
@@ -119,7 +114,7 @@ int main()
     {
         play_game();
         entity_draw_all();
-        entity_creature_draw_stat_block(creature_player_ptr);
+        ui_draw_stat_block((creature_t *)entity_player_ptr->ptr);        
     };
     return 0;
 }

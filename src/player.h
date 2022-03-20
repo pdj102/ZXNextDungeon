@@ -12,7 +12,7 @@
 
 #include <stdint.h>             // standard names for ints with no ambiguity 
    
-
+#include "entity_item.h"
 #include "entity_creature.h"
 
 /***************************************************
@@ -25,6 +25,7 @@
 
 extern creature_t *creature_player_ptr;
 extern entity_t *entity_player_ptr;
+
 
 /***************************************************
  * public function prototypes

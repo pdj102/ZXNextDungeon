@@ -45,25 +45,28 @@ PROGRAM=dungeon.nex
 # program output name
 ASSEMBLEY=dungeon.asm
 
+# ####################################################################################################################################
 # PAGE_18
 # Target for dungeon map generator code and data
-# - dungeon_map_generator.o 
-$(OBJDIR)/dungeon_map_generator.o: $(SRCDIR)/dungeon_map_generator.c $(SRCDIR)/dungeon_map_generator.h $(PRAGMA_FILE)
+# - dungeon_map_generator_bank.o 
+$(OBJDIR)/dungeon_map_generator_bank.o: $(SRCDIR)/dungeon_map_generator_bank.c $(SRCDIR)/dungeon_map_generator_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_18 --constsegPAGE_18 -o $@ $<
 
+# ####################################################################################################################################
 # PAGE_19
-# target for ai*
+# target for ai* _bank
 # - ai_pathfind
 # - ai
-$(OBJDIR)/ai_pathfind.o: $(SRCDIR)/ai_pathfind.c $(SRCDIR)/ai_pathfind.h $(PRAGMA_FILE)
+$(OBJDIR)/ai_pathfind_bank.o: $(SRCDIR)/ai_pathfind_bank.c $(SRCDIR)/ai_pathfind_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_19 --constsegPAGE_19 -o $@ $<
 
-$(OBJDIR)/ai.o: $(SRCDIR)/ai.c $(SRCDIR)/ai.h $(PRAGMA_FILE)
+$(OBJDIR)/ai_bank.o: $(SRCDIR)/ai_bank.c $(SRCDIR)/ai_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_19 --constsegPAGE_19 -o $@ $<
 
+# ####################################################################################################################################
 # PAGE 20
-# target for player_*
-$(OBJDIR)/player_inventory.o: $(SRCDIR)/player_inventory.c $(SRCDIR)/player_inventory.h $(PRAGMA_FILE)
+# target for player_inventory_bank*
+$(OBJDIR)/player_inventory_bank.o: $(SRCDIR)/player_inventory_bank.c $(SRCDIR)/player_inventory_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_20 --constsegPAGE_20 -o $@ $<
 
 

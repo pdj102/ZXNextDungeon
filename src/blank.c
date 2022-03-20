@@ -20,15 +20,10 @@
  ***************************************************/
 
 /***************************************************
- * functions definitions
+ * functions 
  ***************************************************/
 
-/**
- * function description
- * 
- * @param input1  description
- * @return void
- */
+
 void function()
 {
 

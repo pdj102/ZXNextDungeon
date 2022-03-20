@@ -1,14 +1,15 @@
 /***************************************************
     Dungeon - ZX Spectrum Next 
-    Paul Johnson
+    Paul Johnson 
 
-   AI 
+    AI 
+
+    Banked code. Do not call directly
 
  ***************************************************/
-#include "ai.h"
-#include "ai_bank.h"
 
-#include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions
+#ifndef AI_BANK_H 
+    #define AI_BANK_H 
 
 #include "entity_creature.h"
 
@@ -18,26 +19,21 @@
  * types
  ***************************************************/
 
+/***************************************************
+ * variable declarations
+ ***************************************************/
 
 /***************************************************
  * function prototypes
  ***************************************************/
 
-
-/***************************************************
- * variables
- ***************************************************/
-
-
-/***************************************************
- * functions
- ***************************************************/
+/**
+ * @brief AI creature takes a turn
+ * 
+ * @param *creature_ptr  pointer to creature
+ * @return void
+ */
+void ai_turn_b(creature_t *creature_ptr);
 
 
-void ai_turn(creature_t *creature_ptr)
-{
-    /* Map AI (bank 19) into ZX Spectrum 8k MMU slot 6 */
-    ZXN_WRITE_REG(0x56, 19);
-    /* Call banked code */    
-    ai_turn_b(creature_ptr); 
-}
+#endif

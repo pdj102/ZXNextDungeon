@@ -6,8 +6,13 @@
 
  ***************************************************/
 
-#ifndef BLANK_H 
-    #define BLANK_H 
+#ifndef UI_H 
+    #define UI_H 
+
+#include <inttypes.h>
+
+#include "entity_creature.h"
+
 
 /***************************************************
  * public types
@@ -22,12 +27,27 @@
  ***************************************************/
 
 /**
- * @brief function description
+ * @brief display the inventory of the creature
  * 
- * @param input1  description
- * @return description
+ * @param creature_ptr display inventory of this creature
+ * @return number of items in inventory
  */
-void function();
+uint8_t ui_display_inventory();
+
+/**
+ * @brief display the stats of the creature
+ * 
+ * @param creature_ptr display stats of this creature
+ * @return void
+ */
+void ui_draw_stat_block(const creature_t *creature_ptr);
+
+/**
+ * @brief clear the ui
+ * 
+ * @return void
+ */
+void ui_clear_display();
 
 
 #endif
