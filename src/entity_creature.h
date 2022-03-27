@@ -41,8 +41,9 @@ typedef struct {
     dice_t          dmg_die;
 } attack_t;
 
-typedef struct {
 
+
+typedef struct {
     uint8_t record;         /**< if 0  record is available for use or array index + 1 if in use. */
 
     entity_t    *entity_ptr;    /**< pointer back to entity */
@@ -59,13 +60,11 @@ typedef struct {
     uint16_t    nxt;
 
     uint8_t     strength;
-    uint8_t     dexerity;    
+    uint8_t     dexterity;    
     uint8_t     constitution;    
     uint8_t     intelligence;
     uint8_t     wisdom;
     uint8_t     charisma;    
-
-
 
     uint8_t     ac;
     

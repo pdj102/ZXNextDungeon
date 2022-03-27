@@ -24,7 +24,6 @@
 #include "messages.h"
 #include "memory_map.h"
 
-#define DEBUG 
 
 
 /***************************************************
@@ -123,7 +122,7 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
             c->nxt      = 100;
 
             c->strength      = 12;
-            c->dexerity      = 12;            
+            c->dexterity      = 12;            
             c->constitution      = 12;
             c->intelligence      = 12;
             c->wisdom      = 12;
@@ -159,7 +158,7 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
             c->nxt      = 100;
 
             c->strength         = 10;
-            c->dexerity         = 5;            
+            c->dexterity         = 5;            
             c->constitution     = 12;
             c->intelligence     = 1;            
             c->wisdom           = 10;

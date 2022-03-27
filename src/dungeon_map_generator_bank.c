@@ -21,17 +21,20 @@
 #pragma output CRT_ORG_CODE = 0xC000
 
 /***************************************************
- * private types
+ * private types 
  ***************************************************/
 
 /***************************************************
- * private function prototypes
+ * private function prototypes - static
  ***************************************************/
 
-void fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, uint8_t tile);
-uint8_t is_empty_space_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h);
-uint8_t create_room_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h);
-void dungeon_map_embelish_walls_b();
+static void fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, uint8_t tile);
+
+static uint8_t is_empty_space_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h);
+
+static uint8_t create_room_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h);
+
+static void dungeon_map_embelish_walls_b();
 
 /***************************************************
  * Private variables - static
@@ -44,7 +47,7 @@ extern const dungeon_tile_t tiles[];
  * functions definitions
  ***************************************************/
 
-void fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, uint8_t tile)
+static void fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, uint8_t tile)
 {
     // TODO check bounds
     for (uint8_t y = dungeon_y; y < dungeon_h+dungeon_y; y++ ) {
@@ -53,7 +56,7 @@ void fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dun
     }
 }
 
-uint8_t is_empty_space_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h)
+static uint8_t is_empty_space_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h)
 {
     // TODO check bounds
     for (uint8_t y = dungeon_y; y < dungeon_h+dungeon_y; y++ ) {
@@ -66,14 +69,14 @@ uint8_t is_empty_space_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w
     return 1;
 }
 
-uint8_t create_room_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h)
+static uint8_t create_room_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h)
 {
     fill_b(dungeon_x, dungeon_y, dungeon_w, dungeon_h, FLOOR);
 
     return 1;
 }
 
-void dungeon_map_embelish_walls_b()
+static void dungeon_map_embelish_walls_b()
 {
     // scan from the bottom to top. 
     // Do not scan row 0 as some rules write to the row-1 

@@ -19,12 +19,27 @@
  * public types
  ***************************************************/
 
+
 /***************************************************
- * public variable declarations - extern
+ * public variable declarations 
  ***************************************************/
 
 extern creature_t *creature_player_ptr;
 extern entity_t *entity_player_ptr;
+
+extern uint8_t     player_base_strength;
+extern uint8_t     player_base_dexterity;    
+extern uint8_t     player_base_constitution;    
+extern uint8_t     player_base_intelligence;
+extern uint8_t     player_base_wisdom;
+extern uint8_t     player_base_charisma;
+
+extern uint8_t     player_base_ac;
+    
+extern uint8_t     player_base_max_hp;
+extern int8_t      player_base_curr_hp;
+
+extern uint8_t     player_base_speed;
 
 
 /***************************************************

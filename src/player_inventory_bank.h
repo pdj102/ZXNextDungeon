@@ -23,6 +23,9 @@
  * variable declarations
  ***************************************************/
 
+extern creature_t *creature_player_ptr;
+extern entity_t *entity_player_ptr;
+
 /***************************************************
  * function prototypes
  ***************************************************/
@@ -36,11 +39,18 @@
 void player_inventory_display_b(creature_t *creature_ptr);
 
 /**
- * @brief Player can equip item
+ * @brief Player wear/wield item
  * 
  * @return void
  */
 void player_inventory_wear_b(creature_t *creature_ptr);
+
+/**
+ * @brief Player take off item
+ * 
+ * @return void
+ */
+void player_inventory_takeoff_b(creature_t *creature_ptr);
 
 
 #endif

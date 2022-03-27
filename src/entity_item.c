@@ -29,6 +29,8 @@ typedef struct {
     items_t             item_type;
     char                name[15];
     tilemap_tile_t      tile;
+    affect_t            affect;             /**< what ability does the item modify */
+    uint8_t             affect_mod;         /**< what it the mod */    
 } item_t;
 
 /***************************************************
@@ -48,9 +50,9 @@ static uint8_t max_entity_item_records;
 
 static const item_t items[] =
 {
-    {potion_class, red_potion, "RED POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}},
-    {potion_class, blue_potion, "BLUE POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}},
-    {ring_class, ring_ac, "RING AC", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}}
+    {potion_class, red_potion, "RED POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+    {potion_class, blue_potion, "BLUE POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}, affect_none, 0},
+    {ring_class, ring_ac, "RING AC", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}, affect_ac, 2}
 };
 
 /***************************************************
@@ -129,7 +131,9 @@ entity_item_t *entity_item_create(items_t item, uint8_t x, uint8_t y)
 */
 
     i->item_class = items[item].item_class;
-    i->item_type = items[item].item_type;    
+    i->item_type = items[item].item_type;
+    i->affect = items[item].affect;
+    i->affect_mod = items[item].affect_mod;   
     strcpy(i->name, items[item].name);
     e->tilemap_tile = items[item].tile;
 

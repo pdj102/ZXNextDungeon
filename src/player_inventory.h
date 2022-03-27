@@ -41,5 +41,12 @@ void player_inventory_display(creature_t *creature_ptr);
  */
 void player_inventory_wear(creature_t *creature_ptr);
 
+/**
+ * @brief Command takeoff item
+ * 
+ * @return void
+ */
+void player_inventory_takeoff(creature_t *creature_ptr);
+
 
 #endif

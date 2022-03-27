@@ -85,7 +85,7 @@ void ui_draw_stat_block(const creature_t *creature_ptr)
     text_print_uint8(30, 5, creature_ptr->strength);
     text_print_uint8(30, 6, creature_ptr->intelligence);
     text_print_uint8(30, 7, creature_ptr->wisdom);
-    text_print_uint8(30, 8, creature_ptr->dexerity);
+    text_print_uint8(30, 8, creature_ptr->dexterity);
     text_print_uint8(30, 9, creature_ptr->constitution);
     text_print_uint8(30, 10, creature_ptr->charisma);    
     

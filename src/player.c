@@ -28,6 +28,7 @@
  * private types
  ***************************************************/
 
+
 /***************************************************
  * private function prototypes
  ***************************************************/
@@ -38,11 +39,26 @@
 creature_t *creature_player_ptr;
 entity_t *entity_player_ptr;
 
+uint8_t     player_base_strength;
+uint8_t     player_base_dexterity;    
+uint8_t     player_base_constitution;    
+uint8_t     player_base_intelligence;
+uint8_t     player_base_wisdom;
+uint8_t     player_base_charisma;
 
+uint8_t     player_base_ac;
+    
+uint8_t     player_base_max_hp;
+int8_t      player_base_curr_hp;
+
+uint8_t     player_base_speed;
 
 /***************************************************
  * private variables - static
  ***************************************************/
+
+
+
 
 /***************************************************
  * functions definitions
@@ -53,6 +69,18 @@ void player_create(uint8_t x, uint8_t y)
 {
     creature_player_ptr = entity_creature_create(PLAYER, x, y);
     entity_player_ptr = creature_player_ptr->entity_ptr;
+
+    player_base_strength = creature_player_ptr->strength;
+    player_base_constitution = creature_player_ptr->constitution;
+    player_base_dexterity = creature_player_ptr->dexterity;    
+    player_base_intelligence = creature_player_ptr->intelligence;    
+    player_base_wisdom = creature_player_ptr->wisdom;
+    player_base_charisma = creature_player_ptr->charisma;
+
+    player_base_ac = creature_player_ptr->ac;
+    player_base_max_hp = creature_player_ptr->max_hp;
+    player_base_curr_hp = creature_player_ptr->curr_hp;
+    player_base_speed = creature_player_ptr->speed;
 }
 
 void player_turn()
@@ -87,9 +115,13 @@ void player_turn()
             entity_creature_pickup(creature_player_ptr);
             break;
 
-        case 'E':
+        case 'W':
             player_inventory_wear(creature_player_ptr);         
             break;
+
+        case 'T':
+            player_inventory_takeoff(creature_player_ptr);  
+            break;            
 
         case '1':
             dungeon_map_scroll(-1, 0);

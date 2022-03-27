@@ -61,6 +61,18 @@ typedef enum {
     blue_potion
 } items_t;
 
+typedef enum {
+    affect_none,
+    affect_strength,
+    affect_dexterity,
+    affect_constitution,
+    affect_wisdom,
+    affect_charisma,
+    affect_ac,
+    affect_max_hp,
+    affect_speed
+} affect_t;
+
 
 typedef struct {
     uint8_t             record;             /**< if 0  record is available for use or array index + 1 if in use. */
@@ -69,8 +81,10 @@ typedef struct {
     item_type_class_t   item_class;         /**< type of item class*/
     char                name[15];           /**< description */
 
-    items_t             item_type;          /** type of item */
-    uint8_t             dummy3;
+    items_t             item_type;          /**< type of item */
+
+    affect_t            affect;             /**< what ability does the item modify */
+    uint8_t             affect_mod;         /**< what it the mod */
 } entity_item_t;
 
 /***************************************************

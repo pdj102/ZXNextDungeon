@@ -16,6 +16,8 @@
 #include "entity_item.h"
 #include "entity_creature.h"
 
+#include "player.h"
+
 #include "ui.h"
 
 #include "text.h"
@@ -35,7 +37,7 @@
  * private variables in banked code not supported by z88dk. Place them in asm file
  ***************************************************/
 
-extern entity_item_t *player_wear_body;
+extern entity_item_t *player_equip_body;
 extern entity_item_t *player_equip_left_hand;
 extern entity_item_t *player_equip_right_hand;
 extern entity_item_t *player_equip_left_finger;
@@ -44,18 +46,24 @@ extern entity_item_t *player_equip_head;
 
 
 /***************************************************
- * function prototypes
+ * Private function prototypes - static
  ***************************************************/
 
-void wear_b(uint8_t item_num);
+static uint8_t select_item(uint8_t max);
 
-void equip_ring_b(entity_item_t *item_ptr);
+static void equip_b(uint8_t item_num);
+
+static void equip_ring_b(entity_item_t *item_ptr);
+
+static void calculate_stats_b();
+
+static void apply_affect_mod(entity_item_t *item_ptr);
 
 /***************************************************
  * functions
  ***************************************************/
 
-uint8_t select_item(uint8_t max)
+static uint8_t select_item(uint8_t max)
 {
     unsigned char key;    
     uint8_t index;
@@ -83,13 +91,10 @@ uint8_t select_item(uint8_t max)
 
 void player_inventory_wear_b(creature_t *creature_ptr)
 {
-
-
     uint8_t max;
     uint8_t index;
     uint8_t i = 1;    
     entity_item_t *item_ptr;
-
 
     max = ui_display_inventory();
 
@@ -137,19 +142,21 @@ void player_inventory_wear_b(creature_t *creature_ptr)
 
     /* TODO recalculate bonuses */
 
+    calculate_stats_b();
+
 }
 
-void equip_ring_b(entity_item_t *item_ptr)
+static void equip_ring_b(entity_item_t *item_ptr)
 {
-    if (player_equip_left_hand == NULL)
+    if (player_equip_left_finger == NULL)
     {
-        player_equip_left_hand = item_ptr;
+        player_equip_left_finger = item_ptr;
         item_ptr->entity_ptr->location = wearing;
         messages_println("YOU EQUIP THE RING");
     }
-    else if (player_equip_right_hand == NULL)
+    else if (player_equip_right_finger == NULL)
     {
-        player_equip_right_hand = item_ptr;
+        player_equip_right_finger = item_ptr;
         item_ptr->entity_ptr->location = wearing;
         messages_println("YOU EQUIP THE RING");
     }
@@ -170,3 +177,55 @@ void player_inventory_display_b(creature_t *creature_ptr)
     in_wait_key(); 
 }
 
+static void calculate_stats_b()
+{
+    creature_player_ptr->strength = player_base_strength;
+    creature_player_ptr->dexterity = player_base_dexterity; 
+    creature_player_ptr->constitution = player_base_constitution;   
+    creature_player_ptr->intelligence = player_base_intelligence;
+    creature_player_ptr->wisdom = player_base_wisdom;
+    creature_player_ptr->charisma = player_base_charisma;
+
+    creature_player_ptr->ac = player_base_ac;
+
+    creature_player_ptr->max_hp = player_base_max_hp;
+    creature_player_ptr->curr_hp = player_base_curr_hp;
+    creature_player_ptr->speed = player_base_speed;
+
+    apply_affect_mod(player_equip_body);
+    apply_affect_mod(player_equip_left_hand);
+    apply_affect_mod(player_equip_right_hand);
+    apply_affect_mod(player_equip_left_finger);
+    apply_affect_mod(player_equip_right_finger);
+    apply_affect_mod(player_equip_head);
+}
+
+/** 
+ * TODO handle negative modifiers - ability scores must not go negative *
+ */
+
+static void apply_affect_mod(entity_item_t *item_ptr) 
+{
+    uint8_t affect;
+    int8_t affect_mod = 0;
+
+    if (item_ptr == NULL)
+        return;
+
+    affect = item_ptr->affect;
+    affect = item_ptr->affect_mod;
+
+    switch (affect)
+    {
+    case affect_none:
+        /* no affect */
+        break;
+    case affect_ac:
+        creature_player_ptr->ac += affect_mod;
+        break;
+    
+    default:
+        /* should never get */
+        break;
+    }  
+}
