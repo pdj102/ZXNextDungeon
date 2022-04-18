@@ -121,7 +121,11 @@ void player_turn()
 
         case 'T':
             player_inventory_takeoff(creature_player_ptr);  
-            break;            
+            break;
+
+        case 'D':
+            player_inventory_drop(creature_player_ptr);
+            break;                      
 
         case '1':
             dungeon_map_scroll(-1, 0);

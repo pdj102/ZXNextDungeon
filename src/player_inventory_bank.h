@@ -52,5 +52,11 @@ void player_inventory_wear_b(creature_t *creature_ptr);
  */
 void player_inventory_takeoff_b(creature_t *creature_ptr);
 
+/**
+ * @brief Player drop item
+ * 
+ * @return void
+ */
+void player_inventory_drop_b(creature_t *creature_ptr);
 
 #endif

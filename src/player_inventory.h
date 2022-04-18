@@ -48,5 +48,12 @@ void player_inventory_wear(creature_t *creature_ptr);
  */
 void player_inventory_takeoff(creature_t *creature_ptr);
 
+/**
+ * @brief Command drop item
+ * 
+ * @return void
+ */
+void player_inventory_drop(creature_t *creature_ptr);
+
 
 #endif

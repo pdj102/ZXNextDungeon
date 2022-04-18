@@ -62,3 +62,11 @@ void player_inventory_display(creature_t *creature_ptr)
     player_inventory_display_b(creature_ptr); 
 }
 
+void player_inventory_drop(creature_t *creature_ptr)
+{
+    /* Map Player Inventory (bank 20) into ZX Spectrum 8k MMU slot 6 */
+    ZXN_WRITE_REG(0x56, 20);
+    /* Call banked code */    
+    player_inventory_drop_b(creature_ptr);
+}
+

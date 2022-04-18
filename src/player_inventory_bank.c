@@ -148,6 +148,46 @@ void player_inventory_takeoff_b(creature_t *creature_ptr)
     calculate_stats_b();    
 }
 
+void player_inventory_drop_b(creature_t *creature_ptr)
+{
+uint8_t max;
+    uint8_t index;
+    uint8_t i = 1;    
+    entity_item_t *item_ptr;
+
+    max = ui_display_items(inventory);
+
+    if (max == 0)
+    {
+        messages_println("NO ITEMS TO DROP");
+        return;
+    }
+
+    messages_println("SELECT ITEM TO DROP OR SPACE TO EXIT"); 
+
+    index = ui_select_item(max);
+
+    if (index == 0)
+    {       
+        return;        
+    }
+
+    item_ptr = entity_item_get_nth_at_location(index, inventory);
+
+    if (item_ptr == NULL)
+    {
+        messages_println("ERROR 5");        
+        return;
+    }
+
+    /* drop item */
+    messages_println("YOU DROP ITEM");
+    item_ptr->entity_ptr->location = dungeon;
+    item_ptr->entity_ptr->x = creature_ptr->entity_ptr->x;
+    item_ptr->entity_ptr->y = creature_ptr->entity_ptr->y;
+  
+}
+
 static void equip_ring_b(entity_item_t *item_ptr)
 {
     if (player_equip_left_finger == NULL)
