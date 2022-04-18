@@ -59,6 +59,16 @@
 #define TILE_RING       38
 #define TILE_9_3        39
 
+#define TILE_LONG_SWORD 40  // palete 3 for red 4 for blue
+#define TILE_SHORT_SWORD 41
+#define TILE_LONG_BOW   42
+#define TILE_SLING       43
+
+#define TILE_METAL_ARMOUR   44  // palete 3 for red 4 for blue
+#define TILE_LEATHER_ARMOUR 45
+#define TILE_SHIELD         46
+#define TILE_HELMET         47
+
 #define TILE_PLAYER     28
 #define TILE_SNAKE      33
 

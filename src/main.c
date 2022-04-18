@@ -69,6 +69,10 @@ void init_game()
     entity_item_create(ring_ac, 11, 5);
     entity_item_create(red_potion, 10, 5);    
 
+    entity_item_create(long_sword, 5, 4);
+    entity_item_create(metal_helmet, 6, 4);
+    entity_item_create(chain_mail_armour, 7, 4);
+
     player_create(5, 5);
 
     ai_pathfind(5, 5);

@@ -32,13 +32,49 @@ Run dungeon.nex using the CSpect emulator
 - F2 to select file to run
 - Select dungeon.nex
 
-## sprites
+## Sprite and palette editor
 
-To lead the sprites in the  editor 
+### sprites
+
+To load the sprites in the editor 
 - Toggle 8x8 on
 - Select 4bit
 - upload .spr file
 - upload palette file
+
+To save the sprites from the editor
+- save the .spr file (to reload into the editor later)
+
+To export sprite data to source code
+-  select sprites
+-  select 8x8
+- bytes per line 16
+- Note each sprite is 16 bytes * 8 bytes and contains 4 tile definitions
+- select line prefix db
+- select byte format hex 0x
+- cut n paste sprite data into tilemap_tile_defns_data.asm
+- set the sprite_count to the number of sprites to load 
+- define the tiles in tilemap_tile_defns.h 
+
+each tile definition is 16*16 pixels held as 16 bytes * 2 bytes (each byte = 2 pixels)
+64 sprites = 8,192 = 8KiB 
+
+TO DO as the org is 0x4a00 some of the sprite defs do not fit in section page 10 they overflow into page 11 if more sprites are required the data needs to go in the next memory page
+
+
+### palette
+
+To export palette into source code 
+- toggle export palette on
+- range e.g. 0 to 112 (16 bytes per line )
+- format 8bit
+- bytes per line 16 (16 bytes per tile palette)
+- line prefix db
+- byte format hex 0x
+
+- cut n paste palette data into palette_data.asm
+- set palette_count to the size of the palette data e.g. 112 bytes
+
 
 ## Memory map notes
 The game uses Spectrum Next memory banking to access more then 64Kb
