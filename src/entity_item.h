@@ -121,7 +121,7 @@ entity_item_t *entity_item_create(items_t item, uint8_t x, uint8_t y);
 void entity_item_draw_stat_block(const entity_item_t *item_ptr);
 
 /**
- * @brief Returns the first item at dungeon position x, y or NULL is no item
+ * @brief Returns the first item at dungeon position x, y or NULL if no item
  * 
  * @param x position x
  * @param y position y
@@ -131,7 +131,7 @@ void entity_item_draw_stat_block(const entity_item_t *item_ptr);
 entity_item_t *entity_item_first_at(uint8_t x, uint8_t y);
 
 /**
- * @brief Returns next item at dungeon position.
+ * @brief Returns next item at dungeon position x, y or NULL if no next item
  * 
  * Can be called repeatably to find all items at dungeon location
  * 
@@ -161,6 +161,15 @@ entity_item_t *entity_item_first_at_location(entity_location_t location);
  */
 entity_item_t* entity_item_next_at_location(entity_location_t location, const entity_item_t *item_ptr);
 
+/**
+ * @brief Returns the nth item at location or NULL if no nth item
+ * 
+ * @param index     1, 2, etc
+ * @param location  location
+ * 
+ * @return entity_item_t   next item or NULL
+ */
+entity_item_t *entity_item_get_nth_at_location(uint8_t index, entity_location_t location);
 
 /**
  * @brief Delete item and free item slot for use

@@ -50,9 +50,28 @@ static uint8_t max_entity_item_records;
 
 static const item_t items[] =
 {
+    {weapon_melee_class, red_potion, "SHORT SWORD", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+    {weapon_melee_class, red_potion, "LONG SWORD", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+
+    {weapon_ranged_class, red_potion, "SHORT BOW", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+    {weapon_ranged_class, red_potion, "LONG BOW", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+    {weapon_ranged_class, red_potion, "SLING", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+
+    {wand_class, red_potion, "MAGIC MISSILE", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+
+    {armour_body_class, red_potion, "LEATHER", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+    {armour_body_class, red_potion, "CHAIN", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},   
+
+    {armour_head_class, red_potion, "LEATHER", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+    {armour_head_class, red_potion, "CHAIN", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
+
+    {ring_class, ring_ac, "RING HP", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}, affect_ac, 2},
+    {ring_class, ring_ac, "RING STR", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}, affect_ac, 2},
+    {ring_class, ring_ac, "RING AC", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}, affect_ac, 2},
+
     {potion_class, red_potion, "RED POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, affect_none, 0},
     {potion_class, blue_potion, "BLUE POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}, affect_none, 0},
-    {ring_class, ring_ac, "RING AC", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE}, affect_ac, 2}
+
 };
 
 /***************************************************
@@ -201,6 +220,28 @@ entity_item_t* entity_item_next_at_location(entity_location_t location, const en
         }
     }
     return NULL;    
+}
+
+entity_item_t *entity_item_get_nth_at_location(uint8_t index, entity_location_t location)
+{
+    uint8_t i = 1;    
+    entity_item_t *item_ptr;
+
+    item_ptr = entity_item_first_at_location(location);
+
+    while (i < index)
+    {
+        i++;
+        item_ptr = entity_item_next_at_location(location, item_ptr);
+
+        if (item_ptr == NULL)
+        {   
+            messages_println("ERROR");  
+            /* no such item - return */
+            return NULL;
+        }
+    }
+    return item_ptr;
 }
 
 void entity_item_delete(entity_item_t *item_ptr)

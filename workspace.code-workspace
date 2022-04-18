@@ -29,7 +29,8 @@
 			"entity_creature.h": "c",
 			"tilemap_tile_defns.h": "c",
 			"string.h": "c",
-			"entity_item.h": "c"
+			"entity_item.h": "c",
+			"cctype": "c"
 		}
 	}
 }

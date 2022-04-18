@@ -9,9 +9,9 @@
  ***************************************************/
 #include "player_inventory_bank.h"
 
-#include <input.h>      //  in_WaitForKey()
 #include <stdio.h>      // NULL
-#include <ctype.h>      // character classification e.g. toupper() 
+#include <input.h>      //  in_WaitForKey()
+
 
 #include "entity_item.h"
 #include "entity_creature.h"
@@ -49,9 +49,9 @@ extern entity_item_t *player_equip_head;
  * Private function prototypes - static
  ***************************************************/
 
-static uint8_t select_item(uint8_t max);
+static uint8_t select_item_b(uint8_t max);
 
-static void equip_b(uint8_t item_num);
+static void unequip_b(entity_item_t *item_ptr);
 
 static void equip_ring_b(entity_item_t *item_ptr);
 
@@ -63,32 +63,6 @@ static void apply_affect_mod(entity_item_t *item_ptr);
  * functions
  ***************************************************/
 
-static uint8_t select_item(uint8_t max)
-{
-    unsigned char key;    
-    uint8_t index;
-
-    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
-    in_wait_nokey();    // wait no key
-    key = toupper(key);
-
-    if (key == ' ')
-    {
-        return 0;
-    }
-
-    // A = 1
-    // B = 2 etc
-    index = (key - 'A') + 1;
-
-    if (index > max)
-    {
-        return 0;
-    }
-
-    return index;
-}
-
 void player_inventory_wear_b(creature_t *creature_ptr)
 {
     uint8_t max;
@@ -96,7 +70,7 @@ void player_inventory_wear_b(creature_t *creature_ptr)
     uint8_t i = 1;    
     entity_item_t *item_ptr;
 
-    max = ui_display_inventory();
+    max = ui_display_items(inventory);
 
     if (max == 0)
     {
@@ -106,26 +80,19 @@ void player_inventory_wear_b(creature_t *creature_ptr)
 
     messages_println("SELECT ITEM TO EQUIP OR SPACE TO EXIT"); 
 
-    index = select_item(max);
+    index = ui_select_item(max);
 
     if (index == 0)
-    {
+    {       
         return;        
     }
 
-    item_ptr = entity_item_first_at_location(inventory);
+    item_ptr = entity_item_get_nth_at_location(index, inventory);
 
-    while (i < index)
+    if (item_ptr == NULL)
     {
-        i++;
-        item_ptr = entity_item_next_at_location(inventory, item_ptr);
-
-        if (item_ptr == NULL)
-        {   
-            messages_println("ERROR");  
-            /* no such item - return */
-            return;
-        }
+        messages_println("ERROR 2");        
+        return;
     }
 
     /* put the item on */
@@ -140,10 +107,45 @@ void player_inventory_wear_b(creature_t *creature_ptr)
             break;
     }
 
-    /* TODO recalculate bonuses */
-
     calculate_stats_b();
 
+}
+
+void player_inventory_takeoff_b(creature_t *creature_ptr)
+{
+    uint8_t max;
+    uint8_t index;
+    entity_item_t *item_ptr;     
+        
+    max = ui_display_items(wearing);
+
+    if (max == 0)
+    {
+        messages_println("NO ITEMS TO UNEQUIP");
+        return;
+    }
+
+    messages_println("SELECT ITEM TO UNEQUIP OR SPACE TO EXIT"); 
+    
+    index = ui_select_item(max);
+
+    if (index == 0)
+    {
+        return;        
+    }
+
+    item_ptr = entity_item_get_nth_at_location(index, wearing);
+
+    if (item_ptr == NULL)
+    {
+        // Should never get here
+        messages_println("ERROR 4");
+        return;
+    }    
+
+    unequip_b(item_ptr);
+
+    calculate_stats_b();    
 }
 
 static void equip_ring_b(entity_item_t *item_ptr)
@@ -163,13 +165,28 @@ static void equip_ring_b(entity_item_t *item_ptr)
     else
     {
         messages_println("TAKE OFF A RING FIRST");
+    }   
+}
+
+static void unequip_b(entity_item_t *item_ptr)
+{
+    if (player_equip_left_finger == item_ptr)
+    {
+        player_equip_left_finger = NULL;
+        item_ptr->entity_ptr->location = inventory;
+        messages_println("YOU UNEQUIP THE RING");        
+    } 
+    else if (player_equip_right_finger == item_ptr)
+    {
+        player_equip_right_finger = NULL;
+        item_ptr->entity_ptr->location = inventory;
+        messages_println("YOU UNEQUIP THE RING");  
     }
-    
 }
 
 void player_inventory_display_b(creature_t *creature_ptr)
 {
-    ui_display_inventory();
+    ui_display_items(inventory);
 
     messages_println("PRESS ANY KEY");    
 
@@ -213,7 +230,7 @@ static void apply_affect_mod(entity_item_t *item_ptr)
         return;
 
     affect = item_ptr->affect;
-    affect = item_ptr->affect_mod;
+    affect_mod = item_ptr->affect_mod;
 
     switch (affect)
     {
@@ -223,9 +240,9 @@ static void apply_affect_mod(entity_item_t *item_ptr)
     case affect_ac:
         creature_player_ptr->ac += affect_mod;
         break;
-    
+
     default:
         /* should never get */
         break;
-    }  
+    }
 }

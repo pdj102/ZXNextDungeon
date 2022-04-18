@@ -8,7 +8,10 @@
 #include "ui.h"
 
 #include <stdio.h>      // NULL
+#include <input.h>      //  in_WaitForKey()
+#include <ctype.h>      // character classification e.g. toupper() 
 
+#include "entity.h"
 #include "entity_item.h"
 
 #include "text.h"
@@ -30,7 +33,7 @@
  ***************************************************/
 
 
-uint8_t ui_display_inventory()
+uint8_t ui_display_items(entity_location_t location)
 {
     entity_item_t *item_ptr;
 
@@ -40,9 +43,20 @@ uint8_t ui_display_inventory()
 
     ui_clear_display();
 
-    text_print_string(24, 0, "INVENTORY");
+    switch (location)
+    {
+    case inventory:
+        text_print_string(24, 0, "INVENTORY");
+        break;
+    case wearing:
+        text_print_string(24, 0, "EQUIPPED");
+        break;
+    
+    default:
+        break;
+    } 
 
-    item_ptr = entity_item_first_at_location(inventory);
+    item_ptr = entity_item_first_at_location(location);
 
     while ( item_ptr != NULL)
     {
@@ -50,10 +64,36 @@ uint8_t ui_display_inventory()
         text_print_string(26, 2+count, item_ptr->name );
         count++;        
 
-        item_ptr = entity_item_next_at_location(inventory, item_ptr);
+        item_ptr = entity_item_next_at_location(location, item_ptr);
     }
 
     return count;
+}
+
+uint8_t ui_select_item(uint8_t max)
+{
+    unsigned char key;    
+    uint8_t index;
+
+    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
+    in_wait_nokey();    // wait no key
+    key = toupper(key);
+
+    if (key == ' ')
+    {
+        return 0;
+    }
+
+    // A = 1
+    // B = 2 etc
+    index = (key - 'A') + 1;
+
+    if (index > max)
+    {
+        return 0;
+    }
+
+    return index;
 }
 
 void ui_draw_stat_block(const creature_t *creature_ptr)
