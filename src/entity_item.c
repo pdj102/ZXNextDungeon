@@ -14,7 +14,6 @@
 
 #include "tilemap_tile_defns.h"
 #include "palette.h"    // palette defs
-#include "dice.h"
 
 #include "messages.h"
 #include "memory_map.h"
@@ -25,21 +24,7 @@
  * private types
  ***************************************************/
 
-typedef struct {
-    item_type_class_t   item_class;
-    items_t             item_type;
-    char                name[15];
-    tilemap_tile_t      tile;
 
-    uint16_t            cost;
-    uint8_t             weight;
-
-    uint8_t             ac;
-    dice_t              dmg;
-
-    affect_t            affect;             /**< what ability does the item modify */
-    uint8_t             affect_mod;         /**< what it the mod */    
-} item_t;
 
 /***************************************************
  * private function prototypes
@@ -55,6 +40,7 @@ static entity_item_t *entity_item_base_ptr;
 static uint8_t max_entity_item_records;
 
 // Some handy items
+// TDO move items[] and item creation into banked code
 
 static const item_t items[] =
 {
@@ -150,20 +136,18 @@ entity_item_t *entity_item_create(items_t item, uint8_t x, uint8_t y)
     e->y = y;
     e->blocking = 0;
 
-/*
-    i->item_class_type = potion_class;
-    strcpy(i->name, "RING");
-    e->tilemap_tile.tile_id = TILE_RING;
-    e->tilemap_tile.tile_attr = NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE;
-*/
+    i->item = items[item];
 
+    e->tilemap_tile =i->item.tile;
+
+/*
     i->item_class = items[item].item_class;
     i->item_type = items[item].item_type;
     i->affect = items[item].affect;
     i->affect_mod = items[item].affect_mod;   
     strcpy(i->name, items[item].name);
     e->tilemap_tile = items[item].tile;
-
+*/
     return i;
 }
 

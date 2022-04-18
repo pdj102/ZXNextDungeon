@@ -55,9 +55,15 @@ static void unequip_b(entity_item_t *item_ptr);
 
 static void equip_ring_b(entity_item_t *item_ptr);
 
+static void equip_armour_body_b(entity_item_t *item_ptr);
+
+static void equip_armour_head_b(entity_item_t *item_ptr);
+
 static void calculate_stats_b();
 
-static void apply_affect_mod(entity_item_t *item_ptr);
+static void apply_affect_mod_b(entity_item_t *item_ptr);
+
+static void apply_ac_b(entity_item_t *item_ptr);
 
 /***************************************************
  * functions
@@ -97,8 +103,14 @@ void player_inventory_wear_b(creature_t *creature_ptr)
 
     /* put the item on */
 
-    switch( item_ptr->item_class)
+    switch( item_ptr->item.item_class)
     {
+        case armour_body_class :
+            equip_armour_body_b(item_ptr);
+            break;
+        case armour_head_class :
+            equip_armour_head_b(item_ptr);
+            break;                    
         case ring_class :
             equip_ring_b(item_ptr);
             break;
@@ -208,6 +220,34 @@ static void equip_ring_b(entity_item_t *item_ptr)
     }   
 }
 
+static void equip_armour_body_b(entity_item_t *item_ptr)
+{
+    if (player_equip_body == NULL)
+    {
+        player_equip_body = item_ptr;
+        item_ptr->entity_ptr->location = wearing;
+        messages_println("YOU EQUIP THE ARMOUR");
+    }
+    else
+    {
+        messages_println("TAKE OFF ARMOUR FIRST");
+    }
+}
+
+static void equip_armour_head_b(entity_item_t *item_ptr)
+{
+    if (player_equip_head == NULL)
+    {
+        player_equip_head = item_ptr;
+        item_ptr->entity_ptr->location = wearing;
+        messages_println("YOU EQUIP THE HELMET");
+    }
+    else
+    {
+        messages_println("TAKE OFF HELMET FIRST");
+    }
+}
+
 static void unequip_b(entity_item_t *item_ptr)
 {
     if (player_equip_left_finger == item_ptr)
@@ -222,6 +262,18 @@ static void unequip_b(entity_item_t *item_ptr)
         item_ptr->entity_ptr->location = inventory;
         messages_println("YOU UNEQUIP THE RING");  
     }
+    else if (player_equip_body == item_ptr)
+    {
+        player_equip_body = NULL;
+        item_ptr->entity_ptr->location = inventory;
+        messages_println("YOU UNEQUIP THE ARMOUR");  
+    }
+    else if (player_equip_head == item_ptr)
+    {
+        player_equip_head = NULL;
+        item_ptr->entity_ptr->location = inventory;
+        messages_println("YOU UNEQUIP THE HELMET");  
+    }       
 }
 
 void player_inventory_display_b(creature_t *creature_ptr)
@@ -249,19 +301,23 @@ static void calculate_stats_b()
     creature_player_ptr->curr_hp = player_base_curr_hp;
     creature_player_ptr->speed = player_base_speed;
 
-    apply_affect_mod(player_equip_body);
-    apply_affect_mod(player_equip_left_hand);
-    apply_affect_mod(player_equip_right_hand);
-    apply_affect_mod(player_equip_left_finger);
-    apply_affect_mod(player_equip_right_finger);
-    apply_affect_mod(player_equip_head);
+    // set AC based on body armour being worn */
+    apply_ac_b(player_equip_body);
+
+    // apply affect mods for all items being worn */
+    apply_affect_mod_b(player_equip_body);
+    apply_affect_mod_b(player_equip_left_hand);
+    apply_affect_mod_b(player_equip_right_hand);
+    apply_affect_mod_b(player_equip_left_finger);
+    apply_affect_mod_b(player_equip_right_finger);
+    apply_affect_mod_b(player_equip_head);
 }
 
 /** 
  * TODO handle negative modifiers - ability scores must not go negative *
  */
 
-static void apply_affect_mod(entity_item_t *item_ptr) 
+static void apply_affect_mod_b(entity_item_t *item_ptr) 
 {
     uint8_t affect;
     int8_t affect_mod = 0;
@@ -269,8 +325,8 @@ static void apply_affect_mod(entity_item_t *item_ptr)
     if (item_ptr == NULL)
         return;
 
-    affect = item_ptr->affect;
-    affect_mod = item_ptr->affect_mod;
+    affect = item_ptr->item.affect;
+    affect_mod = item_ptr->item.affect_mod;
 
     switch (affect)
     {
@@ -285,4 +341,19 @@ static void apply_affect_mod(entity_item_t *item_ptr)
         /* should never get */
         break;
     }
+}
+
+static void apply_ac_b(entity_item_t *item_ptr)
+{
+    if (item_ptr == NULL)
+    {
+        /* No armour set to default AC  */
+        creature_player_ptr->ac = player_base_ac;
+        return;
+    } 
+    else
+    {
+        creature_player_ptr->ac = item_ptr->item.ac;
+    }
+    return;
 }

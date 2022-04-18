@@ -13,6 +13,8 @@
 
 #include "entity.h"
 
+#include "dice.h"
+
 /***************************************************
  * public types
  ***************************************************/
@@ -73,18 +75,29 @@ typedef enum {
     affect_speed
 } affect_t;
 
+typedef struct {
+    item_type_class_t   item_class;
+    items_t             item_type;
+    char                name[15];
+    tilemap_tile_t      tile;
+
+    uint16_t            cost;
+    uint8_t             weight;
+
+    uint8_t             ac;
+    dice_t              dmg;
+
+    affect_t            affect;             /**< what ability does the item modify */
+    uint8_t             affect_mod;         /**< what it the mod */    
+} item_t;
 
 typedef struct {
     uint8_t             record;             /**< if 0  record is available for use or array index + 1 if in use. */
 
     entity_t            *entity_ptr;        /**< pointer back to entity */
-    item_type_class_t   item_class;         /**< type of item class*/
-    char                name[15];           /**< description */
 
-    items_t             item_type;          /**< type of item */
+    item_t              item;               /**< item properties */
 
-    affect_t            affect;             /**< what ability does the item modify */
-    uint8_t             affect_mod;         /**< what it the mod */
 } entity_item_t;
 
 /***************************************************

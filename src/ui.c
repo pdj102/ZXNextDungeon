@@ -61,7 +61,7 @@ uint8_t ui_display_items(entity_location_t location)
     while ( item_ptr != NULL)
     {
         text_print_char(24, 2+count, 'A'+count);
-        text_print_string(26, 2+count, item_ptr->name );
+        text_print_string(26, 2+count, item_ptr->item.name );
         count++;        
 
         item_ptr = entity_item_next_at_location(location, item_ptr);
