@@ -28,8 +28,9 @@
  * variables
  ***************************************************/
 entity_item_t *player_equip_body;
-entity_item_t *player_equip_left_hand;
-entity_item_t *player_equip_right_hand;
+entity_item_t *player_equip_melee;
+entity_item_t *player_equip_range;
+entity_item_t *player_equip_shield;
 entity_item_t *player_equip_left_finger;
 entity_item_t *player_equip_right_finger;
 entity_item_t *player_equip_head;

@@ -43,7 +43,7 @@ uint8_t entity_creature_pickup(creature_t *creature_ptr)
     {
         // pickup item
         messages_print("PICKED UP ");
-        messages_println(item_ptr->name);
+        messages_println(item_ptr->item.name);
 
         
         item_ptr->entity_ptr->location = inventory;

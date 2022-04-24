@@ -137,12 +137,26 @@ void ui_draw_stat_block(const creature_t *creature_ptr)
 
     // TODO display damage
 
-    text_print_string(24, 15, "DMG R:");
+    text_print_string(24, 15, "DMG M:");
     text_print_uint8(30, 15, creature_ptr->melee_attack_1.dmg_die.n);
     text_print_string(31, 15, "D");
     text_print_uint8(32, 15, creature_ptr->melee_attack_1.dmg_die.d);    
     text_print_string(33, 15, "+");
     text_print_uint8(34, 15, creature_ptr->melee_attack_1.dmg_die.modifier);
+
+    text_print_string(24, 16, "DMG R:");
+    if (creature_ptr->range_attack_1.damage_kind == NONE)
+    {
+         text_print_string(30, 16, "NONE");
+    }
+    else
+    {
+        text_print_uint8(30, 16, creature_ptr->range_attack_1.dmg_die.n);
+        text_print_string(31, 16, "D");
+        text_print_uint8(32, 16, creature_ptr->range_attack_1.dmg_die.d);    
+        text_print_string(33, 16, "+");
+        text_print_uint8(34, 16, creature_ptr->range_attack_1.dmg_die.modifier);
+    }
 }
 
 

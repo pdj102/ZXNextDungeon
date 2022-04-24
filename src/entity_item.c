@@ -61,6 +61,9 @@ static const item_t items[] =
     {armour_head_class, leather_helmet, "LEATHER", {TILE_HELMET, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},         5,  2,      0,  {0, 0, 0}, NONE,    affect_ac, 1},
     {armour_head_class, metal_helmet, "METAL", {TILE_HELMET, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},             10,  2,     0,  {0, 0, 0}, NONE,    affect_ac, 2},
 
+    {armour_shield_class, leather_shield, "LEATHER", {TILE_SHIELD, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},       5,  2,      0,  {0, 0, 0}, NONE,    affect_ac, 1},
+    {armour_shield_class, metal_shield, "METAL", {TILE_SHIELD, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},           10,  2,     0,  {0, 0, 0}, NONE,    affect_ac, 2},
+
     {ring_class, ring_hp, "RING HP", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                        500,  1,    0,  {0, 0, 0}, NONE,    affect_max_hp, 2}, 
     {ring_class, ring_str, "RING STR", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                      500,  1,    0,  {0, 0, 0}, NONE,    affect_strength, 2},
     {ring_class, ring_ac, "RING AC", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                        500,  1,    0,  {0, 0, 0}, NONE,    affect_ac, 2},

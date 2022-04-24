@@ -212,4 +212,3 @@ entity_t* entity_next_at_location(entity_location_t location, const entity_t *en
 }
 
 
- 

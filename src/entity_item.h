@@ -57,6 +57,8 @@ typedef enum {
     metal_helmet,
 
     // armour_shield_class
+    leather_shield,
+    metal_shield,
 
     // ring_class
     ring_hp,
