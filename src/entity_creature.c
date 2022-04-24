@@ -133,10 +133,11 @@ creature_t *entity_creature_create(creature_type_t creature_type, uint8_t x, uin
             c->max_hp   = 8;
             c->curr_hp  = 8;
 
-            c->melee_attack_1.damage_kind = SLASHING;
+            // default to fist
+            c->melee_attack_1.damage_kind = BLUDGEON;
             c->melee_attack_1.proficiency_mod = 2;
             c->melee_attack_1.dmg_die.n = 1;
-            c->melee_attack_1.dmg_die.d = 6;
+            c->melee_attack_1.dmg_die.d = 2;
             c->melee_attack_1.dmg_die.modifier = 0;
 
             c->speed    = 5;

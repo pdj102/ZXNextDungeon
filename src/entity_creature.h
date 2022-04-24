@@ -33,7 +33,7 @@ typedef enum creature_type
 
 typedef enum creature_state_e {ASLEEP, RESTING, WANDERING, ATTACKING} creature_state_t;
 
-typedef enum damage_kind_e {NONE, ACID, COLD, FIRE, LIGHTNING, POISON, SLASHING} damage_kind_t;
+typedef enum damage_kind_e {NONE, ACID, COLD, FIRE, LIGHTNING, POISON, SLASHING, BLUDGEON, PIERCING} damage_kind_t;
 
 typedef struct {
     int8_t          proficiency_mod;

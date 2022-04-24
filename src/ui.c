@@ -134,6 +134,15 @@ void ui_draw_stat_block(const creature_t *creature_ptr)
     text_print_uint8(30, 12, creature_ptr->curr_hp);
 
     text_print_uint8(30, 13, creature_ptr->speed);
+
+    // TODO display damage
+
+    text_print_string(24, 15, "DMG R:");
+    text_print_uint8(30, 15, creature_ptr->melee_attack_1.dmg_die.n);
+    text_print_string(31, 15, "D");
+    text_print_uint8(32, 15, creature_ptr->melee_attack_1.dmg_die.d);    
+    text_print_string(33, 15, "+");
+    text_print_uint8(34, 15, creature_ptr->melee_attack_1.dmg_die.modifier);
 }
 
 
@@ -147,3 +156,4 @@ void ui_clear_display()
         text_print_string(24, i, blank_string);
     }
 }
+

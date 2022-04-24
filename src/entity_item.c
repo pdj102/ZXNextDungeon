@@ -15,6 +15,8 @@
 #include "tilemap_tile_defns.h"
 #include "palette.h"    // palette defs
 
+#include "entity_creature.h"    // damage_kind_t    TODO refactor
+
 #include "messages.h"
 #include "memory_map.h"
 
@@ -44,27 +46,27 @@ static uint8_t max_entity_item_records;
 
 static const item_t items[] =
 {
-    {weapon_melee_class, short_sword, "SHORT SWORD", {TILE_SHORT_SWORD, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},  10, 2,      0, {1, 6, 0},   affect_none, 0},
-    {weapon_melee_class, long_sword, "LONG SWORD", {TILE_LONG_SWORD, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},     15, 3,      0, {1, 8, 0},   affect_none, 0},
+    {weapon_melee_class, short_sword, "SHORT SWORD", {TILE_SHORT_SWORD, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},  10, 2,      0,  {1, 6, 0}, SLASHING,  affect_none, 0},
+    {weapon_melee_class, long_sword, "LONG SWORD", {TILE_LONG_SWORD, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},     15, 3,      0,  {1, 8, 0}, SLASHING,  affect_none, 0},
 
-    {weapon_ranged_class, short_bow, "SHORT BOW", {TILE_LONG_BOW, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},        25, 2,      0, {1, 6, 0},   affect_none, 0},
-    {weapon_ranged_class, long_bow, "LONG BOW", {TILE_LONG_BOW, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},          50, 2,      0, {1, 8, 0},   affect_none, 0},
-    {weapon_ranged_class, sling, "SLING", {TILE_SLING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},                   1, 0,       0, {1, 4, 0}, affect_none, 0},
+    {weapon_ranged_class, short_bow, "SHORT BOW", {TILE_LONG_BOW, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},        25, 2,      0,  {1, 6, 0}, PIERCING,  affect_none, 0},
+    {weapon_ranged_class, long_bow, "LONG BOW", {TILE_LONG_BOW, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},          50, 2,      0,  {1, 8, 0}, PIERCING,  affect_none, 0},
+    {weapon_ranged_class, sling, "SLING", {TILE_SLING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},                   1, 0,       0,  {1, 4, 0}, BLUDGEON, affect_none, 0},
 
-    {wand_class, wand_magic_missile, "MAGIC MISSILE", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},      1000, 1,    0, {1, 6, 0},   affect_none, 0},
+    {wand_class, wand_magic_missile, "MAGIC MISSILE", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},      1000, 1,    0,  {1, 6, 0}, FIRE,    affect_none, 0},
 
-    {armour_body_class, leather_armour, "LEATHER", {TILE_LEATHER_ARMOUR, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, 10, 10,     11, {0, 0, 0},  affect_none, 0},
-    {armour_body_class, chain_mail_armour, "CHAIN", {TILE_METAL_ARMOUR, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},  50, 20,     13, {0, 0, 0},  affect_none, 0},   
+    {armour_body_class, leather_armour, "LEATHER", {TILE_LEATHER_ARMOUR, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED}, 10, 10,     11, {0, 0, 0}, NONE,    affect_none, 0},
+    {armour_body_class, chain_mail_armour, "CHAIN", {TILE_METAL_ARMOUR, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},  50, 20,     13, {0, 0, 0}, NONE,    affect_none, 0},   
 
-    {armour_head_class, leather_helmet, "LEATHER", {TILE_HELMET, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},         5,  2,      0,  {0, 0, 0},  affect_ac, 1},
-    {armour_head_class, metal_helmet, "METAL", {TILE_HELMET, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},             10,  2,     0,  {0, 0, 0},  affect_ac, 2},
+    {armour_head_class, leather_helmet, "LEATHER", {TILE_HELMET, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},         5,  2,      0,  {0, 0, 0}, NONE,    affect_ac, 1},
+    {armour_head_class, metal_helmet, "METAL", {TILE_HELMET, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},             10,  2,     0,  {0, 0, 0}, NONE,    affect_ac, 2},
 
-    {ring_class, ring_hp, "RING HP", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                        500,  1,    0,  {0, 0, 0},  affect_max_hp, 2}, 
-    {ring_class, ring_str, "RING STR", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                      500,  1,    0,  {0, 0, 0},  affect_strength, 2},
-    {ring_class, ring_ac, "RING AC", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                        500,  1,    0,  {0, 0, 0},  affect_ac, 2},
+    {ring_class, ring_hp, "RING HP", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                        500,  1,    0,  {0, 0, 0}, NONE,    affect_max_hp, 2}, 
+    {ring_class, ring_str, "RING STR", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                      500,  1,    0,  {0, 0, 0}, NONE,    affect_strength, 2},
+    {ring_class, ring_ac, "RING AC", {TILE_RING, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},                        500,  1,    0,  {0, 0, 0}, NONE,    affect_ac, 2},
 
-    {potion_class, red_potion, "RED POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},               10, 1,      0,  {0,0,0,},   affect_none, 0},
-    {potion_class, blue_potion, "BLUE POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},            10, 1,    0,  {0,0,0,},   affect_none,0},
+    {potion_class, red_potion, "RED POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_RED},               10, 1,      0,  {0,0,0,}, NONE,     affect_none, 0},
+    {potion_class, blue_potion, "BLUE POTION", {TILE_POTION, NO_MIRROR | NO_ROTATE | PALETTE_ITEM_BLUE},            10, 1,    0,    {0,0,0,}, NONE,     affect_none,0},
 
 };
 

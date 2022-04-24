@@ -59,11 +59,15 @@ static void equip_armour_body_b(entity_item_t *item_ptr);
 
 static void equip_armour_head_b(entity_item_t *item_ptr);
 
+static void equip_weapon_melee_b(entity_item_t *item_ptr);
+
 static void calculate_stats_b();
 
 static void apply_affect_mod_b(entity_item_t *item_ptr);
 
 static void apply_ac_b(entity_item_t *item_ptr);
+
+static void apply_attack_b(entity_item_t *item_ptr, attack_t *attack);
 
 /***************************************************
  * functions
@@ -113,6 +117,9 @@ void player_inventory_wear_b(creature_t *creature_ptr)
             break;                    
         case ring_class :
             equip_ring_b(item_ptr);
+            break;
+        case weapon_melee_class :
+            equip_weapon_melee_b(item_ptr);
             break;
         default :
             messages_println("CANNOT EQUIP THAT");
@@ -248,6 +255,20 @@ static void equip_armour_head_b(entity_item_t *item_ptr)
     }
 }
 
+static void equip_weapon_melee_b(entity_item_t *item_ptr)
+{
+    if (player_equip_right_hand == NULL)
+    {
+        player_equip_right_hand = item_ptr;
+        item_ptr->entity_ptr->location = wearing;
+        messages_println("YOU EQUIP THE WEAPON");        
+    }
+    else
+    {
+        messages_println("TAKE OFF WEAPON FIRST");        
+    }
+}
+
 static void unequip_b(entity_item_t *item_ptr)
 {
     if (player_equip_left_finger == item_ptr)
@@ -273,6 +294,12 @@ static void unequip_b(entity_item_t *item_ptr)
         player_equip_head = NULL;
         item_ptr->entity_ptr->location = inventory;
         messages_println("YOU UNEQUIP THE HELMET");  
+    }
+    else if (player_equip_right_hand == item_ptr)
+    {
+        player_equip_right_hand = NULL;
+        item_ptr->entity_ptr->location = inventory;
+        messages_println("YOU UNEQUIP THE WEAPON");  
     }       
 }
 
@@ -301,10 +328,18 @@ static void calculate_stats_b()
     creature_player_ptr->curr_hp = player_base_curr_hp;
     creature_player_ptr->speed = player_base_speed;
 
-    // set AC based on body armour being worn */
+    /* set AC based on body armour being worn */
+    /* TODO shields */
     apply_ac_b(player_equip_body);
 
-    // apply affect mods for all items being worn */
+    /* set attack based on equipped weapons */
+    /* TODO handle 
+        weapon in left hand - how to manage an empty lefthand when fighting?
+        two handed weapons
+    */
+    apply_attack_b(player_equip_right_hand, &(creature_player_ptr->melee_attack_1));
+
+    /* apply affect mods for all items being worn */
     apply_affect_mod_b(player_equip_body);
     apply_affect_mod_b(player_equip_left_hand);
     apply_affect_mod_b(player_equip_right_hand);
@@ -354,6 +389,33 @@ static void apply_ac_b(entity_item_t *item_ptr)
     else
     {
         creature_player_ptr->ac = item_ptr->item.ac;
+    }
+    return;
+}
+
+static void apply_attack_b(entity_item_t *item_ptr, attack_t *attack)
+{  
+    // if empty handed or carrying a shield
+    if (item_ptr == NULL || item_ptr->item.item_class == armour_shield_class)
+    {
+        attack->dmg_die.n = 1;
+        attack->dmg_die.d = 2;
+        attack->dmg_die.modifier = 0;    
+        attack->damage_kind = BLUDGEON;
+        attack->proficiency_mod = 2;
+
+        return;
+    }
+
+    // if carrying a melee or ranged weapon 
+    if (item_ptr->item.item_class == weapon_melee_class || item_ptr->item.item_class == weapon_ranged_class)
+    {
+        attack->dmg_die = item_ptr->item.dmg;
+        attack->damage_kind = item_ptr->item.dmg_kind;
+
+        // TODO set proficiency mod correctly
+        // assume proficient with every weapon
+        attack->proficiency_mod = 2;        
     }
     return;
 }

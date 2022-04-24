@@ -13,6 +13,8 @@
 
 #include "entity.h"
 
+#include "entity_creature.h"    // TODO refactor damage_kind_t
+
 #include "dice.h"
 
 /***************************************************
@@ -24,6 +26,7 @@ typedef enum {
     wand_class,
     armour_body_class,
     armour_head_class,
+    armour_shield_class, 
     ring_class,
     potion_class,
     food_class,
@@ -52,6 +55,8 @@ typedef enum {
     // armor_head_class
     leather_helmet,
     metal_helmet,
+
+    // armour_shield_class
 
     // ring_class
     ring_hp,
@@ -85,7 +90,9 @@ typedef struct {
     uint8_t             weight;
 
     uint8_t             ac;
+
     dice_t              dmg;
+    damage_kind_t       dmg_kind;
 
     affect_t            affect;             /**< what ability does the item modify */
     uint8_t             affect_mod;         /**< what it the mod */    
