@@ -77,11 +77,13 @@
 // ------------------- MMU SLOT 6 (0xc000) -------------------
 // Memory pages 18 to 21 - used for banked code and data
 
-// Memory page 18 (8KiB) - dungeon map generator
+// Memory page 18 (8KiB) - dungeon_map_generator*
 
-// Memory page 19 (8KiB) - creature ai
+// Memory page 19 (8KiB) - ai_*
 
-// Memory page 20 (*KiB) - player_
+// Memory page 20 (*KiB) - player_inventory_bank*
+
+// Memory page 21 (8KiB) - token_string_bank*
 
 // ------------------- MMU SLOT 7 (0xe000) -------------------
 // Memory pages 18 to 21 - used for banked code and data

@@ -28,8 +28,7 @@ typedef enum creature_type
     ORC,                        // 3
     GHOUL,                      // 4
     PLAYER                      // Special
-}
- creature_type_t;
+} creature_type_t;
 
 typedef enum creature_state_e {ASLEEP, RESTING, WANDERING, ATTACKING} creature_state_t;
 

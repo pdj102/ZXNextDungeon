@@ -69,6 +69,11 @@ $(OBJDIR)/ai_bank.o: $(SRCDIR)/ai_bank.c $(SRCDIR)/ai_bank.h $(PRAGMA_FILE)
 $(OBJDIR)/player_inventory_bank.o: $(SRCDIR)/player_inventory_bank.c $(SRCDIR)/player_inventory_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_20 --constsegPAGE_20 -o $@ $<
 
+# ####################################################################################################################################
+# PAGE 21
+# target for token_string_bank*
+$(OBJDIR)/token_string_bank.o: $(SRCDIR)/token_string_bank.c $(SRCDIR)/token_string_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_21 --constsegPAGE_21 -o $@ $<
 
 # target for *.o - call C compiler
 # example to compile ./src/test.c execute "make ./obj/test.o"
