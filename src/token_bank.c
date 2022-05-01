@@ -5,7 +5,7 @@
     @brief <Module description>
 
  ***************************************************/
-#include "token_string_bank.h"
+#include "token_bank.h"
 
 #include <stdio.h>      // NULL
 
@@ -23,7 +23,7 @@
  * private function prototypes
  ***************************************************/
 
-static char *token_string_to_b(token_string_token_t token);
+static char *get_string_b(token_string_token_t token);
 
 /***************************************************
  * extern variables - extern
@@ -38,9 +38,17 @@ extern char *strs;
 /***************************************************
  * functions 
  ***************************************************/
-  
 
-void token_string_print_b(token_string_token_t *token_string, char *destination, uint8_t max)
+#ifdef TS_TEST_B
+#error ts_test_b already DEFINED!
+#endif
+
+#ifndef TS_TEST_B
+#define TS_TEST_B
+#endif
+
+
+void token_print_b(token_string_token_t *token_string, char *destination, uint8_t max)
 {
     char *string;
 
@@ -56,7 +64,7 @@ void token_string_print_b(token_string_token_t *token_string, char *destination,
 
     while (*token_string != '\0')
     {
-        string = token_string_to_b(*token_string);
+        string = get_string_b(*token_string);
         token_string++;
 
         if (string != NULL)
@@ -73,13 +81,10 @@ void token_string_print_b(token_string_token_t *token_string, char *destination,
     *destination = '\0';
 }
 
-
-static char *token_string_to_b(token_string_token_t token)
+static char *get_string_b(token_string_token_t token)
 {
    // messages_print_s_uint8("TOKEN ", token);
 
     // TODO check token less than max token
-    // return strs+=token;
-
-    return strs;
+    return strs+=token;
 }

@@ -16,7 +16,7 @@
 #include "entity_item.h"
 #include "ui.h"
 #include "messages.h"
-#include "token_string.h"
+#include "token.h"
 
 #include "ai_pathfind.h"
 #include "ai.h"
@@ -115,7 +115,7 @@ int main()
 
     token_string_token_t ts[] = { 1, 2, 3, 0};
 
-    token_string_print(ts, test, 15);
+    token_print(ts, test, 15);
     messages_println(test);
 
     init_game();

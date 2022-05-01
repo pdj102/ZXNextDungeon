@@ -6,18 +6,18 @@
 
  ***************************************************/
 
-#ifndef TOKEN_STRING_H 
-    #define TOKEN_STRING_H 
+#ifndef TOKEN_H 
+    #define TOKEN_H 
 
 #include <inttypes.h>
 
-#include "token_string_type.h"
+#include "token_type.h"
 
 /***************************************************
  * public types
  ***************************************************/
  
-
+/*
 typedef enum token
 {
     RED_TOKEN,
@@ -63,7 +63,7 @@ typedef enum token
     POTION_TOKEN
 
 } token_t;
-
+*/
 
 
 /***************************************************
@@ -82,7 +82,7 @@ typedef enum token
  * @param destination Pointer to the destination to print the string
  * @param max Size of destination buffer including \0
  */
-void token_string_print(token_string_token_t *token_string, char *destination, uint8_t max);
+void token_print(token_string_token_t *token_string, char *destination, uint8_t max);
 
 
 #endif

@@ -16,7 +16,8 @@ CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -compiler sdcc -clib=sdcc_iy -pr
 LDFLAGS=$(TARGET) $(VERBOSITY) -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
 ASFLAGS=$(TARGET) $(VERBOSITY) -c
 
-# place source files in ./src
+# place .c and .asm source files in ./src
+# warning do not create a .c and .asm with the  same name 
 # object files are placed in ./obj
 # binary output is placed in ./bin
 OBJDIR=./obj
@@ -71,8 +72,8 @@ $(OBJDIR)/player_inventory_bank.o: $(SRCDIR)/player_inventory_bank.c $(SRCDIR)/p
 
 # ####################################################################################################################################
 # PAGE 21
-# target for token_string_bank*
-$(OBJDIR)/token_string_bank.o: $(SRCDIR)/token_string_bank.c $(SRCDIR)/token_string_bank.h $(PRAGMA_FILE)
+# target for token_bank*
+$(OBJDIR)/token_bank.o: $(SRCDIR)/token_bank.c $(SRCDIR)/token_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_21 --constsegPAGE_21 -o $@ $<
 
 # target for *.o - call C compiler

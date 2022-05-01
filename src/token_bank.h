@@ -6,12 +6,12 @@
 
  ***************************************************/
 
-#ifndef TOKEN_STRING_BANK_H 
-    #define TOKEN_STRING_BANK_H 
+#ifndef TOKEN_BANK_H 
+    #define TOKEN_BANK_H 
 
 #include <inttypes.h>
 
-#include "token_string_type.h"
+#include "token_type.h"
 
 /***************************************************
  * public types
@@ -35,6 +35,6 @@
  * @param max Size of destination buffer including \0
  * 
  */
-void token_string_print_b(token_string_token_t *token_string, char *destination, uint8_t max);
+void token_print_b(token_string_token_t *token_string, char *destination, uint8_t max);
 
 #endif
