@@ -1,6 +1,12 @@
 # set variables
-CC=zcc
-AS=zcc
+# set compiler to zcc 
+# Windows
+# CC=zcc
+# AS=zcc
+# Linux flatpack
+CC=z88dk.zcc
+AS=z88dk.zcc
+
 TARGET=+zxn
 VERBOSITY=-vn		# verbose off -vn on -v
 
@@ -47,6 +53,11 @@ PROGRAM=dungeon.nex
 ASSEMBLEY=dungeon.asm
 
 # ####################################################################################################################################
+# DEFAULT TARGET 
+# target for all : $program
+all : $(PROGRAM)
+
+# ####################################################################################################################################
 # PAGE_18
 # Target for dungeon map generator code and data
 # - dungeon_map_generator_bank.o 
@@ -76,6 +87,8 @@ $(OBJDIR)/player_inventory_bank.o: $(SRCDIR)/player_inventory_bank.c $(SRCDIR)/p
 $(OBJDIR)/token_bank.o: $(SRCDIR)/token_bank.c $(SRCDIR)/token_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_21 --constsegPAGE_21 -o $@ $<
 
+# ####################################################################################################################################
+# DEFAULT  PAGES
 # target for *.o - call C compiler
 # example to compile ./src/test.c execute "make ./obj/test.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(PRAGMA_FILE)
@@ -87,8 +100,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(PRAGMA_FILE)
 $(OBJDIR)/%.o: $(SRCDIR)/%.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
-# target for all : $program
-all : $(PROGRAM)
+
 
 # target for $program : dependency is all object files
 $(PROGRAM) : $(OFILES)
