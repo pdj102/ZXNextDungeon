@@ -1,15 +1,15 @@
 # set variables
-CC=zcc
+CC=zcc				# Frontend for the z88dk Cross-C Compiler
 AS=zcc
 TARGET=+zxn
 VERBOSITY=-vn		# verbose off -vn on -v
+CRT=31 				# CRT=31 no stdin stdout stderr streams setup
+# CRT=1 setup stdin stdout stderr streams
 
-# CRT=31 no stdin stdout stderr streams setup
-CRT=31 
-#CRT=1 setup stdin stdout stderr streams
 PRAGMA_FILE=zpragma.inc
 
 # compiler optimisation parameters 
+# 
 C_OPT_FLAGS=-SO3 --max-allocs-per-node200000
 
 CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -compiler sdcc -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
@@ -17,7 +17,7 @@ LDFLAGS=$(TARGET) $(VERBOSITY) -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
 ASFLAGS=$(TARGET) $(VERBOSITY) -c
 
 # place .c and .asm source files in ./src
-# warning do not create a .c and .asm with the  same name 
+# warning do not create a .c and .asm with the same name 
 # object files are placed in ./obj
 # binary output is placed in ./bin
 OBJDIR=./obj
@@ -50,51 +50,32 @@ ASSEMBLEY=dungeon.asm
 # PAGE_18
 # Target for dungeon map generator code and data
 # - dungeon_map_generator_bank.o 
-$(OBJDIR)/dungeon_map_generator_bank.o: $(SRCDIR)/dungeon_map_generator_bank.c $(SRCDIR)/dungeon_map_generator_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_18 --constsegPAGE_18 -o $@ $<
+# $(OBJDIR)/dungeon_map_generator_bank.o: $(SRCDIR)/dungeon_map_generator_bank.c $(SRCDIR)/dungeon_map_generator_bank.h $(PRAGMA_FILE)
+#	$(CC) $(CFLAGS) --codesegPAGE_18 --constsegPAGE_18 -o $@ $<
+
 
 # ####################################################################################################################################
-# PAGE_19
-# target for ai* _bank
-# - ai_pathfind
-# - ai
-$(OBJDIR)/ai_pathfind_bank.o: $(SRCDIR)/ai_pathfind_bank.c $(SRCDIR)/ai_pathfind_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_19 --constsegPAGE_19 -o $@ $<
-
-$(OBJDIR)/ai_bank.o: $(SRCDIR)/ai_bank.c $(SRCDIR)/ai_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_19 --constsegPAGE_19 -o $@ $<
-
-# ####################################################################################################################################
-# PAGE 20
-# target for player_inventory_bank*
-$(OBJDIR)/player_inventory_bank.o: $(SRCDIR)/player_inventory_bank.c $(SRCDIR)/player_inventory_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_20 --constsegPAGE_20 -o $@ $<
-
-# ####################################################################################################################################
-# PAGE 21
-# target for token_bank*
-$(OBJDIR)/token_bank.o: $(SRCDIR)/token_bank.c $(SRCDIR)/token_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_21 --constsegPAGE_21 -o $@ $<
-
 # target for *.o - call C compiler
 # example to compile ./src/test.c execute "make ./obj/test.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) -o $@ $<
 
-
+# ####################################################################################################################################
 # target for *.o - call assembler
 # example to compile ./src/test2.asm execute "make ./obj/test2.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
+# ####################################################################################################################################
 # target for all : $program
 all : $(PROGRAM)
 
+# ####################################################################################################################################
 # target for $program : dependency is all object files
 $(PROGRAM) : $(OFILES)
 	 $(CC) $(LDFLAGS) -startup=$(CRT) $(OFILES) -o $(BINDIR)/$(PROGRAM) -create-app -subtype=nex
 
-
+# ####################################################################################################################################
 .PHONY: clean
 clean:
 	del .\obj\*.o 
