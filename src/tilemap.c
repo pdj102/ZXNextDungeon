@@ -2,11 +2,11 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Tile definitions
+    @brief ZXNext tile definitions
 
 **************************************************/
 
-#include "tile_map.h"
+#include "tilemap.h"
 
 #include <stdint.h>             /* standard names for ints with no ambiguity */
 #include <arch/zxn.h>           /* ZXN_NEXTREG */
@@ -32,13 +32,13 @@
  */
 static uint8_t volatile * const tilemap_base_p = (uint8_t *) TILEMAP_BASE;
 
-static tile_map_tile_t blank = {33,0};
+
 
 /***************************************************
  * functions
  ***************************************************/
 
-void tile_map_clear(const tile_map_tile_t *tile)
+void tilemap_clear(const tilemap_tile_t *tile)
 {
     uint8_t *p = tilemap_base_p;
 
@@ -49,8 +49,17 @@ void tile_map_clear(const tile_map_tile_t *tile)
     }
 }
 
+/* TODO check bounds */
+void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile)
+{
+    uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
+    uint8_t *p = tilemap_base_p + pos;
 
-void tile_map_init()
+    *p = tile->tile_id;
+    *(p+1) = tile->tile_attr;
+}
+
+void tilemap_init()
 {
     /*
      * Set the ZXnext register for the base memory address of the tilemap
@@ -70,8 +79,6 @@ void tile_map_init()
      */
     ZXN_NEXTREG(0x6E, 0);
 
-    /* Set the tilemap to all transparent tiles */
-    tile_map_clear(&blank);
 
     /* 
      * Turn on the zxNext tilemap layer - 40x32 mode with attributes enabled

@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Tile map
+    @brief ZXNext tile map
 
  ***************************************************/
 
@@ -29,10 +29,10 @@
  * @brief A structure to represent a ZX Next tilemap tile
  * 
  */
-typedef struct tile_map_tile {
+typedef struct tilemap_tile {
     uint8_t tile_id;            /**< the id of the tile definition */
     uint8_t tile_attr;          /**< the tile attributes */
-} tile_map_tile_t;
+} tilemap_tile_t;
 
 
 /***************************************************
@@ -49,23 +49,23 @@ typedef struct tile_map_tile {
  * 
  * @return void
  */
-void tile_map_init();
+void tilemap_init();
 
 /**
  * Clear the whole tilemap to tile
  * @param tile  tile pattern number
  * @return void
  */
-void tile_map_clear(const tile_map_tile_t *tile);
+void tilemap_clear(const tilemap_tile_t *tile);
 
 /**
  * Set tilemap tile
  * @param x     x position
  * @param y     y position     
- * @param tile  tile_map tile
+ * @param tile  tilemap tile
  * @return void
  */
-void tile_map_set_tile(uint8_t x, uint8_t y, const tile_map_tile_t *tile);
+void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile);
 
 
 /**
@@ -74,9 +74,9 @@ void tile_map_set_tile(uint8_t x, uint8_t y, const tile_map_tile_t *tile);
  * @param y     y position
  * @param w     width
  * @param h     height  
- * @param tile  tile_map tile
+ * @param tile  tilemap tile
  * @return void
  */
-void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const tile_map_tile_t *tile);
+void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const tilemap_tile_t *tile);
 
 #endif
