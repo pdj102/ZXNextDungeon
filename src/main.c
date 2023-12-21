@@ -13,6 +13,7 @@
 #include "palette.h"
 #include "tilemap.h"
 #include "dungeonmap.h"
+#include "dungeonmap_generator.h"
 
 /***************************************************
  * private types
@@ -57,6 +58,8 @@ void init_game()
     tilemap_init();
     dungeonmap_init();
 
+
+
 }
 
 int main()
@@ -77,7 +80,8 @@ int main()
     blank.tile_id = 5;
     tilemap_set_tile(5,1, &blank);    
     
-    
+    dungeonmap_generate();
+    dungeonmap_draw();
 
     while (1)
     {

@@ -8,4 +8,4 @@ PUBLIC _dungeonmap
 ; TO DO - set the correct size. The whole page is used only for the dungeonmap data structure so no other data goes in here
 ._dungeonmap
 
-ds 40*40*3
+ds 40*40*4

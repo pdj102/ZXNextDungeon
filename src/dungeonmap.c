@@ -1,6 +1,8 @@
 /***************************************************
     Dungeon - ZX Spectrum Next 
-    Paul Johnson 
+    @author Paul Johnson
+
+    @brief Dungeon map
 
  ***************************************************/
 #include "dungeonmap.h"
@@ -100,7 +102,7 @@ void dungeonmap_draw()
     }
 }
 
-void dungeonmap_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y)
+void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y)
 {
     // check tile is within viewable area
     if ( (dungeon_y >= dungeonmap.window_y && dungeon_y < dungeonmap.window_y + dungeonmap.window_h) && (dungeon_x >= dungeonmap.window_x && dungeon_x < dungeonmap.window_x + dungeonmap.window_w) )
@@ -112,27 +114,48 @@ void dungeonmap_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y)
     }
 }
 
-void dungeonmap_draw_object(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile)
+void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile, uint8_t pass)
 {
-    // check tile is within viewable area
-    if ( (dungeon_y >= dungeonmap.window_y && dungeon_y < dungeonmap.window_y + dungeonmap.window_h) && (dungeon_x >= dungeonmap.window_x && dungeon_x < dungeonmap.window_x + dungeonmap.window_w) )
+    dungeonmap.map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = tile->tile_attr; 
+    dungeonmap.map[dungeon_x][dungeon_y].tilemap_tile.tile_id = tile->tile_id;
+    if (pass==1)
     {
-        uint8_t screen_x = dungeon_x - dungeonmap.window_x;
-        uint8_t screen_y = dungeon_y - dungeonmap.window_y;
-
-        tilemap_set_tile(screen_x, screen_y, tile);
+        dungeonmap.map[dungeon_x][dungeon_y].flags |= 1 << 0;
+    } else {
+        dungeonmap.map[dungeon_x][dungeon_y].flags &= ~(1 << 0);
     }
 }
 
-uint8_t dungeonmap_tile_passable(uint8_t dungeon_x, uint8_t dungeon_y) 
+void dungeonmap_reset_tile(uint8_t dungeon_x, uint8_t dungeon_y)
 {
-    switch( dungeonmap.map[dungeon_x][dungeon_y].tile ) 
+    switch(dungeonmap.map[dungeon_x][dungeon_y].tile ) 
     {
         case FLOOR: 
-            return 1;
+            dungeonmap.map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = 0;
+            dungeonmap.map[dungeon_x][dungeon_y].tilemap_tile.tile_id = 2;
+            dungeonmap.map[dungeon_x][dungeon_y].flags |= 1 << 0;
+            break;
         case WALL:
-            return 0;
+            dungeonmap.map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = 0;
+            dungeonmap.map[dungeon_x][dungeon_y].tilemap_tile.tile_id = 4;
+            dungeonmap.map[dungeon_x][dungeon_y].flags &= ~(1 << 0);
+            break;
         default:
-            return 0;
-    }
+            dungeonmap.map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = 0;
+            dungeonmap.map[dungeon_x][dungeon_y].tilemap_tile.tile_id = 0;
+            dungeonmap.map[dungeon_x][dungeon_y].flags &= ~(1 << 0);
+            break;
+    }        
+}
+
+void dungeonmap_set(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile )
+{
+    dungeonmap.map[dungeon_x][dungeon_y].tile = tile;
+    dungeonmap_reset_tile(dungeon_x, dungeon_y);
+}
+
+
+uint8_t dungeonmap_tile_passable(uint8_t dungeon_x, uint8_t dungeon_y) 
+{
+    return dungeonmap.map[dungeon_x][dungeon_y].flags & (1 << 0);
 }

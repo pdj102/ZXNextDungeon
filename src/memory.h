@@ -9,7 +9,7 @@
     The zxnext physical memory (1Mb+) is divided into 8KiB pages PAGE_0 through PAGE_223 
     Any physical memory page can mapped into any MMU slot
 
-    To compile a C file to be put in a page, e.g. page 19, use the --codesegPAGE_19 --constsegPAGE_19 compiler options. The output file will be  "page19.o"
+    To compile a C file to be put in a page, e.g. page 19, use the --codesegPAGE_19 --constsegPAGE_19 compiler options. 
     Note the ORG in the C file also needs to be set so the compiler knows where the page will appear in the 64k memory when banked in
     In this memory model banked pages are always banked into MMU slot 6 or 7 e.g. 0xc000+
 
@@ -31,7 +31,7 @@
 
     Page    |   Description
     --------|-----------------------------------------------------
-    18      |       
+    18      |   Dungeon map generator
 
  ***************************************************/
 

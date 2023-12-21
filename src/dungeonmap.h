@@ -27,8 +27,9 @@ typedef enum dungeonmap_tile_type {FLOOR, WALL} dungeonmap_tile_type_e;
 // Dungeon map tile 
 typedef struct
 {
-    tilemap_tile_t      tilemap_tile;
-    dungeonmap_tile_type_e         tile;
+    tilemap_tile_t          tilemap_tile;
+    dungeonmap_tile_type_e  tile;
+    uint8_t                 flags;
 } dungeonmap_tile_t;
 
 // Dungeon map data structure
@@ -72,7 +73,7 @@ void dungeonmap_init();
 void dungeonmap_setwindow(uint8_t y, uint8_t x, uint8_t h, uint8_t w);
 
 /**
- * Prints the dungeon map to the tilemap
+ * Draws the dungeon map to the graphics tilemap
  * TODO bounds checking - window_y + h and window_x + w must not go beyond map edge
  * 
  * @return void
@@ -80,23 +81,43 @@ void dungeonmap_setwindow(uint8_t y, uint8_t x, uint8_t h, uint8_t w);
 void dungeonmap_draw();
 
 /**
- * Redraw a single dungeon tile to the tilemap
+ * Draw a single dungeon tile to the graphics tilemap
  * 
  * @param dungeon_x x position
  * @param dungeon_y y position
  * @return void
  */
-void dungeonmap_draw_tile(uint8_t dungeon_x, uint8_t dungeon_y);
+void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y);
 
 /**
- * Draw a given tile at dungeon position x, y to the tilemap. Used to draw objects on the dungeon map 
+ * Set the tile at dungeon position x, y. Used to draw objects on the dungeon map 
  * 
  * @param dungeon_x x position
  * @param dungeon_y y position
  * @param tile tilemap tile
+ * @param pass 1 if dungeonmap tile is passable or 0 if blocked
  * @return void
  */
-void dungeonmap_draw_object(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile);
+void  dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile, uint8_t pass);
+
+/**
+ * Set the tile at dungeon position x, y to the dungeon map tile. Use when there are no objects are at this location
+ * 
+ * @param dungeon_x x position
+ * @param dungeon_y y position
+ * @return void
+ */
+void dungeonmap_reset_tile(uint8_t dungeon_x, uint8_t dungeon_y);
+
+/**
+ * Set the dungeonmap tile at dungeon position x, y
+ * 
+ * @param dungeon_x x position
+ * @param dungeon_y y position
+ * @param dungeonmap_tile_type_e dungeon map tile type
+ * @return void
+ */
+void dungeonmap_set(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile );
 
 /**
  * Move dungeon window by dx dy
