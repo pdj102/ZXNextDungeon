@@ -17,8 +17,8 @@
 
     MMU SLOT    |   Address         |   Page    |   Description   
     ------------|-------------------|-----------|---------------------------------------------------------------------
-    0           |   0x0000-0xfff    |   16      |   Global dungeon map data structures. Paged in - do not bank out
-    1           |   0x2000-0x3fff   |   17      |   Global objects data structures. Paged in - do not bank out
+    0           |   0x0000-0xfff    |   16      |   Global game data structure - dungeon map, objects etc. Paged in - do not bank out
+    1           |   0x2000-0x3fff   |   17      |   Global game data structure - dungeon map, objects etc. Paged in - do not bank out
     2           |   0x4000-0x5fff   |   10      |   ZX Next tile map and patterns. Default page
     3           |   0x6000-0x7fff   |   11      |   ZX Next tile map and patterns. Default page
     4           |   0x8000-0x9fff   |   4       |   Global game code. Default page - do not bank out
@@ -35,8 +35,10 @@
 
  ***************************************************/
 
-#ifndef MEMORY_MAP_H 
-    #define MEMORY_MAP_H
+#ifndef MEMORY_H 
+    #define MEMORY_H
+
+#include "dungeonmap.h"
 
 /*
  * ZX Next tile map and pattern address is located at MMU slots 2 and 3 (Bank 5) 0x4000 - 0x7fff
@@ -52,5 +54,29 @@
  */
 #define TILEDEFNS_BASE 0x4a00
 
+
+/***************************************************
+ * types
+ ***************************************************/
+
+// Global game data stucture 
+typedef struct
+{
+    dungeonmap_t    dungeonmap;
+
+} globaldata_t;
+
+/***************************************************
+ * variable declarations
+ ***************************************************/
+
+// Globaldata is defined in memory.asm
+extern globaldata_t globaldata;
+
+/***************************************************
+ * function prototypes
+ ***************************************************/
+
+void memory_init();
 
 #endif

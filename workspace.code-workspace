@@ -31,7 +31,8 @@
 			"string.h": "c",
 			"entity_item.h": "c",
 			"cctype": "c",
-			"memory_map.h": "c"
+			"memory_map.h": "c",
+			"input.h": "c"
 		}
 	}
 }

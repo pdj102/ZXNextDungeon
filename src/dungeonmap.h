@@ -17,12 +17,15 @@
 #define DUNGEONMAP_WIDTH   40
 #define DUNGEONMAP_HEIGHT  40
 
+#define FLAG_PASSABLE 1 << 0
+
+
 
 /***************************************************
  * types
  ***************************************************/
 
-typedef enum dungeonmap_tile_type {FLOOR, WALL} dungeonmap_tile_type_e;
+typedef enum dungeonmap_tile_type {FLOOR, BRICKWALL, SOLIDWALL} dungeonmap_tile_type_e;
 
 // Dungeon map tile 
 typedef struct
@@ -49,9 +52,7 @@ typedef struct
  * variable declarations
  ***************************************************/
 
-extern dungeonmap_t dungeonmap;
-
-// extern dungeonmap_tile_t dungeonmap[DUNGEONMAP_WIDTH][DUNGEONMAP_HEIGHT];
+extern dungeonmap_t *const dungeonmap;
 
 
 /***************************************************
@@ -71,6 +72,16 @@ void dungeonmap_init();
  * @return void
  */
 void dungeonmap_setwindow(uint8_t y, uint8_t x, uint8_t h, uint8_t w);
+
+/**
+ * Move dungeon window by dx dy
+ * 
+ * @param dx delta x
+ * @param dy delta y
+ * @return void
+ * 
+ */
+void dungeonmap_scroll(int8_t dx, int8_t dy );
 
 /**
  * Draws the dungeon map to the graphics tilemap
@@ -135,7 +146,7 @@ void dungeonmap_scroll(int8_t dx, int8_t dy);
  * @param dungeon_y y position
  * @return 1 passable 0 impassable
  */
-uint8_t dungeonmap_tile_passable(uint8_t dungeon_x, uint8_t dungeon_y);
+uint8_t dungeonmap_tile_is_passable(uint8_t dungeon_x, uint8_t dungeon_y);
 
 
 

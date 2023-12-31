@@ -9,11 +9,13 @@
 #include <arch/zxn.h>   // ZX Spectrum Next architecture specific functions
 #include <stdio.h>
 
+#include "memory.h"
 #include "tile_defns.h"
 #include "palette.h"
 #include "tilemap.h"
 #include "dungeonmap.h"
 #include "dungeonmap_generator.h"
+#include "player.h"
 
 /***************************************************
  * private types
@@ -53,6 +55,7 @@ void init_game()
      */
     ZXN_NEXTREG(0x68, 0b10000000);
 
+    memory_init();
     tile_defns_init();
     palette_init();
     tilemap_init();
@@ -85,7 +88,7 @@ int main()
 
     while (1)
     {
-
+        player_turn();
     }
     return 0;
 }

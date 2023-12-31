@@ -65,7 +65,7 @@ void dungeonmap_generate_b()
     uint8_t x, y;
 
     // clear the dungeon map to all ceiling
-    fill_b(0, 0, DUNGEONMAP_WIDTH, DUNGEONMAP_HEIGHT, WALL);
+    fill_b(0, 0, DUNGEONMAP_WIDTH, DUNGEONMAP_HEIGHT, BRICKWALL);
 
     // Create a 5 x 5 grid of rooms of size 8 x 8 tiles
     for (x = 0; x < 40; x+=8)
