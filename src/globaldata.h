@@ -2,37 +2,39 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Memory routines
+    @brief Game global data 
 
  ***************************************************/
-#include "memory.h"
 
-#include <arch/zxn.h>
+#ifndef GLOBALDATA_H 
+    #define GLOBALDATA_H
 
+#include "dungeonmap.h"
+#include "object.h"
 
 /***************************************************
- * private types
+ * types
  ***************************************************/
 
-
-/***************************************************
- * private function prototypes
- ***************************************************/
-
-/***************************************************
- * private variables - static
- ***************************************************/
-
-
-
-/***************************************************
- * functions definitions
- ***************************************************/
-
-void memory_init()
+// Global game data stucture 
+typedef struct
 {
-    // Map global data (bank 16) into ZX Spectrum 8k MMU slot 0
-    ZXN_WRITE_REG(0x50, 16);
-    // Map global data (bank 17) into ZX Spectrum 8k MMU slot 1
-    ZXN_WRITE_REG(0x51, 17);    
-}
+    dungeonmap_t    dungeonmap;
+    object_t        objects[MAX_OBJECT];
+
+} globaldata_t;
+
+/***************************************************
+ * variable declarations
+ ***************************************************/
+
+// Globaldata is defined in memory.asm
+extern globaldata_t globaldata;
+
+/***************************************************
+ * function prototypes
+ ***************************************************/
+
+void globaldata_init();
+
+#endif

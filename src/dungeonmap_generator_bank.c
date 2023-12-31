@@ -46,7 +46,7 @@ static void fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint
     // TODO check bounds
     for (uint8_t y = dungeon_y; y < dungeon_h+dungeon_y; y++ ) {
         for (uint8_t x = dungeon_x; x < dungeon_w+dungeon_x; x++)
-            dungeonmap_set(x, y, tile);
+            dungeonmap_set_tile(x, y, tile);
     }
 }
 

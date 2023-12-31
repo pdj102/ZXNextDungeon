@@ -11,7 +11,7 @@
 #include <inttypes.h>
 #include <stdio.h> 
 
-#include "memory.h"
+#include "globaldata.h"
 #include "tilemap.h"
 #include "tile_defns.h"
 
@@ -28,7 +28,7 @@
  * variables
  ***************************************************/
 
-// helper pointer to the global data dungeon map
+// helper pointer to the global dungeon map data 
 dungeonmap_t *const dungeonmap = &globaldata.dungeonmap;
 
 
@@ -102,7 +102,7 @@ void dungeonmap_draw()
     }
 }
 
-void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y)
+void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile)
 {
     // check tile is within viewable area
     if ( (dungeon_y >= dungeonmap->window_y && dungeon_y < dungeonmap->window_y + dungeonmap->window_h) && (dungeon_x >= dungeonmap->window_x && dungeon_x < dungeonmap->window_x + dungeonmap->window_w) )
@@ -110,57 +110,40 @@ void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y)
         uint8_t screen_x = dungeon_x - dungeonmap->window_x;
         uint8_t screen_y = dungeon_y - dungeonmap->window_y;
 
-        tilemap_set_tile(screen_x, screen_y, &(dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile));
+        tilemap_set_tile(screen_x, screen_y, tile);
     }
 }
 
-void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile, uint8_t pass)
+void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type)
 {
-    dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = tile->tile_attr; 
-    dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_id = tile->tile_id;
-    if (pass==1)
-    {
-        dungeonmap->map[dungeon_x][dungeon_y].flags |= FLAG_PASSABLE;
-    } else {
-        dungeonmap->map[dungeon_x][dungeon_y].flags &= ~(FLAG_PASSABLE);
-    }
-}
+    dungeonmap->map[dungeon_x][dungeon_y].tile = tile_type;
 
-void dungeonmap_reset_tile(uint8_t dungeon_x, uint8_t dungeon_y)
-{
-    switch(dungeonmap->map[dungeon_x][dungeon_y].tile ) 
+    switch(tile_type ) 
     {
         case FLOOR: 
             dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = 0;
             dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_id = 2;
-            dungeonmap->map[dungeon_x][dungeon_y].flags |= FLAG_PASSABLE;
+            dungeonmap->map[dungeon_x][dungeon_y].flags &= ~(FLAG_BLOCKIKNG);
             break;
         case BRICKWALL:
             dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = 0;
             dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_id = 4;
-            dungeonmap->map[dungeon_x][dungeon_y].flags &= ~(FLAG_PASSABLE);
+            dungeonmap->map[dungeon_x][dungeon_y].flags |= FLAG_BLOCKIKNG;
             break;
         case SOLIDWALL:
             dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = 0;
             dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_id = 6;
-            dungeonmap->map[dungeon_x][dungeon_y].flags &= ~(FLAG_PASSABLE);
+            dungeonmap->map[dungeon_x][dungeon_y].flags |= FLAG_BLOCKIKNG;
             break;            
         default:
             dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_attr = 0;
             dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile.tile_id = 0;
-            dungeonmap->map[dungeon_x][dungeon_y].flags &= ~(FLAG_PASSABLE);
+            dungeonmap->map[dungeon_x][dungeon_y].flags |= FLAG_BLOCKIKNG;
             break;
     }        
 }
 
-void dungeonmap_set(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile )
+uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y) 
 {
-    dungeonmap->map[dungeon_x][dungeon_y].tile = tile;
-    dungeonmap_reset_tile(dungeon_x, dungeon_y);
-}
-
-
-uint8_t dungeonmap_tile_is_passable(uint8_t dungeon_x, uint8_t dungeon_y) 
-{
-    return dungeonmap->map[dungeon_x][dungeon_y].flags & (FLAG_PASSABLE);
+    return dungeonmap->map[dungeon_x][dungeon_y].flags & (FLAG_BLOCKIKNG);
 }

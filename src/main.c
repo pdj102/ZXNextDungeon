@@ -9,6 +9,7 @@
 #include <arch/zxn.h>   // ZX Spectrum Next architecture specific functions
 #include <stdio.h>
 
+#include "globaldata.h"
 #include "memory.h"
 #include "tile_defns.h"
 #include "palette.h"
@@ -56,12 +57,14 @@ void init_game()
     ZXN_NEXTREG(0x68, 0b10000000);
 
     memory_init();
+    globaldata_init();
+    
     tile_defns_init();
     palette_init();
     tilemap_init();
     dungeonmap_init();
 
-
+    object_init();
 
 }
 
@@ -70,25 +73,18 @@ int main()
     zx_border(1);
     init_game();
 
-    tilemap_tile_t blank = {1,0};
-    tilemap_clear(&blank);
-
-    tilemap_set_tile(1,1, &blank);
-    blank.tile_id = 2;
-    tilemap_set_tile(2,1, &blank);
-    blank.tile_id = 3;
-    tilemap_set_tile(3,1, &blank);
-    blank.tile_id = 4;
-    tilemap_set_tile(4,1, &blank);    
-    blank.tile_id = 5;
-    tilemap_set_tile(5,1, &blank);    
-    
+ 
     dungeonmap_generate();
+
     dungeonmap_draw();
+    object_drawall();
 
     while (1)
     {
         player_turn();
+        object_test();
+        object_drawall();
+
     }
     return 0;
 }

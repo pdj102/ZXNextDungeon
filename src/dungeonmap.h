@@ -17,7 +17,7 @@
 #define DUNGEONMAP_WIDTH   40
 #define DUNGEONMAP_HEIGHT  40
 
-#define FLAG_PASSABLE 1 << 0
+#define FLAG_BLOCKIKNG 1 << 0
 
 
 
@@ -92,43 +92,26 @@ void dungeonmap_scroll(int8_t dx, int8_t dy );
 void dungeonmap_draw();
 
 /**
- * Draw a single dungeon tile to the graphics tilemap
+ * Draw a single tile to the graphics tilemap at dungeon position x, y
+ * Use to draw objects onto the dungeon map
  * 
  * @param dungeon_x x position
  * @param dungeon_y y position
+ * @param tile      tile to draw
  * @return void
  */
-void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y);
+void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile);
 
 /**
- * Set the tile at dungeon position x, y. Used to draw objects on the dungeon map 
+ * Set the tile at dungeon position x, y
  * 
  * @param dungeon_x x position
  * @param dungeon_y y position
- * @param tile tilemap tile
- * @param pass 1 if dungeonmap tile is passable or 0 if blocked
+ * @param tile_type type of tile to set
  * @return void
  */
-void  dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, const tilemap_tile_t *tile, uint8_t pass);
+void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type);
 
-/**
- * Set the tile at dungeon position x, y to the dungeon map tile. Use when there are no objects are at this location
- * 
- * @param dungeon_x x position
- * @param dungeon_y y position
- * @return void
- */
-void dungeonmap_reset_tile(uint8_t dungeon_x, uint8_t dungeon_y);
-
-/**
- * Set the dungeonmap tile at dungeon position x, y
- * 
- * @param dungeon_x x position
- * @param dungeon_y y position
- * @param dungeonmap_tile_type_e dungeon map tile type
- * @return void
- */
-void dungeonmap_set(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile );
 
 /**
  * Move dungeon window by dx dy
@@ -140,13 +123,13 @@ void dungeonmap_set(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e
 void dungeonmap_scroll(int8_t dx, int8_t dy);
 
 /**
- * Returns 1 if dungeon map tile is floor else 0
+ * Returns 1 if dungeon map tile is blocked else 0
  * 
  * @param dungeon_x x position
  * @param dungeon_y y position
  * @return 1 passable 0 impassable
  */
-uint8_t dungeonmap_tile_is_passable(uint8_t dungeon_x, uint8_t dungeon_y);
+uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y);
 
 
 

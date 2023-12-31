@@ -59,19 +59,11 @@
  * types
  ***************************************************/
 
-// Global game data stucture 
-typedef struct
-{
-    dungeonmap_t    dungeonmap;
-
-} globaldata_t;
 
 /***************************************************
  * variable declarations
  ***************************************************/
 
-// Globaldata is defined in memory.asm
-extern globaldata_t globaldata;
 
 /***************************************************
  * function prototypes
