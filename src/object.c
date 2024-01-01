@@ -34,7 +34,7 @@ object_t* object_getfree();
 object_t *const objects = &globaldata.objects[0];
 
 // List of in use objects
-static p_forward_list_t object_list;
+static p_forward_list_t dungeon_object_list; 
 
 /***************************************************
  * functions
@@ -42,12 +42,18 @@ static p_forward_list_t object_list;
 
 void object_init()
 {
-    p_forward_list_init(&object_list);
+    p_forward_list_init(&dungeon_object_list);
 
     for (uint8_t i = 0; i < MAX_OBJECT; i++)
     {
         objects[i].free = 1;
     }
+}
+
+void object_add_to_dungeon_list(object_t* obj_ptr)
+{
+    // TODO - should check object next ptr to confirm is null 
+    p_forward_list_push_front(&dungeon_object_list, &obj_ptr->next);
 }
 
 // TO DO move into  bank code for creating objects 
@@ -62,7 +68,6 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
     }
     
     // set common object attributes
-    p_forward_list_push_front(&object_list, &obj_ptr->next);
     obj_ptr->free = 0;
     obj_ptr->x = x;
     obj_ptr->y = y;
@@ -149,7 +154,7 @@ uint8_t object_isblocking(uint8_t x, uint8_t y)
 {
     object_t *object_ptr;
 
-    for (object_ptr = p_forward_list_front(&object_list); object_ptr; object_ptr = p_forward_list_next(object_ptr))
+    for (object_ptr = p_forward_list_front(&dungeon_object_list); object_ptr; object_ptr = p_forward_list_next(object_ptr))
     {
         if (!object_ptr->blocking)
         {
@@ -167,18 +172,18 @@ void object_drawall()
 {
     object_t *obj_ptr;
 
-    for (obj_ptr = p_forward_list_front(&object_list); obj_ptr; obj_ptr = p_forward_list_next(obj_ptr))
+    for (obj_ptr = p_forward_list_front(&dungeon_object_list); obj_ptr; obj_ptr = p_forward_list_next(obj_ptr))
     {
         dungeonmap_draw_single_tile(obj_ptr->x, obj_ptr->y, &obj_ptr->tilemap_tile);
     }    
 }
 
-object_t *object_first()
+object_t *object_dungeon_list_first()
 {
-    return p_forward_list_front(&object_list);
+    return p_forward_list_front(&dungeon_object_list);
 }
 
-object_t *object_next(object_t *obj_ptr)
+object_t *object_list_next(object_t *obj_ptr)
 {
     return p_forward_list_next(obj_ptr);
 }

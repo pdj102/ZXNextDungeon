@@ -21,7 +21,6 @@ typedef struct
 {
     dungeonmap_t    dungeonmap;
     object_t        objects[MAX_OBJECT];
-
 } globaldata_t;
 
 /***************************************************

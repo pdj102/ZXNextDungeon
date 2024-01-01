@@ -71,10 +71,18 @@ void init_game()
 
     object_init();
 
-    player_obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
-    object_create(POTION_HEALING, 2, 5);
-    object_create(POTION_SPEED, 5, 5);
-    object_create(DOOR_CLOSED, 4, 7);    
+    object_t    *obj_ptr;
+
+    obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
+    player_obj_ptr = obj_ptr;
+    object_add_to_dungeon_list(obj_ptr);
+
+    obj_ptr = object_create(POTION_HEALING, 2, 5);
+    object_add_to_dungeon_list(obj_ptr);
+    obj_ptr = object_create(POTION_SPEED, 5, 5);
+    object_add_to_dungeon_list(obj_ptr);
+    obj_ptr = object_create(DOOR_CLOSED, 4, 7);    
+    object_add_to_dungeon_list(obj_ptr);
 
     player_init(player_obj_ptr);
    

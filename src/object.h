@@ -37,19 +37,21 @@ typedef enum object_subtype {
     POTION_SPEED
     } object_subtype_e;
 
-typedef struct
+typedef struct 
 {
-    void                    *next;              /**< list of active objects. Next pointer must be first 2 bytes in struct */
-    uint8_t                 free;               /** 1 if object is free */
+    void                    *next;              /**< objects can be part of a list of objects. Next pointer must be first 2 bytes in struct */
+    uint8_t                 free;               /**< 1 if object is free */
     tilemap_tile_t          tilemap_tile;
     uint8_t                 x;
     uint8_t                 y;
     uint8_t                 blocking;           /**< 1 if the object is blocking 0 if non-blocking */
+    p_forward_list_t        obj_list;           /**< Objects can have a list of objects e.g. the players inveontory or a chest */
     object_class_e          class;
     object_type_e           type;
     object_subtype_e        subtype;
         
 } object_t;
+
 
 
 /***************************************************
@@ -77,6 +79,15 @@ void object_init();
  * @return pointer to created object or NULL on failed to create
  */
 object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
+
+/**
+ * Add the object to the list of dungeon objects
+ *
+ * @param *obj_ptr pointer to object 
+ * 
+ * @return void
+ */
+void object_add_to_dungeon_list(object_t* obj_ptr);
 
 /**
  * Move object to position x, y if not blocked
@@ -109,17 +120,17 @@ uint8_t object_isblocking(uint8_t x, uint8_t y);
 void object_drawall();
 
 /**
- * Returns the first in use object 
+ * Returns the first object in the dungeon object list
  * 
- * @return *object_t    first in use object or 0 if no objects
+ * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_first();
+object_t *object_dungeon_list_first();
 
 /**
- * Returns the next in use object 
+ * Returns the next object in the object list
  * 
- * @return *object_t    next in use object or 0 if no more objects
+ * @return *object_t    pointer to next object or 0 if no more objects
  */
-object_t *object_next(object_t *obj_ptr);
+object_t *object_list_next(object_t *obj_ptr);
 
 #endif

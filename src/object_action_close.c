@@ -56,7 +56,7 @@ object_t *object_action_close_findat(uint8_t x, uint8_t y)
 {
     object_t *obj_ptr;
 
-    for (obj_ptr = object_first(); obj_ptr; obj_ptr = object_next(obj_ptr))
+    for (obj_ptr = object_dungeon_list_first(); obj_ptr; obj_ptr = object_list_next(obj_ptr))
     {
         if (object_action_move_is_closeable(obj_ptr) && obj_ptr->x == x && obj_ptr->y == y)
         {
