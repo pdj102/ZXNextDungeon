@@ -8,10 +8,10 @@
 
  ***************************************************/
 
-#include "dungeonmap_generator_bank.h"
-
 #include <inttypes.h>           
 #include <stdlib.h>             // rand()
+
+#include "dungeonmap_generator_bank.h"
 
 #include "dungeonmap.h"
         

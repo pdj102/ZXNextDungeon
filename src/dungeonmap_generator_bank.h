@@ -11,9 +11,6 @@
 #ifndef DUNGEONMAP_GENERATOR_BANK_H 
     #define DUNGEONMAP_GENERATOR_BANK_H 
 
-#include <inttypes.h>
-
-
 
 /***************************************************
  * types

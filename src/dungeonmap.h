@@ -52,7 +52,7 @@ typedef struct
  * variable declarations
  ***************************************************/
 
-extern dungeonmap_t *const dungeonmap;
+// extern dungeonmap_t *const dungeonmap;
 
 
 /***************************************************

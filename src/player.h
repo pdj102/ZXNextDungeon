@@ -9,6 +9,8 @@
 #ifndef PLAYER_H 
     #define PLAYER_H 
 
+#include "object.h"
+
 /***************************************************
  * types
  ***************************************************/
@@ -21,7 +23,19 @@
  * function prototypes
  ***************************************************/
 
-// generate a dungeon map 
+/**
+ * Init the player
+ *
+ * @param obj_ptr pointer to the player object
+ * @return void
+ */
+void player_init(object_t *obj_ptr);
+
+/**
+ * Player takes turn
+ * 
+ * @return void
+ */
 void player_turn();
 
 #endif

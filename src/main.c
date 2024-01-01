@@ -17,6 +17,9 @@
 #include "dungeonmap.h"
 #include "dungeonmap_generator.h"
 #include "player.h"
+#include "object_action_move.h"
+#include "object.h"
+
 
 /***************************************************
  * private types
@@ -29,6 +32,8 @@
 /***************************************************
  * private variables - static
  ***************************************************/
+
+static object_t *player_obj_ptr ;
 
 /***************************************************
  * functions
@@ -66,13 +71,25 @@ void init_game()
 
     object_init();
 
+    player_obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
+    object_create(POTION_HEALING, 2, 5);
+    object_create(POTION_SPEED, 5, 5);
+    object_create(DOOR_CLOSED, 4, 7);    
+
+    player_init(player_obj_ptr);
+   
+}
+
+void object_test()
+{
+    object_action_move_to(player_obj_ptr, player_obj_ptr->x+1, player_obj_ptr->y);
 }
 
 int main()
 {
     zx_border(1);
     init_game();
-
+    zx_border(4);
  
     dungeonmap_generate();
 
@@ -82,7 +99,8 @@ int main()
     while (1)
     {
         player_turn();
-        object_test();
+
+        dungeonmap_draw();
         object_drawall();
 
     }

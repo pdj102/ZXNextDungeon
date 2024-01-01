@@ -7,9 +7,7 @@
  ***************************************************/
 #include "dungeonmap.h"
 
-#include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions
 #include <inttypes.h>
-#include <stdio.h> 
 
 #include "globaldata.h"
 #include "tilemap.h"
@@ -25,11 +23,11 @@
  ***************************************************/
 
 /***************************************************
- * variables
+ * private variables - static
  ***************************************************/
 
 // helper pointer to the global dungeon map data 
-dungeonmap_t *const dungeonmap = &globaldata.dungeonmap;
+static dungeonmap_t *const dungeonmap = &globaldata.dungeonmap;
 
 
 /***************************************************
@@ -145,5 +143,6 @@ void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_t
 
 uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y) 
 {
+    // NB no test for dungeon map limits. Assumes the map has a blocking outer wall
     return dungeonmap->map[dungeon_x][dungeon_y].flags & (FLAG_BLOCKIKNG);
 }

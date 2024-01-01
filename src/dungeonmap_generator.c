@@ -7,7 +7,6 @@
  ***************************************************/
 #include "dungeonmap_generator.h"
 
-#include <inttypes.h>
 #include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions     
 
 #include "dungeonmap_generator_bank.h"
