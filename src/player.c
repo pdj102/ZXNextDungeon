@@ -17,6 +17,7 @@
 #include "object_action_move.h"
 #include "object_action_open.h"
 #include "object_action_close.h"
+#include "object_action_pickup.h"
 
 /***************************************************
  * private types
@@ -28,6 +29,7 @@
  ***************************************************/
 
 void open_or_close();
+void pickup();
 
 /***************************************************
  * private variables - static
@@ -71,6 +73,10 @@ void player_turn()
         case 'O':  // open or close
             open_or_close();
             break;
+
+        case 'P':  // pickup
+            pickup();
+            break;            
 
         case '1':
             dungeonmap_scroll(-1, 0);
@@ -152,4 +158,15 @@ void open_or_close()
         object_action_close(obj_ptr);
         return;
     }
+}
+
+void pickup()
+{
+    object_t *obj_ptr;
+
+    if ( obj_ptr = object_action_pickup_findat(player_obj_ptr->x, player_obj_ptr->y) )
+    {
+        object_action_pickup(obj_ptr, player_obj_ptr);
+        return;
+    }  
 }

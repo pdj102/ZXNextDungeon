@@ -50,10 +50,37 @@ void object_init()
     }
 }
 
-void object_add_to_dungeon_list(object_t* obj_ptr)
+uint8_t object_add_to_dungeon_list(object_t* obj_ptr)
 {
-    // TODO - should check object next ptr to confirm is null 
+    // Object must not belong to another list
+    // This partially checks for this but if object is last object in a list this check will not spot this
+    /*
+    if (obj_ptr !=0)
+    {
+        return 0;
+    }
+    */
     p_forward_list_push_front(&dungeon_object_list, &obj_ptr->next);
+    return 1;
+}
+
+uint8_t object_remove_from_dungeon_list(object_t* obj_ptr)
+{
+    p_forward_list_remove(&dungeon_object_list, &obj_ptr->next);
+    return 1;
+}
+
+uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr)
+{
+    // Object must not belong to another list
+    // This partially checks for this but if object is last object in a list this check will not spot this
+    if (obj_ptr != 0)
+    {
+        return 0;
+    }
+    p_forward_list_push_front(&obj_container_ptr->obj_list, &obj_ptr->next);
+
+    return 1;
 }
 
 // TO DO move into  bank code for creating objects 

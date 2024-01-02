@@ -82,12 +82,33 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
 
 /**
  * Add the object to the list of dungeon objects
+ * Object must not belong to another list!
  *
  * @param *obj_ptr pointer to object 
  * 
- * @return void
+ * @return uint8_t  1 success 0 fail
  */
-void object_add_to_dungeon_list(object_t* obj_ptr);
+uint8_t object_add_to_dungeon_list(object_t* obj_ptr);
+
+/**
+ * Remove the object from the list of dungeon objects
+ *
+ * @param *obj_ptr pointer to object 
+ * 
+ * @return uint8_t  1 success 0 fail
+ */
+uint8_t object_remove_from_dungeon_list(object_t* obj_ptr);
+
+/**
+ * Add the object to the container object's list
+ * Object must not belong to another list!
+ *
+ * @param *obj_ptr              pointer to object 
+ * @param *obj_container_ptr    pointer to the container object 
+ * 
+ * @return uint8_t  1 success 0 fail
+ */
+uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr);
 
 /**
  * Move object to position x, y if not blocked
