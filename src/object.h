@@ -111,6 +111,16 @@ uint8_t object_remove_from_dungeon_list(object_t* obj_ptr);
 uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr);
 
 /**
+ * Remove the object from the container object's list
+ *
+ * @param *obj_ptr              pointer to object 
+ * @param *obj_container_ptr    pointer to the container object 
+ * 
+ * @return uint8_t  1 success 0 fail
+ */
+uint8_t object_remove_object_from_object_list(object_t* obj_ptr, object_t* obj_container_ptr);
+
+/**
  * Move object to position x, y if not blocked
  * 
  * @param *obj pointer to object to move
@@ -146,6 +156,14 @@ void object_drawall();
  * @return *object_t    pointer to first object or 0 if no objects
  */
 object_t *object_dungeon_list_first();
+
+/**
+ * Returns the first object in an object's object list
+ *
+ * @param *obj_ptr      pointer to the container object  
+ * @return *object_t    pointer to first object or 0 if no objects
+ */
+object_t *object_list_first(object_t *obj_ptr);
 
 /**
  * Returns the next object in the object list

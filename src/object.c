@@ -55,7 +55,7 @@ uint8_t object_add_to_dungeon_list(object_t* obj_ptr)
     // Object must not belong to another list
     // This partially checks for this but if object is last object in a list this check will not spot this
     /*
-    if (obj_ptr !=0)
+    if (obj_ptr->next !=0)
     {
         return 0;
     }
@@ -72,14 +72,14 @@ uint8_t object_remove_from_dungeon_list(object_t* obj_ptr)
 
 uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr)
 {
-    // Object must not belong to another list
-    // This partially checks for this but if object is last object in a list this check will not spot this
-    if (obj_ptr != 0)
-    {
-        return 0;
-    }
     p_forward_list_push_front(&obj_container_ptr->obj_list, &obj_ptr->next);
 
+    return 1;
+}
+
+uint8_t object_remove_object_from_object_list(object_t* obj_ptr, object_t* obj_container_ptr)
+{
+    p_forward_list_remove(&obj_container_ptr->obj_list, &obj_ptr->next);
     return 1;
 }
 
@@ -96,6 +96,7 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
     
     // set common object attributes
     obj_ptr->free = 0;
+    obj_ptr->obj_list = 0;
     obj_ptr->x = x;
     obj_ptr->y = y;
 
@@ -208,6 +209,11 @@ void object_drawall()
 object_t *object_dungeon_list_first()
 {
     return p_forward_list_front(&dungeon_object_list);
+}
+
+object_t *object_list_first(object_t *obj_ptr)
+{
+    return p_forward_list_front(&obj_ptr->obj_list);
 }
 
 object_t *object_list_next(object_t *obj_ptr)
