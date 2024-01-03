@@ -19,6 +19,7 @@
 #include "player.h"
 #include "object_action_move.h"
 #include "object.h"
+#include "text.h"
 
 
 /***************************************************
@@ -67,8 +68,10 @@ void init_game()
     tile_defns_init();
     palette_init();
     tilemap_init();
-    dungeonmap_init();
 
+    text_init();
+
+    dungeonmap_init();
     object_init();
 
     object_t    *obj_ptr;
@@ -88,10 +91,6 @@ void init_game()
    
 }
 
-void object_test()
-{
-    object_action_move_to(player_obj_ptr, player_obj_ptr->x+1, player_obj_ptr->y);
-}
 
 int main()
 {
@@ -103,6 +102,9 @@ int main()
 
     dungeonmap_draw();
     object_drawall();
+
+    text_print_string_at(0, 24, "WELCOME TO DUNGEON!");
+    text_print_string("EXPLORE");
 
     while (1)
     {

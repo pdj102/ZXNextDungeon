@@ -11,6 +11,7 @@
 
 #include "dungeonmap.h"
 #include "object.h"
+#include "text.h"
 
 /***************************************************
  * types
@@ -21,6 +22,7 @@ typedef struct
 {
     dungeonmap_t    dungeonmap;
     object_t        objects[MAX_OBJECT];
+    text_window_t   text_window;
 } globaldata_t;
 
 /***************************************************
