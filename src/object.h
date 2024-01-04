@@ -45,7 +45,7 @@ typedef struct
     uint8_t                 x;
     uint8_t                 y;
     uint8_t                 blocking;           /**< 1 if the object is blocking 0 if non-blocking */
-    p_forward_list_t        obj_list;           /**< Objects can have a list of objects e.g. the players inveontory or a chest */
+    p_forward_list_t        obj_list;           /**< Objects can contain a list of objects e.g. the players inventory or a chest */
     object_class_e          class;
     object_type_e           type;
     object_subtype_e        subtype;
@@ -81,6 +81,12 @@ void object_init();
 object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
 
 /**
+ * Destorys an object and all its contained objects
+ * 
+ */
+void object_destroy(object_t *obj_todestory);
+
+/**
  * Add the object to the list of dungeon objects
  * Object must not belong to another list!
  *
@@ -88,7 +94,7 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
  * 
  * @return uint8_t  1 success 0 fail
  */
-uint8_t object_add_to_dungeon_list(object_t* obj_ptr);
+void object_add_to_dungeon_list(object_t* obj_ptr);
 
 /**
  * Remove the object from the list of dungeon objects
@@ -100,7 +106,7 @@ uint8_t object_add_to_dungeon_list(object_t* obj_ptr);
 uint8_t object_remove_from_dungeon_list(object_t* obj_ptr);
 
 /**
- * Add the object to the container object's list
+ * Add the object to a container object's list
  * Object must not belong to another list!
  *
  * @param *obj_ptr              pointer to object 
@@ -111,7 +117,7 @@ uint8_t object_remove_from_dungeon_list(object_t* obj_ptr);
 uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr);
 
 /**
- * Remove the object from the container object's list
+ * Remove object from a container object's list
  *
  * @param *obj_ptr              pointer to object 
  * @param *obj_container_ptr    pointer to the container object 
@@ -131,7 +137,6 @@ uint8_t object_remove_object_from_object_list(object_t* obj_ptr, object_t* obj_c
  */
 void object_xy(object_t *obj, uint8_t x, uint8_t y);
 
- void object_test();
 
 /**
  * Check if an object is blocking dungeon x, y

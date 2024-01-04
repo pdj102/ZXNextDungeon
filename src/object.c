@@ -24,6 +24,8 @@
 
 object_t* object_getfree();
 
+void object_free(object_t *obj_tofree);
+
 
 /***************************************************
  * private variables - static
@@ -50,18 +52,9 @@ void object_init()
     }
 }
 
-uint8_t object_add_to_dungeon_list(object_t* obj_ptr)
+void object_add_to_dungeon_list(object_t* obj_ptr)
 {
-    // Object must not belong to another list
-    // This partially checks for this but if object is last object in a list this check will not spot this
-    /*
-    if (obj_ptr->next !=0)
-    {
-        return 0;
-    }
-    */
     p_forward_list_push_front(&dungeon_object_list, &obj_ptr->next);
-    return 1;
 }
 
 uint8_t object_remove_from_dungeon_list(object_t* obj_ptr)
@@ -73,7 +66,6 @@ uint8_t object_remove_from_dungeon_list(object_t* obj_ptr)
 uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr)
 {
     p_forward_list_push_front(&obj_container_ptr->obj_list, &obj_ptr->next);
-
     return 1;
 }
 
@@ -170,6 +162,27 @@ object_t* object_getfree()
     }
     // no free object slot
     return 0;
+}
+
+void object_free(object_t *obj_todelete)
+{
+       obj_todelete->free = 1;
+}
+
+void object_destroy(object_t *obj_todestroy)
+{
+    text_print_string("DESTROY ");
+    // free objects contained by this object
+    object_t *obj_ptr = object_list_first(obj_todestroy);
+
+    while (obj_ptr)
+    {
+        object_destroy(obj_ptr);
+        // object_free(obj_ptr);
+        obj_ptr = object_list_next(obj_ptr);
+    }
+    // free the object
+    object_free(obj_todestroy);
 }
 
 void object_xy(object_t *obj, uint8_t x, uint8_t y)
