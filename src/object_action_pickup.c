@@ -10,6 +10,7 @@
 #include "object_action_pickup.h"
 
 #include "object.h"
+#include "object_list.h"
 #include "object_dungeon_list.h"
 
 /***************************************************
@@ -42,7 +43,7 @@ uint8_t object_action_is_pickup(object_t *obj)
 uint8_t object_action_pickup(object_t *obj_topickup, object_t *obj_container)
 {
     object_dungeon_list_remove(obj_topickup);
-    object_add_object_to_object_list(obj_topickup, obj_container);
+    object_list_add(obj_topickup, obj_container);
 
     return 1;
 }

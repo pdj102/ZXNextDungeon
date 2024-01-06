@@ -10,9 +10,8 @@
     #define OBJECT_DUNGEON_LIST_H 
 
 #include <inttypes.h>
-#include <adt/p_forward_list.h>
 
-#include "tilemap.h"
+#include "object.h"
 
 
 /***************************************************

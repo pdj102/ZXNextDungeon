@@ -10,6 +10,7 @@
 #include "object_action_pickup.h"
 
 #include "object.h"
+#include "object_list.h"
 #include "object_dungeon_list.h"
 
 /***************************************************
@@ -36,7 +37,7 @@ uint8_t object_action_is_drop(object_t *obj)
 
 uint8_t object_action_drop(object_t *obj_todrop, object_t *obj_container_ptr)
 {
-    object_remove_object_from_object_list(obj_todrop, obj_container_ptr);
+    object_list_remove(obj_todrop, obj_container_ptr);
     obj_todrop->x = obj_container_ptr->x;
     obj_todrop->y = obj_container_ptr->y;
     object_dungeon_list_add(obj_todrop);
@@ -51,7 +52,6 @@ object_t *object_action_drop_find_first(object_t *obj_container_ptr)
     {
         if (object_action_is_drop(obj_ptr) )
         {
-
             return obj_ptr;
         }
     }

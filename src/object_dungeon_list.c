@@ -12,7 +12,7 @@
 #include "object.h"
 #include "object_dungeon_list.h"
 #include "globaldata.h"
-#include "tilemap.h"
+// #include "tilemap.h"
 #include "dungeonmap.h"
 
 /***************************************************
@@ -42,12 +42,12 @@ void object_dungeon_list_init()
 
 void object_dungeon_list_add(object_t* obj_ptr)
 {
-    p_forward_list_push_front(&dungeon_object_list, &obj_ptr->next);
+    p_forward_list_push_front(&dungeon_object_list, obj_ptr);
 }
 
 uint8_t object_dungeon_list_remove(object_t* obj_ptr)
 {
-    p_forward_list_remove(&dungeon_object_list, &obj_ptr->next);
+    p_forward_list_remove(&dungeon_object_list, obj_ptr);
     return 1;
 }
 

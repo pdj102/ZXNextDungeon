@@ -55,19 +55,22 @@ $(OBJDIR)/dungeonmap_generator_bank.o: $(SRCDIR)/dungeonmap_generator_bank.c $(S
 
 
 # ####################################################################################################################################
-# target for *.o - call C compiler
+# target for *.o : dependency is *.c and *.h 
+# This rule requires .c file to have a .h file
+# call C compiler
 # example to compile ./src/test.c execute "make ./obj/test.o"
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(PRAGMA_FILE)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(SRCDIR)/%.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) -o $@ $<
 
 # ####################################################################################################################################
-# target for *.o - call assembler
+# target for *.o : dependency is *.asm
+# call assembler
 # example to compile ./src/test2.asm execute "make ./obj/test2.o"
 $(OBJDIR)/%.o: $(SRCDIR)/%.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
 # ####################################################################################################################################
-# target for all : $program
+# target for all : dependency is $program
 all : $(PROGRAM)
 
 # ####################################################################################################################################

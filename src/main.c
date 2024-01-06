@@ -21,6 +21,7 @@
 #include "object_action_destroy.h"
 #include "object_action_pickup.h"
 #include "object.h"
+#include "object_list.h"
 #include "object_dungeon_list.h"
 #include "text.h"
 
@@ -97,6 +98,7 @@ void init_game()
     object_dungeon_list_add(obj_ptr);
 
     player_init(player_obj_ptr);
+
    
 }
 
@@ -113,6 +115,11 @@ int main()
 
     dungeonmap_draw();
     object_dungeon_list_drawall();
+
+    object_dungeon_list_remove(tmp_obj_ptr1);
+    object_dungeon_list_remove(tmp_obj_ptr2);
+    object_list_add(tmp_obj_ptr2, tmp_obj_ptr1);
+    object_destroy(tmp_obj_ptr1);    
 
     while (1)
     {

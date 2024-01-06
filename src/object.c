@@ -10,6 +10,7 @@
 #include <adt/p_forward_list.h>
 
 #include "object.h"
+#include "object_list.h"
 #include "globaldata.h"
 #include "tilemap.h"
 #include "dungeonmap.h"
@@ -47,17 +48,7 @@ void object_init()
     }
 }
 
-uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr)
-{
-    p_forward_list_push_front(&obj_container_ptr->obj_list, &obj_ptr->next);
-    return 1;
-}
 
-uint8_t object_remove_object_from_object_list(object_t* obj_ptr, object_t* obj_container_ptr)
-{
-    p_forward_list_remove(&obj_container_ptr->obj_list, &obj_ptr->next);
-    return 1;
-}
 
 // TO DO move into  bank code for creating objects 
 object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
@@ -72,7 +63,8 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
     
     // set common object attributes
     obj_ptr->free = 0;
-    obj_ptr->obj_list = 0;
+    // obj_ptr->obj_list = 0;
+    p_forward_list_init(&(obj_ptr->obj_list));
     obj_ptr->x = x;
     obj_ptr->y = y;
 
@@ -148,33 +140,22 @@ object_t* object_getfree()
     return 0;
 }
 
-void object_free(object_t *obj_todelete)
+void object_free(object_t *obj_p)
 {
-       obj_todelete->free = 1;
+       obj_p->free = 1;
 }
 
-void object_destroy(object_t *obj_todestroy)
+void object_destroy(object_t *obj_p)
 {
-    text_print_string("DESTROY ");
-    // free objects contained by this object
-    object_t *obj_ptr = object_list_first(obj_todestroy);
+    text_print_string("DESTROY OBJ");
+    // destroy objects contained by this object
+    object_t *obj_ptr = object_list_first(obj_p);
 
     while (obj_ptr)
     {
         object_destroy(obj_ptr);
-        // object_free(obj_ptr);
         obj_ptr = object_list_next(obj_ptr);
     }
     // free the object
-    object_free(obj_todestroy);
-}
-
-object_t *object_list_first(object_t *obj_ptr)
-{
-    return p_forward_list_front(&obj_ptr->obj_list);
-}
-
-object_t *object_list_next(object_t *obj_ptr)
-{
-    return p_forward_list_next(obj_ptr);
+    object_free(obj_p);
 }

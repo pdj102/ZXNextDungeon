@@ -10,6 +10,8 @@
 #include "object_action_open.h"
 
 #include "object.h"
+#include "object_list.h"
+#include "object_dungeon_list.h"
 
 /***************************************************
  * private types

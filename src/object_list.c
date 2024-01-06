@@ -2,15 +2,17 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game object action - destroy
+    @brief Game objects
 
 **************************************************/
-#include <inttypes.h>
 
-#include "object_action_destroy.h"
+#include <inttypes.h>
+#include <adt/p_forward_list.h>
+
+#include "object_list.h"
 
 #include "object.h"
-#include "object_dungeon_list.h"
+#include "text.h"
 
 /***************************************************
  * private types
@@ -28,18 +30,28 @@
  * functions
  ***************************************************/
 
-uint8_t object_action_is_destroy(object_t *obj)
+uint8_t object_list_add(object_t* obj_p, object_t* container_obj_p)
 {
-    // Everything can be destroyed
+    p_forward_list_push_front(&container_obj_p->obj_list, obj_p);
     return 1;
 }
 
-uint8_t object_action_destroy(object_t *obj_todestroy)
+
+uint8_t object_list_remove(object_t* obj_p, object_t* container_obj_p)
 {
-
-    object_dungeon_list_remove(obj_todestroy);
-    object_destroy(obj_todestroy);
-
+    text_print_string("REMOVE ");
+    p_forward_list_remove(&container_obj_p->obj_list, obj_p);
+    text_print_string("1");
     return 1;
 }
 
+object_t *object_list_first(object_t *container_obj_p)
+{
+    return p_forward_list_front(&container_obj_p->obj_list);
+}
+
+
+object_t *object_list_next(object_t *obj_p)
+{
+    return p_forward_list_next(obj_p);
+}
