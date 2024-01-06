@@ -10,6 +10,7 @@
 #include "object_action_destroy.h"
 
 #include "object.h"
+#include "object_dungeon_list.h"
 
 /***************************************************
  * private types
@@ -35,9 +36,8 @@ uint8_t object_action_is_destroy(object_t *obj)
 
 uint8_t object_action_destroy(object_t *obj_todestroy)
 {
-    object_t    obj_ptr;
 
-    object_remove_from_dungeon_list(obj_todestroy);
+    object_dungeon_list_remove(obj_todestroy);
 
     object_destroy(obj_todestroy);
 

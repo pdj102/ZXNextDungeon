@@ -87,25 +87,6 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
 void object_destroy(object_t *obj_todestory);
 
 /**
- * Add the object to the list of dungeon objects
- * Object must not belong to another list!
- *
- * @param *obj_ptr pointer to object 
- * 
- * @return uint8_t  1 success 0 fail
- */
-void object_add_to_dungeon_list(object_t* obj_ptr);
-
-/**
- * Remove the object from the list of dungeon objects
- *
- * @param *obj_ptr pointer to object 
- * 
- * @return uint8_t  1 success 0 fail
- */
-uint8_t object_remove_from_dungeon_list(object_t* obj_ptr);
-
-/**
  * Add the object to a container object's list
  * Object must not belong to another list!
  *
@@ -125,42 +106,6 @@ uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_contai
  * @return uint8_t  1 success 0 fail
  */
 uint8_t object_remove_object_from_object_list(object_t* obj_ptr, object_t* obj_container_ptr);
-
-/**
- * Move object to position x, y if not blocked
- * 
- * @param *obj pointer to object to move
- * @param x move to dungeon x position
- * @param y move to dungeon y position
- * 
- * @return void
- */
-void object_xy(object_t *obj, uint8_t x, uint8_t y);
-
-
-/**
- * Check if an object is blocking dungeon x, y
- * 
- * @param x dungeon x position
- * @param y dungeon y position
- * 
- * @return 1 if object blocking or 0
- */
-uint8_t object_isblocking(uint8_t x, uint8_t y);
-
-/**
- * Draws all the objects to the graphics tile map
- * 
- * @return void
- */
-void object_drawall();
-
-/**
- * Returns the first object in the dungeon object list
- * 
- * @return *object_t    pointer to first object or 0 if no objects
- */
-object_t *object_dungeon_list_first();
 
 /**
  * Returns the first object in an object's object list

@@ -10,6 +10,7 @@
 #include "object_action_move.h"
 
 #include "object.h"
+#include "object_dungeon_list.h"
 #include "dungeonmap.h"
 
 /***************************************************
@@ -61,5 +62,5 @@ uint8_t object_action_move_isblocked(uint8_t dungeon_x, uint8_t dungeon_y)
         return 1;
     }
     // check if move is blocked by ablocking object e.g. a closed door
-    return object_isblocking(dungeon_x, dungeon_y);
+    return object_dungeon_list_isblocking_at(dungeon_x, dungeon_y);
 }

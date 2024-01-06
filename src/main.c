@@ -21,6 +21,7 @@
 #include "object_action_destroy.h"
 #include "object_action_pickup.h"
 #include "object.h"
+#include "object_dungeon_list.h"
 #include "text.h"
 
 
@@ -78,21 +79,22 @@ void init_game()
 
     dungeonmap_init();
     object_init();
+    object_dungeon_list_init();
 
     object_t    *obj_ptr;
 
     obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
     player_obj_ptr = obj_ptr;
-    object_add_to_dungeon_list(obj_ptr);
+    object_dungeon_list_add(obj_ptr);
 
     obj_ptr = object_create(POTION_HEALING, 2, 5);
-    object_add_to_dungeon_list(obj_ptr);
+    object_dungeon_list_add(obj_ptr);
     tmp_obj_ptr1 = obj_ptr;    
     obj_ptr = object_create(POTION_SPEED, 5, 5);
-    object_add_to_dungeon_list(obj_ptr);
+    object_dungeon_list_add(obj_ptr);
     tmp_obj_ptr2 = obj_ptr;
     obj_ptr = object_create(DOOR_CLOSED, 4, 7);    
-    object_add_to_dungeon_list(obj_ptr);
+    object_dungeon_list_add(obj_ptr);
 
     player_init(player_obj_ptr);
    
@@ -108,22 +110,16 @@ int main()
     dungeonmap_generate();
 
     text_print_string_at(0, 24, "WELCOME TO DUNGEON!");
-    object_action_pickup(tmp_obj_ptr1, tmp_obj_ptr2);
-    object_action_destroy(tmp_obj_ptr2);    
 
     dungeonmap_draw();
-    object_drawall();
-
-
-
-
+    object_dungeon_list_drawall();
 
     while (1)
     {
         player_turn();
 
         dungeonmap_draw();
-        object_drawall();
+        object_dungeon_list_drawall();
 
     }
     return 0;

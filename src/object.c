@@ -35,32 +35,16 @@ void object_free(object_t *obj_tofree);
 // TO DO make static
 object_t *const objects = &globaldata.objects[0];
 
-// List of in use objects
-static p_forward_list_t dungeon_object_list; 
-
 /***************************************************
  * functions
  ***************************************************/
 
 void object_init()
 {
-    p_forward_list_init(&dungeon_object_list);
-
     for (uint8_t i = 0; i < MAX_OBJECT; i++)
     {
         objects[i].free = 1;
     }
-}
-
-void object_add_to_dungeon_list(object_t* obj_ptr)
-{
-    p_forward_list_push_front(&dungeon_object_list, &obj_ptr->next);
-}
-
-uint8_t object_remove_from_dungeon_list(object_t* obj_ptr)
-{
-    p_forward_list_remove(&dungeon_object_list, &obj_ptr->next);
-    return 1;
 }
 
 uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr)
@@ -183,45 +167,6 @@ void object_destroy(object_t *obj_todestroy)
     }
     // free the object
     object_free(obj_todestroy);
-}
-
-void object_xy(object_t *obj, uint8_t x, uint8_t y)
-{
-    obj->x = x;
-    obj->y = y;
-}
-
-uint8_t object_isblocking(uint8_t x, uint8_t y)
-{
-    object_t *object_ptr;
-
-    for (object_ptr = p_forward_list_front(&dungeon_object_list); object_ptr; object_ptr = p_forward_list_next(object_ptr))
-    {
-        if (!object_ptr->blocking)
-        {
-            continue;
-        }
-        if (object_ptr->x == x && object_ptr->y == y)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-void object_drawall()
-{
-    object_t *obj_ptr;
-
-    for (obj_ptr = p_forward_list_front(&dungeon_object_list); obj_ptr; obj_ptr = p_forward_list_next(obj_ptr))
-    {
-        dungeonmap_draw_single_tile(obj_ptr->x, obj_ptr->y, &obj_ptr->tilemap_tile);
-    }    
-}
-
-object_t *object_dungeon_list_first()
-{
-    return p_forward_list_front(&dungeon_object_list);
 }
 
 object_t *object_list_first(object_t *obj_ptr)

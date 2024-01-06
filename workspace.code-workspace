@@ -33,7 +33,8 @@
 			"cctype": "c",
 			"memory_map.h": "c",
 			"input.h": "c",
-			"object.h": "c"
+			"object.h": "c",
+			"object_dungeon_list.h": "c"
 		}
 	}
 }
