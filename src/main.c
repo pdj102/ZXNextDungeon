@@ -80,26 +80,34 @@ void init_game()
 
     dungeonmap_init();
     object_init();
-    object_dungeon_list_init();
+    object_dungeon_list_init();   
 
     object_t    *obj_ptr;
 
     obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
     player_obj_ptr = obj_ptr;
     object_dungeon_list_add(obj_ptr);
+    player_init(player_obj_ptr);     
 
     obj_ptr = object_create(POTION_HEALING, 2, 5);
     object_dungeon_list_add(obj_ptr);
-    tmp_obj_ptr1 = obj_ptr;    
+  
+
+    obj_ptr = object_create(DOOR_CLOSED, 4, 7);      
+    object_dungeon_list_add(obj_ptr);
+
+    obj_ptr = object_create(CHEST_LARGE, 4, 4);
+    tmp_obj_ptr1 = obj_ptr;
+    object_dungeon_list_add(obj_ptr);
+
     obj_ptr = object_create(POTION_SPEED, 5, 5);
-    object_dungeon_list_add(obj_ptr);
-    tmp_obj_ptr2 = obj_ptr;
-    obj_ptr = object_create(DOOR_CLOSED, 4, 7);    
-    object_dungeon_list_add(obj_ptr);
+    object_list_add(obj_ptr, tmp_obj_ptr1); 
 
-    player_init(player_obj_ptr);
-
+    obj_ptr = object_create(POTION_SPEED, 5, 5);
+    object_list_add(obj_ptr, tmp_obj_ptr1);     
    
+    obj_ptr = object_create(TRAP_NOISE, 1, 1);      
+    object_dungeon_list_add(obj_ptr);   
 }
 
 
@@ -116,10 +124,6 @@ int main()
     dungeonmap_draw();
     object_dungeon_list_drawall();
 
-    object_dungeon_list_remove(tmp_obj_ptr1);
-    object_dungeon_list_remove(tmp_obj_ptr2);
-    object_list_add(tmp_obj_ptr2, tmp_obj_ptr1);
-    object_destroy(tmp_obj_ptr1);    
 
     while (1)
     {

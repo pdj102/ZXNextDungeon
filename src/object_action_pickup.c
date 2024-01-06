@@ -50,26 +50,26 @@ uint8_t object_action_pickup(object_t *obj_topickup, object_t *obj_container)
 
 object_t *object_action_pickup_find_first_at(uint8_t x, uint8_t y)
 {
-    object_t *obj_ptr;
+    object_t *obj_p;
 
-    for (obj_ptr = object_dungeon_list_first(); obj_ptr; obj_ptr = object_list_next(obj_ptr))
+    for (obj_p = object_dungeon_list_first_at(x, y); obj_p; obj_p = object_dungeon_list_next_at(obj_p, x, y))    
     {
-        if (object_action_is_pickup(obj_ptr) && obj_ptr->x == x && obj_ptr->y == y)
+        if (object_action_is_pickup(obj_p))
         {
-            return obj_ptr;
+            return obj_p;
         }
     }
-    return obj_ptr;
+    return 0;
 }
 
-object_t *object_action_pickup_find_next_at(object_t *obj_ptr, uint8_t x, uint8_t y)
+object_t *object_action_pickup_find_next_at(object_t *obj_p, uint8_t x, uint8_t y)
 {
-    for (; obj_ptr; obj_ptr = object_list_next(obj_ptr))
+    for (; obj_p; obj_p = object_dungeon_list_next_at(obj_p, x, y))
     {
-        if (object_action_is_pickup(obj_ptr) && obj_ptr->x == x && obj_ptr->y == y)
+        if (object_action_is_pickup(obj_p) )
         {
-            return obj_ptr;
+            return obj_p;
         }
     }
-    return obj_ptr;
+    return 0;
 }

@@ -83,4 +83,25 @@ object_t *object_dungeon_list_first();
  */
 object_t *object_dungeon_list_next(object_t *obj_ptr);
 
+/**
+ * Returns the first object in dungeon object list at position x, y
+ * 
+ * @param x dungeon x position
+ * @param y dungeon y position
+ * 
+ * @return *object_t    pointer to first object or 0 if no objects
+ */
+object_t *object_dungeon_list_first_at(uint8_t x, uint8_t y);
+
+/**
+ * Returns the next object in dungeon object list at position x, y
+ * 
+ * @param *obj_p    previous object at x, y
+ * @param x         dungeon x position
+ * @param y         dungeon y position
+ * 
+ * @return *object_t    pointer to first object or 0 if no objects
+ */
+object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y);
+
 #endif

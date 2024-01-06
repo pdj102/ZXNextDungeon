@@ -11,6 +11,7 @@
 
 #include "object.h"
 #include "object_dungeon_list.h"
+#include "object_action_stepon.h"
 #include "dungeonmap.h"
 
 /***************************************************
@@ -46,6 +47,7 @@ uint8_t object_action_move_to(object_t *obj, uint8_t x, uint8_t y)
     obj->x = x;
     obj->y = y;
 
+    object_action_stepon_all(x, y);
     return 1;
 }
 

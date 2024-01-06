@@ -56,14 +56,14 @@ uint8_t object_action_close(object_t *obj)
 
 object_t *object_action_close_findat(uint8_t x, uint8_t y)
 {
-    object_t *obj_ptr;
+    object_t *obj_p;
 
-    for (obj_ptr = object_dungeon_list_first(); obj_ptr; obj_ptr = object_list_next(obj_ptr))
+    for (obj_p = object_dungeon_list_first_at(x, y); obj_p; obj_p = object_dungeon_list_next_at(obj_p, x, y))
     {
-        if (object_action_is_closeable(obj_ptr) && obj_ptr->x == x && obj_ptr->y == y)
+        if (object_action_is_closeable(obj_p) )
         {
-            return obj_ptr;
+            return obj_p;
         }
     }
-    return obj_ptr;
+    return 0;
 }

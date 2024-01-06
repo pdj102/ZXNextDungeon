@@ -38,11 +38,21 @@ uint8_t object_action_is_drop(object_t *obj);
 /**
  * Drop object
  *
- * @param *obj pointer to object to drop
+ * @param *obj_todrop           object to drop
+ * @param *obj_container_ptr    container object
  * 
  * @return uint8_t 1 if action successful or 0 failed
  */
 uint8_t object_action_drop(object_t *obj_todrop, object_t *obj_container_ptr);
+
+/**
+ * Drop all objects
+ *
+ * @param *obj_container_ptr    container object
+ * 
+ * @return uint8_t 1 if action successful or 0 failed
+ */
+uint8_t object_action_drop_all(object_t *obj_container_ptr);
 
 /**
  * Return an object's first dropable object 
@@ -60,6 +70,6 @@ object_t *object_action_drop_find_first(object_t *obj_container_ptr);
  * 
  * @return *object_t pointer to next dropable object or 0 if no dropable object
  */
-object_t *object_action_pickup_find_next(object_t *obj_ptr);
+object_t *object_action_drop_find_next(object_t *obj_ptr);
 
 #endif

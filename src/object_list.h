@@ -59,8 +59,8 @@ object_t *object_list_first(object_t *container_obj_p);
 /**
  * Returns the next object in the object list
  * 
- * @return *object_t    pointer to next object or 0 if no more objects
+ * @return *obj_ptr    pointer to next object or 0 if no more objects
  */
-object_t *object_list_next(object_t *container_obj_p);
+object_t *object_list_next(object_t *obj_ptr);
 
 #endif

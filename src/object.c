@@ -63,7 +63,7 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
     
     // set common object attributes
     obj_ptr->free = 0;
-    // obj_ptr->obj_list = 0;
+    obj_ptr->next = 0;    
     p_forward_list_init(&(obj_ptr->obj_list));
     obj_ptr->x = x;
     obj_ptr->y = y;
@@ -86,7 +86,25 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->tilemap_tile.tile_attr = 0;
             obj_ptr->tilemap_tile.tile_id = 43;
             obj_ptr->blocking = 1;
-            break;            
+            break;
+
+        case CHEST_LARGE:
+            obj_ptr->class = PHYSICAL;
+            obj_ptr->type = CHEST;
+            obj_ptr->subtype = CHEST_LARGE;
+            obj_ptr->tilemap_tile.tile_attr = 0;
+            obj_ptr->tilemap_tile.tile_id = 38;
+            obj_ptr->blocking = 1;
+            break;
+
+        case TRAP_NOISE:
+            obj_ptr->class = PHYSICAL;
+            obj_ptr->type = TRAP;
+            obj_ptr->subtype = TRAP_NOISE;
+            obj_ptr->tilemap_tile.tile_attr = 0;
+            obj_ptr->tilemap_tile.tile_id = 37;
+            obj_ptr->blocking = 0;
+            break;              
 
         case HUMANOID_HUMAN:
             obj_ptr->class = CREATURE;
