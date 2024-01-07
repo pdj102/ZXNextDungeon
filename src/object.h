@@ -21,9 +21,9 @@
  * types
  ***************************************************/
 
-typedef enum object_class {PHYSICAL, ITEM, CREATURE} object_class_e;
+typedef enum {PHYSICAL, ITEM, CREATURE} object_class_e;
 
-typedef enum object_type {
+typedef enum {
     // Physical
     DOOR,
     CHEST,
@@ -48,7 +48,7 @@ typedef enum object_type {
 
     } object_type_e;
 
-typedef enum object_subtype {
+typedef enum {
 
     // Physical
     DOOR_OPEN,
@@ -85,7 +85,7 @@ typedef enum object_subtype {
     UNDEAD_SKELETON
     } object_subtype_e;
 
-typedef struct object_s
+typedef struct 
 {
     void                    *next;              /**< objects can be part of a list of objects. Next pointer must be first 2 bytes in struct */
     uint8_t                 free;               /**< 1 if object slot is free */

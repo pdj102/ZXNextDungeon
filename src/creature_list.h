@@ -66,9 +66,9 @@ creature_t *creature_list_first();
 creature_t *creature_list_next(creature_t *obj_ptr);
 
 /**
- * Update all creatures. Each creature takes a turn
+ * All creatures take a turn
  * 
  */
-void creature_update_all();
+void creature_list_update_all();
 
 #endif

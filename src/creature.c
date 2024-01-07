@@ -14,6 +14,12 @@
 #include "object.h"
 #include "globaldata.h"
 
+#include "text.h"
+
+#include "player.h"
+
+#define MAX_ENERGY  100
+
 /***************************************************
  * private types
  ***************************************************/
@@ -39,6 +45,30 @@ void creature_init()
     for (uint8_t i = 0; i < MAX_CREATURE; i++)
     {
         globaldata.creatures[i].free = 1;
+        globaldata.creatures[i].next = 0;
+    }
+}
+
+void creature_turn(creature_t *creature_p)
+{
+    // Increase creature's energy by its speed. Clamp to MAX_ENERGY
+    creature_p->energy = (creature_p->speed <= MAX_ENERGY - creature_p->energy ? creature_p->energy + creature_p->speed : MAX_ENERGY );
+
+    if (creature_p->energy == MAX_ENERGY)
+    {
+        switch (creature_p->creature_class )
+        {
+        case AI:
+            text_print_string("AI");
+            break;
+        case PLAYER:
+            text_print_string("P");
+            // player_turn();
+            break;
+        default:
+            text_print_string("UNKOWN");
+            break;
+        }
     }
 }
 
@@ -58,15 +88,18 @@ creature_t* creature_create(object_t *obj_p)
     creature_p->next = 0;
     creature_p->obj_p = obj_p;
     creature_p->energy = 0;
+    creature_p->creature_class = AI;
 
     switch (obj_p->subtype)
     {
     case HUMANOID_HUMAN:
+        text_print_string("CREATE HUMAN");
         creature_p->speed = 10;
         creature_p->hp = 10;
         creature_p->ac = 10;
         break;
     case BEAST_SNAKE:
+        text_print_string("CREATE SNAKE");    
         creature_p->speed = 5;
         creature_p->hp = 5;        
         creature_p->ac = 5;
@@ -78,13 +111,11 @@ creature_t* creature_create(object_t *obj_p)
     return creature_p;
 }
 
-
-
 creature_t* creature_getfree()
 {
     for (uint8_t i = 0; i < MAX_CREATURE; i++)
     {
-        if (&globaldata.creatures[i].free)
+        if (globaldata.creatures[i].free)
         {
             return &globaldata.creatures[i];
         }

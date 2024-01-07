@@ -28,6 +28,7 @@
 #include "object_open.h"
 
 #include "creature.h"
+#include "creature_list.h"
 
 #include "event.h"
 #include "event_list.h"
@@ -47,11 +48,6 @@ uint8_t call_back(object_t *obj_p);
  * private variables - static
  ***************************************************/
 
-static object_t *player_obj_ptr ;
-
-static object_t *tmp_obj_ptr1;
-static object_t *tmp_obj_ptr2;
-static event_t *tmp_event_p;
 
 /***************************************************
  * functions
@@ -98,23 +94,36 @@ void init_game()
     event_list_init();    
 
     creature_init();
+    creature_list_init();
 
     object_t    *obj_ptr;
-    creature_t  *creature_p;
+    creature_t  *creature1_p = 0;
+    creature_t  *creature2_p = 0;
 
+    static object_t *tmp_obj_ptr1;
+    static object_t *tmp_obj_ptr2;
+    static event_t *tmp_event_p;  
+
+
+    // player
     obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
-    player_obj_ptr = obj_ptr;
-    creature_p = creature_create(player_obj_ptr);
     object_dungeon_list_add(obj_ptr);
-    player_init(player_obj_ptr);
+    player_init(obj_ptr);
 
+    creature2_p = creature_create(obj_ptr);
+    creature_list_add(creature2_p);
+    creature2_p->creature_class = PLAYER;
+    
+
+    // snake
     obj_ptr = object_create(BEAST_SNAKE, 10, 2);
-    creature_p = creature_create(obj_ptr);
+    creature1_p = creature_create(obj_ptr);
     object_dungeon_list_add(obj_ptr);
+    creature_list_add(creature1_p);    
+
 
     obj_ptr = object_create(POTION_HEALING, 2, 5);
     object_dungeon_list_add(obj_ptr);
-  
 
     obj_ptr = object_create(DOOR_CLOSED, 4, 7);      
     tmp_obj_ptr2 = obj_ptr;
@@ -133,8 +142,12 @@ void init_game()
     obj_ptr = object_create(TRAP_NOISE, 1, 1);      
     object_dungeon_list_add(obj_ptr);
 
-    tmp_event_p = event_create_object_cb(object_open, tmp_obj_ptr2, 10);
+    tmp_event_p = event_create_object_cb(object_open, tmp_obj_ptr2, 5);
     event_list_add(tmp_event_p);
+
+    tmp_event_p = event_create_object_cb(object_open, tmp_obj_ptr1, 6);
+    event_list_add(tmp_event_p);    
+
 }
 
 uint8_t call_back(object_t *obj_p)
@@ -156,8 +169,8 @@ int main()
     s = sizeof(globaldata_t);
     text_print_uint16(s);
 
-    dungeonmap_draw();
-    object_dungeon_list_drawall();
+    // dungeonmap_draw();
+    // object_dungeon_list_drawall();
 
 
     while (1)
@@ -167,7 +180,9 @@ int main()
         dungeonmap_draw();
         object_dungeon_list_drawall();
 
-        event_update_all();
+        event_list_update_all();
+
+        creature_list_update_all();
 
     }
     return 0;

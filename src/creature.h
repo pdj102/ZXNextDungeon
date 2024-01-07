@@ -20,11 +20,15 @@
  * types
  ***************************************************/
 
-typedef struct creature_s
+typedef enum {PLAYER, AI} creature_class_e;
+
+typedef struct 
 {
     void                    *next;              /**< creatures can be part of a list of creatures. Next pointer must be first 2 bytes in struct */
     uint8_t                 free;               /**< 1 if creature slot is free */
     object_t                *obj_p;             /** all creatures have an associated object */
+
+    creature_class_e        creature_class;     /**< player or AI */
 
     uint8_t                 max_hp;
     uint8_t                 hp;
@@ -93,13 +97,12 @@ creature_t* creature_create(object_t *obj_p);
 void creature_delete(creature_t *creature_p);
 
 /**
- * Free a creature record
+ * Creature turn
  * 
- * Marks an creaqture slot as free for use 
  * 
- * @param   *creature_p  Creature to free
+ * @param   *creature_p  
  */
-// void object_free(creature_t *obj_p);
+void creature_turn(creature_t *creature_p);
 
 
 #endif

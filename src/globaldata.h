@@ -28,8 +28,9 @@ typedef struct
     creature_t      creatures[MAX_CREATURE];
     p_forward_list_t dungeon_object_list;     
     p_forward_list_t event_list; 
+    p_forward_list_t creature_list; 
     text_window_t   text_window;
-    // uint8_t     tmp;
+    uint8_t     tmp;
 } globaldata_t;
 
 /***************************************************

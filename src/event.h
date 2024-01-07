@@ -14,7 +14,7 @@
 
 #include "object.h"
 
-#define MAX_EVENT  40
+#define MAX_EVENT  20
 
 
 /***************************************************

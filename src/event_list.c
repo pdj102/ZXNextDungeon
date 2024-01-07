@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Dungeon list of objects
+    @brief List of timed events
 
 **************************************************/
 
@@ -56,13 +56,14 @@ event_t *event_list_next(event_t *event_p)
     return p_forward_list_next(event_p);
 }
 
-void event_update_all()
+void event_list_update_all()
 {
     event_t *event_p;
 
     for (event_p = p_forward_list_front(&globaldata.event_list); event_p; event_p = p_forward_list_next(event_p))
     {
         event_update(event_p);
+        // TODO remove fired event
     }    
 }
 

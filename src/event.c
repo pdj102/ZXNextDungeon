@@ -29,7 +29,7 @@ void event_free(event_t *event_p);
  * private variables - static
  ***************************************************/
 // helper pointer to the global event 
-static event_t *const events = &globaldata.events[0];
+// static event_t *const events = &globaldata.events[0];
 
 /***************************************************
  * functions definitions
@@ -39,7 +39,8 @@ void event_init()
 {
     for (uint8_t i = 0; i < MAX_EVENT; i++)
     {
-        events[i].free = 1;
+        globaldata.events[i].free = 1;
+        globaldata.events[i].next = 0;
     }
 }
 
@@ -82,9 +83,9 @@ event_t* event_getfree()
 {
     for (uint8_t i = 0; i < MAX_EVENT; i++)
     {
-        if (events[i].free)
+        if (globaldata.events[i].free)
         {
-            return &events[i];
+            return &globaldata.events[i];
         }
     }
     // no free object slot
