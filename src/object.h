@@ -85,6 +85,7 @@ typedef enum {
     UNDEAD_SKELETON
     } object_subtype_e;
 
+
 typedef struct 
 {
     void                    *next;              /**< objects can be part of a list of objects. Next pointer must be first 2 bytes in struct */
@@ -97,7 +98,7 @@ typedef struct
     object_class_e          class;
     object_type_e           type;
     object_subtype_e        subtype;
-        
+    void                    *creature_p;
 } object_t;
 
 

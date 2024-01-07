@@ -13,6 +13,7 @@
 
 #include "object.h"
 
+
 #define MAX_CREATURE  15
 
 
@@ -21,6 +22,7 @@
  ***************************************************/
 
 typedef enum {PLAYER, AI} creature_class_e;
+
 
 typedef struct 
 {

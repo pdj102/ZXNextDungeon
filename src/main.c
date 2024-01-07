@@ -112,12 +112,14 @@ void init_game()
 
     creature2_p = creature_create(obj_ptr);
     creature_list_add(creature2_p);
+    obj_ptr->creature_p = creature2_p;
     creature2_p->creature_class = PLAYER;
     
 
     // snake
     obj_ptr = object_create(BEAST_SNAKE, 10, 2);
     creature1_p = creature_create(obj_ptr);
+    obj_ptr->creature_p = creature1_p;
     object_dungeon_list_add(obj_ptr);
     creature_list_add(creature1_p);    
 
