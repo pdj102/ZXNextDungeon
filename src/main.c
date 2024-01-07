@@ -108,12 +108,12 @@ void init_game()
     // player
     obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
     object_dungeon_list_add(obj_ptr);
-    player_init(obj_ptr);
 
     creature2_p = creature_create(obj_ptr);
     creature_list_add(creature2_p);
     obj_ptr->creature_p = creature2_p;
     creature2_p->creature_class = PLAYER;
+    player_init(creature2_p);
     
 
     // snake
@@ -171,14 +171,8 @@ int main()
     s = sizeof(globaldata_t);
     text_print_uint16(s);
 
-    // dungeonmap_draw();
-    // object_dungeon_list_drawall();
-
-
     while (1)
     {
-        player_turn();
-
         dungeonmap_draw();
         object_dungeon_list_drawall();
 

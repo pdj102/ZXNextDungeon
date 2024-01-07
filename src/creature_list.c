@@ -39,25 +39,7 @@ void creature_list_init()
 
 void creature_list_add(creature_t *creature_p)
 {
-    if (creature_p == 0)
-    {
-        text_print_string("NULL!");
-    }
-    if (creature_p->next != 0)
-    {
-        text_print_string("NEXT!");
-    }
-    if (creature_p->obj_p == 0)
-    {
-        text_print_string("OBJ!");
-    }
-    text_print_string("LENA:");
-    text_print_int8(p_forward_list_size(&globaldata.creature_list));
-
     p_forward_list_push_front(&globaldata.creature_list, creature_p);
-
-    text_print_string("LENB:");
-    text_print_int8(p_forward_list_size(&globaldata.creature_list));
 }
 
 uint8_t creature_list_remove(creature_t *creature_p)

@@ -29,7 +29,6 @@ typedef enum {
     CHEST,
     TRAP,
 
-
     // ITEM
     FOOD,
     POTION,
@@ -86,7 +85,7 @@ typedef enum {
     } object_subtype_e;
 
 
-typedef struct 
+typedef struct object_s
 {
     void                    *next;              /**< objects can be part of a list of objects. Next pointer must be first 2 bytes in struct */
     uint8_t                 free;               /**< 1 if object slot is free */
@@ -98,7 +97,7 @@ typedef struct
     object_class_e          class;
     object_type_e           type;
     object_subtype_e        subtype;
-    void                    *creature_p;
+    struct creature_s       *creature_p;
 } object_t;
 
 

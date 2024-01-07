@@ -59,14 +59,11 @@ void creature_turn(creature_t *creature_p)
         switch (creature_p->creature_class )
         {
         case AI:
-            text_print_string("AI");
             break;
         case PLAYER:
-            text_print_string("P");
-            // player_turn();
+            player_turn();
             break;
         default:
-            text_print_string("UNKOWN");
             break;
         }
     }
@@ -93,13 +90,16 @@ creature_t* creature_create(object_t *obj_p)
     switch (obj_p->subtype)
     {
     case HUMANOID_HUMAN:
-        text_print_string("CREATE HUMAN");
         creature_p->speed = 10;
         creature_p->hp = 10;
         creature_p->ac = 10;
+
+        creature_p->melee_damage_roll.n = 1;
+        creature_p->melee_damage_roll.d = 6;
+        creature_p->melee_damage_roll.mod = 0;
+        creature_p->melee_modifier = 0;
         break;
     case BEAST_SNAKE:
-        text_print_string("CREATE SNAKE");    
         creature_p->speed = 5;
         creature_p->hp = 5;        
         creature_p->ac = 5;

@@ -19,6 +19,10 @@
 #include "object_close.h"
 #include "object_pickup.h"
 #include "object_drop.h"
+#include "object_strike.h"
+
+#include "creature.h"
+#include "creature_melee_strike.h"
 
 /***************************************************
  * private types
@@ -32,19 +36,20 @@
 void open_or_close();
 void pickup();
 void drop();
+void attack();
 
 /***************************************************
  * private variables - static
  ***************************************************/
-static object_t *player_obj_ptr;
+static creature_t *player_creature_p;
 
 /***************************************************
  * functions
  ***************************************************/
 
-void player_init(object_t *obj_ptr)
+void player_init(creature_t *creature_p)
 {
-    player_obj_ptr = obj_ptr;
+    player_creature_p = creature_p;
 }
 
 void player_turn()
@@ -57,19 +62,19 @@ void player_turn()
     switch(toupper(key)) {
         
         case 54:  // down
-            object_move_by(player_obj_ptr, 0, 1);
+            object_move_by(player_creature_p->obj_p, 0, 1);
             break;
 
         case 55:  // up
-            object_move_by(player_obj_ptr, 0, -1);
+            object_move_by(player_creature_p->obj_p, 0, -1);
             break;
 
         case 53:  // left
-            object_move_by(player_obj_ptr, -1, 0);
+            object_move_by(player_creature_p->obj_p, -1, 0);
             break;
 
         case 56:  // right
-            object_move_by(player_obj_ptr, 1, 0);
+            object_move_by(player_creature_p->obj_p, 1, 0);
             break;
 
         case 'O':  // open or close
@@ -82,7 +87,11 @@ void player_turn()
 
         case 'D':  // drop
             drop();
-            break;                       
+            break;
+
+        case 'A':  // attack
+            attack();
+            break;                            
 
         case '1':
             dungeonmap_scroll(-1, 0);
@@ -138,6 +147,32 @@ uint8_t get_dir_or_cancel(int8_t *dx, int8_t *dy)
     }
 }
 
+void attack()
+{
+    int8_t dx, dy;
+    uint8_t x, y;
+
+    object_t *obj_p;
+
+    creature_t *target_p;
+
+    if (! (get_dir_or_cancel(&dx, &dy)) )
+    {
+        return;
+    }
+
+    x = player_creature_p->obj_p->x + dx;
+    y = player_creature_p->obj_p->y + dy;
+
+    if ( obj_p = object_strike_find_first_at(x, y) )
+    {
+        target_p = obj_p->creature_p;
+        creature_melee_strike(player_creature_p, target_p);
+        return;
+    }
+    
+}
+
 void open_or_close()
 {
     int8_t dx, dy;
@@ -150,8 +185,8 @@ void open_or_close()
         return;
     }
 
-    x = player_obj_ptr->x + dx;
-    y = player_obj_ptr->y + dy;
+    x = player_creature_p->obj_p->x + dx;
+    y = player_creature_p->obj_p->y + dy;
 
     if ( obj_ptr = object_open_findat(x, y) )
     {
@@ -170,9 +205,9 @@ void pickup()
 {
     object_t *obj_ptr;
 
-    if ( obj_ptr = object_pickup_find_first_at(player_obj_ptr->x, player_obj_ptr->y) )
+    if ( obj_ptr = object_pickup_find_first_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y) )
     {
-        object_pickup(obj_ptr, player_obj_ptr);
+        object_pickup(obj_ptr, player_creature_p->obj_p);
     }  
 }
 
@@ -180,8 +215,8 @@ void drop()
 {
     object_t *obj_todrop_ptr;
 
-    if ( obj_todrop_ptr = object_drop_find_first(player_obj_ptr) )
+    if ( obj_todrop_ptr = object_drop_find_first(player_creature_p->obj_p) )
     {
-        object_drop(obj_todrop_ptr, player_obj_ptr);
+        object_drop(obj_todrop_ptr, player_creature_p->obj_p);
     }  
 }

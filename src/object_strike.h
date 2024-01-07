@@ -33,7 +33,7 @@
  * 
  * @return uint8_t  1 if pickupable or 0 if not
  */
-uint8_t object_strike_is(object_t *obj);
+uint8_t object_strike_is(object_t *obj_p);
 
 /**
  * Return first strikeable object at dungeon x, y

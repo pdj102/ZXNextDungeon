@@ -29,10 +29,10 @@
  * functions
  ***************************************************/
 
-uint8_t object_strike_is(object_t *obj)
+uint8_t object_strike_is(object_t *obj_p)
 {
     // All creatures can be striked 
-    if (obj->class == CREATURE)
+    if (obj_p->class == CREATURE)
     {
         return 1;
     }

@@ -10,6 +10,7 @@
     #define PLAYER_H 
 
 #include "object.h"
+#include "creature.h"
 
 /***************************************************
  * types
@@ -29,7 +30,7 @@
  * @param obj_ptr pointer to the player object
  * @return void
  */
-void player_init(object_t *obj_ptr);
+void player_init(creature_t *creature_p);
 
 /**
  * Player takes turn

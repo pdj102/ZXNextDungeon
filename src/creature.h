@@ -12,6 +12,7 @@
 #include <inttypes.h>
 
 #include "object.h"
+#include "dice.h"
 
 
 #define MAX_CREATURE  15
@@ -23,8 +24,11 @@
 
 typedef enum {PLAYER, AI} creature_class_e;
 
+typedef enum {
+    SLASH
+} damage_type_t;
 
-typedef struct 
+typedef struct creature_s
 {
     void                    *next;              /**< creatures can be part of a list of creatures. Next pointer must be first 2 bytes in struct */
     uint8_t                 free;               /**< 1 if creature slot is free */
@@ -49,6 +53,16 @@ typedef struct
 
     uint8_t                 max_magic;
     uint8_t                 cur_magic;
+
+    uint8_t                 melee_modifier;
+    dice_t                  melee_damage_roll;
+    damage_type_t           melee_damage_type;
+
+    uint8_t                 ranged_modifier;
+    dice_t                  ranged_damage_roll;
+    damage_type_t           ranged_damage_type;    
+
+    uint8_t                 max_range;
         
 } creature_t;
 
