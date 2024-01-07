@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Time event
+    @brief Timed event
 
  ***************************************************/
 
@@ -12,6 +12,8 @@
 #include <inttypes.h>
 #include <adt/p_forward_list.h>
 
+#include "object.h"
+
 #define MAX_EVENT  40
 
 
@@ -19,14 +21,15 @@
  * types
  ***************************************************/
 
-typedef void (*event_callback)(void);
+typedef uint8_t (*event_callback)(object_t *);
 
 typedef struct event_s
 {
     void                    *next;              
     uint8_t                 free;               /**< 1 if event slot is free */
     uint8_t                 ticks;
-    event_callback          cb;
+    event_callback          cb;                 /**< call back function - object action */
+    object_t                *obj_p;             /**< call back function - object*/
 } event_t;
 
 
@@ -50,15 +53,19 @@ void event_init();
 /**
  * Create an event  
  *
+ * @param cb        call back function
+ * @param *obj_p    call back function obj_p data
+ * @param ticks     timer number of turns
+ * 
  * @return pointer to created event or NULL on failed to create
  */
-event_t *event_create(event_callback cb, uint8_t ticks);
+event_t *event_create_object_cb(event_callback cb, object_t *obj_p, uint8_t ticks);
 
 /**
- * Event decrement timer
+ * Update event timer and if triggered call callback function and delete event.  
  * 
  * @param   *event_p  Event
  */
-void event_decrement(event_t *event_p);
+void event_update(event_t *event_p);
 
 #endif

@@ -119,6 +119,13 @@ typedef struct object_s
 void object_init();
 
 /**
+ * Find a free object slot
+ * 
+ * @return   object_t* pointer to a free object slot or 0 if no free slot
+ */
+object_t* object_getfree();
+
+/**
  * Create an  object of type subtype at xm y.  
  *
  * @param subtype object subtype to create
@@ -126,7 +133,7 @@ void object_init();
  * @param y dungeon y position
  * @return pointer to created object or NULL on failed to create
  */
-object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
+// object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
 
 /**
  * Delete an object and all its contained objects

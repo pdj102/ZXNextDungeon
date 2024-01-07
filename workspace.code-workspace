@@ -40,7 +40,8 @@
 			"object_action_move.h": "c",
 			"object_action_pickup.h": "c",
 			"object_action_stepon.h": "c",
-			"event.h": "c"
+			"event.h": "c",
+			"object_create_bank.h": "c"
 		}
 	}
 }

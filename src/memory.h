@@ -32,6 +32,9 @@
     Page    |   Description
     --------|-----------------------------------------------------
     18      |   Dungeon map generator
+    19      |   reserved - dungeon map generator 
+    20      |   Object create
+    21      |   reserved - object create
 
  ***************************************************/
 

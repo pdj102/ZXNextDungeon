@@ -27,7 +27,7 @@
  ***************************************************/
 
 /**
- * Initialises the object data structure. Must be called before using Object 
+ * Initialises the dungeon object list. Must be called before using the list
  * 
  * @return void
  */

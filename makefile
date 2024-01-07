@@ -53,6 +53,13 @@ ASSEMBLEY=dungeon.asm
 $(OBJDIR)/dungeonmap_generator_bank.o: $(SRCDIR)/dungeonmap_generator_bank.c $(SRCDIR)/dungeonmap_generator_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_18 --constsegPAGE_18 -o $@ $<
 
+# ####################################################################################################################################
+# PAGE_20
+# Target for object creator code and data
+# - object_create_bank.o 
+$(OBJDIR)/object_create_bank.o: $(SRCDIR)/object_create_bank.c $(SRCDIR)/object_create_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_20 --constsegPAGE_20 -o $@ $<
+
 
 # ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 

@@ -17,14 +17,18 @@
 #include "dungeonmap.h"
 #include "dungeonmap_generator.h"
 #include "player.h"
-#include "object_move.h"
-#include "object_destroy.h"
-#include "object_pickup.h"
 #include "object.h"
 #include "object_list.h"
 #include "object_dungeon_list.h"
+#include "object_create.h"
+#include "object_move.h"
+#include "object_destroy.h"
+#include "object_pickup.h"
+#include "object_open.h"
+
 #include "text.h"
 #include "event.h"
+#include "event_list.h"
 
 
 /***************************************************
@@ -35,7 +39,7 @@
  * private function prototypes
  ***************************************************/
 
-void call_back(void);
+uint8_t call_back(object_t *obj_p);
 
 /***************************************************
  * private variables - static
@@ -89,6 +93,7 @@ void init_game()
     object_dungeon_list_init();
 
     event_init();
+    event_list_init();    
 
     object_t    *obj_ptr;
 
@@ -102,6 +107,7 @@ void init_game()
   
 
     obj_ptr = object_create(DOOR_CLOSED, 4, 7);      
+    tmp_obj_ptr2 = obj_ptr;
     object_dungeon_list_add(obj_ptr);
 
     obj_ptr = object_create(CHEST_LARGE, 4, 4);
@@ -117,10 +123,11 @@ void init_game()
     obj_ptr = object_create(TRAP_NOISE, 1, 1);      
     object_dungeon_list_add(obj_ptr);
 
-    tmp_event_p = event_create(call_back, 10);
+    tmp_event_p = event_create_object_cb(object_open, tmp_obj_ptr2, 10);
+    event_list_add(tmp_event_p);
 }
 
-void call_back()
+uint8_t call_back(object_t *obj_p)
 {
     text_print_string("CALL BACK");
 }
@@ -146,7 +153,7 @@ int main()
         dungeonmap_draw();
         object_dungeon_list_drawall();
 
-        event_decrement(tmp_event_p);
+        event_update_all();
 
     }
     return 0;

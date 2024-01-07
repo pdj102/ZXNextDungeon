@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Time event
+    @brief Timed event
 
  ***************************************************/
 #include "event.h"
@@ -43,7 +43,8 @@ void event_init()
     }
 }
 
-event_t *event_create(event_callback cb, uint8_t ticks)
+// event_t *event_create(event_callback cb, uint8_t ticks)
+event_t *event_create_object_cb(event_callback cb, object_t *obj_p, uint8_t ticks)
 {
     event_t *event_p;
 
@@ -57,21 +58,23 @@ event_t *event_create(event_callback cb, uint8_t ticks)
     event_p->free = 0;
     event_p->next = 0;
 
-    event_p->ticks = ticks;
     event_p->cb = cb;
+    event_p->obj_p = obj_p;
+    event_p->ticks = ticks;
 
     return event_p;
 }
 
-void event_decrement(event_t *event_p)
+void event_update(event_t *event_p)
 {
     (event_p->ticks)--;
 
     if (event_p->ticks == 0)
     {
         text_print_string("EVENT FIRED");
-        event_p->cb();
+        event_p->cb(event_p->obj_p);
     }
+    event_free(event_p);
 }
 
 

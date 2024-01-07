@@ -2,7 +2,9 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game objects
+    @brief Game object action - create object
+
+    Banked code do not call directly
 
 **************************************************/
 
@@ -10,10 +12,9 @@
 #include <adt/p_forward_list.h>
 
 #include "object.h"
-#include "object_list.h"
-#include "globaldata.h"
 #include "tilemap.h"
-#include "dungeonmap.h"
+
+#pragma output CRT_ORG_CODE = 0xC000
 
 /***************************************************
  * private types
@@ -23,40 +24,25 @@
  * private function prototypes
  ***************************************************/
 
-void object_free(object_t *obj_tofree);
-
 
 /***************************************************
  * private variables - static
  ***************************************************/
 
-// helper pointer to the global object data array
-static object_t *const objects = &globaldata.objects[0];
-
 /***************************************************
  * functions
  ***************************************************/
 
-void object_init()
-{
-    for (uint8_t i = 0; i < MAX_OBJECT; i++)
-    {
-        objects[i].free = 1;
-    }
-}
-
-
 
 // TO DO move into  bank code for creating objects 
-/*
-object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
+object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
 {
     object_t *obj_ptr;
 
     // get a free object slot
     if ( ! (obj_ptr = object_getfree()) )
     {
-        return obj_ptr;
+        return 0;
     }
     
     // set common object attributes
@@ -141,37 +127,4 @@ object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
             break;             
     }
     return obj_ptr;
-}
-*/
-
-object_t* object_getfree()
-{
-    for (uint8_t i = 0; i < MAX_OBJECT; i++)
-    {
-        if (objects[i].free)
-        {
-            return &objects[i];
-        }
-    }
-    // no free object slot
-    return 0;
-}
-
-void object_free(object_t *obj_p)
-{
-       obj_p->free = 1;
-}
-
-void object_delete(object_t *obj_p)
-{
-    // destroy objects contained by this object
-    object_t *obj_ptr = object_list_first(obj_p);
-
-    while (obj_ptr)
-    {
-        object_delete(obj_ptr);
-        obj_ptr = object_list_next(obj_ptr);
-    }
-    // free the object
-    object_free(obj_p);
 }
