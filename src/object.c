@@ -163,15 +163,14 @@ void object_free(object_t *obj_p)
        obj_p->free = 1;
 }
 
-void object_destroy(object_t *obj_p)
+void object_delete(object_t *obj_p)
 {
-    text_print_string("DESTROY OBJ");
     // destroy objects contained by this object
     object_t *obj_ptr = object_list_first(obj_p);
 
     while (obj_ptr)
     {
-        object_destroy(obj_ptr);
+        object_delete(obj_ptr);
         obj_ptr = object_list_next(obj_ptr);
     }
     // free the object

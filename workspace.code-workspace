@@ -34,7 +34,12 @@
 			"memory_map.h": "c",
 			"input.h": "c",
 			"object.h": "c",
-			"object_dungeon_list.h": "c"
+			"object_dungeon_list.h": "c",
+			"object_action_destroy.h": "c",
+			"object_action_drop.h": "c",
+			"object_action_move.h": "c",
+			"object_action_pickup.h": "c",
+			"object_action_stepon.h": "c"
 		}
 	}
 }

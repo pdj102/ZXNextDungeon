@@ -6,8 +6,8 @@
 
  ***************************************************/
 
-#ifndef OBJECT_ACTION_DROP_H 
-    #define OBJECT_ACTION_DROP_H 
+#ifndef OBJECT_DROP_H 
+    #define OBJECT_DROP_H 
 
 #include <inttypes.h>
 
@@ -33,7 +33,7 @@
  * 
  * @return uint8_t  1 if dropable or 0 if not
  */
-uint8_t object_action_is_drop(object_t *obj);
+uint8_t oobject_drop_is(object_t *obj);
 
 /**
  * Drop object
@@ -43,7 +43,7 @@ uint8_t object_action_is_drop(object_t *obj);
  * 
  * @return uint8_t 1 if action successful or 0 failed
  */
-uint8_t object_action_drop(object_t *obj_todrop, object_t *obj_container_ptr);
+uint8_t object_drop(object_t *obj_todrop, object_t *obj_container_ptr);
 
 /**
  * Drop all objects
@@ -52,7 +52,7 @@ uint8_t object_action_drop(object_t *obj_todrop, object_t *obj_container_ptr);
  * 
  * @return uint8_t 1 if action successful or 0 failed
  */
-uint8_t object_action_drop_all(object_t *obj_container_ptr);
+uint8_t object_drop_all(object_t *obj_container_ptr);
 
 /**
  * Return an object's first dropable object 
@@ -61,7 +61,7 @@ uint8_t object_action_drop_all(object_t *obj_container_ptr);
  * 
  * @return *object_t pointer to first dropable object or 0 if no dropable object
  */
-object_t *object_action_drop_find_first(object_t *obj_container_ptr);
+object_t *object_drop_find_first(object_t *obj_container_ptr);
 
 /**
  * Return next dropable object in list
@@ -70,6 +70,6 @@ object_t *object_action_drop_find_first(object_t *obj_container_ptr);
  * 
  * @return *object_t pointer to next dropable object or 0 if no dropable object
  */
-object_t *object_action_drop_find_next(object_t *obj_ptr);
+object_t *object_drop_find_next(object_t *obj_ptr);
 
 #endif

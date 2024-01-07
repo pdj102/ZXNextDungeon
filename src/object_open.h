@@ -6,8 +6,8 @@
 
  ***************************************************/
 
-#ifndef OBJECT_ACTION_OPEN_H 
-    #define OBJECT_ACTION_OPEN_H 
+#ifndef OBJECT_OPEN_H 
+    #define OBJECT_OPEN_H 
 
 #include <inttypes.h>
 
@@ -33,7 +33,7 @@
  * 
  * @return uint8_t  1 if openable or 0 if not
  */
-uint8_t object_action_move_is_openable(object_t *obj);
+uint8_t object_open_is(object_t *obj);
 
 /**
  * Open object if openable
@@ -42,7 +42,7 @@ uint8_t object_action_move_is_openable(object_t *obj);
  * 
  * @return uint8_t 1 if action successful or 0 failed
  */
-uint8_t object_action_open(object_t *obj);
+uint8_t object_open(object_t *obj);
 
 /**
  * Return first openable object at dungeon x, y
@@ -52,6 +52,6 @@ uint8_t object_action_open(object_t *obj);
  * 
  * @return *object_t pointer to first openable object or 0 if no openable object
  */
-object_t *object_action_open_findat(uint8_t x, uint8_t y);
+object_t *object_open_findat(uint8_t x, uint8_t y);
 
 #endif

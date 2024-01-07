@@ -14,11 +14,11 @@
 
 #include "dungeonmap.h"
 #include "object.h"
-#include "object_action_move.h"
-#include "object_action_open.h"
-#include "object_action_close.h"
-#include "object_action_pickup.h"
-#include "object_action_drop.h"
+#include "object_move.h"
+#include "object_open.h"
+#include "object_close.h"
+#include "object_pickup.h"
+#include "object_drop.h"
 
 /***************************************************
  * private types
@@ -57,19 +57,19 @@ void player_turn()
     switch(toupper(key)) {
         
         case 54:  // down
-            object_action_move_by(player_obj_ptr, 0, 1);
+            object_move_by(player_obj_ptr, 0, 1);
             break;
 
         case 55:  // up
-            object_action_move_by(player_obj_ptr, 0, -1);
+            object_move_by(player_obj_ptr, 0, -1);
             break;
 
         case 53:  // left
-            object_action_move_by(player_obj_ptr, -1, 0);
+            object_move_by(player_obj_ptr, -1, 0);
             break;
 
         case 56:  // right
-            object_action_move_by(player_obj_ptr, 1, 0);
+            object_move_by(player_obj_ptr, 1, 0);
             break;
 
         case 'O':  // open or close
@@ -153,15 +153,15 @@ void open_or_close()
     x = player_obj_ptr->x + dx;
     y = player_obj_ptr->y + dy;
 
-    if ( obj_ptr = object_action_open_findat(x, y) )
+    if ( obj_ptr = object_open_findat(x, y) )
     {
-        object_action_open(obj_ptr);
+        object_open(obj_ptr);
         return;
     }
     
-    if ( obj_ptr = object_action_close_findat(x, y) )
+    if ( obj_ptr = object_close_findat(x, y) )
     {
-        object_action_close(obj_ptr);
+        object_close(obj_ptr);
         return;
     }
 }
@@ -170,9 +170,9 @@ void pickup()
 {
     object_t *obj_ptr;
 
-    if ( obj_ptr = object_action_pickup_find_first_at(player_obj_ptr->x, player_obj_ptr->y) )
+    if ( obj_ptr = object_pickup_find_first_at(player_obj_ptr->x, player_obj_ptr->y) )
     {
-        object_action_pickup(obj_ptr, player_obj_ptr);
+        object_pickup(obj_ptr, player_obj_ptr);
     }  
 }
 
@@ -180,8 +180,8 @@ void drop()
 {
     object_t *obj_todrop_ptr;
 
-    if ( obj_todrop_ptr = object_action_drop_find_first(player_obj_ptr) )
+    if ( obj_todrop_ptr = object_drop_find_first(player_obj_ptr) )
     {
-        object_action_drop(obj_todrop_ptr, player_obj_ptr);
+        object_drop(obj_todrop_ptr, player_obj_ptr);
     }  
 }

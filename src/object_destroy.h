@@ -6,8 +6,8 @@
 
  ***************************************************/
 
-#ifndef OBJECT_ACTION_DESTROY_H 
-    #define OBJECT_ACTION_DESTROY_H 
+#ifndef OBJECT_DESTROY_H 
+    #define OBJECT_DESTROY_H 
 
 #include <inttypes.h>
 
@@ -33,7 +33,7 @@
  * 
  * @return uint8_t  1 if destroyable or 0 if not
  */
-uint8_t object_action_is_destroy(object_t *obj);
+uint8_t object_destroy_is(object_t *obj);
 
 /**
  * Destory dungeon map object
@@ -42,7 +42,7 @@ uint8_t object_action_is_destroy(object_t *obj);
  * 
  * @return uint8_t 1 always returns 1
  */
-uint8_t object_action_destroy(object_t *obj_todestroy);
+uint8_t object_destroy(object_t *obj_todestroy);
 
 
 #endif

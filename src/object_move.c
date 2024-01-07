@@ -7,11 +7,11 @@
 **************************************************/
 #include <inttypes.h>
 
-#include "object_action_move.h"
+#include "object_move.h"
 
 #include "object.h"
 #include "object_dungeon_list.h"
-#include "object_action_stepon.h"
+#include "object_stepon.h"
 #include "dungeonmap.h"
 
 /***************************************************
@@ -30,14 +30,14 @@
  * functions
  ***************************************************/
 
-uint8_t object_action_move_is_movable(object_t *obj)
+uint8_t object_move_is(object_t *obj)
 {
     // TODO return false for non movable objects
     return 1;
 }
-uint8_t object_action_move_to(object_t *obj, uint8_t x, uint8_t y)
+uint8_t object_move(object_t *obj, uint8_t x, uint8_t y)
 {
-    if (object_action_move_isblocked(x, y))
+    if (object_move_isblocked(x, y))
     {
         return 0;
     }
@@ -47,16 +47,16 @@ uint8_t object_action_move_to(object_t *obj, uint8_t x, uint8_t y)
     obj->x = x;
     obj->y = y;
 
-    object_action_stepon_all(x, y);
+    object_stepon_all(x, y);
     return 1;
 }
 
-uint8_t object_action_move_by(object_t *obj, int8_t dx, int8_t dy)
+uint8_t object_move_by(object_t *obj, int8_t dx, int8_t dy)
 {
-    return object_action_move_to(obj, obj->x + dx, obj->y + dy);
+    return object_move(obj, obj->x + dx, obj->y + dy);
 }
 
-uint8_t object_action_move_isblocked(uint8_t dungeon_x, uint8_t dungeon_y)
+uint8_t object_move_isblocked(uint8_t dungeon_x, uint8_t dungeon_y)
 {
     // check if move is blocked by dungeon map tile e.g. wall
     if (dungeonmap_tile_is_blocked(dungeon_x, dungeon_y))

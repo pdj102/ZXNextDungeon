@@ -2,14 +2,15 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game object action - destroy
+    @brief Game object action - close
 
 **************************************************/
 #include <inttypes.h>
 
-#include "object_action_destroy.h"
+#include "object_close.h"
 
 #include "object.h"
+#include "object_list.h"
 #include "object_dungeon_list.h"
 
 /***************************************************
@@ -28,18 +29,41 @@
  * functions
  ***************************************************/
 
-uint8_t object_action_is_destroy(object_t *obj)
+uint8_t object_close_is(object_t *obj)
 {
-    // Everything can be destroyed
-    return 1;
+    switch (obj->subtype)
+    {
+    case DOOR_OPEN:
+        return 1;
+    default:
+        return 0;
+    }
 }
 
-uint8_t object_action_destroy(object_t *obj_todestroy)
+uint8_t object_close(object_t *obj)
 {
-
-    object_dungeon_list_remove(obj_todestroy);
-    object_destroy(obj_todestroy);
-
-    return 1;
+    switch (obj->subtype)
+    {
+    case DOOR_OPEN:
+        obj->subtype=DOOR_CLOSED;
+        obj->tilemap_tile.tile_id=43;
+        obj->blocking = 1;
+        return 1;
+    default:
+        return 0;
+    }
 }
 
+object_t *object_close_findat(uint8_t x, uint8_t y)
+{
+    object_t *obj_p;
+
+    for (obj_p = object_dungeon_list_first_at(x, y); obj_p; obj_p = object_dungeon_list_next_at(obj_p, x, y))
+    {
+        if (object_close_is(obj_p) )
+        {
+            return obj_p;
+        }
+    }
+    return 0;
+}

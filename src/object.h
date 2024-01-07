@@ -129,13 +129,13 @@ void object_init();
 object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
 
 /**
- * Destroy an object and all its contained objects
+ * Delete an object and all its contained objects
  * 
  * Object must not belong to an object list
  * 
  * @param   *obj_p  Object to destroy
  */
-void object_destroy(object_t *obj_p);
+void object_delete(object_t *obj_p);
 
 /**
  * Free an object

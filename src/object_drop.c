@@ -7,7 +7,7 @@
 **************************************************/
 #include <inttypes.h>
 
-#include "object_action_drop.h"
+#include "object_drop.h"
 
 #include "object.h"
 #include "object_list.h"
@@ -30,13 +30,13 @@
  * functions
  ***************************************************/
 
-uint8_t object_action_is_drop(object_t *obj)
+uint8_t oobject_drop_is(object_t *obj)
 {
     // For now all objects can be dropped
     return 1;
 }
 
-uint8_t object_action_drop(object_t *obj_todrop, object_t *obj_container_ptr)
+uint8_t object_drop(object_t *obj_todrop, object_t *obj_container_ptr)
 {
     object_list_remove(obj_todrop, obj_container_ptr);
     obj_todrop->x = obj_container_ptr->x;
@@ -45,32 +45,24 @@ uint8_t object_action_drop(object_t *obj_todrop, object_t *obj_container_ptr)
     return 1;
 }
 
-uint8_t object_action_drop_all(object_t *obj_container_ptr)
+uint8_t object_drop_all(object_t *obj_container_ptr)
 {
     object_t *obj_p;
 
-    while (obj_p = object_action_drop_find_first(obj_container_ptr))
+    while (obj_p = object_drop_find_first(obj_container_ptr))
     {
-        object_action_drop(obj_p, obj_container_ptr);
+        object_drop(obj_p, obj_container_ptr);
     }
-
-    /*
-    while (obj_p)
-    {
-        object_action_drop(obj_p, obj_container_ptr);
-        obj_p = object_action_drop_find_next(obj_p);
-    }
-    */
    return 1;
 }
 
-object_t *object_action_drop_find_first(object_t *obj_container_ptr)
+object_t *object_drop_find_first(object_t *obj_container_ptr)
 {
     object_t *obj_ptr;
 
     for (obj_ptr = object_list_first(obj_container_ptr); obj_ptr; obj_ptr = object_list_next(obj_ptr))
     {
-        if (object_action_is_drop(obj_ptr) )
+        if (oobject_drop_is(obj_ptr) )
         {
             return obj_ptr;
         }
@@ -78,12 +70,12 @@ object_t *object_action_drop_find_first(object_t *obj_container_ptr)
     return 0;
 }
 
-object_t *object_action_drop_find_next(object_t *obj_ptr)
+object_t *object_drop_find_next(object_t *obj_ptr)
 {
     for (; obj_ptr; obj_ptr = object_list_next(obj_ptr))
     {
         text_print_string("*");
-        if (object_action_is_drop(obj_ptr) )
+        if (oobject_drop_is(obj_ptr) )
         {
             return obj_ptr;
         }
