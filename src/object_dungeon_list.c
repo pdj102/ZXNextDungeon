@@ -29,7 +29,7 @@
  ***************************************************/
 
 // List of dungeon objects
-static p_forward_list_t dungeon_object_list; 
+// static p_forward_list_t dungeon_object_list; 
 
 /***************************************************
  * functions
@@ -37,17 +37,17 @@ static p_forward_list_t dungeon_object_list;
 
 void object_dungeon_list_init()
 {
-    p_forward_list_init(&dungeon_object_list);
+    p_forward_list_init(&globaldata.dungeon_object_list);
 }
 
 void object_dungeon_list_add(object_t* obj_ptr)
 {
-    p_forward_list_push_front(&dungeon_object_list, obj_ptr);
+    p_forward_list_push_front(&globaldata.dungeon_object_list, obj_ptr);
 }
 
 uint8_t object_dungeon_list_remove(object_t* obj_ptr)
 {
-    p_forward_list_remove(&dungeon_object_list, obj_ptr);
+    p_forward_list_remove(&globaldata.dungeon_object_list, obj_ptr);
     return 1;
 }
 
@@ -55,7 +55,7 @@ uint8_t object_dungeon_list_isblocking_at(uint8_t x, uint8_t y)
 {
     object_t *object_ptr;
 
-    for (object_ptr = p_forward_list_front(&dungeon_object_list); object_ptr; object_ptr = p_forward_list_next(object_ptr))
+    for (object_ptr = p_forward_list_front(&globaldata.dungeon_object_list); object_ptr; object_ptr = p_forward_list_next(object_ptr))
     {
         if (!object_ptr->blocking)
         {
@@ -73,7 +73,7 @@ void object_dungeon_list_drawall()
 {
     object_t *obj_ptr;
 
-    for (obj_ptr = p_forward_list_front(&dungeon_object_list); obj_ptr; obj_ptr = p_forward_list_next(obj_ptr))
+    for (obj_ptr = p_forward_list_front(&globaldata.dungeon_object_list); obj_ptr; obj_ptr = p_forward_list_next(obj_ptr))
     {
         dungeonmap_draw_single_tile(obj_ptr->x, obj_ptr->y, &obj_ptr->tilemap_tile);
     }    
@@ -81,7 +81,7 @@ void object_dungeon_list_drawall()
 
 object_t *object_dungeon_list_first()
 {
-    return p_forward_list_front(&dungeon_object_list);
+    return p_forward_list_front(&globaldata.dungeon_object_list);
 }
 
 object_t *object_dungeon_list_next(object_t *obj_ptr)

@@ -34,7 +34,7 @@ void object_free(object_t *obj_tofree);
 
 // helper pointer to the global object data array
 // TO DO make static
-object_t *const objects = &globaldata.objects[0];
+static object_t *const objects = &globaldata.objects[0];
 
 /***************************************************
  * functions

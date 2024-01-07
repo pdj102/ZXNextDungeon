@@ -24,6 +24,7 @@
 #include "object_list.h"
 #include "object_dungeon_list.h"
 #include "text.h"
+#include "event.h"
 
 
 /***************************************************
@@ -34,6 +35,8 @@
  * private function prototypes
  ***************************************************/
 
+void call_back(void);
+
 /***************************************************
  * private variables - static
  ***************************************************/
@@ -42,10 +45,13 @@ static object_t *player_obj_ptr ;
 
 static object_t *tmp_obj_ptr1;
 static object_t *tmp_obj_ptr2;
+static event_t *tmp_event_p;
 
 /***************************************************
  * functions
  ***************************************************/
+
+
 
 void init_game()
 {
@@ -80,7 +86,9 @@ void init_game()
 
     dungeonmap_init();
     object_init();
-    object_dungeon_list_init();   
+    object_dungeon_list_init();
+
+    event_init();
 
     object_t    *obj_ptr;
 
@@ -107,9 +115,15 @@ void init_game()
     object_list_add(obj_ptr, tmp_obj_ptr1);     
    
     obj_ptr = object_create(TRAP_NOISE, 1, 1);      
-    object_dungeon_list_add(obj_ptr);   
+    object_dungeon_list_add(obj_ptr);
+
+    tmp_event_p = event_create(call_back, 10);
 }
 
+void call_back()
+{
+    text_print_string("CALL BACK");
+}
 
 int main()
 {
@@ -131,6 +145,8 @@ int main()
 
         dungeonmap_draw();
         object_dungeon_list_drawall();
+
+        event_decrement(tmp_event_p);
 
     }
     return 0;

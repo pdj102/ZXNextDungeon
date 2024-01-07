@@ -144,42 +144,7 @@ void object_delete(object_t *obj_p);
  * 
  * @param   *obj_p  Object to free
  */
-void object_free(object_t *obj_p);
+// void object_free(object_t *obj_p);
 
-/**
- * Add the object to a container object's list
- * Object must not belong to another list!
- *
- * @param *obj_ptr              pointer to object 
- * @param *obj_container_ptr    pointer to the container object 
- * 
- * @return uint8_t  1 success 0 fail
- */
-// uint8_t object_add_object_to_object_list(object_t* obj_ptr, object_t* obj_container_ptr);
-
-/**
- * Remove object from a container object's list
- *
- * @param *obj_ptr              pointer to object 
- * @param *obj_container_ptr    pointer to the container object 
- * 
- * @return uint8_t  1 success 0 fail
- */
-// uint8_t object_remove_object_from_object_list(object_t* obj_ptr, object_t* obj_container_ptr);
-
-/**
- * Returns the first object in an object's object list
- *
- * @param *obj_ptr      pointer to the container object  
- * @return *object_t    pointer to first object or 0 if no objects
- */
-// object_t *object_list_first(object_t *obj_ptr);
-
-/**
- * Returns the next object in the object list
- * 
- * @return *object_t    pointer to next object or 0 if no more objects
- */
-// object_t *object_list_next(object_t *obj_ptr);
 
 #endif
