@@ -11,6 +11,7 @@
 
 #include "globaldata.h"
 #include "memory.h"
+#include "text.h"
 #include "tile_defns.h"
 #include "palette.h"
 #include "tilemap.h"
@@ -26,7 +27,8 @@
 #include "object_pickup.h"
 #include "object_open.h"
 
-#include "text.h"
+#include "creature.h"
+
 #include "event.h"
 #include "event_list.h"
 
@@ -95,12 +97,20 @@ void init_game()
     event_init();
     event_list_init();    
 
+    creature_init();
+
     object_t    *obj_ptr;
+    creature_t  *creature_p;
 
     obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
     player_obj_ptr = obj_ptr;
+    creature_p = creature_create(player_obj_ptr);
     object_dungeon_list_add(obj_ptr);
-    player_init(player_obj_ptr);     
+    player_init(player_obj_ptr);
+
+    obj_ptr = object_create(BEAST_SNAKE, 10, 2);
+    creature_p = creature_create(obj_ptr);
+    object_dungeon_list_add(obj_ptr);
 
     obj_ptr = object_create(POTION_HEALING, 2, 5);
     object_dungeon_list_add(obj_ptr);
@@ -141,6 +151,10 @@ int main()
     dungeonmap_generate();
 
     text_print_string_at(0, 24, "WELCOME TO DUNGEON!");
+
+    uint16_t s;
+    s = sizeof(globaldata_t);
+    text_print_uint16(s);
 
     dungeonmap_draw();
     object_dungeon_list_drawall();

@@ -67,44 +67,36 @@ void text_print_string_at(uint8_t x, uint8_t y, const char text[]);
 /**
  * @brief Print uint8 on tilemap.
  * 
- * @param x  x position 0 - 39
- * @param y  y position 0 - 31
  * @param i  unit8 to print
  * @return void
  */
-void text_print_uint8(uint8_t x, uint8_t y, uint8_t i);
+void text_print_uint8(uint8_t i);
 
 
 /**
  * @brief Print int8 on tilemap.
  * 
- * @param x  x position 0 - 39
- * @param y  y position 0 - 31
- * @param i  nit8 to print
+ * @param i  int8 to print
  * @return void
  */
-void text_print_int8(uint8_t x, uint8_t y, int8_t i);
+void text_print_int8(int8_t i);
 
 /**
  * @brief Print uint16 on tilemap.
  * 
- * @param x  x position 0 - 39
- * @param y  y position 0 - 31
  * @param i  unit16 to print
  * @return void
  */
-void text_print_uint16(uint8_t x, uint8_t y, uint16_t i);
+void text_print_uint16(uint16_t i);
 
 
 /**
  * @brief Print int16 on tilemap.
  * 
- * @param x  x position 0 - 39
- * @param y  y position 0 - 31
  * @param i  int16 to print
  * @return void
  */
-void text_print_int16(uint8_t x, uint8_t y, int16_t i);
+void text_print_int16(int16_t i);
 
 
 

@@ -78,7 +78,7 @@ typedef enum object_subtype {
     // Creatures
     HUMANOID_HUMAN,
 
-    BEAT_SNAKE,
+    BEAST_SNAKE,
 
     OOZE_SLIME,
 

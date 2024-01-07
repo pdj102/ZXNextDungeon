@@ -99,6 +99,15 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->blocking = 1;
             break;
 
+        case BEAST_SNAKE:
+            obj_ptr->class = CREATURE;
+            obj_ptr->type = BEAST;
+            obj_ptr->subtype = BEAST_SNAKE;
+            obj_ptr->tilemap_tile.tile_attr = 0;
+            obj_ptr->tilemap_tile.tile_id = 83;
+            obj_ptr->blocking = 1;
+            break;       
+
         case POTION_HEALING:
             obj_ptr->class = ITEM;
             obj_ptr->type = POTION;

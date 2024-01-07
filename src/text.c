@@ -73,34 +73,34 @@ void text_print_string_at(uint8_t x, uint8_t y, const char text[])
     text_print_string(text);
 }
 
-void text_print_uint8(uint8_t x, uint8_t y, uint8_t i)
+void text_print_uint8(uint8_t i)
 {
     char s[] = "   ";     // string buffer for converting numbers to strings e.g. 255
     
     itoa(i, s, 10);
-    text_print_string_at(x, y, s);
+    text_print_string(s);
 }
 
-void text_print_int8(uint8_t x, uint8_t y, int8_t i)
+void text_print_int8(int8_t i)
 {
     char s[] = "    ";     // string buffer for converting numbers to strings e.g. -128
     
     itoa(i, s, 10);
-    text_print_string_at(x, y, s);
+    text_print_string(s);
 }
 
-void text_print_uint16(uint8_t x, uint8_t y, uint16_t i)
+void text_print_uint16(uint16_t i)
 {
     char s[] = "65535";     // string buffer for converting numbers to strings
     
     itoa(i, s, 10);
-    text_print_string_at(x, y, s);
+    text_print_string(s);
 }
 
-void text_print_int16(uint8_t x, uint8_t y, int16_t i)
+void text_print_int16(int16_t i)
 {
     char s[] = "-32768";     // string buffer for converting numbers to strings
     
     itoa(i, s, 10);
-    text_print_string_at(x, y, s);
+    text_print_string(s);
 }
