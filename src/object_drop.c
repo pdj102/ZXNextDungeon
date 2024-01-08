@@ -30,7 +30,7 @@
  * functions
  ***************************************************/
 
-uint8_t oobject_drop_is(object_t *obj)
+uint8_t object_drop_is(object_t *obj)
 {
     // For now all objects can be dropped
     return 1;
@@ -51,6 +51,7 @@ uint8_t object_drop_all(object_t *obj_container_ptr)
 
     while (obj_p = object_drop_find_first(obj_container_ptr))
     {
+        text_print_string("DROP");
         object_drop(obj_p, obj_container_ptr);
     }
    return 1;
@@ -62,7 +63,7 @@ object_t *object_drop_find_first(object_t *obj_container_ptr)
 
     for (obj_ptr = object_list_first(obj_container_ptr); obj_ptr; obj_ptr = object_list_next(obj_ptr))
     {
-        if (oobject_drop_is(obj_ptr) )
+        if (object_drop_is(obj_ptr) )
         {
             return obj_ptr;
         }
@@ -74,8 +75,7 @@ object_t *object_drop_find_next(object_t *obj_ptr)
 {
     for (; obj_ptr; obj_ptr = object_list_next(obj_ptr))
     {
-        text_print_string("*");
-        if (oobject_drop_is(obj_ptr) )
+        if (object_drop_is(obj_ptr) )
         {
             return obj_ptr;
         }

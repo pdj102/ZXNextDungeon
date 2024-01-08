@@ -134,7 +134,10 @@ void init_game()
     object_dungeon_list_add(chest_obj_p);
 
     object_t *speed_obj_p = object_create(POTION_SPEED, 5, 5);
-    object_list_add(speed_obj_p, chest_obj_p);    
+    object_list_add(speed_obj_p, chest_obj_p);
+
+    object_t *speed2_obj_p = object_create(POTION_SPEED, 5, 5);
+    object_list_add(speed2_obj_p, chest_obj_p);    
    
     object_t *trap_obj_p = object_create(TRAP_NOISE, 1, 1);      
     object_dungeon_list_add(trap_obj_p);

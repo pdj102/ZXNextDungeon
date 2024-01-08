@@ -23,13 +23,9 @@
  * private function prototypes
  ***************************************************/
 
-
 /***************************************************
  * private variables - static
  ***************************************************/
-
-// List of dungeon objects
-// static p_forward_list_t dungeon_object_list; 
 
 /***************************************************
  * functions
