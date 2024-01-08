@@ -39,9 +39,7 @@ uint8_t object_list_add(object_t* obj_p, object_t* container_obj_p)
 
 uint8_t object_list_remove(object_t* obj_p, object_t* container_obj_p)
 {
-    text_print_string("REMOVE ");
     p_forward_list_remove(&container_obj_p->obj_list, obj_p);
-    text_print_string("1");
     return 1;
 }
 

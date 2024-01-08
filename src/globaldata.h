@@ -9,6 +9,8 @@
 #ifndef GLOBALDATA_H 
     #define GLOBALDATA_H
 
+#include <adt/p_forward_list.h>
+
 #include "dungeonmap.h"
 #include "object.h"
 #include "event.h"

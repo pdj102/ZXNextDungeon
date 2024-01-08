@@ -37,7 +37,7 @@
 
 void object_dungeon_list_init()
 {
-    p_forward_list_init(&globaldata.dungeon_object_list);
+    p_forward_list_init(&globaldata.dungeon_object_list); 
 }
 
 void object_dungeon_list_add(object_t* obj_ptr)

@@ -33,6 +33,8 @@
 #include "event.h"
 #include "event_list.h"
 
+#include "adt/p_forward_list.h"
+
 
 /***************************************************
  * private types
@@ -96,58 +98,51 @@ void init_game()
     creature_init();
     creature_list_init();
 
-    object_t    *obj_ptr;
-    creature_t  *creature1_p = 0;
-    creature_t  *creature2_p = 0;
+    static object_t    *obj_ptr;
+    static creature_t  *creature1_p = 0;
+    static creature_t  *creature2_p = 0;
 
     static object_t *tmp_obj_ptr1;
     static object_t *tmp_obj_ptr2;
     static event_t *tmp_event_p;  
 
-
     // player
-    obj_ptr = object_create(HUMANOID_HUMAN, 2, 2);
-    object_dungeon_list_add(obj_ptr);
+    object_t *human_obj_p = object_create(HUMANOID_HUMAN, 2, 2);
+    object_dungeon_list_add(human_obj_p);
 
-    creature2_p = creature_create(obj_ptr);
-    creature_list_add(creature2_p);
-    obj_ptr->creature_p = creature2_p;
-    creature2_p->creature_class = PLAYER;
-    player_init(creature2_p);
+    creature_t *human_creature_p = creature_create(human_obj_p);
+    creature_list_add(human_creature_p);
+    human_obj_p->creature_p = human_creature_p;
+    human_creature_p->creature_class = PLAYER;
+    player_init(human_creature_p);
     
 
     // snake
-    obj_ptr = object_create(BEAST_SNAKE, 10, 2);
-    creature1_p = creature_create(obj_ptr);
-    obj_ptr->creature_p = creature1_p;
-    object_dungeon_list_add(obj_ptr);
-    creature_list_add(creature1_p);    
+    object_t *snake_obj_p = object_create(BEAST_SNAKE, 10, 2);
+    creature_t *snake_creature_p = creature_create(snake_obj_p);
+    snake_obj_p->creature_p = snake_creature_p;
+    object_dungeon_list_add(snake_obj_p);
+    creature_list_add(snake_creature_p);
 
+    object_t *healing_obj_p = object_create(POTION_HEALING, 2, 5);
+    object_dungeon_list_add(healing_obj_p);
 
-    obj_ptr = object_create(POTION_HEALING, 2, 5);
-    object_dungeon_list_add(obj_ptr);
+    object_t *door_obj_p = object_create(DOOR_CLOSED, 4, 7);      
+    object_dungeon_list_add(door_obj_p);
 
-    obj_ptr = object_create(DOOR_CLOSED, 4, 7);      
-    tmp_obj_ptr2 = obj_ptr;
-    object_dungeon_list_add(obj_ptr);
+    object_t *chest_obj_p = object_create(CHEST_LARGE, 4, 4);
+    object_dungeon_list_add(chest_obj_p);
 
-    obj_ptr = object_create(CHEST_LARGE, 4, 4);
-    tmp_obj_ptr1 = obj_ptr;
-    object_dungeon_list_add(obj_ptr);
-
-    obj_ptr = object_create(POTION_SPEED, 5, 5);
-    object_list_add(obj_ptr, tmp_obj_ptr1); 
-
-    obj_ptr = object_create(POTION_SPEED, 5, 5);
-    object_list_add(obj_ptr, tmp_obj_ptr1);     
+    object_t *speed_obj_p = object_create(POTION_SPEED, 5, 5);
+    object_list_add(speed_obj_p, chest_obj_p);    
    
-    obj_ptr = object_create(TRAP_NOISE, 1, 1);      
-    object_dungeon_list_add(obj_ptr);
+    object_t *trap_obj_p = object_create(TRAP_NOISE, 1, 1);      
+    object_dungeon_list_add(trap_obj_p);
 
-    tmp_event_p = event_create_object_cb(object_open, tmp_obj_ptr2, 5);
+    tmp_event_p = event_create_object_cb(object_open, door_obj_p, 5);
     event_list_add(tmp_event_p);
 
-    tmp_event_p = event_create_object_cb(object_open, tmp_obj_ptr1, 6);
+    tmp_event_p = event_create_object_cb(object_open, chest_obj_p, 6);
     event_list_add(tmp_event_p);    
 
 }
@@ -173,13 +168,15 @@ int main()
 
     while (1)
     {
+        // text_print_uint16( p_forward_list_size(&globaldata.event_list)) ;
+        text_print_uint16( p_forward_list_size(&globaldata.dungeon_object_list)) ;
+
         dungeonmap_draw();
         object_dungeon_list_drawall();
 
         event_list_update_all();
 
         creature_list_update_all();
-
     }
     return 0;
 }

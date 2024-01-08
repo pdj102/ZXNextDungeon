@@ -36,7 +36,6 @@ uint8_t object_destroy_is(object_t *obj)
 
 uint8_t object_destroy(object_t *obj_todestroy)
 {
-
     object_dungeon_list_remove(obj_todestroy);
     object_delete(obj_todestroy);
 

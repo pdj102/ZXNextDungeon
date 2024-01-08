@@ -62,8 +62,11 @@ void event_list_update_all()
 
     for (event_p = p_forward_list_front(&globaldata.event_list); event_p; event_p = p_forward_list_next(event_p))
     {
-        event_update(event_p);
-        // TODO remove fired event
+        if (event_update(event_p))
+        {
+            // event fired. Remove from list
+            event_list_remove(event_p);
+        }
     }    
 }
 

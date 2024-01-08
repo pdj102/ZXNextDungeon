@@ -37,6 +37,7 @@ void open_or_close();
 void pickup();
 void drop();
 void attack();
+void move(int8_t dx, int8_t dy);
 
 /***************************************************
  * private variables - static
@@ -62,19 +63,18 @@ void player_turn()
     switch(toupper(key)) {
         
         case 54:  // down
-            object_move_by(player_creature_p->obj_p, 0, 1);
+            move(0, 1);
             break;
-
         case 55:  // up
-            object_move_by(player_creature_p->obj_p, 0, -1);
+            move(0, -1);
             break;
 
         case 53:  // left
-            object_move_by(player_creature_p->obj_p, -1, 0);
+            move(-1, 0);
             break;
 
         case 56:  // right
-            object_move_by(player_creature_p->obj_p, 1, 0);
+            move (1, 0);
             break;
 
         case 'O':  // open or close
@@ -171,6 +171,14 @@ void attack()
         return;
     }
     
+}
+
+void move(int8_t dx, int8_t dy)
+{
+    if (object_move_by(player_creature_p->obj_p, dx, dy))
+    {
+        player_creature_p->energy -= 100;
+    }
 }
 
 void open_or_close()
