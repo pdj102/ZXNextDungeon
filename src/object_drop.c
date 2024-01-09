@@ -51,7 +51,6 @@ uint8_t object_drop_all(object_t *obj_container_ptr)
 
     while (obj_p = object_drop_find_first(obj_container_ptr))
     {
-        text_print_string("DROP");
         object_drop(obj_p, obj_container_ptr);
     }
    return 1;

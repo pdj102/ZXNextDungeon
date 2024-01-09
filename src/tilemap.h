@@ -69,7 +69,6 @@ void tilemap_clear(const tilemap_tile_t *tile);
  */
 void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile);
 
-
 /**
  * Set tilemap rectangle area to tile
  * @param x     x position
@@ -80,5 +79,16 @@ void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile);
  * @return void
  */
 void tilemap_set_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h, const tilemap_tile_t *tile);
+
+/**
+ * Copy tile 
+ * @param fx     from x
+ * @param fy     from y
+ * @param tx     to x
+ * @param ty     to y
+ *
+ * @return void
+ */
+void tilemap_copy_tile(uint8_t fx, uint8_t fy, uint8_t tx, uint8_t ty);
 
 #endif

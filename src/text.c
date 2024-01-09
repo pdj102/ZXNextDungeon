@@ -17,13 +17,14 @@
 /***************************************************
  * private types
  ***************************************************/
+// helper pointer to the global text window struct 
+static text_window_t *const text_win = &globaldata.text_window;
 
 /***************************************************
  * private function prototypes
  ***************************************************/
 
-// helper pointer to the global text window struct 
-static text_window_t *const text_win = &globaldata.text_window;
+void text_scroll_up();
 
 /***************************************************
  * private variables - static
@@ -36,12 +37,43 @@ static text_window_t *const text_win = &globaldata.text_window;
 void text_init()
 {
     text_win->x = 0;
-    text_win->y = 0;
+    text_win->y = 24;
     text_win->w = 40;
-    text_win->y = 32;
-    text_win->c_x = 0;
-    text_win->c_y = 0;
+    text_win->h = 4;
+    text_win->c_x = text_win->x;
+    text_win->c_y = text_win->y;
     text_win->tile.tile_attr = PALETTE_0;
+}
+
+void putc(char c)
+{
+    // reached end of line?
+    if (text_win->c_x >= text_win->x + text_win->w)
+    {
+        text_win->c_x = text_win->x;
+        text_win->c_y++;
+    }
+
+    // gone pass bottom of window?
+    if (text_win->c_y >= text_win->y + text_win->h)
+    {
+            text_scroll_up();
+            text_win->c_y--;            
+    }
+
+    switch (c)
+    {
+    case 10:
+        text_win->c_x = text_win->x;
+        text_win->c_y++;
+        break;
+    default:
+        text_win->tile.tile_id = c;
+        tilemap_set_tile(text_win->c_x, text_win->c_y, &text_win->tile);
+        text_win->c_x++;
+    }
+
+
 }
 
 void text_print_string(const char text[])
@@ -50,19 +82,45 @@ void text_print_string(const char text[])
 
     for (uint8_t i = 0; i < l; i++)
     {
-        text_win->tile.tile_id = text[i];
-        tilemap_set_tile(text_win->c_x, text_win->c_y, &text_win->tile );
-        text_win->c_x++;
-        if (text_win->c_x >= text_win->x + text_win->w)
+
+        if (text[i] != '%')
         {
-            text_win->c_x = text_win->x;
-            text_win->c_y++;
-            if (text_win->c_y >= text_win->y + text_win->h)
-            {
-                // TODO scroll
-                text_win->c_y--;
-            }
+            putc(text[i]);
+            continue;
         }
+
+        i++;
+        switch (text[i])
+        {
+        case 'd':   // TODO
+            break;
+        }
+    }
+}
+
+
+        
+
+void text_scroll_up()
+{
+    uint8_t x, y;
+    tilemap_tile_t blank;
+
+    blank.tile_attr = 0;
+    blank.tile_id = 32;
+
+    for (y = text_win->y; y < text_win->y + text_win->h; y++)
+    {
+        for (x = text_win->x; x < text_win->x + text_win->w; x++)
+        {
+            tilemap_copy_tile(x, y + 1 , x, y );
+        }
+    }
+    
+    y = text_win->y + text_win->h - 1;
+    for (x = text_win->x; x < text_win->x + text_win->w; x++)
+    {
+        tilemap_set_tile(x, y, &blank );
     }
 }
 

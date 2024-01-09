@@ -163,17 +163,16 @@ int main()
  
     dungeonmap_generate();
 
-    text_print_string_at(0, 24, "WELCOME TO DUNGEON!");
+    text_print_string("WELCOME TO DUNGEON!\n");
 
+    text_print_string("GLOBAL DATA SIZE:");
     uint16_t s;
     s = sizeof(globaldata_t);
     text_print_uint16(s);
+    text_print_string("\n");
 
     while (1)
     {
-        // text_print_uint16( p_forward_list_size(&globaldata.event_list)) ;
-        text_print_uint16( p_forward_list_size(&globaldata.dungeon_object_list)) ;
-
         dungeonmap_draw();
         object_dungeon_list_drawall();
 

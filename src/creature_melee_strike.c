@@ -40,12 +40,11 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
 
     attacker_p->energy - 100;
 
-    text_print_string("STRIKE ");
     attack_roll = dice_1d20() + attacker_p->melee_modifier;
 
     if (attack_roll >= target_p->ac)
     {
-        text_print_string("MISS");
+        text_print_string("MISS\n");
         return 0;
     }
     else
@@ -53,7 +52,7 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
         text_print_string("HIT ");
         damage_roll = dice_roll(&attacker_p->melee_damage_roll) + attacker_p->melee_modifier;
         text_print_uint8(damage_roll);
-        text_print_string(" POINTS DAMAGE");
+        text_print_string(" POINTS DAMAGE\n");
         return 1;
     }
 

@@ -71,7 +71,7 @@ uint8_t event_update(event_t *event_p)
 {
     if (event_p->turns == 0)
     {
-        text_print_string("EVENT FIRED");
+        text_print_string("EVENT FIRED\n");
         event_p->cb(event_p->obj_p);
         event_free(event_p);
 

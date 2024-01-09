@@ -38,27 +38,6 @@ static uint8_t volatile * const tilemap_base_p = (uint8_t *) TILEMAP_BASE;
  * functions
  ***************************************************/
 
-void tilemap_clear(const tilemap_tile_t *tile)
-{
-    uint8_t *p = tilemap_base_p;
-
-    for (uint16_t s = 0; s < TILE_MAP_WIDTH * TILE_MAP_HEIGHT; s++) {
-        *(p) = tile->tile_id;
-        *(p+1) = tile->tile_attr;
-        p = p+2;
-    }
-}
-
-/* TODO check bounds */
-void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile)
-{
-    uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
-    uint8_t *p = tilemap_base_p + pos;
-
-    *p = tile->tile_id;
-    *(p+1) = tile->tile_attr;
-}
-
 void tilemap_init()
 {
     /*
@@ -94,4 +73,40 @@ void tilemap_init()
      */
     ZXN_WRITE_REG(0x6B, 0b10000000);
 
+}
+
+void tilemap_clear(const tilemap_tile_t *tile)
+{
+    uint8_t *p = tilemap_base_p;
+
+    for (uint16_t s = 0; s < TILE_MAP_WIDTH * TILE_MAP_HEIGHT; s++) {
+        *(p) = tile->tile_id;
+        *(p+1) = tile->tile_attr;
+        p = p+2;
+    }
+}
+
+void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile)
+{
+    /* TODO check bounds */
+    uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
+    uint8_t *p = tilemap_base_p + pos;
+
+    *p = tile->tile_id;
+    *(p+1) = tile->tile_attr;
+}
+
+
+void  tilemap_copy_tile(uint8_t fx, uint8_t fy, uint8_t tx, uint8_t ty)
+{
+    /* TODO check bounds */
+    /* TODO a copy row version would be faster */
+    uint16_t fpos = ( (fy * TILE_MAP_WIDTH) + fx) * 2;
+    uint8_t *fp = tilemap_base_p + fpos;
+
+    uint16_t tpos = ( (ty * TILE_MAP_WIDTH) + tx) * 2;
+    uint8_t *tp = tilemap_base_p + tpos;    
+
+    *tp = *fp; 
+    *(tp+1) = *(fp+1);
 }
