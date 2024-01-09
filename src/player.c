@@ -13,6 +13,10 @@
 #include <ctype.h>              // character classification e.g. toupper() 
 
 #include "dungeonmap.h"
+
+#include "text.h"
+#include "text_token.h"
+
 #include "object.h"
 #include "object_move.h"
 #include "object_open.h"
@@ -216,7 +220,14 @@ void pickup()
     if ( obj_ptr = object_pickup_find_first_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y) )
     {
         object_pickup(obj_ptr, player_creature_p->obj_p);
-    }  
+        text_print_string("YOU PICK UP ");
+        text_token_print(obj_ptr->name_token);
+        text_print_string("\n");
+    }
+    else
+    {
+        text_print_string("NOTHING TO PICK UP HERE\n");
+    }
 }
 
 void drop()

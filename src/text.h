@@ -32,6 +32,8 @@ typedef struct
  * public variable declarations
  ***************************************************/
 
+extern char object_base_data[];
+
 /***************************************************
  * public function prototypes
  ***************************************************/
@@ -42,6 +44,19 @@ typedef struct
  * @return void
  */
 void text_init();
+
+/**
+ * @brief Print a char on tilemap at cursor position
+ * 
+ * Increments cursor position. 
+ * 
+ * If the end of the line is reached move to next line. 
+ * If bottom of window is reached scroll the text up
+ * 
+ * @param c     Char to print
+ * @return void
+ */
+void text_putc(char c);
 
 /**
  * @brief Print text string on tilemap at cursor position

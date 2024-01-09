@@ -164,6 +164,8 @@ int main()
     dungeonmap_generate();
 
     text_print_string("WELCOME TO DUNGEON!\n");
+    //text_print_string(&object_base_data[0]);
+    text_print_string("TEST TOKEN %\1 \n");
 
     text_print_string("GLOBAL DATA SIZE:");
     uint16_t s;

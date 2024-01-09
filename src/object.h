@@ -97,6 +97,7 @@ typedef struct object_s
     object_class_e          class;
     object_type_e           type;
     object_subtype_e        subtype;
+    uint8_t                 name_token;
     struct creature_s       *creature_p;
 } object_t;
 

@@ -44,7 +44,8 @@
 			"object_create_bank.h": "c",
 			"creature_melee_strike.h": "c",
 			"creature.h": "c",
-			"dungeonmap.h": "c"
+			"dungeonmap.h": "c",
+			"text_token.h": "c"
 		}
 	}
 }

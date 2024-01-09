@@ -13,12 +13,14 @@
 
 #include "globaldata.h"
 #include "tilemap.h"
+#include "text_token.h"
 
 /***************************************************
  * private types
  ***************************************************/
 // helper pointer to the global text window struct 
 static text_window_t *const text_win = &globaldata.text_window;
+
 
 /***************************************************
  * private function prototypes
@@ -45,7 +47,7 @@ void text_init()
     text_win->tile.tile_attr = PALETTE_0;
 }
 
-void putc(char c)
+void text_putc(char c)
 {
     // reached end of line?
     if (text_win->c_x >= text_win->x + text_win->w)
@@ -72,8 +74,6 @@ void putc(char c)
         tilemap_set_tile(text_win->c_x, text_win->c_y, &text_win->tile);
         text_win->c_x++;
     }
-
-
 }
 
 void text_print_string(const char text[])
@@ -82,24 +82,33 @@ void text_print_string(const char text[])
 
     for (uint8_t i = 0; i < l; i++)
     {
-
+        // TODO handle %
         if (text[i] != '%')
         {
-            putc(text[i]);
+            text_putc(text[i]);
             continue;
         }
 
         i++;
+
+        text_token_print((uint8_t)text[i]);
+
+        /*
+        text_putc('*');
         switch (text[i])
         {
-        case 'd':   // TODO
+        case 0:
+            text_putc('A');
             break;
+        case 1:
+            text_putc('B');
+            break;
+        default:
+            text_putc('C');
         }
+        */
     }
 }
-
-
-        
 
 void text_scroll_up()
 {

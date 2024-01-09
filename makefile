@@ -60,6 +60,13 @@ $(OBJDIR)/dungeonmap_generator_bank.o: $(SRCDIR)/dungeonmap_generator_bank.c $(S
 $(OBJDIR)/object_create_bank.o: $(SRCDIR)/object_create_bank.c $(SRCDIR)/object_create_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_20 --constsegPAGE_20 -o $@ $<
 
+# ####################################################################################################################################
+# PAGE_21
+# Target for text token and data 
+# - text_token_bank.o 
+$(OBJDIR)/text_token_bank.o: $(SRCDIR)/text_token_bank.c $(SRCDIR)/text_token_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_21 --constsegPAGE_21 -o $@ $<	
+
 
 # ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 

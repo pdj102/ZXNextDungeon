@@ -27,14 +27,19 @@
     7           |   0xe000-0xffff   |   Banked  |   Banked code and data
 
 
-    List of banked pages:
+    MMU 6 - List of banked pages:
 
     Page    |   Description
     --------|-----------------------------------------------------
     18      |   Dungeon map generator
-    19      |   reserved - dungeon map generator 
     20      |   Object create
-    21      |   reserved - object create
+
+    MMU 7 - List of banked pages:
+
+    Page    |   Description
+    --------|-----------------------------------------------------
+    19      |   reserved for dungeon map generator 
+    21      |   Text token 
 
  ***************************************************/
 
