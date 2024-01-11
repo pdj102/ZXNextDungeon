@@ -31,7 +31,7 @@
  * 
  * @return void
  */
-void event_list_init();
+void event_list_init( void );
 
 /**
  * Add an object to the list
@@ -56,7 +56,7 @@ uint8_t event_list_remove(event_t* event_p);
  * 
  * @return *event_t    pointer to first object or 0 if no objects
  */
-event_t *event_list_first();
+event_t *event_list_first( void );
 
 /**
  * Returns the next event in the event  list
@@ -69,6 +69,6 @@ event_t *event_list_next(event_t *obj_ptr);
  * Update all event timers. If triggered call callback function and delete event.  
  * 
  */
-void event_list_update_all();
+void event_list_update_all( void );
 
 #endif

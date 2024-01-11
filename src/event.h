@@ -57,7 +57,7 @@ typedef struct event_s
  * 
  * @return void
  */
-void event_init();
+void event_init( void );
 
 /**
  * Create an event  

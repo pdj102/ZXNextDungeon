@@ -31,7 +31,7 @@
  * functions
  ***************************************************/
 
-void object_dungeon_list_init()
+void object_dungeon_list_init( void )
 {
     p_forward_list_init(&globaldata.dungeon_object_list); 
 }
@@ -65,7 +65,7 @@ uint8_t object_dungeon_list_isblocking_at(uint8_t x, uint8_t y)
     return 0;
 }
 
-void object_dungeon_list_drawall()
+void object_dungeon_list_drawall( void )
 {
     object_t *obj_ptr;
 
@@ -75,7 +75,7 @@ void object_dungeon_list_drawall()
     }    
 }
 
-object_t *object_dungeon_list_first()
+object_t *object_dungeon_list_first( void )
 {
     return p_forward_list_front(&globaldata.dungeon_object_list);
 }

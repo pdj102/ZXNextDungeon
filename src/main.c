@@ -57,7 +57,7 @@ uint8_t call_back(object_t *obj_p);
 
 
 
-void init_game()
+void init_game( void )
 {
     /* set CPU speed 28MHz */
     ZXN_WRITE_REG(REG_TURBO_MODE, 0b00000011);
@@ -156,7 +156,7 @@ uint8_t call_back(object_t *obj_p)
     text_print_string("CALL BACK");
 }
 
-int main()
+int main( void )
 {
     zx_border(1);
     init_game();

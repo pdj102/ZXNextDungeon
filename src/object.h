@@ -117,14 +117,14 @@ typedef struct object_s
  * 
  * @return void
  */
-void object_init();
+void object_init( void );
 
 /**
  * Find a free object slot
  * 
  * @return   object_t* pointer to a free object slot or 0 if no free slot
  */
-object_t* object_getfree();
+object_t* object_getfree( void );
 
 /**
  * Create an  object of type subtype at xm y.  

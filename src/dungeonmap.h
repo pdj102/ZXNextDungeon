@@ -64,7 +64,7 @@ typedef struct
  * 
  * @return void
  */
-void dungeonmap_init();
+void dungeonmap_init( void );
 
 /**
  * Set the dungeonmap scrollable view window position. 
@@ -89,7 +89,7 @@ void dungeonmap_scroll(int8_t dx, int8_t dy );
  * 
  * @return void
  */
-void dungeonmap_draw();
+void dungeonmap_draw( void );
 
 /**
  * Draw a single tile to the graphics tilemap at dungeon position x, y

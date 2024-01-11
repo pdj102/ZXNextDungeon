@@ -32,7 +32,7 @@
  * functions
  ***************************************************/
 
-void creature_list_init()
+void creature_list_init( void )
 {
     p_forward_list_init(&globaldata.creature_list);
 }
@@ -48,7 +48,7 @@ uint8_t creature_list_remove(creature_t *creature_p)
     return 1;
 }
 
-creature_t *creature_list_first()
+creature_t *creature_list_first( void )
 {
     return p_forward_list_front(&globaldata.creature_list);
 }
@@ -58,7 +58,7 @@ creature_t *creature_list_next(creature_t *creature_p)
     return p_forward_list_next(creature_p);
 }
 
-void creature_list_update_all()
+void creature_list_update_all( void )
 {
     creature_t *creature_p;
     

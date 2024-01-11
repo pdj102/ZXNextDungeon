@@ -10,6 +10,7 @@
 #include <string.h>     /* strlen() */
 #include <stdlib.h>     /* itoa() */
 #include <stdint.h>
+#include <stdio.h>
 #include <stdarg.h>     /* variadic functions */
 
 #include "globaldata.h"
@@ -22,12 +23,13 @@
 // helper pointer to the global text window struct 
 static text_window_t *const text_win = &globaldata.text_window;
 
+tilemap_tile_t blank;
 
 /***************************************************
  * private function prototypes
  ***************************************************/
 
-void text_scroll_up();
+void text_scroll_up( void );
 
 /***************************************************
  * private variables - static
@@ -37,12 +39,12 @@ void text_scroll_up();
  * functions definitions
  ***************************************************/
 
-void text_init()
+void text_init( void )
 {
     text_win->x = 0;
     text_win->y = 24;
     text_win->w = 40;
-    text_win->h = 8;
+    text_win->h = 7;
     text_win->c_x = text_win->x;
     text_win->c_y = text_win->y;
     text_win->tile.tile_attr = PALETTE_0;
@@ -80,8 +82,7 @@ void text_putc(char c)
 void text_printf(const char *text, ...)
 {
     va_list ptr;
-    // va_start(ptr, text);
-    ptr= (getarg()*2)+&text-4;
+    va_start(ptr, text);
 
     uint8_t l = strlen(text);
 
@@ -126,26 +127,31 @@ void text_print_string(const char text[])
     }
 }
 
-void text_scroll_up()
+void text_scroll_up( void )
 {
-    uint8_t x, y;
-    tilemap_tile_t blank;
+    uint8_t x = 0;
+    uint8_t y = 0;
 
     blank.tile_attr = 0;
     blank.tile_id = 32;
 
-    for (y = text_win->y; y < text_win->y + text_win->h; y++)
+    tilemap_tile_t *p = &blank;
+
+    for (y = text_win->y + 1; y < text_win->y + text_win->h; y++)
     {
-        for (x = text_win->x; x < text_win->x + text_win->w; x++)
+        
+        for (x = text_win->x; x < text_win->x + text_win->w ; x++)
         {
-            tilemap_copy_tile(x, y + 1 , x, y );
+            // text_print_string_at(x, y, "*");
+            tilemap_copy_tile(x, y, x, y - 1);
         }
+
     }
     
     y = text_win->y + text_win->h - 1;
     for (x = text_win->x; x < text_win->x + text_win->w; x++)
     {
-        tilemap_set_tile(x, y, &blank );
+        tilemap_set_tile(x, y, p );
     }
 }
 

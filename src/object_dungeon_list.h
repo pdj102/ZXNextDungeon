@@ -31,7 +31,7 @@
  * 
  * @return void
  */
-void object_dungeon_list_init();
+void object_dungeon_list_init( void );
 
 /**
  * Add the object to the list of dungeon objects
@@ -67,14 +67,14 @@ uint8_t object_dungeon_list_isblocking_at(uint8_t x, uint8_t y);
  * 
  * @return void
  */
-void object_dungeon_list_drawall();
+void object_dungeon_list_drawall( void );
 
 /**
  * Returns the first object in the dungeon object list
  * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_dungeon_list_first();
+object_t *object_dungeon_list_first( void );
 
 /**
  * Returns the next object in the dungeon object list

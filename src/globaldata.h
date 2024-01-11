@@ -46,6 +46,6 @@ extern globaldata_t globaldata;
  * function prototypes
  ***************************************************/
 
-void globaldata_init();
+void globaldata_init( void );
 
 #endif

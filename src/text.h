@@ -43,7 +43,7 @@ extern char object_base_data[];
  * 
  * @return void
  */
-void text_init();
+void text_init( void );
 
 /**
  * @brief Print a char on tilemap at cursor position
@@ -76,7 +76,7 @@ void text_printf(const char *text, ...);
 /**
  * @brief Print text string to tilemap at cursor position
  * 
- * Uses text_putc() so will wrap with window 
+ * Uses text_putc( void ) so will wrap with window 
  * 
  * @param text[] text to print
  * @return void

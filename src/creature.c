@@ -41,7 +41,7 @@ void object_free(object_t *obj_tofree);
  * functions
  ***************************************************/
 
-void creature_init()
+void creature_init( void )
 {
     for (uint8_t i = 0; i < MAX_CREATURE; i++)
     {
@@ -112,7 +112,7 @@ creature_t* creature_create(object_t *obj_p)
     return creature_p;
 }
 
-creature_t* creature_getfree()
+creature_t* creature_getfree( void )
 {
     for (uint8_t i = 0; i < MAX_CREATURE; i++)
     {

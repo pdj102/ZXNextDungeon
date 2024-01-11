@@ -37,6 +37,10 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
 {
     uint8_t attack_roll;
     uint8_t damage_roll;
+    uint8_t a, t;
+    
+    a = attacker_p->obj_p->name_token;
+    t = target_p->obj_p->name_token;    
 
     attacker_p->energy -= 100;
 
@@ -44,22 +48,17 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
 
     if (attack_roll >= target_p->ac)
     {
-        uint8_t a, t;
-        a = attacker_p->obj_p->name_token;
-        t = target_p->obj_p->name_token;
         // TODO implement "You hit the" vs "Snake hits" 
-        text_printf("MISS THE %t\n", t);
-        text_printf("%u MISS THE %u \n", a, t);
-        text_printf("SUBTYPE %u\n", target_p->obj_p->subtype);
-        text_printf("TOKEN %u \n", target_p->obj_p->name_token);
-        text_printf("NAME %t \n", target_p->obj_p->name_token);         
+        text_printf("%t MISS THE ", a);
+        text_printf("%t\n", t);
         return 0;
     }
     else
     {
         damage_roll = dice_roll(&attacker_p->melee_damage_roll) + attacker_p->melee_modifier;
         // TODO implement "You hit the" vs "Snake hits" 
-        text_printf("%t HIT THE %t \n", attacker_p->obj_p->name_token, target_p->obj_p->name_token);
+        text_printf("%t HIT THE ", a);
+        text_printf("%t\n", t);
         return 1;
     }
 

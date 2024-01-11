@@ -22,6 +22,6 @@
  ***************************************************/
 
 // generate a dungeon map 
-void dungeonmap_generate();
+void dungeonmap_generate( void );
 
 #endif

@@ -89,8 +89,11 @@ void tilemap_clear(const tilemap_tile_t *tile)
 void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile)
 {
     /* TODO check bounds */
-    uint16_t pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
-    uint8_t *p = tilemap_base_p + pos;
+    uint16_t pos;
+    uint8_t *p;
+    
+    pos = ( (y * TILE_MAP_WIDTH) + x) * 2;
+    p = tilemap_base_p + pos;
 
     *p = tile->tile_id;
     *(p+1) = tile->tile_attr;
@@ -99,13 +102,16 @@ void tilemap_set_tile(uint8_t x, uint8_t y, const tilemap_tile_t *tile)
 
 void  tilemap_copy_tile(uint8_t fx, uint8_t fy, uint8_t tx, uint8_t ty)
 {
+    uint16_t fpos, tpos;
+    uint8_t *fp, *tp;
+
     /* TODO check bounds */
     /* TODO a copy row version would be faster */
-    uint16_t fpos = ( (fy * TILE_MAP_WIDTH) + fx) * 2;
-    uint8_t *fp = tilemap_base_p + fpos;
+    fpos = ( (fy * TILE_MAP_WIDTH) + fx) * 2;
+    fp = tilemap_base_p + fpos;
 
-    uint16_t tpos = ( (ty * TILE_MAP_WIDTH) + tx) * 2;
-    uint8_t *tp = tilemap_base_p + tpos;    
+    tpos = ( (ty * TILE_MAP_WIDTH) + tx) * 2;
+    tp = tilemap_base_p + tpos;    
 
     *tp = *fp; 
     *(tp+1) = *(fp+1);

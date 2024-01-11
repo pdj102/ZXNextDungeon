@@ -28,7 +28,7 @@
  * functions
  ***************************************************/
 
-void tile_defns_init()
+void tile_defns_init( void )
 {
     /*
      * Set the ZXnext register for the base memory address of the tile definitions

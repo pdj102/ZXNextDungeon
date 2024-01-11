@@ -21,7 +21,7 @@
  * private function prototypes
  ***************************************************/
 
-event_t* event_getfree();
+event_t* event_getfree( void );
 
 void event_free(event_t *event_p);
 

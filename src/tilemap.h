@@ -51,7 +51,7 @@ typedef struct tilemap_tile {
  * 
  * @return void
  */
-void tilemap_init();
+void tilemap_init( void );
 
 /**
  * Clear the whole tilemap to tile

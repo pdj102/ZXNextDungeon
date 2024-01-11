@@ -77,6 +77,6 @@
  * function prototypes
  ***************************************************/
 
-void memory_init();
+void memory_init( void );
 
 #endif

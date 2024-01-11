@@ -37,6 +37,6 @@ void player_init(creature_t *creature_p);
  * 
  * @return void
  */
-void player_turn();
+void player_turn( void );
 
 #endif

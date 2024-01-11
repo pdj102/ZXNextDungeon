@@ -35,7 +35,7 @@ extern uint8_t tile_palette[];
  ***************************************************/
 
 
-void palette_init()
+void palette_init( void )
 {
     // 0x43 Palette Control
     // 7    0 = enable auto-increment

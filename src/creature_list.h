@@ -31,7 +31,7 @@
  * 
  * @return void
  */
-void creature_list_init();
+void creature_list_init( void );
 
 /**
  * Add a creature to the list
@@ -56,7 +56,7 @@ uint8_t creature_list_remove(creature_t* creature_p);
  * 
  * @return *creature_t    pointer to first creature or 0 if no creatures
  */
-creature_t *creature_list_first();
+creature_t *creature_list_first( void );
 
 /**
  * Returns the next creature in the creature  list
@@ -69,6 +69,6 @@ creature_t *creature_list_next(creature_t *obj_ptr);
  * All creatures take a turn
  * 
  */
-void creature_list_update_all();
+void creature_list_update_all( void );
 
 #endif

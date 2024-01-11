@@ -27,7 +27,7 @@
  * 
  * @return void
  */
-void palette_init();
+void palette_init( void );
 
 
 #endif

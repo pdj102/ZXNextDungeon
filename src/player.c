@@ -37,11 +37,11 @@
  * private function prototypes
  ***************************************************/
 
-void open();
-void close();
-void pickup();
-void drop();
-void attack();
+void open( void );
+void close( void );
+void pickup( void );
+void drop( void );
+void attack( void );
 void move(int8_t dx, int8_t dy);
 
 /***************************************************
@@ -58,7 +58,7 @@ void player_init(creature_t *creature_p)
     player_creature_p = creature_p;
 }
 
-void player_turn()
+void player_turn( void )
 {
     unsigned int key;
 
@@ -159,7 +159,7 @@ uint8_t get_dir_or_cancel(int8_t *dx, int8_t *dy)
     }
 }
 
-void attack()
+void attack( void )
 {
     int8_t dx, dy;
     uint8_t x, y;
@@ -178,15 +178,7 @@ void attack()
 
     if ( obj_p = object_strike_find_first_at(x, y) )
     {
-        text_printf("DEBUG:\n");
-        text_printf("NAME %t \n", obj_p->name_token);
-        text_printf("NAME %t \n", obj_p->creature_p->obj_p->name_token);        
-        text_printf("SUBTYPE %u \n", obj_p->subtype);
-        text_printf("TOKEN %u \n", obj_p->name_token);
-        text_printf("AC %u \n", obj_p->creature_p->ac);
-
         target_p = obj_p->creature_p;
-
         creature_melee_strike(player_creature_p, target_p);
         return;
     }
@@ -203,7 +195,7 @@ void move(int8_t dx, int8_t dy)
 
 // TODO tokenise strings to save memory 
 
-void open()
+void open( void )
 {
     int8_t dx, dy;
     uint8_t x, y;
@@ -230,7 +222,7 @@ void open()
     text_printf("NOTHING TO OPEN HERE\n");
 }
 
-void close()
+void close( void )
 {
     int8_t dx, dy;
     uint8_t x, y;
@@ -256,7 +248,7 @@ void close()
     text_printf("NOTHING TO CLOSE HERE\n");
 }
 
-void pickup()
+void pickup( void )
 {
     object_t *obj_ptr;
 
@@ -270,7 +262,7 @@ void pickup()
 }
 
 // TODO implement drop from inventory 
-void drop()
+void drop( void )
 {
     object_t *obj_p;
 

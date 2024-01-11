@@ -82,14 +82,14 @@ typedef struct creature_s
  * 
  * @return void
  */
-void creature_init();
+void creature_init( void );
 
 /**
  * Find a free creature slot
  * 
  * @return   creature_t* pointer to a free creature slot or 0 if no free slot
  */
-creature_t* creature_getfree();
+creature_t* creature_getfree( void );
 
 /**
  * Create a creature

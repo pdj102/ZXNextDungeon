@@ -14,7 +14,7 @@
  * 
  * @return void
  */
-void tile_defns_init();
+void tile_defns_init( void );
 
 
 #endif

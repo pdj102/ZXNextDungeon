@@ -30,7 +30,7 @@
  * functions
  ***************************************************/
 
-void event_list_init()
+void event_list_init( void )
 {
     p_forward_list_init(&globaldata.event_list);
 }
@@ -46,7 +46,7 @@ uint8_t event_list_remove(event_t *event_p)
     return 1;
 }
 
-event_t *event_list_first()
+event_t *event_list_first( void )
 {
     return p_forward_list_front(&globaldata.event_list);
 }
@@ -56,7 +56,7 @@ event_t *event_list_next(event_t *event_p)
     return p_forward_list_next(event_p);
 }
 
-void event_list_update_all()
+void event_list_update_all( void )
 {
     event_t *event_p;
 
