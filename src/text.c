@@ -77,10 +77,11 @@ void text_putc(char c)
     }
 }
 
-void text_printf(const char text[], ...)
+void text_printf(const char *text, ...)
 {
     va_list ptr;
-     va_start(ptr, text);
+    // va_start(ptr, text);
+    ptr= (getarg()*2)+&text-4;
 
     uint8_t l = strlen(text);
 

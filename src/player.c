@@ -62,8 +62,10 @@ void player_turn()
 {
     unsigned int key;
 
-    while ((key = in_Inkey()) == 0) ;   // loop while no key pressed
-    in_WaitForNoKey();    // wait no key
+    // while ((key = in_Inkey()) == 0) ;   // loop while no key pressed
+    // in_WaitForNoKey();    // wait no key
+    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
+    in_wait_nokey();    // wait no key    
 
     switch(toupper(key)) {
         
@@ -124,9 +126,10 @@ uint8_t get_dir_or_cancel(int8_t *dx, int8_t *dy)
 {
     unsigned int key;
 
-    while ((key = in_Inkey()) == 0)
-        ;            // loop while no key pressed
-    in_WaitForNoKey(); // wait no key
+    // while ((key = in_Inkey()) == 0) ;   // loop while no key pressed
+    // in_WaitForNoKey();    // wait no key
+    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
+    in_wait_nokey();    // wait no key   
 
     switch (toupper(key))
     {

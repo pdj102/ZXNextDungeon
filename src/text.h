@@ -66,12 +66,12 @@ void text_putc(char c);
  * %u   uint8_t
  * %d   int8_t
  * 
- * @param text[] text to print
- * @param ... parameters   
+ * @param *text text to print
+ * @param ...   parameters   
  * 
  * @return void
  */
-void text_printf(const char text[], ...);
+void text_printf(const char *text, ...);
 
 /**
  * @brief Print text string to tilemap at cursor position

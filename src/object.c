@@ -31,7 +31,7 @@ void object_free(object_t *obj_tofree);
  ***************************************************/
 
 // helper pointer to the global object data array
-static object_t *const objects = &globaldata.objects;
+// static object_t *objects = &globaldata.objects[];
 
 /***************************************************
  * functions
@@ -41,7 +41,7 @@ void object_init()
 {
     for (uint8_t i = 0; i < MAX_OBJECT; i++)
     {
-        objects[i].free = 1;
+        globaldata.objects[i].free = 1;
     }
 }
 
@@ -49,9 +49,9 @@ object_t* object_getfree()
 {
     for (uint8_t i = 0; i < MAX_OBJECT; i++)
     {
-        if (objects[i].free)
+        if (globaldata.objects[i].free)
         {
-            return &objects[i];
+            return &globaldata.objects[i];
         }
     }
     // no free object slot

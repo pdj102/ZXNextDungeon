@@ -48,7 +48,8 @@
 			"text_token.h": "c",
 			"ctype.h": "c",
 			"stdint-gcc.h": "c",
-			"input_basic.h": "c"
+			"input_basic.h": "c",
+			"stdarg.h": "c"
 		}
 	}
 }
