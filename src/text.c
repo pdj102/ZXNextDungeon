@@ -11,6 +11,7 @@
 #include <stdlib.h>     /* itoa() */
 #include <stdint.h>
 #include <stdio.h>
+
 #include <stdarg.h>     /* variadic functions */
 
 #include "globaldata.h"
@@ -132,24 +133,25 @@ void text_scroll_up( void )
     uint8_t x = 0;
     uint8_t y = 0;
 
+    uint8_t x2 = text_win->x + text_win->w;
+    uint8_t y2 = text_win->y + text_win->h;
+
     blank.tile_attr = 0;
     blank.tile_id = 32;
 
     tilemap_tile_t *p = &blank;
 
-    for (y = text_win->y + 1; y < text_win->y + text_win->h; y++)
+    for (y = text_win->y + 1; y < y2 ; y++)
     {
         
-        for (x = text_win->x; x < text_win->x + text_win->w ; x++)
+        for (x = text_win->x; x < x2 ; x++)
         {
-            // text_print_string_at(x, y, "*");
             tilemap_copy_tile(x, y, x, y - 1);
         }
-
     }
     
     y = text_win->y + text_win->h - 1;
-    for (x = text_win->x; x < text_win->x + text_win->w; x++)
+    for (x = text_win->x; x < x2 ; x++)
     {
         tilemap_set_tile(x, y, p );
     }
