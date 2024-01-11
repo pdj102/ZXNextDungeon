@@ -50,7 +50,7 @@ void text_init();
  * 
  * Increments cursor position. 
  * 
- * If the end of the line is reached move to next line. 
+ * If the end of the line is reached move to next line 
  * If bottom of window is reached scroll the text up
  * 
  * @param c     Char to print
@@ -59,7 +59,24 @@ void text_init();
 void text_putc(char c);
 
 /**
- * @brief Print text string on tilemap at cursor position
+ * @brief Print a formatted string on tilemap at cursor position
+ * 
+ * Format tags
+ * %t   token string ID (uint_8t)
+ * %u   uint8_t
+ * %d   int8_t
+ * 
+ * @param text[] text to print
+ * @param ... parameters   
+ * 
+ * @return void
+ */
+void text_printf(const char text[], ...);
+
+/**
+ * @brief Print text string to tilemap at cursor position
+ * 
+ * Uses text_putc() so will wrap with window 
  * 
  * @param text[] text to print
  * @return void
@@ -80,7 +97,7 @@ void text_print_string_at(uint8_t x, uint8_t y, const char text[]);
 
 
 /**
- * @brief Print uint8 on tilemap.
+ * @brief Print uint8 to tilemap at cursor position
  * 
  * @param i  unit8 to print
  * @return void
@@ -89,7 +106,7 @@ void text_print_uint8(uint8_t i);
 
 
 /**
- * @brief Print int8 on tilemap.
+ * @brief Print int8 to tilemap at cursor position
  * 
  * @param i  int8 to print
  * @return void
@@ -97,7 +114,7 @@ void text_print_uint8(uint8_t i);
 void text_print_int8(int8_t i);
 
 /**
- * @brief Print uint16 on tilemap.
+ * @brief Print uint16 to tilemap at cursor position
  * 
  * @param i  unit16 to print
  * @return void
@@ -106,7 +123,7 @@ void text_print_uint16(uint16_t i);
 
 
 /**
- * @brief Print int16 on tilemap.
+ * @brief Print int16 to tilemap at cursor position
  * 
  * @param i  int16 to print
  * @return void

@@ -8,6 +8,7 @@ PUBLIC _text_token_data
 ._text_token_data
 
 ;       1234567890123456789012345
+ds 25, "ZERO TOKEN"
 ds 25, "DOOR"
 ds 25, "CHEST"
 ds 25, "TRAP"

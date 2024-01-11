@@ -6,8 +6,9 @@
 
 **************************************************/
 
-#include <inttypes.h>
+
 #include <adt/p_forward_list.h>
+#include <stdint.h>
 
 #include "creature.h"
 

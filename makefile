@@ -10,10 +10,14 @@ PRAGMA_FILE=zpragma.inc
 
 # compiler optimisation parameters 
 # 
-C_OPT_FLAGS=-SO3 --max-allocs-per-node200000
+# C_OPT_FLAGS=-SO3 --max-allocs-per-node200000
 
-CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -compiler sdcc -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
-LDFLAGS=$(TARGET) $(VERBOSITY) -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
+# CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -compiler sdcc -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
+# LDFLAGS=$(TARGET) $(VERBOSITY) -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
+# ASFLAGS=$(TARGET) $(VERBOSITY) -c
+
+CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -clib=classic -lndos -pragma-include:$(PRAGMA_FILE)
+LDFLAGS=$(TARGET) $(VERBOSITY) -clib=classic -lndos -pragma-include:$(PRAGMA_FILE)
 ASFLAGS=$(TARGET) $(VERBOSITY) -c
 
 # place .c and .asm source files in ./src

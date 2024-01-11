@@ -123,6 +123,7 @@ void init_game()
     snake_obj_p->creature_p = snake_creature_p;
     object_dungeon_list_add(snake_obj_p);
     creature_list_add(snake_creature_p);
+    // snake_obj_p->name_token = 12;
 
     object_t *healing_obj_p = object_create(POTION_HEALING, 2, 5);
     object_dungeon_list_add(healing_obj_p);
@@ -163,9 +164,8 @@ int main()
  
     dungeonmap_generate();
 
-    text_print_string("WELCOME TO DUNGEON!\n");
-    //text_print_string(&object_base_data[0]);
-    text_print_string("TEST TOKEN %\1 \n");
+    text_printf("WELCOME TO DUNGEON!\n");
+    text_printf("TEST TOKEN %t UINT8 %u INT8 %d \n", (uint8_t)1, (uint8_t)255, (int8_t)-128);
 
     text_print_string("GLOBAL DATA SIZE:");
     uint16_t s;

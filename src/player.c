@@ -37,7 +37,8 @@
  * private function prototypes
  ***************************************************/
 
-void open_or_close();
+void open();
+void close();
 void pickup();
 void drop();
 void attack();
@@ -81,9 +82,13 @@ void player_turn()
             move (1, 0);
             break;
 
-        case 'O':  // open or close
-            open_or_close();
+        case 'O':  // open
+            open();
             break;
+
+        case 'C':  // close
+            close();
+            break;            
 
         case 'P':  // pickup
             pickup();
@@ -170,7 +175,15 @@ void attack()
 
     if ( obj_p = object_strike_find_first_at(x, y) )
     {
+        text_printf("DEBUG:\n");
+        text_printf("NAME %t \n", obj_p->name_token);
+        text_printf("NAME %t \n", obj_p->creature_p->obj_p->name_token);        
+        text_printf("SUBTYPE %u \n", obj_p->subtype);
+        text_printf("TOKEN %u \n", obj_p->name_token);
+        text_printf("AC %u \n", obj_p->creature_p->ac);
+
         target_p = obj_p->creature_p;
+
         creature_melee_strike(player_creature_p, target_p);
         return;
     }
@@ -185,7 +198,9 @@ void move(int8_t dx, int8_t dy)
     }
 }
 
-void open_or_close()
+// TODO tokenise strings to save memory 
+
+void open()
 {
     int8_t dx, dy;
     uint8_t x, y;
@@ -202,15 +217,40 @@ void open_or_close()
 
     if ( obj_ptr = object_open_findat(x, y) )
     {
-        object_open(obj_ptr);
+        if ( object_open(obj_ptr) )
+        {
+            text_printf("YOU OPEN THE %t\n", (uint8_t) obj_ptr->name_token);
+
+            return;
+        }
+    }
+    text_printf("NOTHING TO OPEN HERE\n");
+}
+
+void close()
+{
+    int8_t dx, dy;
+    uint8_t x, y;
+
+    object_t *obj_ptr;
+
+    if (! (get_dir_or_cancel(&dx, &dy)) )
+    {
         return;
     }
-    
+
+    x = player_creature_p->obj_p->x + dx;
+    y = player_creature_p->obj_p->y + dy;
+
     if ( obj_ptr = object_close_findat(x, y) )
     {
-        object_close(obj_ptr);
-        return;
+        if ( object_close(obj_ptr) )
+        {
+            text_printf("YOU CLOSE THE %t\n", (uint8_t) obj_ptr->name_token);
+            return;
+        }
     }
+    text_printf("NOTHING TO CLOSE HERE\n");
 }
 
 void pickup()
@@ -220,22 +260,22 @@ void pickup()
     if ( obj_ptr = object_pickup_find_first_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y) )
     {
         object_pickup(obj_ptr, player_creature_p->obj_p);
-        text_print_string("YOU PICK UP ");
-        text_token_print(obj_ptr->name_token);
-        text_print_string("\n");
+        text_printf("YOU PICK UP THE %t\n", (uint8_t) obj_ptr->name_token);
+        return;
     }
-    else
-    {
-        text_print_string("NOTHING TO PICK UP HERE\n");
-    }
+    text_print_string("NOTHING TO PICK UP HERE\n");
 }
 
+// TODO implement drop from inventory 
 void drop()
 {
-    object_t *obj_todrop_ptr;
+    object_t *obj_p;
 
-    if ( obj_todrop_ptr = object_drop_find_first(player_creature_p->obj_p) )
+    if ( obj_p = object_drop_find_first(player_creature_p->obj_p) )
     {
-        object_drop(obj_todrop_ptr, player_creature_p->obj_p);
-    }  
+        object_drop(obj_p, player_creature_p->obj_p);
+        text_printf("YOU DROP THE %t\n", (uint8_t) obj_p->name_token);   
+        return;     
+    }
+    text_printf("NOTHING TO DROP\n");
 }

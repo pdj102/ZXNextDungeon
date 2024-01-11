@@ -10,6 +10,7 @@
 #include <string.h>     /* strlen() */
 #include <stdlib.h>     /* itoa() */
 #include <inttypes.h>
+#include <stdarg.h>     /* variadic functions */
 
 #include "globaldata.h"
 #include "tilemap.h"
@@ -41,7 +42,7 @@ void text_init()
     text_win->x = 0;
     text_win->y = 24;
     text_win->w = 40;
-    text_win->h = 4;
+    text_win->h = 8;
     text_win->c_x = text_win->x;
     text_win->c_y = text_win->y;
     text_win->tile.tile_attr = PALETTE_0;
@@ -76,13 +77,15 @@ void text_putc(char c)
     }
 }
 
-void text_print_string(const char text[])
+void text_printf(const char text[], ...)
 {
+    va_list ptr;
+     va_start(ptr, text);
+
     uint8_t l = strlen(text);
 
     for (uint8_t i = 0; i < l; i++)
     {
-        // TODO handle %
         if (text[i] != '%')
         {
             text_putc(text[i]);
@@ -91,22 +94,34 @@ void text_print_string(const char text[])
 
         i++;
 
-        text_token_print((uint8_t)text[i]);
-
-        /*
-        text_putc('*');
-        switch (text[i])
+        switch(text[i])
         {
-        case 0:
-            text_putc('A');
+            case 't':   // token string
+            text_token_print( (uint8_t) va_arg(ptr, uint8_t) );
             break;
-        case 1:
-            text_putc('B');
+
+            case 'u':   // uint8_t
+            text_print_uint8( (uint8_t) va_arg(ptr, uint8_t) );
             break;
-        default:
-            text_putc('C');
+
+            case 'd':   // int8_t
+            text_print_int8( (int8_t) va_arg(ptr, int8_t) );
+            break;
+
+            default:
+            text_putc('*');
         }
-        */
+    }
+    va_end(ptr);
+}
+
+void text_print_string(const char text[])
+{
+    uint8_t l = strlen(text);
+
+    for (uint8_t i = 0; i < l; i++)
+    {
+            text_putc(text[i]);
     }
 }
 
