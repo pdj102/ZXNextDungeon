@@ -9,7 +9,7 @@
 #ifndef CREATURE_LIST_H 
     #define CREATURE_LIST_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "creature.h"
 

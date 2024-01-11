@@ -5,7 +5,7 @@
     @brief Game object action - pickup
 
 **************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object_pickup.h"
 

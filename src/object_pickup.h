@@ -9,7 +9,7 @@
 #ifndef OBJECT_PICKUP_H 
     #define OBJECT_PICKUP_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

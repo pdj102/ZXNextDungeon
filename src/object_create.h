@@ -9,7 +9,7 @@
 #ifndef OBJECT_CREATE_H 
     #define OBJECT_CREATE__H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

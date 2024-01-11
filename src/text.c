@@ -9,7 +9,7 @@
 
 #include <string.h>     /* strlen() */
 #include <stdlib.h>     /* itoa() */
-#include <inttypes.h>
+#include <stdint.h>
 #include <stdarg.h>     /* variadic functions */
 
 #include "globaldata.h"

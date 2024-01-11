@@ -7,7 +7,7 @@
  ***************************************************/
 #include "dungeonmap.h"
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "globaldata.h"
 #include "tilemap.h"

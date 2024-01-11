@@ -5,7 +5,7 @@
     @brief Game object action - close
 
 **************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object_close.h"
 

@@ -9,7 +9,7 @@
 #ifndef OBJECT_DUNGEON_LIST_H 
     #define OBJECT_DUNGEON_LIST_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

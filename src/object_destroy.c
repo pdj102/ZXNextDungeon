@@ -5,7 +5,7 @@
     @brief Game object action - destroy
 
 **************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object_destroy.h"
 

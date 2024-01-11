@@ -30,7 +30,7 @@
  * @brief Pointer to the base of the ZXnext tilemap 
  * 
  */
-static uint8_t volatile * const tilemap_base_p = (uint8_t *) TILEMAP_BASE;
+static uint8_t *tilemap_base_p = (uint8_t *) TILEMAP_BASE;
 
 
 

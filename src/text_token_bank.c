@@ -9,7 +9,7 @@
  ***************************************************/
 #include "text_token_bank.h"
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <string.h>     /* strlen() */       
 
 #include "text.h"

@@ -7,7 +7,7 @@
  ***************************************************/
 #include "dice.h"
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 

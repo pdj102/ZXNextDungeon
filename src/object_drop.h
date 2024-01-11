@@ -9,7 +9,7 @@
 #ifndef OBJECT_DROP_H 
     #define OBJECT_DROP_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

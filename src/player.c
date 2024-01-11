@@ -7,8 +7,8 @@
  ***************************************************/
 #include "player.h"
 
-#include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions
-#include <inttypes.h>
+
+#include <stdint.h>
 #include <input.h>              // Functions for Reading Keyboards, Joysticks and Mice
 #include <ctype.h>              // character classification e.g. toupper() 
 
@@ -60,10 +60,10 @@ void player_init(creature_t *creature_p)
 
 void player_turn()
 {
-    unsigned char key;
+    unsigned int key;
 
-    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
-    in_wait_nokey();    // wait no key
+    while ((key = in_Inkey()) == 0) ;   // loop while no key pressed
+    in_WaitForNoKey();    // wait no key
 
     switch(toupper(key)) {
         
@@ -122,11 +122,11 @@ void player_turn()
 
 uint8_t get_dir_or_cancel(int8_t *dx, int8_t *dy)
 {
-    unsigned char key;
+    unsigned int key;
 
-    while ((key = in_inkey()) == 0)
+    while ((key = in_Inkey()) == 0)
         ;            // loop while no key pressed
-    in_wait_nokey(); // wait no key
+    in_WaitForNoKey(); // wait no key
 
     switch (toupper(key))
     {

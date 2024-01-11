@@ -9,7 +9,7 @@
 #ifndef TEXT_H 
     #define TEXT_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "tilemap.h"
 

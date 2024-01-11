@@ -6,7 +6,7 @@
 
 **************************************************/
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <adt/p_forward_list.h>
 
 #include "event.h"

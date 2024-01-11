@@ -9,7 +9,7 @@
 #ifndef OBJECT_STRIKE_H 
     #define OBJECT_STRIKE_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

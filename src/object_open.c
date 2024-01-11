@@ -5,7 +5,7 @@
     @brief Game object action - open
 
 **************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object_open.h"
 

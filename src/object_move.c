@@ -5,7 +5,7 @@
     @brief Game object action - move
 
 **************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object_move.h"
 

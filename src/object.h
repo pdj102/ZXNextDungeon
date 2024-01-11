@@ -9,7 +9,7 @@
 #ifndef OBJECT_H 
     #define OBJECT_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <adt/p_forward_list.h>
 
 #include "tilemap.h"

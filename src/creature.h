@@ -9,7 +9,7 @@
 #ifndef CREATURE_H 
     #define CREATURE_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 #include "dice.h"

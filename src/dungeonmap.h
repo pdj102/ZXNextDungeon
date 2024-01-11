@@ -9,7 +9,7 @@
 #ifndef DUNGEONMAP_H 
     #define DUNGEONMAP_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "tilemap.h"
 

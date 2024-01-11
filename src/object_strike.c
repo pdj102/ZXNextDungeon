@@ -5,7 +5,7 @@
     @brief Game object action - strike
 
 **************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object_strike.h"
 

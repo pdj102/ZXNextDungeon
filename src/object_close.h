@@ -9,7 +9,7 @@
 #ifndef OBJECT_CLOSE_H 
     #define OBJECT_CLOSE_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

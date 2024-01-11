@@ -11,7 +11,7 @@
 #ifndef CREATURE_MELEE_STRIKE_H 
     #define CREATURE_MELEE_STRIKE_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "creature.h"
 

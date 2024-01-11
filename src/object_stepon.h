@@ -9,7 +9,7 @@
 #ifndef OBJECT_STEPON_H 
     #define OBJECT_STEPON_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

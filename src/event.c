@@ -7,7 +7,7 @@
  ***************************************************/
 #include "event.h"
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "globaldata.h"
 

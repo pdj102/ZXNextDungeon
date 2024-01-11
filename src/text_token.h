@@ -9,7 +9,7 @@
 #ifndef TEXT_TOKEN_H 
     #define TEXT_TOKEN_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 /***************************************************
  * types

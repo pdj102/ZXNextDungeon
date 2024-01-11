@@ -9,7 +9,7 @@
 #ifndef OBJECT_OPEN_H 
     #define OBJECT_OPEN_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

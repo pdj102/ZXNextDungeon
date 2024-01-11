@@ -6,7 +6,7 @@
 
 **************************************************/
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions   
 
 #include "object_create.h"

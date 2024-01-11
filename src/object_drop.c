@@ -5,7 +5,7 @@
     @brief Game object action - drop
 
 **************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object_drop.h"
 

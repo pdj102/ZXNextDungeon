@@ -9,7 +9,7 @@
 #ifndef OBJECT_MOVE_H 
     #define OBJECT_MOVE_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

@@ -6,7 +6,7 @@
 
 **************************************************/
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <adt/p_forward_list.h>
 
 #include "object.h"
@@ -31,7 +31,7 @@ void object_free(object_t *obj_tofree);
  ***************************************************/
 
 // helper pointer to the global object data array
-static object_t *const objects = &globaldata.objects[0];
+static object_t *const objects = &globaldata.objects;
 
 /***************************************************
  * functions

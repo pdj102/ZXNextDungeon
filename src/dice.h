@@ -9,7 +9,7 @@
 #ifndef DICE_H 
     #define DICE_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 /***************************************************
  * public types

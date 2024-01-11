@@ -9,7 +9,7 @@
 #ifndef OBJECT_LIST_H 
     #define OBJECT_LIST_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

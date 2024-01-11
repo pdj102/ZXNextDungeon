@@ -9,7 +9,7 @@
 #ifndef EVENT_LIST_H 
     #define EVENT_LIST_H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "event.h"
 

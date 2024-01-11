@@ -11,7 +11,7 @@
 #ifndef OBJECT_CREATE_BANK_H 
     #define OBJECT_CREATE_BANK__H 
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object.h"
 

@@ -5,7 +5,7 @@
     @brief Game object action - step on
 
 **************************************************/
-#include <inttypes.h>
+#include <stdint.h>
 
 #include "object_stepon.h"
 

@@ -8,7 +8,7 @@
 
 #include "text_token.h"
 
-#include <inttypes.h>
+#include <stdint.h>
 #include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions   
 
 #include "text_token_bank.h"
