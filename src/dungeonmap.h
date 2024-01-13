@@ -28,7 +28,7 @@
 typedef enum dungeonmap_tile_type {FLOOR, BRICKWALL, SOLIDWALL} dungeonmap_tile_type_e;
 
 // Dungeon map tile 
-typedef struct
+typedef struct dungeonmap_tile_s
 {
     tilemap_tile_t          tilemap_tile;
     dungeonmap_tile_type_e  tile;
@@ -38,7 +38,7 @@ typedef struct
 // Dungeon map data structure
 typedef struct 
 {
-    dungeonmap_tile_t map[DUNGEONMAP_WIDTH][DUNGEONMAP_HEIGHT];
+    struct dungeonmap_tile_s map[DUNGEONMAP_WIDTH][DUNGEONMAP_HEIGHT];
 
     // position of scrollable viewpoint within dungeon map  
     uint8_t window_y;

@@ -68,7 +68,7 @@ void event_init( void );
  * 
  * @return pointer to created event or NULL on failed to create
  */
-event_t *event_create_object_cb(event_callback cb, object_t *obj_p, uint8_t turns);
+event_t *event_create_object_cb(event_callback cb, const object_t *obj_p, uint8_t turns);
 
 /**
  * Update event timer and if triggered call callback function and delete event.  

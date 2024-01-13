@@ -29,7 +29,7 @@
  * functions
  ***************************************************/
 
-uint8_t object_close_is(object_t *obj)
+uint8_t object_close_is(const object_t *obj)
 {
     switch (obj->subtype)
     {
@@ -67,3 +67,4 @@ object_t *object_close_findat(uint8_t x, uint8_t y)
     }
     return 0;
 }
+

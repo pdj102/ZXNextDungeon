@@ -92,18 +92,6 @@ void creature_init( void );
 creature_t* creature_getfree( void );
 
 /**
- * Create a creature
- * 
- * Creates a creature record based on the provided object. 
- * NB the object specifies the creature type to create
- *
- * @param obj_p* pointer to object
- *
- * @return pointer to created creature or NULL on failed to create
- */
-creature_t* creature_create(object_t *obj_p);
-
-/**
  * Delete a creature 
  * 
  * NB creature's object needs to be deleted separately 

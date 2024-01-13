@@ -104,4 +104,32 @@ object_t *object_dungeon_list_first_at(uint8_t x, uint8_t y);
  */
 object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y);
 
+/**
+ * Returns the first object in dungeon object list of a requested type at position x, y
+ * 
+ * the function calls the supplied function to determine if an object at x,y is of the requested type 
+ * e.g. passing the function uint_8t isopen(const object_t *obj_p) will return the first object that can be opened
+ * 
+ * @param x dungeon x position
+ * @param y dungeon y position
+ * @param uint8_t (*isfunc_p)(struct object_s *) pointer to function that tests if object is of requested type
+ * 
+ * @return *object_t    pointer to first object or 0 if no objects
+ */
+object_t *object_find_first_is_at(uint8_t x, uint8_t y, uint8_t (*isfunc_p)(struct object_s *));
+
+/**
+ * Returns the next object in dungeon object list of a requested type at position x, y
+ * 
+ * @param *obj_p    previous object at x, y
+ * @param x         dungeon x position
+ * @param y         dungeon y position
+ * @param uint8_t (*isfunc_p)(struct object_s *) pointer to function that tests if object is of requested type
+ * 
+ * @return *object_t    pointer to first object or 0 if no objects
+ */
+object_t *object_pickup_find_next_is_at(object_t *obj_p, uint8_t x, uint8_t y, uint8_t (*isfunc_p)(struct object_s *));
+
+
+
 #endif

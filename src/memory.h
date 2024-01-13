@@ -33,6 +33,7 @@
     --------|-----------------------------------------------------
     18      |   Dungeon map generator
     20      |   Object create
+    22      |   Creature create
 
     MMU 7 - List of banked pages:
 

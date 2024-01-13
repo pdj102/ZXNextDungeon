@@ -109,5 +109,30 @@ object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y)
         }
     }
     return 0;
+}
 
+object_t *object_find_first_is_at(uint8_t x, uint8_t y, uint8_t (*isfunc_p)(struct object_s *))
+{
+    object_t *obj_p;
+
+    for (obj_p = object_dungeon_list_first_at(x, y); obj_p; obj_p = object_dungeon_list_next_at(obj_p, x, y))    
+    {
+        if (isfunc_p(obj_p))
+        {
+            return obj_p;
+        }
+    }
+    return 0;
+}
+
+object_t *object_pickup_find_next_is_at(object_t *obj_p, uint8_t x, uint8_t y, uint8_t (*isfunc_p)(struct object_s *))
+{
+    for (; obj_p; obj_p = object_dungeon_list_next_at(obj_p, x, y))
+    {
+        if (isfunc_p(obj_p))
+        {
+            return obj_p;
+        }
+    }
+    return 0;
 }

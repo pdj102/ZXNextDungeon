@@ -33,7 +33,7 @@
  * 
  * @return uint8_t  1 if closeable or 0 if not
  */
-uint8_t object_close_is(object_t *obj);
+uint8_t object_close_is(const object_t *obj);
 
 /**
  * Close object if closeable

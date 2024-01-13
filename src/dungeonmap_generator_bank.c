@@ -14,6 +14,7 @@
 #include "dungeonmap_generator_bank.h"
 
 #include "dungeonmap.h"
+#include "globaldata.h"
         
 
 #pragma output CRT_ORG_CODE = 0xC000
@@ -30,6 +31,8 @@ static void fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint
 
 static void create_room_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h);
 
+static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type);
+
 
 /***************************************************
  * Private variables - static
@@ -43,34 +46,65 @@ static void create_room_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_
 
 static void fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, dungeonmap_tile_type_e tile)
 {
+    uint8_t x2 = dungeon_w + dungeon_x;
+    uint8_t y2 = dungeon_h + dungeon_y;
+
     // TODO check bounds
-    for (uint8_t y = dungeon_y; y < dungeon_h+dungeon_y; y++ ) {
-        for (uint8_t x = dungeon_x; x < dungeon_w+dungeon_x; x++)
-            dungeonmap_set_tile(x, y, tile);
+    for (uint8_t y = dungeon_y; y < y2; y++ ) {
+        for (uint8_t x = dungeon_x; x < x2; x++)
+            dungeonmap_set_tile_b(x, y, tile);
     }
 }
-
 
 static void create_room_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h)
 {
     fill_b(dungeon_x, dungeon_y, dungeon_w, dungeon_h, FLOOR);
-
 }
 
-// Assume dungeon map size is 40 * 40 tiles
-// C
-void dungeonmap_generate_b()
+static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type)
 {
-    
+    dungeonmap_tile_t *const m = &(globaldata.dungeonmap.map[dungeon_x][dungeon_y]);
+
+    m->tile = tile_type;
+
+    switch (tile_type)
+    {
+    case FLOOR:
+        m->tilemap_tile.tile_attr = 0;
+        m->tilemap_tile.tile_id = 2;
+        m->flags &= ~(FLAG_BLOCKIKNG);
+        break;
+    case BRICKWALL:
+        m->tilemap_tile.tile_attr = 0;
+        m->tilemap_tile.tile_id = 4;
+        m->flags |= FLAG_BLOCKIKNG;
+        break;
+    case SOLIDWALL:
+        m->tilemap_tile.tile_attr = 0;
+        m->tilemap_tile.tile_id = 6;
+        m->flags |= FLAG_BLOCKIKNG;
+        break;
+    default:
+        m->tilemap_tile.tile_attr = 0;
+        m->tilemap_tile.tile_id = 0;
+        m->flags |= FLAG_BLOCKIKNG;
+        break;
+    }
+}
+
+
+void dungeonmap_generate_b( void )
+{
     uint8_t x, y;
 
     // clear the dungeon map to all ceiling
     fill_b(0, 0, DUNGEONMAP_WIDTH, DUNGEONMAP_HEIGHT, BRICKWALL);
 
+    // Assuming dungeon map size is 40 * 40 tiles
     // Create a 5 x 5 grid of rooms of size 8 x 8 tiles
-    for (x = 0; x < 40; x+=8)
+    for (x = 0; x < DUNGEONMAP_WIDTH; x+=8)
     {
-        for (y = 0; y < 40; y+=8)
+        for (y = 0; y < DUNGEONMAP_HEIGHT; y+=8)
         {
             create_room_b(x+1, y+1, 6, 6);
         }
@@ -91,3 +125,4 @@ void dungeonmap_generate_b()
     create_room_b(32+4, 2, 1, 36);
 
 }
+

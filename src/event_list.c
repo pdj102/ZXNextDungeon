@@ -65,6 +65,7 @@ void event_list_update_all( void )
         if (event_update(event_p))
         {
             // event fired. Remove from list
+            // NB *next pointer needs to left valid pointing to the next node
             event_list_remove(event_p);
         }
     }    

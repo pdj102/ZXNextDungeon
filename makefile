@@ -74,6 +74,12 @@ $(OBJDIR)/object_create_bank.o: $(SRCDIR)/object_create_bank.c $(SRCDIR)/object_
 $(OBJDIR)/text_token_bank.o: $(SRCDIR)/text_token_bank.c $(SRCDIR)/text_token_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_21 --constsegPAGE_21 -o $@ $<	
 
+# ####################################################################################################################################
+# PAGE_22
+# Target for create creature and data 
+# - create_creature_bank.o 
+$(OBJDIR)/create_creature_bank.o: $(SRCDIR)/create_creature_bank.c $(SRCDIR)/create_creature_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_21 --constsegPAGE_21 -o $@ $<	
 
 # ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 

@@ -28,14 +28,13 @@ void event_free(event_t *event_p);
 /***************************************************
  * private variables - static
  ***************************************************/
-// helper pointer to the global event 
-// static event_t *const events = &globaldata.events[0];
+
 
 /***************************************************
  * functions definitions
  ***************************************************/
 
-void event_init()
+void event_init( void )
 {
     for (uint8_t i = 0; i < MAX_EVENT; i++)
     {
@@ -44,7 +43,6 @@ void event_init()
     }
 }
 
-// event_t *event_create(event_callback cb, uint8_t ticks)
 event_t *event_create_object_cb(event_callback cb, object_t *obj_p, uint8_t turns)
 {
     event_t *event_p;
@@ -71,7 +69,6 @@ uint8_t event_update(event_t *event_p)
 {
     if (event_p->turns == 0)
     {
-        text_print_string("EVENT FIRED\n");
         event_p->cb(event_p->obj_p);
         event_free(event_p);
 
@@ -91,7 +88,7 @@ uint8_t event_update(event_t *event_p)
 }
 
 
-event_t* event_getfree()
+event_t* event_getfree( void )
 {
     for (uint8_t i = 0; i < MAX_EVENT; i++)
     {
