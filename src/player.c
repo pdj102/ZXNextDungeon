@@ -25,6 +25,8 @@
 #include "object_drop.h"
 #include "object_strike.h"
 
+#include "object_dungeon_list.h"
+
 #include "creature.h"
 #include "creature_melee_strike.h"
 
@@ -176,7 +178,8 @@ void attack( void )
     x = player_creature_p->obj_p->x + dx;
     y = player_creature_p->obj_p->y + dy;
 
-    if ( obj_p = object_strike_find_first_at(x, y) )
+    if ( obj_p = object_find_first_is_at(x, y, object_strike_is))
+    //if ( obj_p = object_strike_find_first_at(x, y) )
     {
         target_p = obj_p->creature_p;
         creature_melee_strike(player_creature_p, target_p);
@@ -200,7 +203,7 @@ void open( void )
     int8_t dx, dy;
     uint8_t x, y;
 
-    object_t *obj_ptr;
+    object_t *obj_p;
 
     if (! (get_dir_or_cancel(&dx, &dy)) )
     {
@@ -210,11 +213,11 @@ void open( void )
     x = player_creature_p->obj_p->x + dx;
     y = player_creature_p->obj_p->y + dy;
 
-    if ( obj_ptr = object_open_findat(x, y) )
+    if ( obj_p = object_find_first_is_at(x, y, object_open_is))
     {
-        if ( object_open(obj_ptr) )
+        if ( object_open(obj_p) )
         {
-            text_printf("YOU OPEN THE %t\n", (uint8_t) obj_ptr->name_token);
+            text_printf("YOU OPEN THE %t\n", (uint8_t) obj_p->name_token);
 
             return;
         }
@@ -227,7 +230,7 @@ void close( void )
     int8_t dx, dy;
     uint8_t x, y;
 
-    object_t *obj_ptr;
+    object_t *obj_p;
 
     if (! (get_dir_or_cancel(&dx, &dy)) )
     {
@@ -237,11 +240,12 @@ void close( void )
     x = player_creature_p->obj_p->x + dx;
     y = player_creature_p->obj_p->y + dy;
 
-    if ( obj_ptr = object_close_findat(x, y) )
+    if ( obj_p = object_find_first_is_at(x, y, object_close_is))
+    // if ( obj_ptr = object_close_findat(x, y) )
     {
-        if ( object_close(obj_ptr) )
+        if ( object_close(obj_p) )
         {
-            text_printf("YOU CLOSE THE %t\n", (uint8_t) obj_ptr->name_token);
+            text_printf("YOU CLOSE THE %t\n", (uint8_t) obj_p->name_token);
             return;
         }
     }
@@ -250,12 +254,13 @@ void close( void )
 
 void pickup( void )
 {
-    object_t *obj_ptr;
+    object_t *obj_p;
 
-    if ( obj_ptr = object_pickup_find_first_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y) )
+    if ( obj_p = object_find_first_is_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y, object_pickup_is))
+    // if ( obj_ptr = object_pickup_find_first_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y) )
     {
-        object_pickup(obj_ptr, player_creature_p->obj_p);
-        text_printf("YOU PICK UP THE %t\n", (uint8_t) obj_ptr->name_token);
+        object_pickup(obj_p, player_creature_p->obj_p);
+        text_printf("YOU PICK UP THE %t\n", (uint8_t) obj_p->name_token);
         return;
     }
     text_print_string("NOTHING TO PICK UP HERE\n");

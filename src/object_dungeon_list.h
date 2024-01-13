@@ -108,7 +108,7 @@ object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y);
  * Returns the first object in dungeon object list of a requested type at position x, y
  * 
  * the function calls the supplied function to determine if an object at x,y is of the requested type 
- * e.g. passing the function uint_8t isopen(const object_t *obj_p) will return the first object that can be opened
+ * e.g. passing a pointer to the function 'uint_8t isopen(const object_t *obj_p)' will return the first object that can be opened
  * 
  * @param x dungeon x position
  * @param y dungeon y position
