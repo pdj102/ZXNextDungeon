@@ -2,16 +2,15 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game object action - strike
+    @brief Game creature action - destroy
 
 **************************************************/
 #include <stdint.h>
 
-#include "object_strike.h"
+#include "object_destroy.h"
 
-#include "object.h"
-#include "object_list.h"
-#include "object_dungeon_list.h"
+#include "creature.h"
+#include "creature_list.h"
 
 /***************************************************
  * private types
@@ -29,13 +28,16 @@
  * functions
  ***************************************************/
 
-uint8_t object_strike_is(object_t *obj_p)
+uint8_t creature_destroy_is(creature_t *creature_p)
 {
-    // All creatures can be striked 
-    if (obj_p->class == CREATURE)
-    {
-        return 1;
-    }
-    // Everything else cannot
-    return 0;
+    // Everything can be destroyed
+    return 1;
+}
+
+uint8_t creature_destroy(creature_t *creature_p)
+{
+    creature_list_remove(creature_p);
+    creature_delete(creature_p);
+
+    return 1;
 }

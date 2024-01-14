@@ -29,6 +29,7 @@
 
 #include "creature.h"
 #include "creature_list.h"
+#include "creature_create.h"
 
 #include "event.h"
 #include "event_list.h"
@@ -98,13 +99,12 @@ void init_game( void )
     creature_init();
     creature_list_init();
 
-    static object_t    *obj_ptr;
-    static creature_t  *creature1_p = 0;
-    static creature_t  *creature2_p = 0;
+    creature_t  *snake1_creature_p;
+    creature_t  *snake2_creature_p;
+    object_t     *snake1_obj_p;
+    object_t     *snake2_obj_p;
 
-    static object_t *tmp_obj_ptr1;
-    static object_t *tmp_obj_ptr2;
-    static event_t *tmp_event_p;  
+    event_t *tmp_event_p;  
 
     // player
     object_t *human_obj_p = object_create(HUMANOID_HUMAN, 2, 2);
@@ -117,13 +117,19 @@ void init_game( void )
     player_init(human_creature_p);
     
 
-    // snake
-    object_t *snake_obj_p = object_create(BEAST_SNAKE, 10, 2);
-    creature_t *snake_creature_p = creature_create(snake_obj_p);
-    snake_obj_p->creature_p = snake_creature_p;
-    object_dungeon_list_add(snake_obj_p);
-    creature_list_add(snake_creature_p);
-    // snake_obj_p->name_token = 12;
+    // snake 1
+    snake1_obj_p = object_create(BEAST_SNAKE, 10, 2);
+    snake1_creature_p = creature_create(snake1_obj_p);
+    snake1_obj_p->creature_p = snake1_creature_p;
+    object_dungeon_list_add(snake1_obj_p);
+    creature_list_add(snake1_creature_p);
+
+    // snake 2
+    snake2_obj_p = object_create(BEAST_SNAKE, 12, 2);
+    snake2_creature_p = creature_create(snake2_obj_p);
+    snake2_obj_p->creature_p = snake2_creature_p;
+    object_dungeon_list_add(snake2_obj_p);
+    creature_list_add(snake2_creature_p);    
 
     object_t *healing_obj_p = object_create(POTION_HEALING, 2, 5);
     object_dungeon_list_add(healing_obj_p);
@@ -149,11 +155,6 @@ void init_game( void )
     tmp_event_p = event_create_object_cb(object_open, chest_obj_p, 6);
     event_list_add(tmp_event_p);    
 
-}
-
-uint8_t call_back(object_t *obj_p)
-{
-    text_print_string("CALL BACK");
 }
 
 int main( void )

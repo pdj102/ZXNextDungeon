@@ -29,7 +29,7 @@
  * functions definitions
  ***************************************************/
 
-void memory_init()
+void memory_init( void )
 {
     // Map global data (bank 16) into ZX Spectrum 8k MMU slot 0
     ZXN_WRITE_REG(0x50, 16);

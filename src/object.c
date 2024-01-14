@@ -37,7 +37,7 @@ void object_free(object_t *obj_tofree);
  * functions
  ***************************************************/
 
-void object_init()
+void object_init( void )
 {
     for (uint8_t i = 0; i < MAX_OBJECT; i++)
     {
@@ -45,7 +45,7 @@ void object_init()
     }
 }
 
-object_t* object_getfree()
+object_t* object_getfree( void )
 {
     for (uint8_t i = 0; i < MAX_OBJECT; i++)
     {

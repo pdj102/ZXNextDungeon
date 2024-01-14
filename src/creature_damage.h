@@ -2,16 +2,18 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game object action - stike
+    @brief Game creature action - damage
+
+    Attempt to apply damage to a creature
 
  ***************************************************/
 
-#ifndef OBJECT_STRIKE_H 
-    #define OBJECT_STRIKE_H 
+#ifndef CREATURE_DAMAGE_H 
+    #define CREATURE_DAMAGE_H 
 
 #include <stdint.h>
 
-#include "object.h"
+#include "creature.h"
 
 /***************************************************
  * types
@@ -21,18 +23,21 @@
  * variable declarations
  ***************************************************/
 
-
 /***************************************************
  * function prototypes
  ***************************************************/
 
 /**
- * Is object strikeable? 
- *
- * @param *obj pointer to object to check
+ * Apply damage to target creature. 
  * 
- * @return uint8_t  1 if pickupable or 0 if not
+ * Applies target's damage modifiers which may reduce or increase the damage 
+ *
+ * @param *target_p target creature
+ * @param damage base damage amount
+ * @param type type of damage
+ * 
+ * @return uint8_t actual damage applied
  */
-uint8_t object_strike_is(object_t *obj_p);
+uint8_t creature_damage(creature_t *target_p, uint8_t base_damage, damage_type_t type);
 
 #endif

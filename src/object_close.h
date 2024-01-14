@@ -44,14 +44,5 @@ uint8_t object_close_is(const object_t *obj);
  */
 uint8_t object_close(object_t *obj);
 
-/**
- * Return first closeable object at dungeon x, y
- *
- * @param x dungeon x position
- * @param y dungeon y position
- * 
- * @return *object_t pointer to first closeable object or 0 if no closeable object
- */
-object_t *object_close_findat(uint8_t x, uint8_t y);
 
 #endif

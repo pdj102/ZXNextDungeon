@@ -64,7 +64,7 @@ creature_t* creature_create_b(object_t *obj_p)
         break;
     case BEAST_SNAKE:
         creature_p->speed = 5;
-        creature_p->hp = 5;        
+        creature_p->hp = 15;        
         creature_p->ac = 5;
         break;
     default:

@@ -49,7 +49,7 @@ uint8_t object_stepon(object_t *obj_p)
     return 1;
 }
 
-
+// TODO make it so any creature can step on objects
 void *object_stepon_all(uint8_t x, uint8_t y)
 {
     object_t *obj_p;

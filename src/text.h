@@ -62,9 +62,9 @@ void text_putc(char c);
  * @brief Print a formatted string on tilemap at cursor position
  * 
  * Format tags
- * %t   token string ID (uint_8t)
- * %u   uint8_t
- * %d   int8_t
+ *  %t   token string ID (uint_8t)
+ *  %u   uint8_t
+ *  %d   int8_t
  * 
  * @param *text text to print
  * @param ...   parameters   

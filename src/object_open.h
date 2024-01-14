@@ -44,14 +44,5 @@ uint8_t object_open_is(object_t *obj);
  */
 uint8_t object_open(object_t *obj);
 
-/**
- * Return first openable object at dungeon x, y
- *
- * @param x dungeon x position
- * @param y dungeon y position
- * 
- * @return *object_t pointer to first openable object or 0 if no openable object
- */
-object_t *object_open_findat(uint8_t x, uint8_t y);
 
 #endif

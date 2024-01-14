@@ -28,16 +28,16 @@
  * functions
  ***************************************************/
 
-uint8_t object_destroy_is(object_t *obj)
+uint8_t object_destroy_is(object_t *obj_p)
 {
     // Everything can be destroyed
     return 1;
 }
 
-uint8_t object_destroy(object_t *obj_todestroy)
+uint8_t object_destroy(object_t *obj_p)
 {
-    object_dungeon_list_remove(obj_todestroy);
-    object_delete(obj_todestroy);
+    object_dungeon_list_remove(obj_p);
+    object_delete(obj_p);
 
     return 1;
 }

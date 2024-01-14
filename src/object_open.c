@@ -61,16 +61,3 @@ uint8_t object_open(object_t *obj)
     }
     return 1;
 }
-
-object_t *object_open_findat(uint8_t x, uint8_t y)
-{
-    object_t *obj_p;
-    for (obj_p = object_dungeon_list_first_at(x, y); obj_p; obj_p = object_dungeon_list_next_at(obj_p, x, y))
-    {
-        if (object_open_is(obj_p) )
-        {
-            return obj_p;
-        }
-    }
-    return 0;
-}

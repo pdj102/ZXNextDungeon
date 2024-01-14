@@ -2,16 +2,16 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game object action - stike
+    @brief Game creature action - destroy
 
  ***************************************************/
 
-#ifndef OBJECT_STRIKE_H 
-    #define OBJECT_STRIKE_H 
+#ifndef CREATURE_DESTROY_H 
+    #define CREATURE_DESTROY_H 
 
 #include <stdint.h>
 
-#include "object.h"
+#include "creature.h"
 
 /***************************************************
  * types
@@ -27,12 +27,24 @@
  ***************************************************/
 
 /**
- * Is object strikeable? 
+ * Is creature destroyable? 
  *
- * @param *obj pointer to object to check
+ * @param *creature pointer to creature to check
  * 
- * @return uint8_t  1 if pickupable or 0 if not
+ * @return uint8_t  1 if destroyable or 0 if not
  */
-uint8_t object_strike_is(object_t *obj_p);
+uint8_t creature_destroy_is(creature_t *creature_p);
+
+/**
+ * Destory creature object
+ * 
+ * Note - must also destory the creature's object
+ *
+ * @param *creature_p pointer to creature to destroy
+ * 
+ * @return uint8_t 1 will always returns 1
+ */
+uint8_t creature_destroy(creature_t *creature_p);
+
 
 #endif

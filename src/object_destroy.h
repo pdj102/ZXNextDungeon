@@ -33,16 +33,16 @@
  * 
  * @return uint8_t  1 if destroyable or 0 if not
  */
-uint8_t object_destroy_is(object_t *obj);
+uint8_t object_destroy_is(object_t *obj_p);
 
 /**
  * Destory dungeon map object
  *
  * @param *obj pointer to object to destroy
  * 
- * @return uint8_t 1 always returns 1
+ * @return uint8_t 1 will always returns 1
  */
-uint8_t object_destroy(object_t *obj_todestroy);
+uint8_t object_destroy(object_t *obj_p);
 
 
 #endif

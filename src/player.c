@@ -24,11 +24,14 @@
 #include "object_pickup.h"
 #include "object_drop.h"
 #include "object_strike.h"
+#include "object_destroy.h"
 
 #include "object_dungeon_list.h"
 
 #include "creature.h"
 #include "creature_melee_strike.h"
+#include "creature_damage.h"
+#include "creature_destroy.h"
 
 /***************************************************
  * private types
@@ -165,6 +168,8 @@ void attack( void )
 {
     int8_t dx, dy;
     uint8_t x, y;
+    uint8_t damage_roll;
+    uint8_t actual_damage;
 
     object_t *obj_p;
 
@@ -179,13 +184,50 @@ void attack( void )
     y = player_creature_p->obj_p->y + dy;
 
     if ( obj_p = object_find_first_is_at(x, y, object_strike_is))
-    //if ( obj_p = object_strike_find_first_at(x, y) )
     {
         target_p = obj_p->creature_p;
-        creature_melee_strike(player_creature_p, target_p);
-        return;
+
+        // Miss?
+        if (!creature_melee_strike(player_creature_p, target_p))
+        {
+            text_printf("YOU MISS THE %t\n", target_p->obj_p->name_token);
+        }
+
+        // Hit
+        text_printf("YOU HIT THE %t\n", target_p->obj_p->name_token);
+
+        // Roll for melee damage
+        damage_roll = dice_roll(&player_creature_p->melee_damage_roll) + player_creature_p->melee_modifier;
+
+        // Attempt to apply damage
+        actual_damage = creature_damage(target_p, damage_roll, player_creature_p->melee_damage_type);
+
+        // Was the target vulnerable or resist damage? 
+        if (actual_damage == 0)
+        {
+            text_printf("YOUR HIT HAS NO EFFECT\n");
+        }
+        else if (actual_damage < damage_roll)
+        {
+            text_printf("IT RESISTS SOME DAMAGE\n");
+        }
+        else if (actual_damage > damage_roll)
+        {
+            text_printf("YOUR HIT CAUSES EXTRA DAMAGE\n");
+        }
+
+        text_printf("HIT POINTS %u\n", target_p->hp);
+
+        // Is the target dead?
+        if (target_p->hp == 0)
+        {
+            text_printf("YOU KILLED THE %t\n", target_p->obj_p->name_token);
+            
+            // Destory the creature
+            object_destroy(target_p->obj_p);
+            creature_destroy(target_p);
+        }
     }
-    
 }
 
 void move(int8_t dx, int8_t dy)
@@ -241,7 +283,6 @@ void close( void )
     y = player_creature_p->obj_p->y + dy;
 
     if ( obj_p = object_find_first_is_at(x, y, object_close_is))
-    // if ( obj_ptr = object_close_findat(x, y) )
     {
         if ( object_close(obj_p) )
         {
@@ -257,7 +298,6 @@ void pickup( void )
     object_t *obj_p;
 
     if ( obj_p = object_find_first_is_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y, object_pickup_is))
-    // if ( obj_ptr = object_pickup_find_first_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y) )
     {
         object_pickup(obj_p, player_creature_p->obj_p);
         text_printf("YOU PICK UP THE %t\n", (uint8_t) obj_p->name_token);

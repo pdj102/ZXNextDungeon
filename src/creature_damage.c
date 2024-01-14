@@ -2,16 +2,17 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game object action - strike
+    @brief Game creature action - damage
 
-**************************************************/
+    Attempt to apply damage to a creature
+
+ ***************************************************/
+
 #include <stdint.h>
 
-#include "object_strike.h"
+#include "creature_damage.h"
 
-#include "object.h"
-#include "object_list.h"
-#include "object_dungeon_list.h"
+#include "creature.h"
 
 /***************************************************
  * private types
@@ -29,13 +30,23 @@
  * functions
  ***************************************************/
 
-uint8_t object_strike_is(object_t *obj_p)
+uint8_t creature_damage(creature_t *target_p, uint8_t base_damage, damage_type_t type)
 {
-    // All creatures can be striked 
-    if (obj_p->class == CREATURE)
+    uint8_t damage;
+
+    // TODO apply damage resistance and vulnerability
+    damage = base_damage;
+
+    if (target_p->hp > damage)
     {
-        return 1;
+        // apply damage 
+        target_p->hp -= damage;
+        return damage;
     }
-    // Everything else cannot
-    return 0;
+
+    // Drop to zero hit points
+    target_p->hp = 0;
+    
+    return damage;
 }
+

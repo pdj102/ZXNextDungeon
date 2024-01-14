@@ -38,7 +38,7 @@ static uint8_t *tilemap_base_p = (uint8_t *) TILEMAP_BASE;
  * functions
  ***************************************************/
 
-void tilemap_init()
+void tilemap_init( void )
 {
     /*
      * Set the ZXnext register for the base memory address of the tilemap
