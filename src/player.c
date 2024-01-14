@@ -28,6 +28,7 @@
 #include "object_drop.h"
 #include "object_strike.h"
 #include "object_destroy.h"
+#include "object_quaff.h"
 
 #include "object_dungeon_list.h"
 
@@ -52,6 +53,8 @@ void drop( void );
 void attack( void );
 void move(int8_t dx, int8_t dy);
 void inventory( void );
+void quaff( void);
+object_t *select_object_from_inventory( object_is_a is_a_p );
 
 /***************************************************
  * private variables - static
@@ -115,7 +118,11 @@ void player_turn( void )
 
         case 'I':  // show inventory
             inventory();
-            break;  
+            break;
+
+        case 'Q':  // show inventory
+            quaff();
+            break;             
 
         case '1':
             dungeonmap_scroll(-1, 0);
@@ -360,5 +367,75 @@ void inventory( void )
     in_wait_nokey();    // wait no key 
 
     text_select_win( WIN_MESSAGES);
+}
 
+void quaff( void)
+{
+    object_t *obj_p;
+
+    obj_p = select_object_from_inventory( object_quaff_is);
+
+    if ( object_quaff(player_creature_p, obj_p) )
+    {
+        text_printf("YOU QUAFF THE %t\n", obj_p->name_token);
+    }
+}
+
+object_t *select_object_from_inventory( object_is_a is_a_p )
+{
+    object_t *obj_p;
+    uint8_t letter_max = 'A';
+    uint8_t index, index_current;
+    unsigned int key;    
+
+    // Does the player have at least one item of the required type?
+    obj_p = object_list_first_is(player_creature_p->obj_p, is_a_p);
+
+    if (!obj_p)
+    {
+        text_printf("YOU HAVE NO ITEMS\n");
+        return 0;
+    }
+
+    // Display the list of items of the required type
+    text_select_win( WIN_LARGE);
+    text_cls();
+
+    while (obj_p)
+    {
+        text_printf("%c) ", letter_max);
+        text_printf("%t\n", obj_p->name_token);
+
+        letter_max++;
+        obj_p = object_list_next_is(obj_p, is_a_p);
+    }
+
+    // Select item or press any other key to cancel
+    text_printf("\nSELECT ITEM LETTER\n");
+    text_select_win( WIN_MESSAGES);
+
+    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
+    in_wait_nokey();    // wait no key
+
+    if (! (key >= 'A' && key <= letter_max) )
+    {
+        // cancel
+        return 0;
+    }
+
+    // Get the index of the selected object. 'A' is index 1, 'B' is 2 etc
+    index = key - 'A';  
+
+    // Find object at index 
+    index_current = 1;
+    obj_p = object_list_first_is(player_creature_p->obj_p, is_a_p);
+
+    while (index_current <= index)
+    {
+        obj_p = object_list_next_is(obj_p, is_a_p);
+        index_current++;
+    }
+
+    // return selected object
+    return obj_p;
 }

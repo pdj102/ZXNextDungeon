@@ -58,7 +58,7 @@ object_t *object_list_next(object_t *obj_p)
 }
 
 
-object_t *object_first_is( object_t *container_obj_p, object_is_a is_a_p )
+object_t *object_list_first_is( object_t *container_obj_p, object_is_a is_a_p )
 {
     object_t *obj_p = object_list_first(container_obj_p);
 
@@ -73,7 +73,7 @@ object_t *object_first_is( object_t *container_obj_p, object_is_a is_a_p )
     return 0;
 }
 
-object_t *object_next_is( object_t *obj_p, object_is_a is_a_p )
+object_t *object_list_next_is( object_t *obj_p, object_is_a is_a_p )
 {
     while ( obj_p = object_list_next(obj_p) )
     {
