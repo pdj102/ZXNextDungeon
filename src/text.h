@@ -13,6 +13,8 @@
 
 #include "tilemap.h"
 
+#define MAX_WINDOW 3
+
 /***************************************************
  * public types
  ***************************************************/
@@ -41,12 +43,31 @@ extern char object_base_data[];
 /**
  * @brief Initialise text system. Must be called before using text
  * 
+ * Initalises and selects window 0
+ * 
  * @return void
  */
 void text_init( void );
 
 /**
- * @brief Print a char on tilemap at cursor position
+ * @brief Initialise a text window. Sets window size, cursor position, default text tile attribute
+ * 
+ * @param window    window index
+ * @param x         window top x position
+ * @param y         window top y position
+ * @param w         window w position
+ * @param h         window h position
+ * 
+ * @return void
+ */
+void text_init_window(uint8_t window, uint8_t x, uint8_t y, uint8_t w, uint8_t h);
+
+void text_select_win( uint8_t window);
+
+void text_cls( void );
+
+/**
+ * @brief Print a char on tilemap at cursor position in current window
  * 
  * Increments cursor position. 
  * 
@@ -59,7 +80,7 @@ void text_init( void );
 void text_putc(char c);
 
 /**
- * @brief Print a formatted string on tilemap at cursor position
+ * @brief Print a formatted string on tilemap at cursor position in current window
  * 
  * Format tags
  *  %t   token string ID (uint_8t)
@@ -74,7 +95,7 @@ void text_putc(char c);
 void text_printf(const char *text, ...);
 
 /**
- * @brief Print text string to tilemap at cursor position
+ * @brief Print text string to tilemap at cursor position in current window
  * 
  * Uses text_putc( void ) so will wrap with window 
  * 
@@ -86,7 +107,7 @@ void text_print_string(const char text[]);
 /**
  * @brief Print text string on tilemap at x, y
  * 
- * No check is made to confirm if x and y is within text window
+ * No check is made to confirm if x and y is within text window in current window
  * 
  * @param x  x 
  * @param y  y 
@@ -97,7 +118,7 @@ void text_print_string_at(uint8_t x, uint8_t y, const char text[]);
 
 
 /**
- * @brief Print uint8 to tilemap at cursor position
+ * @brief Print uint8 to tilemap at cursor position in current window
  * 
  * @param i  unit8 to print
  * @return void
@@ -106,7 +127,7 @@ void text_print_uint8(uint8_t i);
 
 
 /**
- * @brief Print int8 to tilemap at cursor position
+ * @brief Print int8 to tilemap at cursor position in current window
  * 
  * @param i  int8 to print
  * @return void
@@ -114,7 +135,7 @@ void text_print_uint8(uint8_t i);
 void text_print_int8(int8_t i);
 
 /**
- * @brief Print uint16 to tilemap at cursor position
+ * @brief Print uint16 to tilemap at cursor position in current window
  * 
  * @param i  unit16 to print
  * @return void
@@ -123,7 +144,7 @@ void text_print_uint16(uint16_t i);
 
 
 /**
- * @brief Print int16 to tilemap at cursor position
+ * @brief Print int16 to tilemap at cursor position in current window
  * 
  * @param i  int16 to print
  * @return void

@@ -87,7 +87,16 @@ void init_game( void )
     palette_init();
     tilemap_init();
 
+    // Init windows
+    // Tilemap is 40x32
     text_init();
+    text_init_window(0, 0, 24, 40, 8);  // init window used for messages
+    text_cls();     
+    text_init_window(1, 0, 0, 24, 24);  // init window used for inventory etc
+    text_cls(); 
+    text_init_window(2, 24, 0, 16, 24);  // init window used for player stats 
+    text_cls();
+    text_select_win(0);
 
     dungeonmap_init();
     object_init();
@@ -165,6 +174,7 @@ int main( void )
  
     dungeonmap_generate();
 
+    text_cls();
     text_printf("WELCOME TO DUNGEON!\n");
     text_printf("TEST TOKEN %t UINT8 %u INT8 %d \n", (uint8_t)1, (uint8_t)255, (int8_t)-128);
 

@@ -18,6 +18,7 @@
 #include "text_token.h"
 
 #include "object.h"
+#include "object_list.h"
 #include "object_move.h"
 #include "object_open.h"
 #include "object_close.h"
@@ -48,6 +49,7 @@ void pickup( void );
 void drop( void );
 void attack( void );
 void move(int8_t dx, int8_t dy);
+void inventory( void );
 
 /***************************************************
  * private variables - static
@@ -108,6 +110,10 @@ void player_turn( void )
         case 'A':  // attack
             attack();
             break;                            
+
+        case 'I':  // show inventory
+            inventory();
+            break;  
 
         case '1':
             dungeonmap_scroll(-1, 0);
@@ -202,7 +208,7 @@ void attack( void )
         // Attempt to apply damage
         actual_damage = creature_damage(target_p, damage_roll, player_creature_p->melee_damage_type);
 
-        // Was the target vulnerable or resist damage? 
+        // Was the target immune, vulnerable or resist damage? 
         if (actual_damage == 0)
         {
             text_printf("YOUR HIT HAS NO EFFECT\n");
@@ -318,4 +324,19 @@ void drop( void )
         return;     
     }
     text_printf("NOTHING TO DROP\n");
+}
+
+void inventory( void )
+{
+    object_t *obj_p;
+    unsigned char index = 'a';
+
+    obj_p = object_drop_find_first(player_creature_p->obj_p);
+    
+    if (!obj_p)
+    {
+        text_printf("THERE IS NOTHING IN YOUR INVENTORY\n");
+        return;
+    }
+    
 }

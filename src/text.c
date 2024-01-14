@@ -22,7 +22,7 @@
  * private types
  ***************************************************/
 // helper pointer to the global text window struct 
-static text_window_t *const text_win = &globaldata.text_window;
+static text_window_t * text_win = &globaldata.text_windows[0];
 
 tilemap_tile_t blank;
 
@@ -42,14 +42,27 @@ void text_scroll_up( void );
 
 void text_init( void )
 {
-    text_win->x = 0;
-    text_win->y = 24;
-    text_win->w = 40;
-    text_win->h = 7;
+    text_init_window(0, 0, 0, 40, 32);  // tilmap is 40 x 32
+}
+
+void text_init_window(uint8_t window, uint8_t x, uint8_t y, uint8_t w, uint8_t h)
+{
+    text_select_win(window);
+
+    text_win->x = x;
+    text_win->y = y;
+    text_win->w = w;
+    text_win->h = h;
     text_win->c_x = text_win->x;
     text_win->c_y = text_win->y;
-    text_win->tile.tile_attr = PALETTE_0;
+    text_win->tile.tile_attr = PALETTE_0;    
 }
+
+void text_select_win( uint8_t window)
+{
+    text_win = &globaldata.text_windows[window];    
+}
+
 
 void text_putc(char c)
 {
@@ -128,42 +141,6 @@ void text_print_string(const char text[])
     }
 }
 
-void text_scroll_up( void )
-{
-    uint8_t x = 0;
-    uint8_t y = 0;
-
-    uint8_t x2 = text_win->x + text_win->w;
-    uint8_t y2 = text_win->y + text_win->h;
-
-    blank.tile_attr = 0;
-    blank.tile_id = 32;
-
-    tilemap_tile_t *p = &blank;
-
-    for (y = text_win->y + 1; y < y2 ; y++)
-    {
-        
-        for (x = text_win->x; x < x2 ; x++)
-        {
-            tilemap_copy_tile(x, y, x, y - 1);
-        }
-    }
-    
-    y = text_win->y + text_win->h - 1;
-    for (x = text_win->x; x < x2 ; x++)
-    {
-        tilemap_set_tile(x, y, p );
-    }
-}
-
-void text_print_string_at(uint8_t x, uint8_t y, const char text[])
-{
-    text_win->c_x = x;
-    text_win->c_y = y;
-    text_print_string(text);
-}
-
 void text_print_uint8(uint8_t i)
 {
     char s[] = "   ";     // string buffer for converting numbers to strings e.g. 255
@@ -194,4 +171,57 @@ void text_print_int16(int16_t i)
     
     itoa(i, s, 10);
     text_print_string(s);
+}
+
+void text_cls( void )
+{
+    uint8_t x = 0;
+    uint8_t y = 0;
+
+    uint8_t x2 = text_win->x + text_win->w;
+    uint8_t y2 = text_win->y + text_win->h;
+
+    blank.tile_attr = text_win->tile.tile_attr;
+    blank.tile_id = 32;
+
+    tilemap_tile_t *p = &blank;
+
+    for (y = text_win->y; y < y2 ; y++)
+    {
+        
+        for (x = text_win->x; x < x2 ; x++)
+        {
+            tilemap_set_tile(x, y, p );
+        }
+    }    
+
+}
+
+void text_scroll_up( void )
+{
+    uint8_t x = 0;
+    uint8_t y = 0;
+
+    uint8_t x2 = text_win->x + text_win->w;
+    uint8_t y2 = text_win->y + text_win->h;
+
+    blank.tile_attr = text_win->tile.tile_attr;
+    blank.tile_id = 32;
+
+    tilemap_tile_t *p = &blank;
+
+    for (y = text_win->y + 1; y < y2 ; y++)
+    {
+        
+        for (x = text_win->x; x < x2 ; x++)
+        {
+            tilemap_copy_tile(x, y, x, y - 1);
+        }
+    }
+    
+    y = text_win->y + text_win->h - 1;
+    for (x = text_win->x; x < x2 ; x++)
+    {
+        tilemap_set_tile(x, y, p );
+    }
 }
