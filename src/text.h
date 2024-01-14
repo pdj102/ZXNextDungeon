@@ -12,8 +12,8 @@
 #include <stdint.h>
 
 #include "tilemap.h"
+#include "globaldata_defines.h"
 
-#define MAX_WINDOW 3
 
 /***************************************************
  * public types

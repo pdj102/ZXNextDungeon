@@ -10,7 +10,7 @@
 
     Game time progresses by 10 ticks per game loop
 
-    An average cretrure will take 1 action per turn
+    An average creature will take 1 action per turn
 
  ***************************************************/
 
@@ -27,6 +27,7 @@
  * types
  ***************************************************/
 
+// Typedef for event callback functions
 typedef uint8_t (*event_callback)(object_t *);
 
 typedef struct event_s

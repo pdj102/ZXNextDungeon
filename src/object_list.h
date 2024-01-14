@@ -18,6 +18,7 @@
  * types
  ***************************************************/
 
+
 /***************************************************
  * variable declarations
  ***************************************************/
@@ -51,7 +52,8 @@ uint8_t object_list_remove(object_t* obj_p, object_t* container_obj_p);
 /**
  * Returns the first object in the object's list
  *
- * @param *obj_ptr      pointer to the container object  
+ * @param *obj_ptr      pointer to the container object
+ * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
 object_t *object_list_first(object_t *container_obj_p);
@@ -61,8 +63,28 @@ object_t *object_list_first(object_t *container_obj_p);
  * 
  * @param   *obj_ptr    pointer to object previously returned by first() or next()
  * 
- * @return  *obj_ptr    pointer to next object or 0 if no more objects
+ * @return  *object_t    pointer to next object or 0 if no more objects
  */
 object_t *object_list_next(object_t *obj_ptr);
+
+/**
+ * Returns the next object of a type in the object list
+ * 
+ * @param   *obj_ptr        pointer to the container object  
+ * @param   object_is_a_p   pointer to function that returns 1 if object is of required type
+ * 
+ * @return  *object_t       pointer to first object or 0 if no object
+ */
+object_t *object_first_is(object_t *container_obj_p, object_is_a is_a_p);
+
+/**
+ * Returns the next object of a type in the object list
+ * 
+ * @param   *obj_ptr        pointer to object previously returned by first() or next()
+ * @param   object_is_a_p   pointer to function that returns 1 if object is of required type
+ * 
+ * @return  *object_t       pointer to next object or 0 if no more objects
+ */
+object_t *object_next_is(object_t *obj_p, object_is_a is_a_p);
 
 #endif

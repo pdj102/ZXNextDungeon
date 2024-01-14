@@ -191,7 +191,7 @@ void attack( void )
     x = player_creature_p->obj_p->x + dx;
     y = player_creature_p->obj_p->y + dy;
 
-    if ( obj_p = object_find_first_is_at(x, y, object_strike_is))
+    if ( obj_p = object_dungeon_list_first_is_at(x, y, object_strike_is))
     {
         target_p = obj_p->creature_p;
 
@@ -263,7 +263,7 @@ void open( void )
     x = player_creature_p->obj_p->x + dx;
     y = player_creature_p->obj_p->y + dy;
 
-    if ( obj_p = object_find_first_is_at(x, y, object_open_is))
+    if ( obj_p = object_dungeon_list_first_is_at(x, y, object_open_is))
     {
         if ( object_open(obj_p) )
         {
@@ -290,7 +290,7 @@ void close( void )
     x = player_creature_p->obj_p->x + dx;
     y = player_creature_p->obj_p->y + dy;
 
-    if ( obj_p = object_find_first_is_at(x, y, object_close_is))
+    if ( obj_p = object_dungeon_list_first_is_at(x, y, object_close_is))
     {
         if ( object_close(obj_p) )
         {
@@ -305,7 +305,7 @@ void pickup( void )
 {
     object_t *obj_p;
 
-    if ( obj_p = object_find_first_is_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y, object_pickup_is))
+    if ( obj_p = object_dungeon_list_first_is_at(player_creature_p->obj_p->x, player_creature_p->obj_p->y, object_pickup_is))
     {
         object_pickup(obj_p, player_creature_p->obj_p);
         text_printf("YOU PICK UP THE %t\n", (uint8_t) obj_p->name_token);

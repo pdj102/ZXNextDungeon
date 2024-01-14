@@ -18,6 +18,7 @@
  * types
  ***************************************************/
 
+
 /***************************************************
  * variable declarations
  ***************************************************/
@@ -116,7 +117,7 @@ object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y);
  * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_find_first_is_at(uint8_t x, uint8_t y, uint8_t (*isfunc_p)(struct object_s *));
+object_t *object_dungeon_list_first_is_at(uint8_t x, uint8_t y, object_is_a);
 
 /**
  * Returns the next object in dungeon object list of a requested type at position x, y
@@ -128,7 +129,7 @@ object_t *object_find_first_is_at(uint8_t x, uint8_t y, uint8_t (*isfunc_p)(stru
  * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_pickup_find_next_is_at(object_t *obj_p, uint8_t x, uint8_t y, uint8_t (*isfunc_p)(struct object_s *));
+object_t *object_dungeon_list_next_is_at(object_t *obj_p, uint8_t x, uint8_t y, object_is_a);
 
 
 

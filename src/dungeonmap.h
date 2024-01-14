@@ -36,7 +36,7 @@ typedef struct dungeonmap_tile_s
 } dungeonmap_tile_t;
 
 // Dungeon map data structure
-typedef struct 
+typedef struct dungeonmap_s
 {
     struct dungeonmap_tile_s map[DUNGEONMAP_WIDTH][DUNGEONMAP_HEIGHT];
 
