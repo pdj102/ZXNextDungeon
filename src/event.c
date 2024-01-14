@@ -10,7 +10,7 @@
 #include <stdint.h>
 
 #include "globaldata.h"
-
+#include "globaldata_defines.h"
 #include "text.h"
 
 /***************************************************

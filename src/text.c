@@ -124,6 +124,10 @@ void text_printf(const char *text, ...)
             text_print_int8( (int8_t) va_arg(ptr, int8_t) );
             break;
 
+            case 'c':   // unsigned char
+            text_putc( (unsigned char) va_arg(ptr, unsigned char) );
+            break;            
+
             default:
             text_putc('*');
         }
@@ -194,7 +198,8 @@ void text_cls( void )
             tilemap_set_tile(x, y, p );
         }
     }    
-
+    text_win->c_x = text_win->x;
+    text_win->c_y = text_win->y;
 }
 
 void text_scroll_up( void )

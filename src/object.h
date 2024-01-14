@@ -14,8 +14,6 @@
 
 #include "tilemap.h"
 
-#define MAX_OBJECT  40
-
 
 /***************************************************
  * types

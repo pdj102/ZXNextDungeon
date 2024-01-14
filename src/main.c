@@ -10,6 +10,7 @@
 #include <stdio.h>
 
 #include "globaldata.h"
+#include "globaldata_defines.h"
 #include "memory.h"
 #include "text.h"
 #include "tile_defns.h"
@@ -35,7 +36,6 @@
 #include "event_list.h"
 
 #include "adt/p_forward_list.h"
-
 
 /***************************************************
  * private types
@@ -90,13 +90,13 @@ void init_game( void )
     // Init windows
     // Tilemap is 40x32
     text_init();
-    text_init_window(0, 0, 24, 40, 8);  // init window used for messages
+    text_init_window(WIN_MESSAGES, 0, 24, 40, 8);  // init window used for messages
     text_cls();     
-    text_init_window(1, 0, 0, 24, 24);  // init window used for inventory etc
+    text_init_window(WIN_LARGE, 0, 0, 24, 24);  // init large window used for inventory etc
     text_cls(); 
-    text_init_window(2, 24, 0, 16, 24);  // init window used for player stats 
+    text_init_window(WIN_STATS, 24, 0, 16, 24);  // init window used for player stats 
     text_cls();
-    text_select_win(0);
+    text_select_win(WIN_MESSAGES);
 
     dungeonmap_init();
     object_init();

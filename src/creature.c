@@ -14,6 +14,7 @@
 
 #include "object.h"
 #include "globaldata.h"
+#include "globaldata_defines.h"     // MAX_CREATURE
 
 #include "text.h"
 

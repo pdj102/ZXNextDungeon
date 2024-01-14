@@ -14,6 +14,8 @@
 
 #include "dungeonmap.h"
 
+#include "globaldata_defines.h"
+
 #include "text.h"
 #include "text_token.h"
 
@@ -329,9 +331,11 @@ void drop( void )
 void inventory( void )
 {
     object_t *obj_p;
-    unsigned char index = 'a';
+    unsigned char index = 'A';
+    unsigned int key;    
 
-    obj_p = object_drop_find_first(player_creature_p->obj_p);
+
+    obj_p = object_list_first(player_creature_p->obj_p);
     
     if (!obj_p)
     {
@@ -339,4 +343,22 @@ void inventory( void )
         return;
     }
     
+    text_select_win( WIN_LARGE);
+    text_cls();
+
+    while (obj_p)
+    {
+        text_printf("%c) ", index);
+        text_printf("%t\n", obj_p->name_token);
+
+        index++;
+        obj_p = object_list_next(obj_p);
+    }
+
+    text_printf("\n PRESS ANY KEY\n");
+    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
+    in_wait_nokey();    // wait no key 
+
+    text_select_win( WIN_MESSAGES);
+
 }

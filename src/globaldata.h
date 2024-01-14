@@ -11,11 +11,13 @@
 
 #include <adt/p_forward_list.h>
 
+#include "globaldata_defines.h"
 #include "dungeonmap.h"
 #include "object.h"
 #include "event.h"
 #include "creature.h"
 #include "text.h"
+
 
 /***************************************************
  * types

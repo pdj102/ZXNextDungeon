@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game objects
+    @brief Manage an objects list of objects
 
 **************************************************/
 

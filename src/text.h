@@ -62,8 +62,20 @@ void text_init( void );
  */
 void text_init_window(uint8_t window, uint8_t x, uint8_t y, uint8_t w, uint8_t h);
 
+/**
+ * @brief Select current active window
+ * 
+ * @param uint8_t    window index
+ * 
+ * @return void
+ */
 void text_select_win( uint8_t window);
 
+/**
+ * @brief Clear current window and return cursor to top left
+ * 
+ * @return void
+ */
 void text_cls( void );
 
 /**
