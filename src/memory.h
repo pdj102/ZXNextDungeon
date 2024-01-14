@@ -34,6 +34,8 @@
     18      |   Dungeon map generator
     20      |   Object create
     22      |   Creature create
+    23      |   ? (Do not use causes a crash)
+    24      |   Player code
 
     MMU 7 - List of banked pages:
 

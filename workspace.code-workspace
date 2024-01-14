@@ -50,7 +50,8 @@
 			"stdint-gcc.h": "c",
 			"input_basic.h": "c",
 			"stdarg.h": "c",
-			"globaldata_defines.h": "c"
+			"globaldata_defines.h": "c",
+			"player_inventory_bank.h": "c"
 		}
 	}
 }

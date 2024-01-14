@@ -2,26 +2,45 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Player code
+    @brief The player code - quaff action
+
+    Code is banked do not call directly
 
  ***************************************************/
-#include "player.h"
 
-#include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions 
+#pragma output CRT_ORG_CODE = 0xC000
 
-#include "creature.h"
 #include "player_bank.h"
 
+#include <stdint.h>
+
+#include "player.h"
+#include "player_quaff_bank.h"
+
 #include "globaldata.h"
+
+#include "text.h"
+#include "text_token.h"
+
+#include "object.h"
+#include "object_list.h"
+#include "object_quaff.h"
+
+#include "object_dungeon_list.h"
+
+#include "creature.h"
+
 
 
 /***************************************************
  * private types
  ***************************************************/
 
+
 /***************************************************
  * private function prototypes
  ***************************************************/
+
 
 /***************************************************
  * private variables - static
@@ -32,19 +51,16 @@
  * functions
  ***************************************************/
 
-void player_init(creature_t *creature_p)
+void player_quaff_b( void)
 {
-    /* Map Player code (bank 24) into ZX Spectrum 8k MMU slot 6 */
-    globaldata.player_creature_p = creature_p;
-    ZXN_WRITE_REG(0x56, 24);
-    /* Call banked code */ 
-    player_init_b(creature_p); 
-}
+    object_t *obj_p;
 
-void player_turn( void )
-{
-    /* Map Player code (bank 24) into ZX Spectrum 8k MMU slot 6 */
-    ZXN_WRITE_REG(0x56, 24);
-    /* Call banked code */ 
-    player_turn_b(); 
+    obj_p = select_object_from_inventory_b( object_quaff_is);
+
+    if ( object_quaff(globaldata.player_creature_p, obj_p) )
+    {
+        globaldata.player_creature_p->energy = 0;
+
+        text_printf("YOU QUAFF THE %t\n", obj_p->name_token);
+    }
 }

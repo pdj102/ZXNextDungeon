@@ -2,26 +2,44 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Player code
+    @brief The player code - move action
+
+    Code is banked do not call directly
 
  ***************************************************/
-#include "player.h"
 
-#include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions 
+#pragma output CRT_ORG_CODE = 0xC000
 
-#include "creature.h"
 #include "player_bank.h"
 
+#include <stdint.h>
+
+#include "player.h"
+#include "player_move_bank.h"
+
 #include "globaldata.h"
+
+#include "text.h"
+#include "text_token.h"
+
+#include "object.h"
+#include "object_list.h"
+#include "object_move.h"
+
+#include "object_dungeon_list.h"
+
+#include "creature.h"
 
 
 /***************************************************
  * private types
  ***************************************************/
 
+
 /***************************************************
  * private function prototypes
  ***************************************************/
+
 
 /***************************************************
  * private variables - static
@@ -32,19 +50,10 @@
  * functions
  ***************************************************/
 
-void player_init(creature_t *creature_p)
+void player_move_b(int8_t dx, int8_t dy)
 {
-    /* Map Player code (bank 24) into ZX Spectrum 8k MMU slot 6 */
-    globaldata.player_creature_p = creature_p;
-    ZXN_WRITE_REG(0x56, 24);
-    /* Call banked code */ 
-    player_init_b(creature_p); 
-}
-
-void player_turn( void )
-{
-    /* Map Player code (bank 24) into ZX Spectrum 8k MMU slot 6 */
-    ZXN_WRITE_REG(0x56, 24);
-    /* Call banked code */ 
-    player_turn_b(); 
+    if (object_move_by(globaldata.player_creature_p->obj_p, dx, dy))
+    {
+        globaldata.player_creature_p->energy = 0;
+    }
 }

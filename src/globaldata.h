@@ -34,6 +34,7 @@ typedef struct
     p_forward_list_t event_list; 
     p_forward_list_t creature_list; 
     text_window_t   text_windows[MAX_WINDOW];
+    creature_t      *player_creature_p;    
     uint8_t     tmp;
 } globaldata_t;
 

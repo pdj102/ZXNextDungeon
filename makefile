@@ -78,8 +78,36 @@ $(OBJDIR)/text_token_bank.o: $(SRCDIR)/text_token_bank.c $(SRCDIR)/text_token_ba
 # PAGE_22
 # Target for create creature and data 
 # - create_creature_bank.o 
-$(OBJDIR)/create_creature_bank.o: $(SRCDIR)/create_creature_bank.c $(SRCDIR)/create_creature_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_21 --constsegPAGE_21 -o $@ $<	
+$(OBJDIR)/creature_create_bank.o: $(SRCDIR)/creature_create_bank.c $(SRCDIR)/creature_create_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_22 --constsegPAGE_22 -o $@ $<	
+
+# ####################################################################################################################################
+# PAGE_24
+# Target for player code 
+# - player_bank.o 
+$(OBJDIR)/player_bank.o: $(SRCDIR)/player_bank.c $(SRCDIR)/player_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
+# - player_open_bank.o 
+$(OBJDIR)/player_open_bank.o: $(SRCDIR)/player_open_bank.c $(SRCDIR)/player_open_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
+# - player_close_bank.o 
+$(OBJDIR)/player_close_bank.o: $(SRCDIR)/player_close_bank.c $(SRCDIR)/player_close_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
+# - player_quaff_bank.o 
+$(OBJDIR)/player_quaff_bank.o: $(SRCDIR)/player_quaff_bank.c $(SRCDIR)/player_quaff_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<		
+# - player_drop_bank.o 
+$(OBJDIR)/player_drop_bank.o: $(SRCDIR)/player_drop_bank.c $(SRCDIR)/player_drop_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
+# - player_strike_bank.o 
+$(OBJDIR)/player_strike_bank.o: $(SRCDIR)/player_strike_bank.c $(SRCDIR)/player_strike_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
+# - player_inventory_bank.o 
+$(OBJDIR)/player_inventory_bank.o: $(SRCDIR)/player_inventory_bank.c $(SRCDIR)/player_inventory_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
+# - player_move_bank.o 
+$(OBJDIR)/player_move_bank.o: $(SRCDIR)/player_move_bank.c $(SRCDIR)/player_move_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
 
 # ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 
