@@ -35,7 +35,6 @@
 void player_init(creature_t *creature_p)
 {
     /* Map Player code (bank 24) into ZX Spectrum 8k MMU slot 6 */
-    globaldata.player_creature_p = creature_p;
     ZXN_WRITE_REG(0x56, 24);
     /* Call banked code */ 
     player_init_b(creature_p); 

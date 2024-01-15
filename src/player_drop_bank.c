@@ -56,12 +56,12 @@ void player_drop_b( void )
 {
     object_t *obj_p;
 
-    if ( obj_p = object_drop_find_first(globaldata.player_creature_p->obj_p) )
+    if ( obj_p = object_drop_find_first(globaldata.player.player_creature_p->obj_p) )
     {
-        globaldata.player_creature_p->energy = 0;
+        globaldata.player.player_creature_p->energy = 0;
 
-        object_drop(obj_p, globaldata.player_creature_p->obj_p);
-        text_printf("YOU DROP THE %t\n", (uint8_t) obj_p->name_token);   
+        object_drop(obj_p, globaldata.player.player_creature_p->obj_p);
+        text_printf("YOU DROP THE %t\n", (uint16_t) obj_p->name_token);   
         return;     
     }
     text_printf("NOTHING TO DROP\n");

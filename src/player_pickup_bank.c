@@ -55,11 +55,11 @@ void player_pickup_b( void )
 {
     object_t *obj_p;
 
-    if ( obj_p = object_dungeon_list_first_is_at(globaldata.player_creature_p->obj_p->x, globaldata.player_creature_p->obj_p->y, object_pickup_is))
+    if ( obj_p = object_dungeon_list_first_is_at(globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y, object_pickup_is))
     {
-        globaldata.player_creature_p->energy = 0;
+        globaldata.player.player_creature_p->energy = 0;
 
-        object_pickup(obj_p, globaldata.player_creature_p->obj_p);
+        object_pickup(obj_p, globaldata.player.player_creature_p->obj_p);
         text_printf("YOU PICK UP THE %t\n", (uint16_t) obj_p->name_token);
         return;
     }

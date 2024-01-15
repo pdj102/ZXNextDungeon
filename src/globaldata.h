@@ -17,6 +17,7 @@
 #include "event.h"
 #include "creature.h"
 #include "text.h"
+#include "player.h"
 
 
 /***************************************************
@@ -34,7 +35,7 @@ typedef struct
     p_forward_list_t event_list; 
     p_forward_list_t creature_list; 
     text_window_t   text_windows[MAX_WINDOW];
-    creature_t      *player_creature_p;    
+    player_t        player;    
     uint8_t     tmp;
 } globaldata_t;
 

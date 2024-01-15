@@ -69,29 +69,29 @@ void player_strike_b( void )
         return;
     }
 
-    x = globaldata.player_creature_p->obj_p->x + dx;
-    y = globaldata.player_creature_p->obj_p->y + dy;
+    x = globaldata.player.player_creature_p->obj_p->x + dx;
+    y = globaldata.player.player_creature_p->obj_p->y + dy;
 
     if ( obj_p = object_dungeon_list_first_is_at(x, y, object_strike_is))
     {
         target_p = obj_p->creature_p;
 
-        globaldata.player_creature_p->energy = 0;
+        globaldata.player.player_creature_p->energy = 0;
 
         // Miss?
-        if (!creature_melee_strike(globaldata.player_creature_p, target_p))
+        if (!creature_melee_strike(globaldata.player.player_creature_p, target_p))
         {
-            text_printf("YOU MISS THE %t\n", target_p->obj_p->name_token);
+            text_printf("YOU MISS THE %t\n", (uint16_t)target_p->obj_p->name_token);
         }
 
         // Hit
-        text_printf("YOU HIT THE %t\n", target_p->obj_p->name_token);
+        text_printf("YOU HIT THE %t\n", (uint16_t)target_p->obj_p->name_token);
 
         // Roll for melee damage
-        damage_roll = dice_roll(&globaldata.player_creature_p->melee_damage_roll) + globaldata.player_creature_p->melee_modifier;
+        damage_roll = dice_roll(&globaldata.player.player_creature_p->melee_damage_roll) + globaldata.player.player_creature_p->melee_modifier;
 
         // Attempt to apply damage
-        actual_damage = creature_damage(target_p, damage_roll, globaldata.player_creature_p->melee_damage_type);
+        actual_damage = creature_damage(target_p, damage_roll, globaldata.player.player_creature_p->melee_damage_type);
 
         // Was the target immune, vulnerable or resist damage? 
         if (actual_damage == 0)
@@ -112,7 +112,7 @@ void player_strike_b( void )
         // Is the target dead?
         if (target_p->hp == 0)
         {
-            text_printf("YOU KILLED THE %t\n", target_p->obj_p->name_token);
+            text_printf("YOU KILLED THE %t\n", (uint16_t)target_p->obj_p->name_token);
             
             // Destory the creature
             object_destroy(target_p->obj_p);

@@ -52,8 +52,8 @@
 
 void player_move_b(int8_t dx, int8_t dy)
 {
-    if (object_move_by(globaldata.player_creature_p->obj_p, dx, dy))
+    if (object_move_by(globaldata.player.player_creature_p->obj_p, dx, dy))
     {
-        globaldata.player_creature_p->energy = 0;
+        globaldata.player.player_creature_p->energy = 0;
     }
 }

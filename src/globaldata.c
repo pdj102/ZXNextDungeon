@@ -27,7 +27,7 @@
  * functions definitions
  ***************************************************/
 
-void globaldata_init()
+void globaldata_init( void )
 {
 
 }

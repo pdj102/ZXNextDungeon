@@ -66,7 +66,7 @@ void inventory_b( void );
 
 void player_init_b(creature_t *creature_p)
 {
-    globaldata.player_creature_p = creature_p;
+    globaldata.player.player_creature_p = creature_p;
 }
 
 void player_turn_b( void )
@@ -187,7 +187,7 @@ object_t *select_object_from_inventory_b( object_is_a is_a_p )
     unsigned int key;    
 
     // Does the player have at least one item of the required type?
-    obj_p = object_list_first_is(globaldata.player_creature_p->obj_p, is_a_p);
+    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, is_a_p);
 
     if (!obj_p)
     {
@@ -225,7 +225,7 @@ object_t *select_object_from_inventory_b( object_is_a is_a_p )
 
     // Find object at index 
     index_current = 1;
-    obj_p = object_list_first_is(globaldata.player_creature_p->obj_p, is_a_p);
+    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, is_a_p);
 
     while (index_current <= index)
     {

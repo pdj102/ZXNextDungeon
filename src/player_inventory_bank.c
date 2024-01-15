@@ -55,7 +55,7 @@ void player_inventory_b( void )
     unsigned int key;    
 
 
-    obj_p = object_list_first(globaldata.player_creature_p->obj_p);
+    obj_p = object_list_first(globaldata.player.player_creature_p->obj_p);
     
     if (!obj_p)
     {

@@ -57,10 +57,10 @@ void player_quaff_b( void)
 
     obj_p = select_object_from_inventory_b( object_quaff_is);
 
-    if ( object_quaff(globaldata.player_creature_p, obj_p) )
+    if ( object_quaff(globaldata.player.player_creature_p, obj_p) )
     {
-        globaldata.player_creature_p->energy = 0;
+        globaldata.player.player_creature_p->energy = 0;
 
-        text_printf("YOU QUAFF THE %t\n", obj_p->name_token);
+        text_printf("YOU QUAFF THE %t\n", (uint16_t)obj_p->name_token);
     }
 }
