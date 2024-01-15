@@ -23,6 +23,6 @@
  * function prototypes
  ***************************************************/
 
-void text_token_print(uint8_t c);
+void text_token_print(uint16_t c);
 
 #endif

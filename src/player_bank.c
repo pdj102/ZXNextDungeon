@@ -201,8 +201,7 @@ object_t *select_object_from_inventory_b( object_is_a is_a_p )
 
     while (obj_p)
     {
-        text_printf("%c) ", letter_max);
-        text_printf("%t\n", obj_p->name_token);
+        text_printf("%c) %t\n", (char)letter_max, (uint16_t)obj_p->name_token);
 
         letter_max++;
         obj_p = object_list_next_is(obj_p, is_a_p);

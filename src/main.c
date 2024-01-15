@@ -176,7 +176,9 @@ int main( void )
 
     text_cls();
     text_printf("WELCOME TO DUNGEON!\n");
-    text_printf("TEST TOKEN %t UINT8 %u INT8 %d \n", (uint8_t)1, (uint8_t)255, (int8_t)-128);
+    // text_printf("TEST T1 %t T2 %t UINT8 %u INT8 %d \n", (uint8_t)1, (uint8_t)2, (uint8_t)255, (int8_t)-128);
+    // text_printf("TEST T1 %t T2 %t UINT8 %u INT8 %d \n", 1, 2, (uint8_t)255, (int8_t)-128);
+    text_printf("TEST T1 %t T2 %t UINT8 %u INT8 %d \n", (uint16_t)1, (uint16_t)2, (uint8_t)255, (int8_t)-128);
 
     text_print_string("GLOBAL DATA SIZE:");
     uint16_t s;

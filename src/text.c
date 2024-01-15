@@ -113,7 +113,7 @@ void text_printf(const char *text, ...)
         switch(text[i])
         {
             case 't':   // token string
-            text_token_print( (uint8_t) va_arg(ptr, uint8_t) );
+            text_token_print( (uint16_t) va_arg(ptr, uint16_t) );
             break;
 
             case 'u':   // uint8_t

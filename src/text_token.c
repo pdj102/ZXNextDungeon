@@ -35,7 +35,7 @@
 // Need to ensure the calling banked code is not swapped out on return 
 // Solution? Record the current bank in the MMU slot before swapping out and then switch it back in before returning
 // This would work becuase text_tolen_print_b does not call any other banked code and does not call itself
-void text_token_print(uint8_t c)
+void text_token_print(uint16_t c)
 {
     ZXN_WRITE_REG(0x57, 21);
     /* Call banked code */ 

@@ -27,7 +27,7 @@ extern char text_token_data[];
  * function prototypes
  ***************************************************/
 
-void text_token_print_b(uint8_t c);
+void text_token_print_b(uint16_t c);
 
 void dummy(void);
 

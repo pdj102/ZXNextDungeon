@@ -95,8 +95,9 @@ typedef struct object_s
     object_class_e          class;
     object_type_e           type;
     object_subtype_e        subtype;
-    uint8_t                 name_token;
-    struct creature_s       *creature_p;
+    uint16_t                name_token;
+    uint8_t                 count;              /**< number of objects*/
+    struct creature_s       *creature_p;        /**< pointer to associated creature object*/
 } object_t;
 
 // Typedef for object is_a functions

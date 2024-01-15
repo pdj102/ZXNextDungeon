@@ -68,8 +68,9 @@ void player_inventory_b( void )
 
     while (obj_p)
     {
-        text_printf("%c) ", index);
-        text_printf("%t\n", obj_p->name_token);
+        // text_printf("%c) ", index);
+        // text_printf("%t\n", obj_p->name_token);
+        text_printf("%c) %t\n", (char)index, (uint16_t)obj_p->name_token);        
 
         index++;
         obj_p = object_list_next(obj_p);

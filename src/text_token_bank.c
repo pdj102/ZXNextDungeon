@@ -39,7 +39,7 @@ void dummy(void)
 {
 
 }
-void text_token_print_b(uint8_t c)
+void text_token_print_b(uint16_t c)
 {
     char *text = &text_token_data[0] + (c * 25);
 
