@@ -15,7 +15,7 @@
 #include "text.h"
         
 
-#pragma output CRT_ORG_CODE = 0xe000
+#pragma output CRT_ORG_CODE = 0xC000
 
 /***************************************************
  * private types 

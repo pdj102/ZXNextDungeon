@@ -134,13 +134,23 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->blocking = 0;            
             break;
 
+        case RING_HP:
+            obj_ptr->class = ITEM;
+            obj_ptr->type = RING;
+            obj_ptr->subtype = RING_HP;
+            obj_ptr->name_token = 71;            
+            obj_ptr->tilemap_tile.tile_attr = 0;
+            obj_ptr->tilemap_tile.tile_id = 'R';
+            obj_ptr->blocking = 0;            
+            break;            
+
         default:
             obj_ptr->class = ITEM;
-            obj_ptr->type = POTION;
-            obj_ptr->subtype = POTION_SPEED;
-            obj_ptr->name_token = 32;            
+            obj_ptr->type = RING;
+            obj_ptr->subtype = RING_HP;
+            obj_ptr->name_token = 71;            
             obj_ptr->tilemap_tile.tile_attr = 0;
-            obj_ptr->tilemap_tile.tile_id = 35;
+            obj_ptr->tilemap_tile.tile_id = 'R';
             obj_ptr->blocking = 1; 
             break;             
     }

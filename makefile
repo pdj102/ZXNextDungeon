@@ -108,6 +108,12 @@ $(OBJDIR)/player_inventory_bank.o: $(SRCDIR)/player_inventory_bank.c $(SRCDIR)/p
 # - player_move_bank.o 
 $(OBJDIR)/player_move_bank.o: $(SRCDIR)/player_move_bank.c $(SRCDIR)/player_move_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
+# - player_pickup_bank.o 
+$(OBJDIR)/player_pickup_bank.o: $(SRCDIR)/player_pickup_bank.c $(SRCDIR)/player_pickup_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
+# - player_equip_bank.o 
+$(OBJDIR)/player_equip_bank.o: $(SRCDIR)/player_equip_bank.c $(SRCDIR)/player_equip_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
 
 # ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 

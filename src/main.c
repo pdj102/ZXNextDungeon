@@ -158,6 +158,9 @@ void init_game( void )
     object_t *trap_obj_p = object_create(TRAP_NOISE, 1, 1);      
     object_dungeon_list_add(trap_obj_p);
 
+    object_t *ring_obj_p = object_create(RING_HP, 3, 1);      
+    object_dungeon_list_add(ring_obj_p);
+
     tmp_event_p = event_create_object_cb(object_open, door_obj_p, 5);
     event_list_add(tmp_event_p);
 

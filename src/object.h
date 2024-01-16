@@ -34,7 +34,8 @@ typedef enum {
     MELEE_WEAPON,
     RANGED_WEAPON,
     ARMOUR,
-    JEWLERY, 
+    SHIELD, 
+    RING, 
     WAND,
 
     // CREATURE
@@ -68,7 +69,7 @@ typedef enum {
 
     ARMOUR_LEATHER,
 
-    JEWLERY_RING,
+    RING_HP,
 
     WAND_FIREBALL,
     

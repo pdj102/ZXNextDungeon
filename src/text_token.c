@@ -37,7 +37,15 @@
 // This would work becuase text_tolen_print_b does not call any other banked code and does not call itself
 void text_token_print(uint16_t c)
 {
-    ZXN_WRITE_REG(0x57, 21);
+    uint8_t current_bank;
+
+    /* Remember current bank*/
+    current_bank = ZXN_READ_MMU6();
+
     /* Call banked code */ 
+    ZXN_WRITE_MMU7(21);    
     text_token_print_b(c);
+
+    /* restore previous bank */
+    ZXN_WRITE_MMU6(current_bank);
 }

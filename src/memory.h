@@ -33,6 +33,7 @@
     --------|-----------------------------------------------------
     18      |   Dungeon map generator
     20      |   Object create
+    21      |   Text token 
     22      |   Creature create
     23      |   ? (Do not use causes a crash)
     24      |   Player code
@@ -42,7 +43,7 @@
     Page    |   Description
     --------|-----------------------------------------------------
     19      |   reserved for dungeon map generator 
-    21      |   Text token 
+
 
  ***************************************************/
 

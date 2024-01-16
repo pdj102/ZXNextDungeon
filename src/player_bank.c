@@ -25,6 +25,7 @@
 #include "player_strike_bank.h"
 #include "player_inventory_bank.h"
 #include "player_move_bank.h"
+#include "player_equip_bank.h"
 
 #include "dungeonmap.h"
 
@@ -104,7 +105,7 @@ void player_turn_b( void )
             player_close_b();
             break;            
 
-        case 'P':  // pickup
+        case 'P':  // pickup - get
             player_pickup_b();
             break;
 
@@ -122,7 +123,11 @@ void player_turn_b( void )
 
         case 'Q':  // show inventory
             player_quaff_b();
-            break;             
+            break;      
+
+        case 'E':  // equip
+            player_equip_b();
+            break;                    
 
         case '1':
             dungeonmap_scroll(-1, 0);
