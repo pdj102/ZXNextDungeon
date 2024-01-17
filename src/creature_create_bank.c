@@ -213,7 +213,8 @@ creature_t* creature_create_b(object_t *obj_p)
     creature_p->hp = creature_create_base_hp_b(subtype);
     creature_p->max_hp = creature_p->hp;
     creature_p->magic = creature_create_base_magic_b(subtype);
-    creature_p->max_magic = creature_p->magic;
+    // creature_p->max_magic = creature_p->magic;
+    creature_p->max_magic = 11;
     creature_p->ac = creature_create_base_ac_b(subtype);
     creature_p->melee_damage_roll = creature_create_base_melee_b(subtype);
 

@@ -51,8 +51,10 @@ void ui_display_stats_b( void )
     text_printf("WIS:%u\n", globaldata.player.player_creature_p->wis);
     text_printf("CHA:%u\n", globaldata.player.player_creature_p->cha);
     text_printf("\n");
-    text_printf(" HP:%u (%u)\n", globaldata.player.player_creature_p->hp, globaldata.player.player_creature_p->max_hp);
-    text_printf("MAG:%u (%u)\n", globaldata.player.player_creature_p->magic, globaldata.player.player_creature_p->max_magic);
+    text_printf(" HP:%u ", ((unsigned char)globaldata.player.player_creature_p->hp));
+    text_printf("(%u)\n", (unsigned char)globaldata.player.player_creature_p->max_hp);
+    text_printf(" MP:%u ", (uint8_t)globaldata.player.player_creature_p->magic);
+    text_printf("(%u)\n", (uint8_t)globaldata.player.player_creature_p->max_magic);
     text_printf("\n");
     text_printf("SPD:%u\n", globaldata.player.player_creature_p->speed);
 
