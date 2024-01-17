@@ -35,6 +35,8 @@
 #include "event.h"
 #include "event_list.h"
 
+#include "ui_stats.h"
+
 #include "adt/p_forward_list.h"
 
 /***************************************************
@@ -188,6 +190,8 @@ int main( void )
     s = sizeof(globaldata_t);
     text_print_uint16(s);
     text_print_string("\n");
+
+    ui_display_stats();
 
     while (1)
     {

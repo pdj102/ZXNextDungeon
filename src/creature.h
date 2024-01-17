@@ -32,23 +32,24 @@ typedef struct creature_s
 
     creature_class_e        creature_class;     /**< player or AI */
 
-    uint8_t                 max_hp;
-    uint8_t                 hp;
+    uint8_t                 max_hp;             /**< max hp = base + any modifiers*/
+    uint8_t                 hp;                 /** current hp */
     uint8_t                 ac;
 
     uint8_t                 speed;
     uint8_t                 energy;
 
-    uint8_t                 strength;
-    uint8_t                 dexteriy;
-    uint8_t                 intelligence;
-    uint8_t                 wisdom;
-    uint8_t                 charisma;
+    uint8_t                 str;
+    uint8_t                 dex;
+    uint8_t                 con;
+    uint8_t                 inte;
+    uint8_t                 wis;
+    uint8_t                 cha;
 
     uint8_t                 exp;
 
-    uint8_t                 max_magic;
-    uint8_t                 cur_magic;
+    uint8_t                 max_magic;          /**< max magic points = base + any modifiers*/
+    uint8_t                 magic;              /**< crrent magic points */
 
     uint8_t                 melee_modifier;
     dice_t                  melee_damage_roll;
@@ -56,9 +57,8 @@ typedef struct creature_s
 
     uint8_t                 ranged_modifier;
     dice_t                  ranged_damage_roll;
-    damage_type_t           ranged_damage_type;    
-
-    uint8_t                 max_range;
+    damage_type_t           ranged_damage_type;
+    uint8_t                 range;
         
 } creature_t;
 

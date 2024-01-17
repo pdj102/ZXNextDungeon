@@ -116,6 +116,13 @@ $(OBJDIR)/player_equip_bank.o: $(SRCDIR)/player_equip_bank.c $(SRCDIR)/player_eq
 	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
 
 # ####################################################################################################################################
+# PAGE_25
+# Target for UI code
+# - ui_stats_bank.o 
+$(OBJDIR)/ui_stats_bank.o: $(SRCDIR)/ui_stats_bank.c $(SRCDIR)/ui_stats_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_25 --constsegPAGE_25 -o $@ $<
+
+# ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 
 # This rule requires .c file to have a .h file
 # call C compiler
