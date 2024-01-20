@@ -111,12 +111,19 @@ $(OBJDIR)/player_move_bank.o: $(SRCDIR)/player_move_bank.c $(SRCDIR)/player_move
 # - player_pickup_bank.o 
 $(OBJDIR)/player_pickup_bank.o: $(SRCDIR)/player_pickup_bank.c $(SRCDIR)/player_pickup_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
-# - player_equip_bank.o 
-$(OBJDIR)/player_equip_bank.o: $(SRCDIR)/player_equip_bank.c $(SRCDIR)/player_equip_bank.h $(PRAGMA_FILE)
+# - player_wield_bank.o 
+$(OBJDIR)/player_wield_bank.o: $(SRCDIR)/player_wield_bank.c $(SRCDIR)/player_wield_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
 # - player_calc_stats_bank.o 
 $(OBJDIR)/player_calc_stats_bank.o: $(SRCDIR)/player_calc_stats_bank.c $(SRCDIR)/player_calc_stats_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
+# - player_takeoff_bank.o 
+$(OBJDIR)/player_takeoff_bank.o: $(SRCDIR)/player_takeoff_bank.c $(SRCDIR)/player_takeoff_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
+# - player_equipment_bank.o 
+$(OBJDIR)/player_equipment_bank.o: $(SRCDIR)/player_equipment_bank.c $(SRCDIR)/player_equipment_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
+	
 
 # ####################################################################################################################################
 # PAGE_25

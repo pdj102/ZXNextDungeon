@@ -2,16 +2,17 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief The player code - inventory list and actions
-
-    Code is banked do not call directly
+    @brief Game object action - takeoff
 
  ***************************************************/
 
-#ifndef PLAYER_INVENTORY_BANK_H 
-    #define PLAYER_INVENTORY_BANK_H 
+#ifndef OBJECT_TAKEOFF_H 
+    #define OBJECT_TAKEOFF_H 
+
+#include <stdint.h>
 
 #include "object.h"
+
 #include "creature.h"
 
 /***************************************************
@@ -22,22 +23,19 @@
  * variable declarations
  ***************************************************/
 
+
 /***************************************************
  * function prototypes
  ***************************************************/
 
 /**
- * Player list inventory action
+ * Is object takeoffable? 
  *
- * @return void
+ * @param *obj_p    pointer to object to check
+ * 
+ * @return uint8_t  1 if takeoffable or 0 if not
  */
-void player_inventory_list_b( void );
+uint8_t object_takeoff_is(const object_t *obj_p);
 
-/**
- * Select an object of type 'is_a' from inventory
- *
- * @return void
- */
-object_t *player_inventory_select_object_is_a_b( object_is_a is_a_p );
 
 #endif

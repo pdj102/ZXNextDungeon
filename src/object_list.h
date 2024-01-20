@@ -87,4 +87,28 @@ object_t *object_list_first_is(object_t *container_obj_p, object_is_a is_a_p);
  */
 object_t *object_list_next_is(object_t *obj_p, object_is_a is_a_p);
 
+/**
+ * Returns the next object that is both type1 and type2 in the object list
+ * 
+ * For example, an inventory item of a type that is also not being wielded by the player
+ * 
+ * @param   *obj_ptr        pointer to object previously returned by first() or next()
+ * @param   object_is_a_p   pointer to function that returns 1 if object is of required type
+ * 
+ * @return  *object_t       pointer to next object or 0 if no more objects
+ */
+object_t *object_list_first_is2( object_t *container_obj_p, object_is_a is_a_p1, object_is_a is_a_p2 );
+
+/**
+ * Returns the next object that is both type1 and type2 in the object list
+ * 
+ * For example, an inventory item of a type that is also not being wielded by the player
+ * 
+ * @param   *obj_ptr        pointer to object previously returned by first() or next()
+ * @param   object_is_a_p   pointer to function that returns 1 if object is of required type
+ * 
+ * @return  *object_t       pointer to next object or 0 if no more objects
+ */
+object_t *object_list_next_is2( object_t *obj_p, object_is_a is_a_p1, object_is_a is_a_p2 );
+
 #endif

@@ -10,12 +10,11 @@
 
 #pragma output CRT_ORG_CODE = 0xC000
 
-#include "player_bank.h"
+#include "player_quaff_bank.h"
 
 #include <stdint.h>
 
-#include "player.h"
-#include "player_quaff_bank.h"
+#include "player_inventory_bank.h"
 
 #include "globaldata.h"
 
@@ -55,7 +54,7 @@ void player_quaff_b( void)
 {
     object_t *obj_p;
 
-    obj_p = select_object_from_inventory_b( object_quaff_is);
+    obj_p = player_inventory_select_object_is_a_b( object_quaff_is);
 
     if ( object_quaff(globaldata.player.player_creature_p, obj_p) )
     {

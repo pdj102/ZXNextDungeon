@@ -33,7 +33,7 @@
  * 
  * @return uint8_t  1 if dropable or 0 if not
  */
-uint8_t oobject_drop_is(object_t *obj);
+uint8_t object_drop_is(object_t *obj);
 
 /**
  * Drop object

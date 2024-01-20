@@ -16,6 +16,7 @@
 
 #include "player.h"
 #include "player_drop_bank.h"
+#include "player_inventory_bank.h"
 
 #include "globaldata.h"
 
@@ -52,17 +53,27 @@
  ***************************************************/
 
 // TODO implement drop from inventory 
+// TODO manage if wielding 
 void player_drop_b( void )
 {
     object_t *obj_p;
 
-    if ( obj_p = object_drop_find_first(globaldata.player.player_creature_p->obj_p) )
-    {
-        globaldata.player.player_creature_p->energy = 0;
+    uint8_t obj_type;
 
-        object_drop(obj_p, globaldata.player.player_creature_p->obj_p);
-        text_printf("YOU DROP THE %t\n", (uint16_t) obj_p->name_token);   
-        return;     
+    obj_p = player_inventory_select_object_is_a_b( object_drop_is );
+
+    if (!obj_p)
+    {
+        return;
     }
-    text_printf("NOTHING TO DROP\n");
+
+    globaldata.player.player_creature_p->energy = 0;
+    
+    obj_type = obj_p->type;
+
+    object_drop(obj_p, globaldata.player.player_creature_p->obj_p);
+    text_printf("YOU DROP THE %t\n", (uint16_t) obj_p->name_token);
+
+    // NB droping an object will have no effect on states. No need to recalc stats 
+
 }

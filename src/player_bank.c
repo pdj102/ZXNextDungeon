@@ -24,8 +24,10 @@
 #include "player_drop_bank.h"
 #include "player_strike_bank.h"
 #include "player_inventory_bank.h"
+#include "player_equipment_bank.h"
 #include "player_move_bank.h"
-#include "player_equip_bank.h"
+#include "player_wield_bank.h"
+#include "player_takeoff_bank.h"
 
 #include "dungeonmap.h"
 
@@ -51,9 +53,6 @@
 /***************************************************
  * private function prototypes
  ***************************************************/
-
-void move_b(int8_t dx, int8_t dy);
-void inventory_b( void );
 
 
 /***************************************************
@@ -117,17 +116,25 @@ void player_turn_b( void )
             player_strike_b();
             break;                            
 
-        case 'I':  // show inventory
-            player_inventory_b();
+        case 'I':  // list inventory
+            player_inventory_list_b();
             break;
 
         case 'Q':  // show inventory
             player_quaff_b();
             break;      
 
-        case 'E':  // equip
-            player_equip_b();
-            break;                    
+        case 'W':  // wield
+            player_wield_b();
+            break;
+
+        case 'E':  // list equipped
+            player_equipment_list_b();
+            break;
+
+        case 'T':  // take off
+            player_takeoff_b();
+            break;                                     
 
         case '1':
             dungeonmap_scroll(-1, 0);
@@ -151,8 +158,6 @@ uint8_t get_dir_or_cancel_b(int8_t *dx, int8_t *dy)
 {
     unsigned int key;
 
-    // while ((key = in_Inkey()) == 0) ;   // loop while no key pressed
-    // in_WaitForNoKey();    // wait no key
     while ((key = in_inkey()) == 0) ;   // loop while no key pressed
     in_wait_nokey();    // wait no key   
 
@@ -184,60 +189,4 @@ uint8_t get_dir_or_cancel_b(int8_t *dx, int8_t *dy)
     }
 }
 
-object_t *select_object_from_inventory_b( object_is_a is_a_p )
-{
-    object_t *obj_p;
-    uint8_t letter_max = 'A';
-    uint8_t index, index_current;
-    unsigned int key;    
 
-    // Does the player have at least one item of the required type?
-    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, is_a_p);
-
-    if (!obj_p)
-    {
-        text_printf("YOU HAVE NO ITEMS\n");
-        return 0;
-    }
-
-    // Display the list of items of the required type
-    text_select_win( WIN_LARGE);
-    text_cls();
-
-    while (obj_p)
-    {
-        text_printf("%c) %t\n", (char)letter_max, (uint16_t)obj_p->name_token);
-
-        letter_max++;
-        obj_p = object_list_next_is(obj_p, is_a_p);
-    }
-
-    // User selects item or presses any other key to cancel
-    text_printf("\nSELECT ITEM LETTER\n");
-    text_select_win( WIN_MESSAGES);
-
-    while ((key = in_inkey()) == 0) ;   // loop while no key pressed
-    in_wait_nokey();    // wait no key
-
-    if (! (key >= 'A' && key <= letter_max) )
-    {
-        // cancel
-        return 0;
-    }
-
-    // Get the index of the selected object. 'A' is index 1, 'B' is 2 etc
-    index = key - 'A';  
-
-    // Find object at index 
-    index_current = 1;
-    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, is_a_p);
-
-    while (index_current <= index)
-    {
-        obj_p = object_list_next_is(obj_p, is_a_p);
-        index_current++;
-    }
-
-    // return selected object
-    return obj_p;
-}

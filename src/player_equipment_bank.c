@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief The player code - inventory list and actions
+    @brief The player code - equipment list and actions
 
     Code is banked do not call directly
 
@@ -16,7 +16,7 @@
 #include <input.h>              // Functions for Reading Keyboards, Joysticks and Mice
 
 #include "player.h"
-#include "player_inventory_bank.h"
+#include "player_equipment_bank.h"
 
 #include "globaldata.h"
 
@@ -37,7 +37,7 @@
 /***************************************************
  * private function prototypes
  ***************************************************/
-uint8_t not_wielding_b(object_t *obj_p);
+uint8_t wielding_b(object_t *obj_p);
 
 /***************************************************
  * private variables - static
@@ -50,19 +50,17 @@ uint8_t not_wielding_b(object_t *obj_p);
 
 //TODO dedupe common inventory and equipment code
 
-void player_inventory_list_b( void )
+void player_equipment_list_b( void )
 {
     object_t *obj_p;
     unsigned char index = 'A';
     unsigned int key;    
 
-
-    // obj_p = object_list_first(globaldata.player.player_creature_p->obj_p);
-    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, not_wielding_b );
+    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, wielding_b );
     
     if (!obj_p)
     {
-        text_printf("THERE IS NOTHING IN YOUR INVENTORY\n");
+        text_printf("YOU HAVE NOTHING EQUIPPED\n");
         return;
     }
     
@@ -71,13 +69,9 @@ void player_inventory_list_b( void )
 
     while (obj_p)
     {
-        // text_printf("%c) ", index);
-        // text_printf("%t\n", obj_p->name_token);
-        text_printf("%c) %t\n", (char)index, (uint16_t)obj_p->name_token);        
-
+        text_printf("%c) %t\n", (char)index, (uint16_t)obj_p->name_token);
         index++;
-        // obj_p = object_list_next(obj_p);
-        obj_p = object_list_next_is(globaldata.player.player_creature_p->obj_p, not_wielding_b );
+        obj_p = object_list_next_is(globaldata.player.player_creature_p->obj_p, wielding_b );
     }
 
     text_printf("\n PRESS ANY KEY\n");
@@ -87,23 +81,23 @@ void player_inventory_list_b( void )
     text_select_win( WIN_MESSAGES);
 }
 
-object_t *player_inventory_select_object_is_a_b( object_is_a is_a_p )
+object_t *player_equipment_select_object( void )
 {
     object_t *obj_p;
     uint8_t letter_max = 'A';
     uint8_t index, index_current;
     unsigned int key;    
 
-    // Does the player have at least one item of the required type?
-    obj_p = object_list_first_is2(globaldata.player.player_creature_p->obj_p, is_a_p, not_wielding_b);
+    // Does the player have at least one item equipped?
+    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, wielding_b);
 
     if (!obj_p)
     {
-        text_printf("YOU HAVE NO ITEMS\n");
+        text_printf("YOU HAVE NOTHING EQUIPPED\n");
         return 0;
     }
 
-    // Display the list of items of the required type
+    // Display the list of equipped items
     text_select_win( WIN_LARGE);
     text_cls();
 
@@ -112,7 +106,7 @@ object_t *player_inventory_select_object_is_a_b( object_is_a is_a_p )
         text_printf("%c) %t\n", (char)letter_max, (uint16_t)obj_p->name_token);
 
         letter_max++;
-        obj_p = object_list_next_is2(obj_p, is_a_p, not_wielding_b);
+        obj_p = object_list_next_is(obj_p, wielding_b);
     }
 
     // User selects item or presses any other key to cancel
@@ -133,11 +127,11 @@ object_t *player_inventory_select_object_is_a_b( object_is_a is_a_p )
 
     // Find object at index 
     index_current = 1;
-    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, is_a_p);
+    obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, wielding_b);
 
     while (index_current <= index)
     {
-        obj_p = object_list_next_is(obj_p, is_a_p);
+        obj_p = object_list_next_is(obj_p, wielding_b);
         index_current++;
     }
 
@@ -146,7 +140,7 @@ object_t *player_inventory_select_object_is_a_b( object_is_a is_a_p )
 }
 
 
-uint8_t not_wielding_b(object_t *obj_p)
+uint8_t wielding_b(object_t *obj_p)
 {
     if (globaldata.player.armour == obj_p ||
         globaldata.player.melee_weapon == obj_p ||
@@ -154,8 +148,8 @@ uint8_t not_wielding_b(object_t *obj_p)
         globaldata.player.ring_left == obj_p ||
         globaldata.player.ring_right == obj_p)
     {
-        return 0;
+        return 1;
     }
 
-    return 1;
+    return 0;
 }

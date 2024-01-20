@@ -2,12 +2,12 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game object action - equip
+    @brief Game object action - wield
 
 **************************************************/
 #include <stdint.h>
 
-#include "object_equip.h"
+#include "object_wield.h"
 
 #include "object.h"
 
@@ -27,7 +27,7 @@
  * functions
  ***************************************************/
 
-uint8_t object_equip_is(const object_t *obj_p)
+uint8_t object_wield_is(const object_t *obj_p)
 {
     switch (obj_p->type)
     {

@@ -2,16 +2,17 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief The player code - equip an item
-
-    Code is banked do not call directly
+    @brief Game object action - wield
 
  ***************************************************/
 
-#ifndef PLAYER_EQUIP_BANK_H 
-    #define PLAYER_EQUIP_BANK_H 
+#ifndef OBJECT_WIELD_H 
+    #define OBJECT_WIELD_H 
+
+#include <stdint.h>
 
 #include "object.h"
+
 #include "creature.h"
 
 /***************************************************
@@ -22,15 +23,19 @@
  * variable declarations
  ***************************************************/
 
+
 /***************************************************
  * function prototypes
  ***************************************************/
 
 /**
- * Player equip action
+ * Is object wieldable? 
  *
- * @return void
+ * @param *obj_p    pointer to object to check
+ * 
+ * @return uint8_t  1 if wieldable or 0 if not
  */
-void player_equip_b( void );
+uint8_t object_wield_is(const object_t *obj_p);
+
 
 #endif
