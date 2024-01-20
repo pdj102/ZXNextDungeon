@@ -204,9 +204,7 @@ int main( void )
         event_list_update_all();
 
         creature_list_update_all();
-
-        ai_pathfind(globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y);
-        ai_pathfind_print();        
+     
     }
     return 0;
 }

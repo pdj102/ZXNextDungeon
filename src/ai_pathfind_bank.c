@@ -56,6 +56,10 @@ extern uint8_t frontier_count;
 extern uint8_t x_offset;
 extern uint8_t y_offset;
 extern uint8_t neighbor;
+extern uint8_t max_x;
+extern uint8_t min_x;
+extern uint8_t max_y;
+extern uint8_t min_y;
 
 /***************************************************
  * functions
@@ -74,9 +78,17 @@ void ai_pathfind_b(uint8_t x, uint8_t y)
     next.x = x;
     next.y = y;
 
-    for(x = 0; x < 40; x++)
+    // Limit the bounds of the path finding to a maximum of 10 x 10 squares around the player
+    if (x<10) { min_x = 0; } else { min_x = x - 10; }
+    if (x> DUNGEONMAP_WIDTH - 10) { max_x = DUNGEONMAP_WIDTH; } else { max_x = x + 10; }
+    if (y<10) { min_y = 0; } else { min_y = y - 10; }
+    if (y> DUNGEONMAP_HEIGHT - 10) { max_y = DUNGEONMAP_HEIGHT; } else { max_y = y + 10; }
+
+    // clear previous path information (currently only within limits of new path)
+    // todo - faster to memcopy 0 over the array?
+    for(x = min_x; x < max_x; x++)
     {
-        for (y = 0; y < 40; y++)
+        for (y = min_y; y < max_y; y++)
         {
             reached[x][y].reached = 0;
             reached[x][y].reached_from = NO_DIR;
@@ -93,8 +105,8 @@ void ai_pathfind_b(uint8_t x, uint8_t y)
     {
         neighbor = 0;
         // TO DO add limit to depth of search 
-        // TO DO creatures will not avoid each other. We need to treat a square with a monster on it as passable otherwise the creature cannot move
-        // TO DO implement A* so creatures can avoid each other. Also we can open doors if intelligent etc passing in params to path calculator
+        // TO DO handle blocking objects (object mark map?)
+        // TO DO Intelligent vs non-intelligent can open doors so not blocked
 
         while (get_next_neighbor_b(&current, &next, &direction_from))  
         {
@@ -226,10 +238,10 @@ uint8_t get_next_neighbor_coord_b(coord_t *current, coord_t *next, direction_t *
     next->x = current->x;
     next->y = current->y;
 
-    // up
+    // down
     if (neighbor == 0)
     {
-        if (next->y+1 < DUNGEONMAP_HEIGHT)
+        if (next->y+1 < max_y)
         {
             next->y++;
             *direction_from = N;
@@ -239,7 +251,7 @@ uint8_t get_next_neighbor_coord_b(coord_t *current, coord_t *next, direction_t *
     } else if (neighbor == 1)
     // right
     {
-        if (next->x+1 < DUNGEONMAP_WIDTH)
+        if (next->x+1 < max_x)
         {
             next->x++;
             *direction_from = W;            
@@ -247,9 +259,9 @@ uint8_t get_next_neighbor_coord_b(coord_t *current, coord_t *next, direction_t *
         neighbor++;
         return 1;
     } else if (neighbor == 2)
-    // down
+    // up
     {
-        if (next->y-1 >= 0)
+        if (next->y-1 >= min_y)
         {
             next->y--;
             *direction_from = S;              
@@ -259,7 +271,7 @@ uint8_t get_next_neighbor_coord_b(coord_t *current, coord_t *next, direction_t *
     } else if (neighbor == 3)
     // left
     {
-        if (next->x-1 >= 0)
+        if (next->x-1 >= min_x)
         {
             next->x--;
             *direction_from = E;           

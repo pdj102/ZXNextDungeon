@@ -17,6 +17,8 @@
 #include "player.h"
 #include "player_move_bank.h"
 
+#include "ai_pathfind.h"
+
 #include "globaldata.h"
 
 #include "text.h"
@@ -55,5 +57,9 @@ void player_move_b(int8_t dx, int8_t dy)
     if (object_move_by(globaldata.player.player_creature_p->obj_p, dx, dy))
     {
         globaldata.player.player_creature_p->energy = 0;
+
+        //update AI path
+        ai_pathfind(globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y);
+        ai_pathfind_print();   
     }
 }

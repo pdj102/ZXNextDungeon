@@ -15,6 +15,11 @@ PUBLIC _y_offset
 
 PUBLIC _neighbor
 
+PUBLIC _max_x
+PUBLIC _min_x
+PUBLIC _max_y
+PUBLIC _min_y
+
 
 ; Frontier 100 elements * 2 bytes 
 ._frontier
@@ -42,3 +47,11 @@ ds 1
 ._neighbor
 ds 1
 
+._max_x
+ds 1
+._min_x
+ds 1
+._max_y
+ds 1
+._min_y
+ds 1
