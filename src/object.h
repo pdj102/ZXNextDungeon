@@ -96,6 +96,8 @@ typedef struct object_s
     object_class_e          class;
     object_type_e           type;
     object_subtype_e        subtype;
+    int8_t                  attr_1;             /**< attribute 1. Purpose determined by object's subtype */
+    int8_t                  attr_2;             /**< attribute 2. Purpose determined by object's subtype */
     uint16_t                name_token;
     uint8_t                 count;              /**< number of objects*/
     struct creature_s       *creature_p;        /**< pointer to associated creature object*/

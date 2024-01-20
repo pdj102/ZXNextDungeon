@@ -165,29 +165,52 @@ uint8_t creature_create_base_cha_b(object_subtype_e subtype)
     }
 }
 
-dice_t creature_create_base_melee_b(object_subtype_e subtype)
+creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
 {
-    dice_t d;
+    creature_attack_t a;
 
     switch (subtype)
     {
     case BEAST_SNAKE:
-        d.n = 1;
-        d.d = 4;
-        d.mod = 0;
-        return d;
+        a.damage_type = PIERCING;
+        a.damage_roll.n = 1;
+        a.damage_roll.d = 4;
+        a.damage_roll.mod = 0;
+        a.attack_bonus = 5;
+        return a;
     case HUMANOID_HUMAN:
-        d.n = 1;
-        d.d = 6;
-        d.mod = 0;
-        return d;
+        a.damage_type = BLUDGEONGING;
+        a.damage_roll.n = 1;
+        a.damage_roll.d = 6;
+        a.damage_roll.mod = 0;
+        a.attack_bonus = 0;
+        return a;
     default:
-        d.n = 1;
-        d.d = 1;
-        d.mod = 0;
-        return d;
+        a.damage_type = NONE;
+        a.damage_roll.n = 0;
+        a.damage_roll.d = 0;
+        a.damage_roll.mod = 0;
+        a.attack_bonus = 0;
+        return a;
     }
 }
+
+creature_attack_t creature_create_base_ranged_b(object_subtype_e subtype)
+{
+    creature_attack_t a;
+
+    switch (subtype)
+    {
+    default:
+        a.damage_type = NONE;
+        a.damage_roll.n = 0;
+        a.damage_roll.d = 0;
+        a.damage_roll.mod = 0;
+        a.attack_bonus = 0;
+        return a;
+    }
+}
+
 
 creature_t* creature_create_b(object_t *obj_p)
 {
@@ -210,13 +233,14 @@ creature_t* creature_create_b(object_t *obj_p)
     creature_p->creature_class = AI;
 
     creature_p->speed = creature_create_base_speed_b(subtype);
-    creature_p->hp = creature_create_base_hp_b(subtype);
-    creature_p->max_hp = creature_p->hp;
-    creature_p->magic = creature_create_base_magic_b(subtype);
-    // creature_p->max_magic = creature_p->magic;
-    creature_p->max_magic = 11;
+    creature_p->max_hp = creature_create_base_hp_b(subtype);
+    creature_p->hp = creature_p->max_hp;
+    creature_p->max_mp = creature_create_base_magic_b(subtype);
+    creature_p->mp = creature_p->max_mp;
     creature_p->ac = creature_create_base_ac_b(subtype);
-    creature_p->melee_damage_roll = creature_create_base_melee_b(subtype);
+
+    creature_p->melee = creature_create_base_melee_b(subtype);
+    creature_p->ranged = creature_create_base_ranged_b(subtype);
 
     creature_p->str = creature_create_base_str_b(subtype);
     creature_p->dex = creature_create_base_dex_b(subtype);

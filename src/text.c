@@ -135,6 +135,12 @@ void text_printf(const char *text, ...)
     va_end(ptr);
 }
 
+void text_print_at(uint8_t x, uint8_t y)
+{
+    text_win->c_x = x + text_win->x;
+    text_win->c_y = y + text_win->y;
+}
+
 void text_print_string(const char text[])
 {
     uint8_t l = strlen(text);

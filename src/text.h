@@ -117,6 +117,17 @@ void text_printf(const char *text, ...);
 void text_print_string(const char text[]);
 
 /**
+ * @brief Move cursor to x, y relative to window top left corner
+ * 
+ * No check is made to confirm if x and y is within text window in current window
+ * 
+ * @param x  x 
+ * @param y  y 
+ * @return void
+ */
+void text_print_at(uint8_t x, uint8_t y);
+
+/**
  * @brief Print text string on tilemap at x, y
  * 
  * No check is made to confirm if x and y is within text window in current window
@@ -127,7 +138,6 @@ void text_print_string(const char text[]);
  * @return void
  */
 void text_print_string_at(uint8_t x, uint8_t y, const char text[]);
-
 
 /**
  * @brief Print uint8 to tilemap at cursor position in current window

@@ -88,10 +88,10 @@ void player_strike_b( void )
         text_printf("YOU HIT THE %t\n", (uint16_t)target_p->obj_p->name_token);
 
         // Roll for melee damage
-        damage_roll = dice_roll(&globaldata.player.player_creature_p->melee_damage_roll) + globaldata.player.player_creature_p->melee_modifier;
+        damage_roll = dice_roll(&globaldata.player.player_creature_p->melee.damage_roll);
 
         // Attempt to apply damage
-        actual_damage = creature_damage(target_p, damage_roll, globaldata.player.player_creature_p->melee_damage_type);
+        actual_damage = creature_damage(target_p, damage_roll, globaldata.player.player_creature_p->melee.damage_type);
 
         // Was the target immune, vulnerable or resist damage? 
         if (actual_damage == 0)

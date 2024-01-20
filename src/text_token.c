@@ -40,12 +40,12 @@ void text_token_print(uint16_t c)
     uint8_t current_bank;
 
     /* Remember current bank*/
-    current_bank = ZXN_READ_MMU6();
+    current_bank = ZXN_READ_MMU7();
 
     /* Call banked code */ 
     ZXN_WRITE_MMU7(21);    
     text_token_print_b(c);
 
     /* restore previous bank */
-    ZXN_WRITE_MMU6(current_bank);
+    ZXN_WRITE_MMU7(current_bank);
 }

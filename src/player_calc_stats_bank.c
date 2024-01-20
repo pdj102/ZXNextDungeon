@@ -2,39 +2,35 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Text token
+    @brief Calculate player stats
 
-    Banked code. Do not call directly     
+    Apply modifiers, bonuses, effects etc to base stats
 
  ***************************************************/
+#include "player_calc_stats_bank.h"
 
-#ifndef UI_STATS_BANK_H 
-    #define UI_STATS_BANK_H 
+#include <arch/zxn.h>           // ZX Spectrum Next architecture specfic functions 
 
-/***************************************************
- * types
- ***************************************************/
+#include "player.h"
 
 /***************************************************
- * variable declarations
+ * private types
  ***************************************************/
 
 /***************************************************
- * function prototypes
+ * private function prototypes
  ***************************************************/
 
-/**
- * Display player ability scores
- * 
- * @return void
- */
-void ui_display_ability_scores_b( void );
+/***************************************************
+ * private variables - static
+ ***************************************************/
 
-/**
- * Display player hp and mp scores
- * 
- * @return void
- */
-void ui_display_stats_b( void );
 
-#endif
+/***************************************************
+ * functions
+ ***************************************************/
+
+void player_calc_stats_b( void )
+{
+
+}

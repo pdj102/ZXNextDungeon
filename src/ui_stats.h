@@ -22,8 +22,15 @@
  ***************************************************/
 
 /**
- * Display player stats
- *
+ * Display player ability scores
+ * 
+ * @return void
+ */
+void ui_display_ability_scores( void );
+
+/**
+ * Display player hp and mp scores
+ * 
  * @return void
  */
 void ui_display_stats( void );

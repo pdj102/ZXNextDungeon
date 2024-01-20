@@ -39,7 +39,7 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
     // reduce attackers energy 
     attacker_p->energy -= 100;
 
-    attack_roll = dice_1d20() + attacker_p->melee_modifier;
+    attack_roll = dice_1d20() + attacker_p->melee.attack_bonus;
 
     if (attack_roll < target_p->ac)
     {

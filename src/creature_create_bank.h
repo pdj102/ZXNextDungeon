@@ -41,4 +41,16 @@
  */
 creature_t* creature_create_b(object_t *obj_p);
 
+uint8_t creature_create_base_speed_b(object_subtype_e subtype);
+uint8_t creature_create_base_hp_b(object_subtype_e subtype);
+uint8_t creature_create_base_magic_b(object_subtype_e subtype);
+uint8_t creature_create_base_ac_b(object_subtype_e subtype);
+creature_attack_t creature_create_base_melee_b(object_subtype_e subtype);
+uint8_t creature_create_base_str_b(object_subtype_e subtype);
+uint8_t creature_create_base_dex_b(object_subtype_e subtype);
+uint8_t creature_create_base_con_b(object_subtype_e subtype);
+uint8_t creature_create_base_inte_b(object_subtype_e subtype);
+uint8_t creature_create_base_wis_b(object_subtype_e subtype);
+uint8_t creature_create_base_cha_b(object_subtype_e subtype);
+
 #endif

@@ -18,7 +18,7 @@
 #include "tilemap.h"
 #include "dungeonmap.h"
 #include "dungeonmap_generator.h"
-#include "player.h"
+
 #include "object.h"
 #include "object_list.h"
 #include "object_dungeon_list.h"
@@ -31,6 +31,9 @@
 #include "creature.h"
 #include "creature_list.h"
 #include "creature_create.h"
+
+#include "player.h"
+#include "player_calc_stats.h"
 
 #include "event.h"
 #include "event_list.h"
@@ -169,22 +172,18 @@ void init_game( void )
     tmp_event_p = event_create_object_cb(object_open, chest_obj_p, 6);
     event_list_add(tmp_event_p);    
 
+    player_calc_stats();
 }
 
 int main( void )
 {
-    zx_border(1);
     init_game();
-    zx_border(4);
  
     dungeonmap_generate();
 
     text_cls();
     text_printf("WELCOME TO DUNGEON!\n");
-    // text_printf("TEST T1 %t T2 %t UINT8 %u INT8 %d \n", (uint8_t)1, (uint8_t)2, (uint8_t)255, (int8_t)-128);
-    // text_printf("TEST T1 %t T2 %t UINT8 %u INT8 %d \n", 1, 2, (uint8_t)255, (int8_t)-128);
     text_printf("TEST T1 %t T2 %t UINT8 %u INT8 %d \n", (uint16_t)1, (uint16_t)2, (uint8_t)255, (int8_t)-128);
-
     text_print_string("GLOBAL DATA SIZE:");
     uint16_t s;
     s = sizeof(globaldata_t);
@@ -192,6 +191,7 @@ int main( void )
     text_print_string("\n");
 
     ui_display_stats();
+    ui_display_ability_scores();
 
     while (1)
     {

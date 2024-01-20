@@ -21,8 +21,16 @@
 typedef enum {PLAYER, AI} creature_class_e;
 
 typedef enum {
-    SLASH
+    NONE, ACID, BLUDGEONGING, COLD, FIRE, FORCE, LIGHTNING, PIERCING, POSION, SLASHING
 } damage_type_t;
+
+typedef struct creature_attack_s
+{
+    dice_t                  damage_roll;
+    damage_type_t           damage_type;
+    uint8_t                 attack_bonus;              /**< Calculated attack bonus */
+    uint8_t                 range;
+} creature_attack_t;
 
 typedef struct creature_s
 {
@@ -48,17 +56,11 @@ typedef struct creature_s
 
     uint8_t                 exp;
 
-    uint8_t                 max_magic;          /**< max magic points = base + any modifiers*/
-    uint8_t                 magic;              /**< crrent magic points */
+    uint8_t                 max_mp;          /**< max magic points = base + any modifiers*/
+    uint8_t                 mp;              /**< current magic points */
 
-    uint8_t                 melee_modifier;
-    dice_t                  melee_damage_roll;
-    damage_type_t           melee_damage_type;
-
-    uint8_t                 ranged_modifier;
-    dice_t                  ranged_damage_roll;
-    damage_type_t           ranged_damage_type;
-    uint8_t                 range;
+    creature_attack_t      melee;
+    creature_attack_t      ranged;
         
 } creature_t;
 

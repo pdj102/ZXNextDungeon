@@ -2,14 +2,15 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Text token
+    @brief Calculate player stats
 
-    Banked code. Do not call directly     
+    Apply modifiers, bonuses, effects etc to base stats
 
  ***************************************************/
 
-#ifndef UI_STATS_BANK_H 
-    #define UI_STATS_BANK_H 
+#ifndef PLAYER_CALC_STATS_H 
+    #define PLAYER_CALC_STATS_H 
+
 
 /***************************************************
  * types
@@ -24,17 +25,12 @@
  ***************************************************/
 
 /**
- * Display player ability scores
+ * Calculate player stats
+ *
+ * Apply modifiers, bonuses, effects etc to base stats
  * 
  * @return void
  */
-void ui_display_ability_scores_b( void );
-
-/**
- * Display player hp and mp scores
- * 
- * @return void
- */
-void ui_display_stats_b( void );
+void player_calc_stats( void );
 
 #endif

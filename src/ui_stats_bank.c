@@ -16,6 +16,7 @@
 #include "text.h"
 
 #include "creature.h"
+#include "creature_create.h"
         
 
 #pragma output CRT_ORG_CODE = 0xC000
@@ -38,25 +39,53 @@
  * functions definitions
  ***************************************************/
 
+void ui_display_ability_scores_b( void )
+{
+    object_subtype_e t = globaldata.player.player_creature_p->obj_p->subtype;
+
+    text_select_win( WIN_STATS );
+
+    text_print_at(0, 12);
+    text_printf("STR:%u", globaldata.player.player_creature_p->str);
+    text_printf("(%u)\n", creature_create_base_str(t));
+    text_printf("DEX:%u", globaldata.player.player_creature_p->dex);
+    text_printf("(%u)\n", creature_create_base_dex(t));
+    text_printf("CON:%u", globaldata.player.player_creature_p->con);
+    text_printf("(%u)\n", creature_create_base_con(t));
+    text_printf("INT:%u", globaldata.player.player_creature_p->inte);
+    text_printf("(%u)\n", creature_create_base_inte(t));
+    text_printf("WIS:%u", globaldata.player.player_creature_p->wis);
+    text_printf("(%u)\n", creature_create_base_wis(t));
+    text_printf("CHA:%u", globaldata.player.player_creature_p->cha);
+    text_printf("(%u)\n", creature_create_base_cha(t));
+
+    text_select_win( WIN_MESSAGES );
+}
+
 void ui_display_stats_b( void )
 {
     text_select_win( WIN_STATS );
+    text_print_at(0, 1);
 
-    text_printf("PLAYER STATS\n\n");
+    text_printf("HP:%u ", globaldata.player.player_creature_p->hp);
+    text_printf("(%u)\n", globaldata.player.player_creature_p->max_hp);
+    text_printf("MP:%u ", globaldata.player.player_creature_p->mp);
+    text_printf("(%u)\n", globaldata.player.player_creature_p->max_mp);
 
-    text_printf("STR:%u\n", globaldata.player.player_creature_p->str);
-    text_printf("DEX:%u\n", globaldata.player.player_creature_p->dex);
-    text_printf("CON:%u\n", globaldata.player.player_creature_p->con);
-    text_printf("INT:%u\n", globaldata.player.player_creature_p->inte);
-    text_printf("WIS:%u\n", globaldata.player.player_creature_p->wis);
-    text_printf("CHA:%u\n", globaldata.player.player_creature_p->cha);
     text_printf("\n");
-    text_printf(" HP:%u ", ((unsigned char)globaldata.player.player_creature_p->hp));
-    text_printf("(%u)\n", (unsigned char)globaldata.player.player_creature_p->max_hp);
-    text_printf(" MP:%u ", (uint8_t)globaldata.player.player_creature_p->magic);
-    text_printf("(%u)\n", (uint8_t)globaldata.player.player_creature_p->max_magic);
-    text_printf("\n");
-    text_printf("SPD:%u\n", globaldata.player.player_creature_p->speed);
+    text_printf("AC:%u\n", globaldata.player.player_creature_p->ac);
+    text_printf("SPEED:%u\n", globaldata.player.player_creature_p->speed);
 
-    text_select_win( WIN_MESSAGES );
+    text_printf("\n");
+    text_printf("MELEE:%u", globaldata.player.player_creature_p->melee.damage_roll.n);
+    text_printf("D%u", globaldata.player.player_creature_p->melee.damage_roll.d);
+    text_printf("+%u\n", globaldata.player.player_creature_p->melee.damage_roll.mod);
+    text_printf("BONUS:%u\n", globaldata.player.player_creature_p->melee.attack_bonus);
+
+    text_printf("RANGED:%u", globaldata.player.player_creature_p->ranged.damage_roll.n);
+    text_printf("D%u", globaldata.player.player_creature_p->ranged.damage_roll.d);
+    text_printf("+%u\n", globaldata.player.player_creature_p->ranged.damage_roll.mod);
+    text_printf("BONUS:%u\n", globaldata.player.player_creature_p->ranged.attack_bonus);
+
+    text_select_win( WIN_MESSAGES );    
 }
