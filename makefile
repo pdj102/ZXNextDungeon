@@ -114,6 +114,9 @@ $(OBJDIR)/player_pickup_bank.o: $(SRCDIR)/player_pickup_bank.c $(SRCDIR)/player_
 # - player_equip_bank.o 
 $(OBJDIR)/player_equip_bank.o: $(SRCDIR)/player_equip_bank.c $(SRCDIR)/player_equip_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<	
+# - player_calc_stats_bank.o 
+$(OBJDIR)/player_calc_stats_bank.o: $(SRCDIR)/player_calc_stats_bank.c $(SRCDIR)/player_calc_stats_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_24 --constsegPAGE_24 -o $@ $<
 
 # ####################################################################################################################################
 # PAGE_25

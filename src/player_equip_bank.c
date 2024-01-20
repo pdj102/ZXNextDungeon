@@ -16,6 +16,7 @@
 
 #include "player.h"
 #include "player_equip_bank.h"
+#include "player_calc_stats_bank.h"
 
 #include "globaldata.h"
 
@@ -29,6 +30,8 @@
 #include "object_dungeon_list.h"
 
 #include "creature.h"
+
+#include "ui_stats.h"
 
 
 
@@ -102,6 +105,11 @@ void player_equip_b( void)
 
     globaldata.player.player_creature_p->energy = 0;
     text_printf("YOU EQUIP THE %t\n", (uint16_t)obj_p->name_token);
+
+    // recalculate stats
+    player_calc_stats_b();
+    // update ui stats 
+    ui_display_stats();
 }
 
 void player_equip_melee_b(object_t *obj_p)

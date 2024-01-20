@@ -48,6 +48,22 @@ creature_t* creature_create(object_t *obj_p)
     return c;    
 }
 
+void creature_create_reset_base_stats(creature_t *creature_p)
+{
+    uint8_t current_bank;
+
+    /* Remember current bank*/
+    current_bank = ZXN_READ_MMU6();
+
+    /* Map Create Creature (bank 22) into ZX Spectrum 8k MMU slot 6 */
+    /* Call banked code */ 
+    ZXN_WRITE_MMU6(22);    
+    creature_create_reset_base_stats_b(creature_p);
+
+    /* restore previous bank */
+    ZXN_WRITE_MMU6(current_bank);
+}
+
 uint8_t creature_create_base_speed(object_subtype_e subtype)
 {
     uint8_t current_bank;

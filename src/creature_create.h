@@ -39,7 +39,9 @@
  */
 creature_t* creature_create(object_t *obj_p);
 
+void creature_create_reset_base_stats(creature_t *creature_p);
 
+// TODO remove these functions as not needed
 uint8_t creature_create_base_speed(object_subtype_e subtype);
 uint8_t creature_create_base_hp(object_subtype_e subtype);
 uint8_t creature_create_base_magic(object_subtype_e subtype);

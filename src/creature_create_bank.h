@@ -35,12 +35,27 @@
  * Creates a creature based on the provided object. 
  * NB the object specifies the creature type to create
  *
- * @param obj_p* pointer to object
+ * @param *obj_p pointer to object
  *
  * @return pointer to created creature or NULL on failed to create
  */
 creature_t* creature_create_b(object_t *obj_p);
 
+/**
+ * Reset a creatures stats to their base score
+ * 
+ * Resets Max_HP, Max_MP, AC, Speed, Str, Dex, Con, Int, Wis, Cha, melee and ranged attacks
+ * 
+ * NB the creature's object specifies the creature type 
+ *
+ * @param *creature_p pointer to object
+ *
+ * @return void
+ */
+
+void creature_create_reset_base_stats_b(creature_t *creature_p);
+
+// TODO remove these functions as not needed
 uint8_t creature_create_base_speed_b(object_subtype_e subtype);
 uint8_t creature_create_base_hp_b(object_subtype_e subtype);
 uint8_t creature_create_base_magic_b(object_subtype_e subtype);

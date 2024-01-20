@@ -82,6 +82,7 @@ void player_strike_b( void )
         if (!creature_melee_strike(globaldata.player.player_creature_p, target_p))
         {
             text_printf("YOU MISS THE %t\n", (uint16_t)target_p->obj_p->name_token);
+            return;
         }
 
         // Hit

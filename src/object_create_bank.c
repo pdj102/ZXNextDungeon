@@ -138,7 +138,8 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->class = ITEM;
             obj_ptr->type = RING;
             obj_ptr->subtype = RING_HP;
-            obj_ptr->name_token = 71;            
+            obj_ptr->name_token = 71;
+            obj_ptr->attr_1 = 2;                  
             obj_ptr->tilemap_tile.tile_attr = 0;
             obj_ptr->tilemap_tile.tile_id = 'R';
             obj_ptr->blocking = 0;            
@@ -148,6 +149,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->class = ITEM;
             obj_ptr->type = RING;
             obj_ptr->subtype = RING_HP;
+            obj_ptr->attr_1 = 0;
             obj_ptr->name_token = 71;            
             obj_ptr->tilemap_tile.tile_attr = 0;
             obj_ptr->tilemap_tile.tile_id = 'R';
