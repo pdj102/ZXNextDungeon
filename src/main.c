@@ -16,6 +16,7 @@
 #include "tile_defns.h"
 #include "palette.h"
 #include "tilemap.h"
+
 #include "dungeonmap.h"
 #include "dungeonmap_generator.h"
 
@@ -34,6 +35,8 @@
 
 #include "player.h"
 #include "player_calc_stats.h"
+
+#include "ai_pathfind.h"
 
 #include "event.h"
 #include "event_list.h"
@@ -195,12 +198,15 @@ int main( void )
 
     while (1)
     {
-        dungeonmap_draw();
+        // dungeonmap_draw();
         object_dungeon_list_drawall();
 
         event_list_update_all();
 
         creature_list_update_all();
+
+        ai_pathfind(globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y);
+        ai_pathfind_print();        
     }
     return 0;
 }

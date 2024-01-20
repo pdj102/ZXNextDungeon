@@ -140,6 +140,18 @@ void text_print_at(uint8_t x, uint8_t y);
 void text_print_string_at(uint8_t x, uint8_t y, const char text[]);
 
 /**
+ * @brief Print char on tilemap at display x, y
+ * 
+ * Prints directly to tilemap. Does not use windows
+ * 
+ * @param x     x 
+ * @param y     y 
+ * @param c     char to print
+ * @return      void
+ */
+void text_print_char_at(uint8_t x, uint8_t y, const char c);
+
+/**
  * @brief Print uint8 to tilemap at cursor position in current window
  * 
  * @param i  unit8 to print

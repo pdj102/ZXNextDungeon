@@ -151,6 +151,12 @@ void text_print_string(const char text[])
     }
 }
 
+void text_print_char_at(uint8_t x, uint8_t y, const char c)
+{
+        text_win->tile.tile_id = c;
+        tilemap_set_tile(x, y, &text_win->tile);
+}
+
 void text_print_uint8(uint8_t i)
 {
     char s[] = "   ";     // string buffer for converting numbers to strings e.g. 255

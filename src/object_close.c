@@ -45,6 +45,7 @@ uint8_t object_close(object_t *obj)
     switch (obj->subtype)
     {
     case DOOR_OPEN:
+        // TODO cant close a door if it is blocked by a creature
         obj->subtype=DOOR_CLOSED;
         obj->tilemap_tile.tile_id=43;
         obj->blocking = 1;

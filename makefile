@@ -133,6 +133,13 @@ $(OBJDIR)/ui_stats_bank.o: $(SRCDIR)/ui_stats_bank.c $(SRCDIR)/ui_stats_bank.h $
 	$(CC) $(CFLAGS) --codesegPAGE_25 --constsegPAGE_25 -o $@ $<
 
 # ####################################################################################################################################
+# PAGE_26
+# Target for AI code
+# - ai_pathfind_bank.o 
+$(OBJDIR)/ai_pathfind_bank.o: $(SRCDIR)/ai_pathfind_bank.c $(SRCDIR)/ai_pathfind_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
+
+# ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 
 # This rule requires .c file to have a .h file
 # call C compiler

@@ -35,9 +35,10 @@
     20      |   Object create
     21      |   Text token 
     22      |   Creature create
-    23      |   ? (Do not use causes a crash)
+    23      |   ? (Do not use. Using this page causes a crash)
     24      |   Player code
     25      |   UI
+    26      |   AI code 
 
     MMU 7 - List of banked pages:
 
