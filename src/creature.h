@@ -14,11 +14,18 @@
 #include "object.h"
 #include "dice.h"
 
-#include "ai.h"
-
 /***************************************************
  * types
  ***************************************************/
+
+typedef enum {
+    NO_STATE, SLEEPING, ATTACKING
+} ai_state_t;
+
+typedef struct ai_s
+{
+    ai_state_t      state;
+} ai_t;
 
 typedef enum {PLAYER, AI} creature_class_e;
 
@@ -61,7 +68,7 @@ typedef struct creature_s
     uint8_t                 max_mp;         /**< max magic points = base + any modifiers*/
     uint8_t                 mp;             /**< current magic points */
 
-    // ai_t                    ai;             /**< AI data*/
+    ai_t                    ai;             /**< AI data*/
 
     creature_attack_t      melee;
     creature_attack_t      ranged;

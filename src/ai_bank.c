@@ -31,6 +31,7 @@
 #include "creature.h"
 
 
+
 /***************************************************
  * private types
  ***************************************************/
@@ -55,8 +56,11 @@ void ai_init_b(ai_t *ai_p)
     // globaldata.ai.ai_creature_p = creature_p;
 }
 
-void ai_turn_b( void )
+void ai_turn_b( creature_t *creature_p )
 {
-    
+    creature_p->energy = 0;
+    #ifdef DEBUG_ERROR
+        text_printf("DEBUG: AI TURN %t\n", creature_p->obj_p->name_token );
+    #endif    
 }
 

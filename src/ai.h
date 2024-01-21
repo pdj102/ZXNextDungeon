@@ -9,20 +9,13 @@
 #ifndef AI_H 
     #define AI_H 
 
-#include "object.h"
+#include "creature.h"
 
 /***************************************************
  * types
  ***************************************************/
 
-typedef enum {
-    NO_STATE, SLEEPING, ATTACKING
-} ai_state_t;
 
-typedef struct ai_s
-{
-    ai_state_t      state;
-} ai_t;
 
 /***************************************************
  * variable declarations
@@ -45,6 +38,6 @@ void ai_init(ai_t *ai_p);
  * 
  * @return void
  */
-void ai_turn( void );
+void ai_turn( creature_t *creature_p );
 
 #endif

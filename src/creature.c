@@ -20,6 +20,8 @@
 
 #include "player.h"
 
+#include "ai.h"
+
 #define MAX_ENERGY  100
 
 /***************************************************
@@ -61,6 +63,7 @@ void creature_turn(creature_t *creature_p)
         switch (creature_p->creature_class )
         {
         case AI:
+            ai_turn(creature_p);
             break;
         case PLAYER:
             player_turn();

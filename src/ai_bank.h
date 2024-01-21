@@ -11,7 +11,6 @@
 #ifndef AI_BANK_H 
     #define AI_BANK_H 
 
-#include "object.h"
 #include "creature.h"
 
 /***************************************************
@@ -39,7 +38,7 @@ void ai_init_b(ai_t *ai_p);
  * 
  * @return void
  */
-void ai_turn_b( void );
+void ai_turn_b( creature_t *creature_p );
 
 
 #endif

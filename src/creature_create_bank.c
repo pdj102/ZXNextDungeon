@@ -53,7 +53,7 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
         #ifdef DEBUG_ERROR
             text_printf("ERROR: NO FREE OBJECT SLOT");
         #endif
-        
+
         return 0;
     }
 
@@ -89,6 +89,7 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
     creature_p->mp = creature_p->max_mp;
 
     // TODO Handle if x, y position is blocked
+    // TODO init ai
 
     return creature_p;
 }
