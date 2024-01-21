@@ -13,7 +13,15 @@
 #include <stdint.h>
 
 #include "creature.h"
+#include "creature_list.h"
+
 #include "object.h"
+#include "object_create.h"
+#include "object_dungeon_list.h"
+
+#include "text.h"
+
+#include "globaldata_defines.h"         // ERROR_DEBUG
 
 #pragma output CRT_ORG_CODE = 0xC000
 
@@ -34,43 +42,53 @@
  ***************************************************/
 
 // todo change this function to create the object as well
-creature_t* creature_create_b(object_subtype_e obj_subtype)
+creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y)
 {
     creature_t *creature_p;
     object_t *obj_p;
 
     // create an object
-    if ( ! (obj_p = object_create(obj_subtype) ) )
+    if ( ! (obj_p = object_create(obj_subtype, x, y) ) )
     {
-        // todo error message
+        #ifdef DEBUG_ERROR
+            text_printf("ERROR: NO FREE OBJECT SLOT");
+        #endif
+        
         return 0;
     }
 
     // get a free creature slot
     if ( ! (creature_p = creature_getfree()) )
     {
-        // todo error message
+        object_delete(obj_p);
+
+        #ifdef DEBUG_ERROR
+            text_printf("ERROR: NO FREE CREATURE SLOT");
+        #endif
 
         return 0;
     }
 
-    // set object creature pointer
-    obj_p->creature_p = creature_p;
+    // Setup object
+    obj_p->creature_p = creature_p;         // set object to point to creature
+    object_dungeon_list_add(obj_p);         // add object to dungeon list of objects as all creatures are on the map
 
-    // set creature common attributes
+    // Setup creature common attributes
     creature_p->free = 0;
     creature_p->next = 0;
-    creature_p->obj_p = obj_p;
+    creature_p->obj_p = obj_p;              // set creature to point to object
     creature_p->energy = 0;
-    creature_p->creature_class = AI;
+    creature_p->creature_class = AI;    
+    creature_list_add(creature_p);          // add creature to list of creatures
 
+    // Setup creature specifics 
     creature_create_reset_base_stats_b(creature_p);
 
     // initialise hp and mp to max hp and mp
     creature_p->hp = creature_p->max_hp;
     creature_p->mp = creature_p->max_mp;
 
-    // to set x, y
+    // TODO Handle if x, y position is blocked
 
     return creature_p;
 }

@@ -91,6 +91,13 @@ void creature_free(creature_t *creature_p)
 
 void creature_delete(creature_t *creature_p)
 {
-    // free the object
+    #ifdef DEBUG_ERROR
+        if (creature_p->obj_p->free != 1)
+        {
+            // Fatal error detected - creature object has not been deleted before deleting the creature
+            text_printf("DEBUG: CREATURE OBJ NOT FREE\n");
+        }
+    #endif
+    // free the creature slot
     creature_free(creature_p);
 }

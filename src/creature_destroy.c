@@ -36,7 +36,13 @@ uint8_t creature_destroy_is(creature_t *creature_p)
 
 uint8_t creature_destroy(creature_t *creature_p)
 {
+    // Destroy the object
+    object_destroy(creature_p->obj_p);
+
+    // Remove creature from the creature list
     creature_list_remove(creature_p);
+
+    // Delete the creature 
     creature_delete(creature_p);
 
     return 1;

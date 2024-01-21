@@ -35,11 +35,11 @@
  * Creates a creature based on the provided object. 
  * NB the object specifies the creature type to create
  *
- * @param *obj_p pointer to object
+ * @param obj_subtype       Specify creature subtype to create
  *
  * @return pointer to created creature or NULL on failed to create
  */
-creature_t* creature_create_b(object_t *obj_p);
+creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y);
 
 /**
  * Reset a creatures stats to their base score

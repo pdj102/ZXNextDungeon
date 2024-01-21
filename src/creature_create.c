@@ -29,7 +29,7 @@
  * functions
  ***************************************************/
 
-creature_t* creature_create(object_t *obj_p)
+creature_t* creature_create(object_subtype_e obj_subtype, uint8_t x, uint8_t y)
 {
     uint8_t current_bank;
     creature_t *c;
@@ -40,7 +40,7 @@ creature_t* creature_create(object_t *obj_p)
     /* Map Create Creature (bank 22) into ZX Spectrum 8k MMU slot 6 */
     /* Call banked code */ 
     ZXN_WRITE_MMU6(22);    
-    c = creature_create_b(obj_p);
+    c = creature_create_b(obj_subtype, x, y);
 
     /* restore previous bank */
     ZXN_WRITE_MMU6(current_bank);

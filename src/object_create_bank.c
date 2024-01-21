@@ -14,6 +14,8 @@
 #include "object.h"
 #include "tilemap.h"
 
+#include "text.h"
+
 #pragma output CRT_ORG_CODE = 0xC000
 
 /***************************************************
@@ -51,6 +53,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
     p_forward_list_init(&(obj_ptr->obj_list));
     obj_ptr->x = x;
     obj_ptr->y = y;
+    obj_ptr->subtype = subtype;
 
     switch (subtype)
     {

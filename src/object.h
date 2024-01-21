@@ -145,7 +145,7 @@ object_t* object_getfree( void );
 /**
  * Delete an object and all its contained objects
  * 
- * Object must not belong to an object list
+ * The object must have been removed from any object lists before calling delete
  * 
  * @param   *obj_p  Object to destroy
  */

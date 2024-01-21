@@ -13,8 +13,8 @@ PRAGMA_FILE=zpragma.inc
 C_OPT_FLAGS=-SO3 --max-allocs-per-node200000
 # C_OPT_FLAGS=-SO3 
 
-# Compile with new library using SDCC. Works but bugs with <stdarg.h>
-CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -compiler=sdcc -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
+# Compile with new library using SDCC
+CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -compiler=sdcc -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE) -DDEBUG_ERROR
 LDFLAGS=$(TARGET) $(VERBOSITY) -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
 ASFLAGS=$(TARGET) $(VERBOSITY) -c
 

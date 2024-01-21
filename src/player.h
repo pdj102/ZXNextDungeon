@@ -36,7 +36,8 @@ typedef struct player_s
 /**
  * Init the player
  *
- * @param obj_ptr pointer to the player object
+ * @param creature_p pointer to the player's creature object
+ * 
  * @return void
  */
 void player_init(creature_t *creature_p);

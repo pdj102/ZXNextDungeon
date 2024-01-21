@@ -116,48 +116,22 @@ void init_game( void )
     creature_init();
     creature_list_init();
 
-    creature_t  *snake1_creature_p;
-    creature_t  *snake2_creature_p;
-    creature_t  *ww_creature_p;    
-    object_t     *snake1_obj_p;
-    object_t     *snake2_obj_p;
-    object_t     *ww_obj_p;
-
+    creature_t  *human_creature_p;
     event_t *tmp_event_p;  
 
-    // todo change this so the creature also creates the object
-
     // player
-    object_t *human_obj_p = object_create(HUMANOID_HUMAN, 2, 2);
-    object_dungeon_list_add(human_obj_p);
-
-    creature_t *human_creature_p = creature_create(human_obj_p);
-    creature_list_add(human_creature_p);
-    human_obj_p->creature_p = human_creature_p;
-    human_creature_p->creature_class = PLAYER;
+    human_creature_p = creature_create(HUMANOID_HUMAN, 2, 2);
+    human_creature_p->creature_class = PLAYER;      // Change from AI to player
     player_init(human_creature_p);
-    
 
     // snake 1
-    snake1_obj_p = object_create(BEAST_SNAKE, 10, 2);
-    snake1_creature_p = creature_create(snake1_obj_p);
-    snake1_obj_p->creature_p = snake1_creature_p;
-    object_dungeon_list_add(snake1_obj_p);
-    creature_list_add(snake1_creature_p);
+    creature_create(BEAST_SNAKE, 10, 2);
 
     // snake 2
-    snake2_obj_p = object_create(BEAST_SNAKE, 12, 2);
-    snake2_creature_p = creature_create(snake2_obj_p);
-    snake2_obj_p->creature_p = snake2_creature_p;
-    object_dungeon_list_add(snake2_obj_p);
-    creature_list_add(snake2_creature_p);
+    creature_create(BEAST_SNAKE, 12, 2);
 
     // withering weed
-    ww_obj_p = object_create(PLANT_WITHERWEED, 4, 3);
-    ww_creature_p = creature_create(ww_obj_p);
-    ww_obj_p->creature_p = ww_creature_p;
-    object_dungeon_list_add(ww_obj_p);
-    creature_list_add(ww_creature_p);
+    creature_create(PLANT_WITHERWEED, 4, 3);
 
     object_t *healing_obj_p = object_create(POTION_HEALING, 2, 5);
     object_dungeon_list_add(healing_obj_p);
@@ -195,14 +169,16 @@ int main( void )
  
     dungeonmap_generate();
 
-    text_cls();
+
     text_printf("WELCOME TO DUNGEON!\n");
-    text_printf("TEST T1 %t T2 %t UINT8 %u INT8 %d \n", (uint16_t)1, (uint16_t)2, (uint8_t)255, (int8_t)-128);
-    text_print_string("GLOBAL DATA SIZE:");
-    uint16_t s;
-    s = sizeof(globaldata_t);
-    text_print_uint16(s);
-    text_print_string("\n");
+
+    #ifdef DEBUG_ERROR
+        text_print_string("DEBUG: GLOBAL DATA SIZE:");
+        uint16_t s;
+        s = sizeof(globaldata_t);
+        text_print_uint16(s);
+        text_print_string("\n");
+    #endif
 
     ui_display_stats();
     ui_display_ability_scores();
@@ -215,7 +191,6 @@ int main( void )
         event_list_update_all();
 
         creature_list_update_all();
-     
     }
     return 0;
 }

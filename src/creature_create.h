@@ -37,7 +37,7 @@
  *
  * @return pointer to created creature or NULL on failed to create
  */
-creature_t* creature_create(object_t *obj_p);
+creature_t* creature_create(object_subtype_e obj_subtype, uint8_t x, uint8_t y);
 
 void creature_create_reset_base_stats(creature_t *creature_p);
 
