@@ -33,14 +33,68 @@
  * functions
  ***************************************************/
 
+// todo change this function to create the object as well
+creature_t* creature_create_b(object_subtype_e obj_subtype)
+{
+    creature_t *creature_p;
+    object_t *obj_p;
+
+    // create an object
+    if ( ! (obj_p = object_create(obj_subtype) ) )
+    {
+        // todo error message
+        return 0;
+    }
+
+    // get a free creature slot
+    if ( ! (creature_p = creature_getfree()) )
+    {
+        // todo error message
+
+        return 0;
+    }
+
+    // set object creature pointer
+    obj_p->creature_p = creature_p;
+
+    // set creature common attributes
+    creature_p->free = 0;
+    creature_p->next = 0;
+    creature_p->obj_p = obj_p;
+    creature_p->energy = 0;
+    creature_p->creature_class = AI;
+
+    creature_create_reset_base_stats_b(creature_p);
+
+    // initialise hp and mp to max hp and mp
+    creature_p->hp = creature_p->max_hp;
+    creature_p->mp = creature_p->max_mp;
+
+    // to set x, y
+
+    return creature_p;
+}
+
 uint8_t creature_create_base_speed_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;    
+      
+    // BEAST
     case BEAST_SNAKE:
         return 10;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 1;    
+
+    // UNDEAD          
+
     default:
         return 1;
     }
@@ -51,10 +105,22 @@ uint8_t creature_create_base_hp_b(object_subtype_e subtype)
     // TODO special base HP for player based on level
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 2;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 22;    
+
+    // UNDEAD
+
     default:
         return 1;
     }
@@ -65,10 +131,22 @@ uint8_t creature_create_base_magic_b(object_subtype_e subtype)
     // TODO special base magic for player based on level
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 0;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 0;    
+
+    // UNDEAD
+
     default:
         return 1;
     }
@@ -78,10 +156,22 @@ uint8_t creature_create_base_ac_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 13;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 0;    
+
+    // UNDEAD
+
     default:
         return 1;
     }
@@ -91,10 +181,22 @@ uint8_t creature_create_base_str_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 2;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 3;    
+
+    // UNDEAD
+
     default:
         return 1;
     }
@@ -104,10 +206,22 @@ uint8_t creature_create_base_dex_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 16;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 1;    
+
+    // UNDEAD
+
     default:
         return 1;
     }
@@ -117,10 +231,22 @@ uint8_t creature_create_base_con_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 11;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 10;    
+
+    // UNDEAD
+
     default:
         return 1;
     }
@@ -130,12 +256,24 @@ uint8_t creature_create_base_inte_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 1;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 1;    
+
+    // UNDEAD
+
     default:
-        return 1;
+        return 1;        
     }
 }
 
@@ -143,12 +281,25 @@ uint8_t creature_create_base_wis_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 10;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 3;    
+
+    // UNDEAD
+
     default:
-        return 1;
+        return 1;    
+
     }
 }
 
@@ -156,12 +307,24 @@ uint8_t creature_create_base_cha_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    case HUMANOID_HUMAN:
+        return 10;   
+      
+    // BEAST
     case BEAST_SNAKE:
         return 3;
-    case HUMANOID_HUMAN:
-        return 10;
+
+    // OOZE
+
+    // PLANTS
+    case PLANT_WITHERWEED:
+        return 1;    
+
+    // UNDEAD
+
     default:
-        return 1;
+        return 1;  
     }
 }
 
@@ -171,6 +334,15 @@ creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
 
     switch (subtype)
     {
+    //HUMANOID        
+    case HUMANOID_HUMAN:
+        a.damage_type = BLUDGEONGING;
+        a.damage_roll.n = 1;
+        a.damage_roll.d = 6;
+        a.damage_roll.mod = 0;
+        a.attack_bonus = 0;
+        return a;        
+    // BEAST
     case BEAST_SNAKE:
         a.damage_type = PIERCING;
         a.damage_roll.n = 1;
@@ -178,13 +350,20 @@ creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
         a.damage_roll.mod = 0;
         a.attack_bonus = 5;
         return a;
-    case HUMANOID_HUMAN:
-        a.damage_type = BLUDGEONGING;
+
+    // OOZE
+    
+    // PLANT
+    case PLANT_WITHERWEED:
+        a.damage_type = PIERCING;
         a.damage_roll.n = 1;
-        a.damage_roll.d = 6;
+        a.damage_roll.d = 4;
         a.damage_roll.mod = 0;
-        a.attack_bonus = 0;
-        return a;
+        a.attack_bonus = 2;
+        return a;    
+
+    // UNDEAD
+    
     default:
         a.damage_type = NONE;
         a.damage_roll.n = 0;
@@ -212,31 +391,7 @@ creature_attack_t creature_create_base_ranged_b(object_subtype_e subtype)
 }
 
 
-creature_t* creature_create_b(object_t *obj_p)
-{
-    creature_t *creature_p;
 
-    // get a free creature slot
-    if ( ! (creature_p = creature_getfree()) )
-    {
-        return 0;
-    }
-
-    // set common object attributes
-    creature_p->free = 0;
-    creature_p->next = 0;
-    creature_p->obj_p = obj_p;
-    creature_p->energy = 0;
-    creature_p->creature_class = AI;
-
-    creature_create_reset_base_stats_b(creature_p);
-
-    // initialise hp and mp to max hp and mp
-    creature_p->hp = creature_p->max_hp;
-    creature_p->mp = creature_p->max_mp;
-
-    return creature_p;
-}
 
 void creature_create_reset_base_stats_b(creature_t *creature_p)
 {

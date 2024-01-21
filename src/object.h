@@ -42,6 +42,7 @@ typedef enum {
     HUMANOID,
     BEAST,
     OOZE,
+    PLANTS,
     UNDEAD
 
     } object_type_e;
@@ -79,6 +80,8 @@ typedef enum {
     BEAST_SNAKE,
 
     OOZE_SLIME,
+
+    PLANT_WITHERWEED,
 
     UNDEAD_SKELETON
     } object_subtype_e;

@@ -118,10 +118,14 @@ void init_game( void )
 
     creature_t  *snake1_creature_p;
     creature_t  *snake2_creature_p;
+    creature_t  *ww_creature_p;    
     object_t     *snake1_obj_p;
     object_t     *snake2_obj_p;
+    object_t     *ww_obj_p;
 
     event_t *tmp_event_p;  
+
+    // todo change this so the creature also creates the object
 
     // player
     object_t *human_obj_p = object_create(HUMANOID_HUMAN, 2, 2);
@@ -146,7 +150,14 @@ void init_game( void )
     snake2_creature_p = creature_create(snake2_obj_p);
     snake2_obj_p->creature_p = snake2_creature_p;
     object_dungeon_list_add(snake2_obj_p);
-    creature_list_add(snake2_creature_p);    
+    creature_list_add(snake2_creature_p);
+
+    // withering weed
+    ww_obj_p = object_create(PLANT_WITHERWEED, 4, 3);
+    ww_creature_p = creature_create(ww_obj_p);
+    ww_obj_p->creature_p = ww_creature_p;
+    object_dungeon_list_add(ww_obj_p);
+    creature_list_add(ww_creature_p);
 
     object_t *healing_obj_p = object_create(POTION_HEALING, 2, 5);
     object_dungeon_list_add(healing_obj_p);
@@ -198,7 +209,7 @@ int main( void )
 
     while (1)
     {
-        // dungeonmap_draw();
+        dungeonmap_draw();
         object_dungeon_list_drawall();
 
         event_list_update_all();

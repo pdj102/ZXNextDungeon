@@ -112,7 +112,17 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->tilemap_tile.tile_attr = 0;
             obj_ptr->tilemap_tile.tile_id = 83;
             obj_ptr->blocking = 1;
-            break;       
+            break;
+
+        case PLANT_WITHERWEED:
+            obj_ptr->class = CREATURE;
+            obj_ptr->type = PLANTS;
+            obj_ptr->subtype = PLANT_WITHERWEED;
+            obj_ptr->name_token =  140;            
+            obj_ptr->tilemap_tile.tile_attr = 0;
+            obj_ptr->tilemap_tile.tile_id = 87;
+            obj_ptr->blocking = 1;
+            break;                
 
         case POTION_HEALING:
             obj_ptr->class = ITEM;

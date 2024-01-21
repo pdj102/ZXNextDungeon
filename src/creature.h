@@ -14,6 +14,8 @@
 #include "object.h"
 #include "dice.h"
 
+#include "ai.h"
+
 /***************************************************
  * types
  ***************************************************/
@@ -56,8 +58,10 @@ typedef struct creature_s
 
     uint8_t                 exp;
 
-    uint8_t                 max_mp;          /**< max magic points = base + any modifiers*/
-    uint8_t                 mp;              /**< current magic points */
+    uint8_t                 max_mp;         /**< max magic points = base + any modifiers*/
+    uint8_t                 mp;             /**< current magic points */
+
+    // ai_t                    ai;             /**< AI data*/
 
     creature_attack_t      melee;
     creature_attack_t      ranged;
