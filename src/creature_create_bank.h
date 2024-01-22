@@ -55,7 +55,7 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
 
 void creature_create_reset_base_stats_b(creature_t *creature_p);
 
-// TODO remove these functions as not needed
+// TODO remove these public function delcarations as not needed
 uint8_t creature_create_base_speed_b(object_subtype_e subtype);
 uint8_t creature_create_base_hp_b(object_subtype_e subtype);
 uint8_t creature_create_base_magic_b(object_subtype_e subtype);
@@ -67,5 +67,6 @@ uint8_t creature_create_base_con_b(object_subtype_e subtype);
 uint8_t creature_create_base_inte_b(object_subtype_e subtype);
 uint8_t creature_create_base_wis_b(object_subtype_e subtype);
 uint8_t creature_create_base_cha_b(object_subtype_e subtype);
+ai_state_t creature_create_base_ai_b(object_subtype_e subtype);
 
 #endif

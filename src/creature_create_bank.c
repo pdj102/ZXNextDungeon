@@ -74,7 +74,7 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
     object_dungeon_list_add(obj_p);         // add object to dungeon list of objects as all creatures are on the map
 
     // Setup creature common attributes
-    creature_p->free = 0;
+    creature_p->free = 0;                   // mark creature as in use
     creature_p->next = 0;
     creature_p->obj_p = obj_p;              // set creature to point to object
     creature_p->energy = 0;
@@ -89,7 +89,8 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
     creature_p->mp = creature_p->max_mp;
 
     // TODO Handle if x, y position is blocked
-    // TODO init ai
+    
+    creature_p->ai.state = creature_create_base_ai_b(object_subtype_e subtype);
 
     return creature_p;
 }
@@ -110,12 +111,12 @@ uint8_t creature_create_base_speed_b(object_subtype_e subtype)
 
     // PLANTS
     case PLANT_WITHERWEED:
-        return 1;    
+        return 2;    
 
     // UNDEAD          
 
     default:
-        return 1;
+        return 0;
     }
 }
 
@@ -141,7 +142,7 @@ uint8_t creature_create_base_hp_b(object_subtype_e subtype)
     // UNDEAD
 
     default:
-        return 1;
+        return 0;
     }
 }
 
@@ -167,7 +168,7 @@ uint8_t creature_create_base_magic_b(object_subtype_e subtype)
     // UNDEAD
 
     default:
-        return 1;
+        return 0;
     }
 }
 
@@ -187,12 +188,12 @@ uint8_t creature_create_base_ac_b(object_subtype_e subtype)
 
     // PLANTS
     case PLANT_WITHERWEED:
-        return 0;    
+        return 5;    
 
     // UNDEAD
 
     default:
-        return 1;
+        return 0;
     }
 }
 
@@ -217,7 +218,7 @@ uint8_t creature_create_base_str_b(object_subtype_e subtype)
     // UNDEAD
 
     default:
-        return 1;
+        return 0;
     }
 }
 
@@ -242,7 +243,7 @@ uint8_t creature_create_base_dex_b(object_subtype_e subtype)
     // UNDEAD
 
     default:
-        return 1;
+        return 0;
     }
 }
 
@@ -267,7 +268,7 @@ uint8_t creature_create_base_con_b(object_subtype_e subtype)
     // UNDEAD
 
     default:
-        return 1;
+        return 0;
     }
 }
 
@@ -292,7 +293,7 @@ uint8_t creature_create_base_inte_b(object_subtype_e subtype)
     // UNDEAD
 
     default:
-        return 1;        
+        return 0;        
     }
 }
 
@@ -317,7 +318,7 @@ uint8_t creature_create_base_wis_b(object_subtype_e subtype)
     // UNDEAD
 
     default:
-        return 1;    
+        return 0;    
 
     }
 }
@@ -343,7 +344,7 @@ uint8_t creature_create_base_cha_b(object_subtype_e subtype)
     // UNDEAD
 
     default:
-        return 1;  
+        return 0;  
     }
 }
 
@@ -384,7 +385,7 @@ creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
     // UNDEAD
     
     default:
-        a.damage_type = NONE;
+        a.damage_type = NO_DAMAGE;
         a.damage_roll.n = 0;
         a.damage_roll.d = 0;
         a.damage_roll.mod = 0;
@@ -400,7 +401,7 @@ creature_attack_t creature_create_base_ranged_b(object_subtype_e subtype)
     switch (subtype)
     {
     default:
-        a.damage_type = NONE;
+        a.damage_type = NO_DAMAGE;
         a.damage_roll.n = 0;
         a.damage_roll.d = 0;
         a.damage_roll.mod = 0;
@@ -409,7 +410,14 @@ creature_attack_t creature_create_base_ranged_b(object_subtype_e subtype)
     }
 }
 
-
+ai_state_t creature_create_base_ai_b(object_subtype_e subtype)
+{
+    switch (subtype)
+    {
+    default:
+        return GUARDING;
+    }
+}
 
 
 void creature_create_reset_base_stats_b(creature_t *creature_p)

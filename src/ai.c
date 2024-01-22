@@ -31,6 +31,8 @@
  * functions
  ***************************************************/
 
+// TODO switch bank back
+
 void ai_init(ai_t *ai_p)
 {
     /* Map Ai code (bank 26) into ZX Spectrum 8k MMU slot 6 */

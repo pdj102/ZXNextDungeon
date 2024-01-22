@@ -61,6 +61,26 @@ void ai_turn_b( creature_t *creature_p )
     creature_p->energy = 0;
     #ifdef DEBUG_ERROR
         text_printf("DEBUG: AI TURN %t\n", creature_p->obj_p->name_token );
-    #endif    
+    #endif
+
+    switch (creature_p->ai.state)
+    {
+        case SLEEPING:
+            return;
+        case GUARDING:
+            // TODO see player attack or flee
+            return;
+        case ATTACKING:
+            ai_attack(creature_p);
+            return;
+        default:
+            return;
+    }
+}
+
+void ai_attack( creature_t *creature_p )
+{
+    // TODO use creature move
+    creature_move_by();
 }
 

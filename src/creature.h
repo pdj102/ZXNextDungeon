@@ -19,7 +19,7 @@
  ***************************************************/
 
 typedef enum {
-    NO_STATE, SLEEPING, ATTACKING
+    NO_STATE, SLEEPING, GUARDING, ATTACKING
 } ai_state_t;
 
 typedef struct ai_s
@@ -27,10 +27,10 @@ typedef struct ai_s
     ai_state_t      state;
 } ai_t;
 
-typedef enum {PLAYER, AI} creature_class_e;
+typedef enum {NO_CLASS, PLAYER, AI} creature_class_e;
 
 typedef enum {
-    NONE, ACID, BLUDGEONGING, COLD, FIRE, FORCE, LIGHTNING, PIERCING, POSION, SLASHING
+    NO_DAMAGE, ACID, BLUDGEONGING, COLD, FIRE, FORCE, LIGHTNING, PIERCING, POSION, SLASHING
 } damage_type_t;
 
 typedef struct creature_attack_s
