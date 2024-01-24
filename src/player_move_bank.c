@@ -31,6 +31,7 @@
 #include "object_dungeon_list.h"
 
 #include "creature.h"
+#include "creature_move.h"
 
 
 /***************************************************
@@ -55,11 +56,10 @@
 void player_move_b(int8_t dx, int8_t dy)
 {
     // TODO call creature move and deal with not being able to move e.g. due to an effect or status
-    
-    if (object_move_by(globaldata.player.player_creature_p->obj_p, dx, dy))
+
+    if (creature_move_by(globaldata.player.player_creature_p, dx, dy))
     {
         globaldata.player.player_creature_p->energy = 0;
-
         //update AI path
         ai_pathfind(globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y);
         // ai_pathfind_print();

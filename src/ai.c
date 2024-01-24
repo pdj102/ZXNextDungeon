@@ -35,16 +35,32 @@
 
 void ai_init(ai_t *ai_p)
 {
-    /* Map Ai code (bank 26) into ZX Spectrum 8k MMU slot 6 */
-    ZXN_WRITE_REG(0x56, 26);
+    uint8_t current_bank;
+
+    /* Remember current bank*/
+    current_bank = ZXN_READ_MMU6();
+
+    /* Map AI (bank 26) into ZX Spectrum 8k MMU slot 6 */
     /* Call banked code */ 
+    ZXN_WRITE_MMU6(26);    
     ai_init_b(ai_p); 
+
+    /* restore previous bank */
+    ZXN_WRITE_MMU6(current_bank);    
 }
 
 void ai_turn( creature_t *creature_p )
 {
-    /* Map Ai code (bank 26) into ZX Spectrum 8k MMU slot 6 */
-    ZXN_WRITE_REG(0x56, 26);
+    uint8_t current_bank;
+
+    /* Remember current bank*/
+    current_bank = ZXN_READ_MMU6();
+
+    /* Map AI (bank 26) into ZX Spectrum 8k MMU slot 6 */
     /* Call banked code */ 
+    ZXN_WRITE_MMU6(26);    
     ai_turn_b( creature_p ); 
+
+    /* restore previous bank */
+    ZXN_WRITE_MMU6(current_bank);
 }

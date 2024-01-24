@@ -15,6 +15,7 @@
 #include <stdint.h>
 
 #include "ai.h"
+#include "ai_pathfind_bank.h"
 
 #include "dungeonmap.h"
 
@@ -29,6 +30,7 @@
 #include "object_dungeon_list.h"
 
 #include "creature.h"
+#include "creature_move.h"
 
 
 
@@ -40,7 +42,7 @@
 /***************************************************
  * private function prototypes
  ***************************************************/
-
+void ai_attacking(creature_t *creature_p);
 
 /***************************************************
  * private variables - static
@@ -71,16 +73,45 @@ void ai_turn_b( creature_t *creature_p )
             // TODO see player attack or flee
             return;
         case ATTACKING:
-            ai_attack(creature_p);
+            ai_attacking(creature_p);
             return;
         default:
             return;
     }
 }
 
-void ai_attack( creature_t *creature_p )
+void ai_attacking(creature_t *creature_p)
 {
-    // TODO use creature move
-    creature_move_by();
-}
+    //TODO if target in melee reach attempt to strike
+    //TODO ranged attacks
+    //TODO dont assume player is target?
+    //TODO lost target. Revert to another state
 
+    direction_t d;
+    coord_t c;
+
+    c.x = creature_p->obj_p->x;
+    c.y = creature_p->obj_p->y;
+
+    d = ai_pathfind_direction_to_player_b( &c );
+
+    switch (d)
+    {
+    case NO_DIR:
+        break;
+    case N:
+        creature_move_by(creature_p, 0, -1);
+        break;
+    case S:
+        creature_move_by(creature_p, 0, 1);
+        break;
+    case W:
+        creature_move_by(creature_p, -1, 0);
+        break;
+    case E:
+        creature_move_by(creature_p, 1, 0);
+        break;
+    default:
+        break;
+    }
+}
