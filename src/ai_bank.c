@@ -31,6 +31,7 @@
 
 #include "creature.h"
 #include "creature_move.h"
+#include "creature_melee_strike.h"
 
 
 
@@ -89,6 +90,7 @@ void ai_attacking(creature_t *creature_p)
 
     direction_t d;
     coord_t c;
+    uint8_t moved = 0;
 
     c.x = creature_p->obj_p->x;
     c.y = creature_p->obj_p->y;
@@ -100,18 +102,30 @@ void ai_attacking(creature_t *creature_p)
     case NO_DIR:
         break;
     case N:
-        creature_move_by(creature_p, 0, -1);
+        moved = creature_move_by(creature_p, 0, -1);
         break;
     case S:
-        creature_move_by(creature_p, 0, 1);
+        moved = creature_move_by(creature_p, 0, 1);
         break;
     case W:
-        creature_move_by(creature_p, -1, 0);
+        moved = creature_move_by(creature_p, -1, 0);
         break;
     case E:
-        creature_move_by(creature_p, 1, 0);
+        moved = creature_move_by(creature_p, 1, 0);
         break;
     default:
         break;
+    }
+
+    if (moved)
+    {
+        return;
+    }
+
+    // Lets assume player is in reach and strike
+    text_printf("AI STIRKES\n");
+    if (creature_melee_strike(creature_p, globaldata.player.player_creature_p))
+    {
+        text_printf("HITS\n");
     }
 }
