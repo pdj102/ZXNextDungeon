@@ -13,6 +13,7 @@
 #include "ai_bank.h"
 
 #include <stdint.h>
+#include <stdlib.h>         // abs()
 
 #include "ai.h"
 #include "ai_pathfind_bank.h"
@@ -32,6 +33,7 @@
 #include "creature.h"
 #include "creature_move.h"
 #include "creature_melee_strike.h"
+#include "creature_damage.h"
 
 
 
@@ -44,6 +46,7 @@
  * private function prototypes
  ***************************************************/
 void ai_attacking(creature_t *creature_p);
+uint8_t distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2);
 
 /***************************************************
  * private variables - static
@@ -91,9 +94,21 @@ void ai_attacking(creature_t *creature_p)
     direction_t d;
     coord_t c;
     uint8_t moved = 0;
+    uint8_t distance;
+    uint8_t damage_roll;
 
     c.x = creature_p->obj_p->x;
     c.y = creature_p->obj_p->y;
+
+    // Distance to target
+    distance = distance_manhattan(c.x, c.y, globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y);
+
+    // In range of melee strike (adjacent either up, down, left or right)
+    if ( distance== 1)
+    {
+        creature_melee_strike(creature_p, globaldata.player.player_creature_p);
+        return;
+    }    
 
     d = ai_pathfind_direction_to_player_b( &c );
 
@@ -122,10 +137,13 @@ void ai_attacking(creature_t *creature_p)
         return;
     }
 
-    // Lets assume player is in reach and strike
-    text_printf("AI STIRKES\n");
-    if (creature_melee_strike(creature_p, globaldata.player.player_creature_p))
-    {
-        text_printf("HITS\n");
-    }
+
+}
+
+uint8_t distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2)
+{
+    uint8_t x = x1 > x2 ? x1 - x2 : x2 - x1;
+    uint8_t y  = y1 > y2 ? y1 - y2 : y2 - y1;
+
+    return x + y;
 }

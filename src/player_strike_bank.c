@@ -72,52 +72,17 @@ void player_strike_b( void )
     x = globaldata.player.player_creature_p->obj_p->x + dx;
     y = globaldata.player.player_creature_p->obj_p->y + dy;
 
+    // TODO implement a function that searches for and returns a creature not an object
     if ( obj_p = object_dungeon_list_first_is_at(x, y, object_strike_is))
     {
         target_p = obj_p->creature_p;
 
         globaldata.player.player_creature_p->energy = 0;
 
-        // Miss?
-        if (!creature_melee_strike(globaldata.player.player_creature_p, target_p))
-        {
-            text_printf("YOU MISS THE %t\n", (uint16_t)target_p->obj_p->name_token);
-            return;
-        }
-
-        // Hit
-        text_printf("YOU HIT THE %t\n", (uint16_t)target_p->obj_p->name_token);
-
-        // Roll for melee damage
-        damage_roll = dice_roll(&globaldata.player.player_creature_p->melee.damage_roll);
-
-        // Attempt to apply damage
-        actual_damage = creature_damage(target_p, damage_roll, globaldata.player.player_creature_p->melee.damage_type);
-
-        // Was the target immune, vulnerable or resist damage? 
-        if (actual_damage == 0)
-        {
-            text_printf("YOUR HIT HAS NO EFFECT\n");
-        }
-        else if (actual_damage < damage_roll)
-        {
-            text_printf("IT RESISTS SOME DAMAGE\n");
-        }
-        else if (actual_damage > damage_roll)
-        {
-            text_printf("YOUR HIT CAUSES EXTRA DAMAGE\n");
-        }
-
-        text_printf("HIT POINTS %u\n", target_p->hp);
-
-        // Is the target dead?
-        if (target_p->hp == 0)
-        {
-            text_printf("YOU KILLED THE %t\n", (uint16_t)target_p->obj_p->name_token);
-            
-            // Destory the creature
-            object_destroy(target_p->obj_p);
-            creature_destroy(target_p);
-        }
+        creature_melee_strike(globaldata.player.player_creature_p, target_p);
+    }
+    else
+    {
+        text_printf("NOTHING TO STRIKE HERE\n");
     }
 }

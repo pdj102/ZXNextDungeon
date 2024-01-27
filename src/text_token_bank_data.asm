@@ -200,3 +200,15 @@ ds 25, ""                           ; 156
 ds 25, ""                           ; 157
 ds 25, ""                           ; 158
 ds 25, ""                           ; 159
+
+; damage types 160 - 169
+ds 25, "ACID"                       ; 160
+ds 25, "BLUDGEONING"                ; 161
+ds 25, "COLD"                       ; 162
+ds 25, "FIRE"                       ; 163
+ds 25, "FORCE"                      ; 164
+ds 25, "LIGHTENING"                 ; 165
+ds 25, "PIERCING"                   ; 166
+ds 25, "POSION"                     ; 167
+ds 25, "SLASHING"                   ; 168
+ds 25, "UNKNOWN"                    ; 169
