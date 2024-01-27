@@ -63,7 +63,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->subtype = DOOR_OPEN;
             obj_ptr->name_token = 80;
             obj_ptr->tilemap_tile.tile_attr = 0;
-            obj_ptr->tilemap_tile.tile_id = 45;
+            obj_ptr->tilemap_tile.tile_id = 1;
             obj_ptr->blocking = 0;
             break;
 
@@ -73,7 +73,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->subtype = DOOR_CLOSED;
             obj_ptr->name_token = 90;            
             obj_ptr->tilemap_tile.tile_attr = 0;
-            obj_ptr->tilemap_tile.tile_id = 43;
+            obj_ptr->tilemap_tile.tile_id = 19;
             obj_ptr->blocking = 1;
             break;
 
@@ -143,7 +143,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->subtype = POTION_SPEED;
             obj_ptr->name_token = 32;            
             obj_ptr->tilemap_tile.tile_attr = 0;
-            obj_ptr->tilemap_tile.tile_id = 80;
+            obj_ptr->tilemap_tile.tile_id = 8;
             obj_ptr->blocking = 0;            
             break;
 
@@ -154,7 +154,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->name_token = 71;
             obj_ptr->attr_1 = 2;                  
             obj_ptr->tilemap_tile.tile_attr = 0;
-            obj_ptr->tilemap_tile.tile_id = 'R';
+            obj_ptr->tilemap_tile.tile_id = 17;
             obj_ptr->blocking = 0;            
             break;            
 
@@ -165,7 +165,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->attr_1 = 0;
             obj_ptr->name_token = 71;            
             obj_ptr->tilemap_tile.tile_attr = 0;
-            obj_ptr->tilemap_tile.tile_id = 'R';
+            obj_ptr->tilemap_tile.tile_id = '?';
             obj_ptr->blocking = 1; 
             break;             
     }

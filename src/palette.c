@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 // Set TILE_PALETTE_SIZE to the size of the palette data
-#define TILE_PALETTE_SIZE 96
+#define TILE_PALETTE_SIZE 128
 
 /***************************************************
  * private types

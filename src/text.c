@@ -55,7 +55,7 @@ void text_init_window(uint8_t window, uint8_t x, uint8_t y, uint8_t w, uint8_t h
     text_win->h = h;
     text_win->c_x = text_win->x;
     text_win->c_y = text_win->y;
-    text_win->tile.tile_attr = PALETTE_0;    
+    text_win->tile.tile_attr = PALETTE_WHITE;    
 }
 
 void text_select_win( uint8_t window)
