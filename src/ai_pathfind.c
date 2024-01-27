@@ -34,7 +34,7 @@ void ai_pathfind(uint8_t x, uint8_t y)
     ZXN_WRITE_MMU6(current_bank);
 }
 
-direction_t ai_pathfind_direction_to_player(const coord_t *coord)
+direction_t ai_pathfind_direction_to_player(uint8_t x, uint8_t y)
 {
     uint8_t current_bank;
 
@@ -46,7 +46,7 @@ direction_t ai_pathfind_direction_to_player(const coord_t *coord)
     /* Map AI (bank 26) into ZX Spectrum 8k MMU slot 6 */
     /* Call banked code */ 
     ZXN_WRITE_MMU6(26);    
-    c = ai_pathfind_direction_to_player_b(coord);
+    c = ai_pathfind_direction_to_player_b(x, y);
 
     /* restore previous bank */
     ZXN_WRITE_MMU6(current_bank);   

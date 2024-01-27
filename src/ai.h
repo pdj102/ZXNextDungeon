@@ -25,13 +25,6 @@
  * function prototypes
  ***************************************************/
 
-/**
- * Init the ai
- *
- * @param ai_ptr pointer to the ai object
- * @return void
- */
-void ai_init(ai_t *ai_p);
 
 /**
  * Ai takes turn
@@ -39,5 +32,12 @@ void ai_init(ai_t *ai_p);
  * @return void
  */
 void ai_turn( creature_t *creature_p );
+
+/**
+ * Notify AI of attack by another creature
+ * 
+ * @return void
+ */
+void ai_is_attacked(creature_t *target_p, creature_t *attacker_p);
 
 #endif

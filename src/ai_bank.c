@@ -45,7 +45,8 @@
 /***************************************************
  * private function prototypes
  ***************************************************/
-void ai_attacking(creature_t *creature_p);
+void ai_attacking(creature_t *attacker_p);
+void ai_lost_target( creature_t *creature_p );
 uint8_t distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2);
 
 /***************************************************
@@ -57,17 +58,9 @@ uint8_t distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2);
  * functions
  ***************************************************/
 
-void ai_init_b(ai_t *ai_p)
-{
-    // globaldata.ai.ai_creature_p = creature_p;
-}
-
 void ai_turn_b( creature_t *creature_p )
 {
     creature_p->energy = 0;
-    #ifdef DEBUG_ERROR
-        text_printf("DEBUG: AI TURN %t\n", creature_p->obj_p->name_token );
-    #endif
 
     switch (creature_p->ai.state)
     {
@@ -84,60 +77,113 @@ void ai_turn_b( creature_t *creature_p )
     }
 }
 
-void ai_attacking(creature_t *creature_p)
+/** 
+ * @brief AI turn - attacking
+ * 
+ * @param *attacker_p    Pointer to AI creature
+ * 
+ * Behaviour 
+ * 1) Check target still valid? Call lost target if not
+ * 2) If adjacent to target perform melee strike 
+ * 3) Otherwise move towards target
+ * 
+ * TODO - ranged attacks
+ * TODO - handle unable to find target 
+ * 
+ */
+void ai_attacking(creature_t *attacker_p)
 {
-    //TODO if target in melee reach attempt to strike
-    //TODO ranged attacks
-    //TODO dont assume player is target?
-    //TODO lost target. Revert to another state
+    
+
 
     direction_t d;
-    coord_t c;
-    uint8_t moved = 0;
     uint8_t distance;
-    uint8_t damage_roll;
+    creature_t *target_p;
 
-    c.x = creature_p->obj_p->x;
-    c.y = creature_p->obj_p->y;
+    target_p = attacker_p->ai.target;
 
+    // Is target valid?
+    if (target_p->hp == 0)
+    {
+        ai_lost_target( attacker_p );
+        return;
+    }
+
+    // Melee strike if adjacent 
     // Distance to target
-    distance = distance_manhattan(c.x, c.y, globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y);
+    distance = distance_manhattan(attacker_p->obj_p->x, attacker_p->obj_p->y, target_p->obj_p->x, target_p->obj_p->y);
 
     // In range of melee strike (adjacent either up, down, left or right)
     if ( distance== 1)
     {
-        creature_melee_strike(creature_p, globaldata.player.player_creature_p);
+        creature_melee_strike(attacker_p, target_p);
         return;
     }    
 
-    d = ai_pathfind_direction_to_player_b( &c );
+    // Move towards target
+    d = ai_pathfind_direction_to_player_b( attacker_p->obj_p->x, attacker_p->obj_p->y );
 
     switch (d)
     {
     case NO_DIR:
         break;
     case N:
-        moved = creature_move_by(creature_p, 0, -1);
+        creature_move_by(attacker_p, 0, -1);
         break;
     case S:
-        moved = creature_move_by(creature_p, 0, 1);
+        creature_move_by(attacker_p, 0, 1);
         break;
     case W:
-        moved = creature_move_by(creature_p, -1, 0);
+        creature_move_by(attacker_p, -1, 0);
         break;
     case E:
-        moved = creature_move_by(creature_p, 1, 0);
+        creature_move_by(attacker_p, 1, 0);
         break;
     default:
         break;
     }
+}
 
-    if (moved)
+/**
+ * Notify AI of an attack by another creature
+ * 
+ * @return void
+ */
+void ai_is_attacked_b(creature_t *target_p, creature_t *attacker_p)
+{
+    // Has the creature been killed?
+    if (target_p->hp == 0)
     {
-        return;
+        target_p->ai.state = DEAD;
     }
 
+    switch (target_p->ai.state)
+    {
+        case SLEEPING:
+            text_printf("%t WAKES UP\n", (unsigned int) target_p->obj_p->name_token);
+            target_p->ai.state = ATTACKING;
+            target_p->ai.target = attacker_p;        
+        case AWAKE:
+            target_p->ai.state = ATTACKING;
+            target_p->ai.target = attacker_p;
+            break;
+        case GUARDING:
+            target_p->ai.target = attacker_p;
+            break;
+        case ATTACKING:
+            // TODO - possibly change target if attacker is different to current target
+            // TODO - possibly flee 
+            break;
+        default:
+            break;
+    }
+}
 
+void ai_lost_target( creature_t *creature_p )
+{
+    // TODO Add support for parties and select next target in party
+    creature_p->ai.state = AWAKE;
+    creature_p->ai.target = 0;      
 }
 
 uint8_t distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2)

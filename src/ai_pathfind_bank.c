@@ -125,33 +125,30 @@ void ai_pathfind_print_b( void )
     uint8_t x;
     uint8_t y;
     direction_t direction_from;
-    coord_t next;
 
     for(x = 0; x < 40; x++)
     {
         for (y = 0; y < 40; y++)
         {
-                next.x = x;
-                next.y = y;
-                direction_from = ai_pathfind_direction_to_player_b(&next);
+                direction_from = ai_pathfind_direction_to_player_b(x, y);
 
                 switch (direction_from)
                 {
                 case N:
-                     text_print_char_at(next.x, next.y, 'N');
+                     text_print_char_at(x, y, 'N');
                     break;
                 case S:
-                     text_print_char_at(next.x, next.y, 'S');
+                     text_print_char_at(x, y, 'S');
                     break;
                 case W:
-                     text_print_char_at(next.x, next.y, 'W');
+                     text_print_char_at(x, y, 'W');
                     break;
                 case E:
-                     text_print_char_at(next.x, next.y, 'E');
+                     text_print_char_at(x, y, 'E');
                     break;                                                            
                 
                 default:
-                    text_print_char_at(next.x, next.y, ' ');
+                    text_print_char_at(x, y, ' ');
                     break;
                 }
 
@@ -159,10 +156,9 @@ void ai_pathfind_print_b( void )
     }  
 }
 
-direction_t ai_pathfind_direction_to_player_b(const coord_t *coord)
+direction_t ai_pathfind_direction_to_player_b(uint8_t x, uint8_t y)
 {
-    //messages_print_s_int8("PATHDIR", reached[coord->x][coord->y].reached_from);
-    return (reached[coord->x][coord->y].reached_from);
+    return (reached[x][y].reached_from);
 }
 
 

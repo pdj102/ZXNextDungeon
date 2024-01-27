@@ -26,19 +26,17 @@
  ***************************************************/
 
 /**
- * Init the AI
- *
- * @param obj_ptr pointer to the ai object
- * @return void
- */
-void ai_init_b(ai_t *ai_p);
-
-/**
  * AI takes turn
  * 
  * @return void
  */
 void ai_turn_b( creature_t *creature_p );
 
+/**
+ * Notify AI of attack by another creature
+ * 
+ * @return void
+ */
+void ai_is_attacked_b(creature_t *target_p, creature_t *attacker_p);
 
 #endif

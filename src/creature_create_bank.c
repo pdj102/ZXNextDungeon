@@ -415,7 +415,7 @@ ai_state_t creature_create_base_ai_b(object_subtype_e subtype)
     switch (subtype)
     {
     case BEAST_SNAKE:
-        return ATTACKING;
+        return SLEEPING;
     default:
         return GUARDING;
     }

@@ -19,12 +19,18 @@
  ***************************************************/
 
 typedef enum {
-    NO_STATE, SLEEPING, GUARDING, ATTACKING
+    NO_STATE, DEAD,                 // Misc
+    SLEEPING, AWAKE, ATTACKING,     // Creatures
+    GUARDING                        // Plants
 } ai_state_t;
+
+
+struct creature_t;
 
 typedef struct ai_s
 {
     ai_state_t      state;
+    struct creature_s      *target;
 } ai_t;
 
 typedef enum {NO_CLASS, PLAYER, AI} creature_class_e;
