@@ -53,14 +53,14 @@ uint8_t wielding_b(object_t *obj_p);
 void player_equipment_list_b( void )
 {
     object_t *obj_p;
-    unsigned char index = 'A';
+    unsigned char index = 'a';
     unsigned int key;    
 
     obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, wielding_b );
     
     if (!obj_p)
     {
-        text_printf("YOU HAVE NOTHING EQUIPPED\n");
+        text_printf("You have nothing equipped\n");
         return;
     }
     
@@ -69,12 +69,12 @@ void player_equipment_list_b( void )
 
     while (obj_p)
     {
-        text_printf("%c) %t\n", (char)index, (uint16_t)obj_p->name_token);
+        text_printf("%c) %t\n", (char)index, (unsigned int)obj_p->name_token);
         index++;
         obj_p = object_list_next_is(globaldata.player.player_creature_p->obj_p, wielding_b );
     }
 
-    text_printf("\n PRESS ANY KEY\n");
+    text_printf("\n Press any key\n");
     while ((key = in_inkey()) == 0) ;   // loop while no key pressed
     in_wait_nokey();    // wait no key 
 
@@ -84,7 +84,7 @@ void player_equipment_list_b( void )
 object_t *player_equipment_select_object( void )
 {
     object_t *obj_p;
-    uint8_t letter_max = 'A';
+    uint8_t letter_max = 'a';
     uint8_t index, index_current;
     unsigned int key;    
 
@@ -93,7 +93,7 @@ object_t *player_equipment_select_object( void )
 
     if (!obj_p)
     {
-        text_printf("YOU HAVE NOTHING EQUIPPED\n");
+        text_printf("You have nothing equipped\n");
         return 0;
     }
 
@@ -103,27 +103,27 @@ object_t *player_equipment_select_object( void )
 
     while (obj_p)
     {
-        text_printf("%c) %t\n", (char)letter_max, (uint16_t)obj_p->name_token);
+        text_printf("%c) %t\n", (char)letter_max, (unsigned int)obj_p->name_token);
 
         letter_max++;
         obj_p = object_list_next_is(obj_p, wielding_b);
     }
 
     // User selects item or presses any other key to cancel
-    text_printf("\nSELECT ITEM LETTER\n");
+    text_printf("\nSelect item letter\n");
     text_select_win( WIN_MESSAGES);
 
     while ((key = in_inkey()) == 0) ;   // loop while no key pressed
     in_wait_nokey();    // wait no key
 
-    if (! (key >= 'A' && key <= letter_max) )
+    if (! (key >= 'a' && key <= letter_max) )
     {
         // cancel
         return 0;
     }
 
     // Get the index of the selected object. 'A' is index 1, 'B' is 2 etc
-    index = key - 'A';  
+    index = key - 'a';  
 
     // Find object at index 
     index_current = 1;

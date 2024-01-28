@@ -72,9 +72,9 @@ void player_close_b( void )
 
         if ( object_close(obj_p) )
         {
-            text_printf("YOU CLOSE THE %t\n", (uint16_t) obj_p->name_token);
+            text_printf("You close the %t\n", (unsigned int) obj_p->name_token);
             return;
         }
     }
-    text_printf("NOTHING TO CLOSE HERE\n");
+    text_printf("Nothing to close here\n");
 }

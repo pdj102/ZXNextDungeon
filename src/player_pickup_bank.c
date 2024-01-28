@@ -60,8 +60,8 @@ void player_pickup_b( void )
         globaldata.player.player_creature_p->energy = 0;
 
         object_pickup(obj_p, globaldata.player.player_creature_p->obj_p);
-        text_printf("YOU PICK UP THE %t\n", (uint16_t) obj_p->name_token);
+        text_printf("You pick up the %t\n", (unsigned int) obj_p->name_token);
         return;
     }
-    text_print_string("NOTHING TO PICK UP HERE\n");
+    text_print_string("Nothing to pick up here\n");
 }

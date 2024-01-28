@@ -53,7 +53,7 @@ uint8_t not_wielding_b(object_t *obj_p);
 void player_inventory_list_b( void )
 {
     object_t *obj_p;
-    unsigned char index = 'A';
+    unsigned char index = 'a';
     unsigned int key;    
 
 
@@ -62,7 +62,7 @@ void player_inventory_list_b( void )
     
     if (!obj_p)
     {
-        text_printf("THERE IS NOTHING IN YOUR INVENTORY\n");
+        text_printf("There is nothing in your inventory\n");
         return;
     }
     
@@ -80,7 +80,7 @@ void player_inventory_list_b( void )
         obj_p = object_list_next_is(globaldata.player.player_creature_p->obj_p, not_wielding_b );
     }
 
-    text_printf("\n PRESS ANY KEY\n");
+    text_printf("\n Press any key\n");
     while ((key = in_inkey()) == 0) ;   // loop while no key pressed
     in_wait_nokey();    // wait no key 
 
@@ -90,7 +90,7 @@ void player_inventory_list_b( void )
 object_t *player_inventory_select_object_is_a_b( object_is_a is_a_p )
 {
     object_t *obj_p;
-    uint8_t letter_max = 'A';
+    uint8_t letter_max = 'a';
     uint8_t index, index_current;
     unsigned int key;    
 
@@ -99,7 +99,7 @@ object_t *player_inventory_select_object_is_a_b( object_is_a is_a_p )
 
     if (!obj_p)
     {
-        text_printf("YOU HAVE NO ITEMS\n");
+        text_printf("You have no items\n");
         return 0;
     }
 
@@ -116,20 +116,20 @@ object_t *player_inventory_select_object_is_a_b( object_is_a is_a_p )
     }
 
     // User selects item or presses any other key to cancel
-    text_printf("\nSELECT ITEM LETTER\n");
+    text_printf("\nSelect item letter\n");
     text_select_win( WIN_MESSAGES);
 
     while ((key = in_inkey()) == 0) ;   // loop while no key pressed
     in_wait_nokey();    // wait no key
 
-    if (! (key >= 'A' && key <= letter_max) )
+    if (! (key >= 'a' && key <= letter_max) )
     {
         // cancel
         return 0;
     }
 
     // Get the index of the selected object. 'A' is index 1, 'B' is 2 etc
-    index = key - 'A';  
+    index = key - 'a';  
 
     // Find object at index 
     index_current = 1;

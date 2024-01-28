@@ -33,10 +33,12 @@ static void rect_b(uint8_t x1, uint8_t y1, uint8_t w, uint8_t h, dungeonmap_tile
 
 static void line_horizontal_b(uint8_t x1, uint8_t y1, uint8_t x2, dungeonmap_tile_type_e tile);
 static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_tile_type_e tile);
+static void line_horizontal_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile_type);
+static void line_vertical_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile_type);
 
 static void create_room_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h);
 
-static void create_corridor_running_right_and_down_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+
 
 static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type);
 
@@ -123,28 +125,140 @@ static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_tile_
 }
 
 
+
+
+/**
+ * @brief Create a line running horizontally (left to right or right to left) with an elbow
+ * 
+ * @param x1 
+ * @param y1 
+ * @param x2 
+ * @param y2
+ * @param tile_type 
+ */
+static void line_horizontal_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile_type)
+{
+    uint8_t x_mid;
+    uint8_t ty, tx;
+
+    // switch coords so corridor runs left to right
+    if ( x1 > x2 ) 
+    {
+        tx = x1;    ty = x1;
+        x1 = x2;    y1 = y2;    
+        x2 = tx;    y2 = ty;
+    }    
+
+    x_mid = x1 + ((x2 - x1) / 2);
+    // y_mid = y1 + ((y2 - y1) / 2);
+
+    line_horizontal_b(x1, y1, x_mid, tile_type);
+    line_vertical_b(x_mid, y1, y2, tile_type);
+    line_horizontal_b(x_mid, y2, x2, tile_type);
+}
+
+/**
+ * @brief Create a line running vertically (top to bottom or bottom to top) with an elbow
+ * 
+ * @param x1 
+ * @param y1 
+ * @param x2 
+ * @param y2 
+ * @param tile_type
+ */
+static void line_vertical_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile_type)
+{
+    uint8_t y_mid;
+    uint8_t ty, tx;
+
+    // switch coords so corridor runs top to bottom
+    if ( y1 > y2 ) 
+    {
+        tx = x1;    ty = x1;
+        x1 = x2;    y1 = y2;    
+        x2 = tx;    y2 = ty;
+    }    
+
+    // x_mid = x1 + ((x2 - x1) / 2);
+    y_mid = y1 + ((y2 - y1) / 2);
+
+    line_vertical_b(x1, y1, y_mid, tile_type);
+    line_horizontal_b(x1, y_mid, x2, tile_type);
+    line_vertical_b(x2, y_mid, y2, tile_type);    
+
+}
+
+static void create_horizontal_corridor_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
+{
+    uint8_t x_mid;
+    uint8_t ty, tx;
+
+    // switch coords so corridor runs left to right
+    if ( x1 > x2 ) 
+    {
+        tx = x1;    ty = x1;
+        x1 = x2;    y1 = y2;    
+        x2 = tx;    y2 = ty;
+    }    
+    
+    x_mid = x1 + ((x2 - x1) / 2);
+    
+    // top wall
+    line_horizontal_b(x1, y1 - 1, x_mid + 1, STONEWALL);
+    line_vertical_b(x_mid + 1, y1 - 1, y2 - 1, STONEWALL);
+    line_horizontal_b(x_mid + 1, y2 - 1, x2, STONEWALL);
+
+    // corridor
+    line_horizontal_b(x1, y1, x_mid, FLOOR);
+    line_vertical_b(x_mid, y1, y2, FLOOR);
+    line_horizontal_b(x_mid, y2, x2, FLOOR);
+
+    // top wall
+    line_horizontal_b(x1, y1 + 1, x_mid - 1, STONEWALL);
+    line_vertical_b(x_mid - 1, y1 + 1, y2 + 1, STONEWALL);
+    line_horizontal_b(x_mid - 1, y2 + 1, x2, STONEWALL);    
+}
+
+static void create_vertical_corridor_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
+{
+    uint8_t y_mid;
+    uint8_t ty, tx;
+
+    // switch coords so corridor runs top to bottom
+    if ( y1 > y2 ) 
+    {
+        tx = x1;    ty = x1;
+        x1 = x2;    y1 = y2;    
+        x2 = tx;    y2 = ty;
+    }    
+
+    // x_mid = x1 + ((x2 - x1) / 2);
+    y_mid = y1 + ((y2 - y1) / 2);
+
+    // left wall
+    line_vertical_b(x1 - 1,     y1,     y_mid - 1,      STONEWALL);
+    line_horizontal_b(x1 - 1,   y_mid - 1,  x2 - 1,     STONEWALL);
+    line_vertical_b(x2 - 1,     y_mid - 1,  y2,         STONEWALL);    
+
+    // floor wall
+    line_vertical_b(x1,     y1,     y_mid,  FLOOR);
+    line_horizontal_b(x1,   y_mid,  x2,     FLOOR);
+    line_vertical_b(x2,     y_mid,  y2,     FLOOR);
+
+    // right wall
+    line_vertical_b(x1 + 1,     y1,         y_mid + 1,      STONEWALL);
+    line_horizontal_b(x1 + 1,   y_mid + 1,  x2 + 1,     STONEWALL);
+    line_vertical_b(x2 + 1,     y_mid + 1,  y2,         STONEWALL);            
+}
+
 static void create_room_b(uint8_t x1, uint8_t y1, uint8_t dungeon_w, uint8_t dungeon_h)
 {
     uint8_t x2 = x1 + dungeon_w - 1;
     uint8_t y2 = y1 + dungeon_h - 1;
 
     rect_fill_b(x1, y1, x2, y2, FLOOR);
-    line_horizontal_b(x1, y1 + 1, x2, BRICKWALL);
+    // line_horizontal_b(x1, y1 + 1, x2, BRICKWALL);
     rect_b(x1, y1, x2, y2, STONEWALL);
-}
-
-static void create_corridor_running_right_and_down_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
-{
-    uint8_t x_mid;
-    uint8_t y_mid;
-
-    x_mid = x1 + ((x2 - x1) / 2);
-    // y_mid = y1 + ((y2 - y1) / 2);
-
-    line_horizontal_b(x1, y1, x_mid, FLOOR);
-    line_vertical_b(x_mid, y1, y2, FLOOR);
-    line_horizontal_b(x_mid, y2, x2, FLOOR);
-
 }
 
 static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type)
@@ -203,15 +317,22 @@ void dungeonmap_generate_b( void )
 
     // Assuming dungeon map size is 40 * 40 tiles
     // Create a 5 x 5 grid of rooms of size 8 x 8 tiles
-    for (x = 0; x < DUNGEONMAP_WIDTH - 1; x+=8)
+    for (x = 0; x < DUNGEONMAP_WIDTH - 1; x+=10)
     {
-        for (y = 0; y < DUNGEONMAP_HEIGHT - 1; y+=8)
+        for (y = 0; y < DUNGEONMAP_HEIGHT - 1; y+=10)
         {
-            create_room_b(x, y, 7, 7);
+            create_room_b(x, y, 8, 8);
         }
     }
 
-    create_corridor_running_right_and_down_b(6, 3, 8, 5);
+    create_horizontal_corridor_b(7, 3, 10, 4);
+    create_horizontal_corridor_b(7, 13, 10, 13);
+    create_vertical_corridor_b(4, 7, 1, 10);
+    
+    
+    //    create_corridor_running_horizontal_b(6, 3, 8, 5);
+
+
 
 /*
     // add horizontal connecting corridors

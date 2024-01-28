@@ -99,7 +99,7 @@ void player_takeoff_b( void)
     }
  
     globaldata.player.player_creature_p->energy = 0;
-    text_printf("YOU TAKEOFF THE %t\n", (uint16_t)obj_p->name_token);
+    text_printf("You takeoff the %t\n", (uint16_t)obj_p->name_token);
 
     // recalculate stats
     player_calc_stats_b();

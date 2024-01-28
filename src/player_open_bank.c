@@ -71,10 +71,10 @@ void player_open_b( void )
 
         if ( object_open(obj_p) )
         {
-            text_printf("YOU OPEN THE %t\n", (uint16_t) obj_p->name_token);
+            text_printf("You open the %t\n", (unsigned int) obj_p->name_token);
 
             return;
         }
     }
-    text_printf("NOTHING TO OPEN HERE\n");
+    text_printf("Nothing to open here\n");
 }

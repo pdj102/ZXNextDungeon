@@ -83,6 +83,6 @@ void player_strike_b( void )
     }
     else
     {
-        text_printf("NOTHING TO STRIKE HERE\n");
+        text_printf("Nothing to strike here\n");
     }
 }

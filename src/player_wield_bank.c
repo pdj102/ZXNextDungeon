@@ -104,7 +104,7 @@ void player_wield_b( void)
     }
 
     globaldata.player.player_creature_p->energy = 0;
-    text_printf("YOU WIELD THE %t\n", (uint16_t)obj_p->name_token);
+    text_printf("You wield the %t\n", (unsigned int)obj_p->name_token);
 
     // recalculate stats
     player_calc_stats_b();
