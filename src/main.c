@@ -170,7 +170,7 @@ int main( void )
     dungeonmap_generate();
 
 
-    text_printf("WELCOME TO DUNGEON!\n");
+    text_printf("Welcome to Dungeon!\n");
 
     #ifdef DEBUG_ERROR
         text_print_string("DEBUG: GLOBAL DATA SIZE:");
