@@ -49,7 +49,7 @@ uint8_t object_open(object_t *obj)
     {
     case DOOR_CLOSED:
         obj->subtype=DOOR_OPEN;
-        obj->tilemap_tile.tile_id=45;
+        obj->tilemap_tile.tile_id=18;
         obj->blocking = 0;
         break;
     case CHEST_LARGE:

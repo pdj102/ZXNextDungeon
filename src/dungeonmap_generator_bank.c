@@ -70,18 +70,18 @@ static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonm
     switch (tile_type)
     {
     case FLOOR:
-        m->tilemap_tile.tile_attr = 0;
-        m->tilemap_tile.tile_id = 2;
+        m->tilemap_tile.tile_attr = PALETTE_PURPLE;
+        m->tilemap_tile.tile_id = 1;
         m->flags &= ~(FLAG_BLOCKIKNG);
         break;
     case BRICKWALL:
-        m->tilemap_tile.tile_attr = 0;
+        m->tilemap_tile.tile_attr = PALETTE_ORANGE;
         m->tilemap_tile.tile_id = 4;
         m->flags |= FLAG_BLOCKIKNG;
         break;
     case SOLIDWALL:
-        m->tilemap_tile.tile_attr = 0;
-        m->tilemap_tile.tile_id = 6;
+        m->tilemap_tile.tile_attr = PALETTE_ORANGE;
+        m->tilemap_tile.tile_id = 3;
         m->flags |= FLAG_BLOCKIKNG;
         break;
     default:
