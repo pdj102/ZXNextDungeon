@@ -25,7 +25,7 @@
  * types
  ***************************************************/
 
-typedef enum dungeonmap_tile_type {FLOOR, BRICKWALL, SOLIDWALL} dungeonmap_tile_type_e;
+typedef enum dungeonmap_tile_type {FLOOR, ROCK, BRICKWALL, BRICKWALL_END, STONEWALL, STONEWALL_END } dungeonmap_tile_type_e;
 
 // Dungeon map tile 
 typedef struct dungeonmap_tile_s

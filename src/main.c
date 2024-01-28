@@ -148,10 +148,10 @@ void init_game( void )
     object_t *speed2_obj_p = object_create(POTION_SPEED, 5, 5);
     object_list_add(speed2_obj_p, chest_obj_p);    
    
-    object_t *trap_obj_p = object_create(TRAP_NOISE, 1, 1);      
+    object_t *trap_obj_p = object_create(TRAP_NOISE, 1, 2);      
     object_dungeon_list_add(trap_obj_p);
 
-    object_t *ring_obj_p = object_create(RING_HP, 3, 1);      
+    object_t *ring_obj_p = object_create(RING_HP, 3, 2);      
     object_dungeon_list_add(ring_obj_p);
 
     tmp_event_p = event_create_object_cb(object_open, door_obj_p, 5);

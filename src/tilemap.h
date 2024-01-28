@@ -15,17 +15,17 @@
 #define TILE_MAP_HEIGHT 32
 
 
-#define PALETTE_PURPLE     0b00000000
+#define PALETTE_PURPLE          0b00000000
 #define PALETTE_DARK_GREEN      0b00010000
-#define PALETTE_ORANGE     0b00100000
-#define PALETTE_YELLOW     0b00110000
-#define PALETTE_RED        0b01000000
+#define PALETTE_ORANGE          0b00100000
+#define PALETTE_YELLOW          0b00110000
+#define PALETTE_RED             0b01000000
 #define PALETTE_BLUE            0b01010000
 #define PALETTE_GREEN           0b01100000
 #define PALETTE_WHITE           0b01110000
-#define MIRROR_X    0b00001000
-#define MIRROR_Y    0b00000100
-#define ROTATE      0b00000010
+#define MIRROR_X                0b00001000
+#define MIRROR_Y                0b00000100
+#define ROTATE                  0b00000010
 
 /***************************************************
  * public types
