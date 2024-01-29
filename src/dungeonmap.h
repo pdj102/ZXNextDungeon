@@ -13,9 +13,9 @@
 
 #include "tilemap.h"
 
+#include "globaldata_defines.h"
 
-#define DUNGEONMAP_WIDTH   40
-#define DUNGEONMAP_HEIGHT  40
+
 
 #define FLAG_BLOCKIKNG 1 << 0
 

@@ -27,7 +27,7 @@ ds 100*2
 
 ; Reached 40 * 40 array of 2 byte
 ._reached
-ds 40*40*2
+ds 50*50*2
 
 ._frontier_head 
 ds 1

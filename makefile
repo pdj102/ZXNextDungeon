@@ -57,7 +57,7 @@ ASSEMBLEY=dungeon.asm
 # PAGE_18
 # Target for dungeon map generator code and data
 # - dungeon_map_generator_bank.o 
-$(OBJDIR)/dungeonmap_generator_bank.o: $(SRCDIR)/dungeonmap_generator_bank.c $(SRCDIR)/dungeonmap_generator_bank.h $(PRAGMA_FILE)
+$(OBJDIR)/dungeonmap_generator_bank.o: $(SRCDIR)/dungeonmap_generator_bank.c $(SRCDIR)/dungeonmap_generator_bank.h $(SRCDIR)/dungeonmap_generator_bank_data.asm $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_18 --constsegPAGE_18 -o $@ $<
 
 # ####################################################################################################################################

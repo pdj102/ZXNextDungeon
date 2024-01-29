@@ -131,7 +131,7 @@ uint8_t creature_create_base_hp_b(object_subtype_e subtype)
       
     // BEAST
     case BEAST_SNAKE:
-        return 2;
+        return 4;
 
     // OOZE
 
