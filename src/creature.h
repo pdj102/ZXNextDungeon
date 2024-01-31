@@ -24,6 +24,13 @@ typedef enum {
     GUARDING                        // Plants
 } ai_state_t;
 
+#define CONDITION_NONE              1 << 0
+#define CONDITION_BLINDED           1 << 1
+#define CONDITION_FRIGHTENED        1 << 2
+#define CONDITION_GRAPPLED          1 << 3
+#define CONDITION_INCAPACITATED     1 << 4
+#define CONDITION_POISONED          1 << 5
+
 
 struct creature_t;
 
@@ -33,7 +40,7 @@ typedef struct ai_s
     struct creature_s      *target;
 } ai_t;
 
-typedef enum {NO_CLASS, PLAYER, AI} creature_class_e;
+typedef enum {AI, PLAYER } ai_or_player_e;
 
 typedef enum {
     NO_DAMAGE, ACID, BLUDGEONGING, COLD, FIRE, FORCE, LIGHTNING, PIERCING, POSION, SLASHING
@@ -43,7 +50,8 @@ typedef struct creature_attack_s
 {
     dice_t                  damage_roll;
     damage_type_t           damage_type;
-    uint8_t                 attack_bonus;              /**< Calculated attack bonus */
+    int8_t                  attack_bonus;              /**< Calculated attack bonus */
+    int8_t                  damage_bonus;              /**< Calculated damage bonus */
     uint8_t                 range;
 } creature_attack_t;
 
@@ -53,7 +61,7 @@ typedef struct creature_s
     uint8_t                 free;               /**< 1 if creature slot is free */
     object_t                *obj_p;             /** all creatures have an associated object */
 
-    creature_class_e        creature_class;     /**< player or AI */
+    ai_or_player_e          ai_or_player;       /**< player or AI */
 
     uint8_t                 max_hp;             /**< max hp = base + any modifiers*/
     uint8_t                 hp;                 /** current hp */
@@ -78,6 +86,8 @@ typedef struct creature_s
 
     creature_attack_t      melee;
     creature_attack_t      ranged;
+
+    uint8_t                conditions;
         
 } creature_t;
 
@@ -111,7 +121,7 @@ creature_t* creature_getfree( void );
  * 
  * NB creature's object needs to be deleted separately 
  * 
- * @param   *creature_p  Creature to destroy
+ * @param   *creature_p  Crature to destroy
  */
 void creature_delete(creature_t *creature_p);
 

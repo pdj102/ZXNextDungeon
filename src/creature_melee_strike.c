@@ -46,6 +46,7 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
     // reduce attackers energy 
     attacker_p->energy = 0;
 
+    // TODO manage negative attack bonus. Minimum attack roll is 1
     attack_roll = dice_1d20() + attacker_p->melee.attack_bonus;
 
     text_printf("%t STRIKES %t ", (unsigned int)attacker_p->obj_p->name_token, (unsigned int)target_p->obj_p->name_token);
@@ -60,12 +61,13 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
         // Hit
         text_printf("AND HITS\n");
     
-        damage_roll = dice_roll(&target_p->melee.damage_roll);
+        // TODO manage negative damage bonus. Minimum damage roll is be zero
+        damage_roll = dice_roll(&target_p->melee.damage_roll) + attacker_p->melee.damage_bonus;
         creature_damage(target_p, damage_roll, attacker_p->melee.damage_type);
     }
 
     // Notify AI of attack
-    if (target_p->creature_class == AI)
+    if (target_p->ai_or_player == AI)
     {
         ai_is_attacked(target_p, attacker_p);
     }

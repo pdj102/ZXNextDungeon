@@ -21,6 +21,7 @@
 
 #include "text.h"
 
+#include "globaldata.h"
 #include "globaldata_defines.h"         // ERROR_DEBUG
 
 #pragma output CRT_ORG_CODE = 0xC000
@@ -41,7 +42,6 @@
  * functions
  ***************************************************/
 
-// todo change this function to create the object as well
 creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y)
 {
     creature_t *creature_p;
@@ -78,8 +78,11 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
     creature_p->next = 0;
     creature_p->obj_p = obj_p;              // set creature to point to object
     creature_p->energy = 0;
-    creature_p->creature_class = AI;    
-    creature_list_add(creature_p);          // add creature to list of creatures
+    creature_p->ai_or_player = AI;
+    creature_p->conditions = CONDITION_NONE; // Start with no conditions
+
+    // Add the creature to the games creature list           
+    creature_list_add(creature_p);          
 
     // Setup creature specifics 
     creature_create_reset_base_stats_b(creature_p);
@@ -99,6 +102,10 @@ uint8_t creature_create_base_speed_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_speed;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;    
@@ -125,6 +132,10 @@ uint8_t creature_create_base_hp_b(object_subtype_e subtype)
     // TODO special base HP for player based on level
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_hp;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -151,6 +162,10 @@ uint8_t creature_create_base_magic_b(object_subtype_e subtype)
     // TODO special base magic for player based on level
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_mp;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -176,6 +191,10 @@ uint8_t creature_create_base_ac_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_ac;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -201,6 +220,10 @@ uint8_t creature_create_base_str_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_str;        
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -226,6 +249,10 @@ uint8_t creature_create_base_dex_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_dex;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -251,6 +278,10 @@ uint8_t creature_create_base_con_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_con;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -276,6 +307,10 @@ uint8_t creature_create_base_inte_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_int;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -301,6 +336,10 @@ uint8_t creature_create_base_wis_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_wis;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -327,6 +366,10 @@ uint8_t creature_create_base_cha_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    // PLAYER
+    case HUMANOID_PLAYER:
+        return globaldata.player.base_cha;
+
     //HUMANOID
     case HUMANOID_HUMAN:
         return 10;   
@@ -361,6 +404,7 @@ creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
         a.damage_roll.d = 6;
         a.damage_roll.mod = 0;
         a.attack_bonus = 0;
+        a.damage_bonus = 0;
         return a;        
     // BEAST
     case BEAST_SNAKE:
@@ -369,6 +413,7 @@ creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
         a.damage_roll.d = 4;
         a.damage_roll.mod = 0;
         a.attack_bonus = 5;
+        a.damage_bonus = 0;
         return a;
 
     // OOZE
@@ -380,6 +425,7 @@ creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
         a.damage_roll.d = 4;
         a.damage_roll.mod = 0;
         a.attack_bonus = 2;
+        a.damage_bonus = 0;        
         return a;    
 
     // UNDEAD
@@ -390,6 +436,7 @@ creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
         a.damage_roll.d = 0;
         a.damage_roll.mod = 0;
         a.attack_bonus = 0;
+        a.damage_bonus = 0;        
         return a;
     }
 }
@@ -406,6 +453,7 @@ creature_attack_t creature_create_base_ranged_b(object_subtype_e subtype)
         a.damage_roll.d = 0;
         a.damage_roll.mod = 0;
         a.attack_bonus = 0;
+        a.damage_bonus = 0;        
         return a;
     }
 }

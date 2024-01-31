@@ -75,6 +75,8 @@ typedef enum {
     WAND_FIREBALL,
     
     // Creatures
+    HUMANOID_PLAYER, 
+    
     HUMANOID_HUMAN,
 
     BEAST_SNAKE,

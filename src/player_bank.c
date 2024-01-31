@@ -43,6 +43,7 @@
 #include "object_dungeon_list.h"
 
 #include "creature.h"
+#include "creature_create.h"
 
 
 /***************************************************
@@ -64,9 +65,40 @@
  * functions
  ***************************************************/
 
-void player_init_b(creature_t *creature_p)
+void player_init_b( void )
 {
+    creature_t *creature_p;
+
+    // Create a level 1 humanoid crreature
+    creature_p = creature_create(HUMANOID_HUMAN, 2, 2);
+
+    // Change from AI to player
+    creature_p->ai_or_player = PLAYER;
+
+    // Set global data player to point to this creature
     globaldata.player.player_creature_p = creature_p;
+
+    // Set player name to 'you' 
+    globaldata.player.player_creature_p->obj_p->name_token = 111;
+
+    // Set player details
+    globaldata.player.class = FIGHTER;
+    globaldata.player.level = 1;
+    globaldata.player.xp = 0;
+    globaldata.player.proficiency_bonus = 2;
+
+    // Set the player base stats based on the humanoid creature
+    globaldata.player.base_speed = creature_p->speed;
+    globaldata.player.base_ac = creature_p->ac;
+    globaldata.player.base_hp = creature_p->hp;
+    globaldata.player.base_mp = creature_p->mp;
+    globaldata.player.base_str = creature_p->str;
+    globaldata.player.base_dex = creature_p->dex;
+    globaldata.player.base_con = creature_p->con;
+    globaldata.player.base_int = creature_p->inte;
+    globaldata.player.base_wis = creature_p->wis;
+    globaldata.player.base_cha = creature_p->cha;
+
 }
 
 void player_turn_b( void )

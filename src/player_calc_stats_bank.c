@@ -38,6 +38,7 @@ void player_calc_stats_b( void )
 {
     /* Sequence is 
         1) reset stats to base stats
+        2) reset melee and range attack bonus (proficiency + ability modifier)
         2) apply equipment modifiers
         3) apply effect modifiers
         4) calculate attack bonuses for melee and ranged
@@ -49,12 +50,20 @@ void player_calc_stats_b( void )
     // 1. Reset stats to base stats
     creature_create_reset_base_stats(globaldata.player.player_creature_p);
 
-    // 2. Apply equipment modifiers
+    // 2. Reset melee and range attack bonus (proficiency + ability modifier)
+
+    // TODO add ability modifier
+    globaldata.player.player_creature_p->melee.attack_bonus = globaldata.player.proficiency_bonus;
+
+    // TODO add ability modifier
+    globaldata.player.player_creature_p->ranged.attack_bonus = globaldata.player.proficiency_bonus;
+
+    // 3. Apply equipment modifiers
 
     player_calc_stats_ring_b(globaldata.player.ring_left);
     player_calc_stats_ring_b(globaldata.player.ring_right);
 
-    // 3. Apply effects modifiers (TODO move to creature code as this should apply to creatures too)
+    // 4. Apply effects modifiers (TODO move to creature code as this should apply to creatures too)
 }
 
 void player_calc_stats_ring_b( object_t *obj_p)

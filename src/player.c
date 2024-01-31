@@ -32,12 +32,12 @@
  * functions
  ***************************************************/
 
-void player_init(creature_t *creature_p)
+void player_init( void )
 {
     /* Map Player code (bank 24) into ZX Spectrum 8k MMU slot 6 */
     ZXN_WRITE_REG(0x56, 24);
     /* Call banked code */ 
-    player_init_b(creature_p);
+    player_init_b();
 }
 
 void player_turn( void )

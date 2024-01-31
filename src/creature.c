@@ -60,7 +60,7 @@ void creature_turn(creature_t *creature_p)
 
     if (creature_p->energy == MAX_ENERGY)
     {
-        switch (creature_p->creature_class )
+        switch (creature_p->ai_or_player )
         {
         case AI:
             ai_turn(creature_p);

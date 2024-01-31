@@ -116,13 +116,11 @@ void init_game( void )
     creature_init();
     creature_list_init();
 
-    creature_t  *human_creature_p;
     event_t *tmp_event_p;  
 
     // player
-    human_creature_p = creature_create(HUMANOID_HUMAN, 2, 2);
-    human_creature_p->creature_class = PLAYER;      // Change from AI to player
-    player_init(human_creature_p);
+
+    player_init();
 
     // snake 1
     creature_create(BEAST_SNAKE, 10, 2);
@@ -180,8 +178,8 @@ int main( void )
         text_print_string("\n");
     #endif
 
+    ui_display_hp_mp();
     ui_display_stats();
-    ui_display_ability_scores();
 
     while (1)
     {

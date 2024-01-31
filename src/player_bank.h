@@ -29,10 +29,9 @@
 /**
  * Init the player
  *
- * @param obj_ptr pointer to the player object
  * @return void
  */
-void player_init_b(creature_t *creature_p);
+void player_init_b( void );
 
 /**
  * Player takes turn

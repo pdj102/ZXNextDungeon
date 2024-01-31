@@ -27,7 +27,7 @@
  * functions
  ***************************************************/
 
-void ui_display_ability_scores( void )
+void ui_display_hp_mp( void )
 {
     uint8_t current_bank;
 
@@ -36,7 +36,7 @@ void ui_display_ability_scores( void )
 
     /* Call banked code */ 
     ZXN_WRITE_MMU7(25);    
-    ui_display_ability_scores_b();
+    ui_display_hp_mp_b();
 
     /* restore previous bank */
     ZXN_WRITE_MMU6(current_bank);
