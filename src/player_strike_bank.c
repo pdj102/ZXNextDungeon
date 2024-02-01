@@ -30,6 +30,7 @@
 #include "object_dungeon_list.h"
 
 #include "creature.h"
+#include "creature_list.h"
 #include "creature_melee_strike.h"
 #include "creature_damage.h"
 #include "creature_destroy.h"
@@ -57,10 +58,6 @@ void player_strike_b( void )
 {
     int8_t dx, dy;
     uint8_t x, y;
-    uint8_t damage_roll;
-    uint8_t actual_damage;
-
-    object_t *obj_p;
 
     creature_t *target_p;
 
@@ -72,11 +69,8 @@ void player_strike_b( void )
     x = globaldata.player.player_creature_p->obj_p->x + dx;
     y = globaldata.player.player_creature_p->obj_p->y + dy;
 
-    // TODO implement a function that searches for and returns a creature not an object
-    if ( obj_p = object_dungeon_list_first_is_at(x, y, object_strike_is))
+    if ( target_p = creature_list_first_is_a_at(x, y, object_strike_is))
     {
-        target_p = obj_p->creature_p;
-
         globaldata.player.player_creature_p->energy = 0;
 
         creature_melee_strike(globaldata.player.player_creature_p, target_p);

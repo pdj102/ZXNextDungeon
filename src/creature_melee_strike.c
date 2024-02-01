@@ -37,7 +37,6 @@
  * functions
  ***************************************************/
 
-
 uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
 {
     uint8_t attack_roll;

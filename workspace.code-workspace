@@ -52,7 +52,8 @@
 			"stdarg.h": "c",
 			"globaldata_defines.h": "c",
 			"player_inventory_bank.h": "c",
-			"player_wield_bank.h": "c"
+			"player_wield_bank.h": "c",
+			"creature_destroy.h": "c"
 		}
 	}
 }

@@ -35,8 +35,6 @@
  * functions
  ***************************************************/
 
-
-// TO DO move into  bank code for creating objects 
 object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
 {
     object_t *obj_ptr;

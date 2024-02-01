@@ -104,9 +104,9 @@ void ai_pathfind_b(uint8_t x, uint8_t y)
     while(pop_frontier_b(&current))
     {
         neighbor = 0;
-        // TO DO add limit to depth of search 
-        // TO DO handle blocking objects (object mark map?)
-        // TO DO Intelligent vs non-intelligent can open doors so not blocked
+        // TODO add limit to depth of search 
+        // TODO handle blocking objects (object mark map?)
+        // TODO Intelligent vs non-intelligent can open doors so not blocked
 
         while (get_next_neighbor_b(&current, &next, &direction_from))  
         {

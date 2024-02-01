@@ -91,7 +91,9 @@ typedef struct creature_s
         
 } creature_t;
 
-
+// Typedef for creature is_a functions
+typedef uint8_t (*creature_is_a)(creature_t *);
+typedef uint8_t (*creature_is_a2)(creature_t *, creature_t *);
 
 /***************************************************
  * variable declarations

@@ -66,6 +66,98 @@ creature_t *creature_list_first( void );
 creature_t *creature_list_next(creature_t *obj_ptr);
 
 /**
+ * Returns the first creature in the creature list at location x, y
+ * 
+ * @param x                 dungeon x position
+ * @param y                 dungeon y position
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_first_at(uint8_t x, uint8_t y);
+
+/**
+ * Returns the next creature in the creature list at location x, y
+ * 
+ * @param creature_p        pointer to previously returned creature from list
+ * @param x                 dungeon x position
+ * @param y                 dungeon y position
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_next_at(creature_t *creature_p, uint8_t x, uint8_t y);
+
+/**
+ * Returns the first creature in the creature list at location x, y and is_a function returns true
+ * 
+ * @param x                 dungeon x position
+ * @param y                 dungeon y position
+ * @param is_a_p            pointer to is_a function to test
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_first_is_a_at(uint8_t x, uint8_t y, object_is_a is_a_p);
+
+/**
+ * Returns the next creature in the creature list at location x, y and is_a function returns true
+ *
+ * @param creature_p        pointer to previously returned creature from list 
+ * @param x                 dungeon x position
+ * @param y                 dungeon y position
+ * @param is_a_p            pointer to is_a function to test
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_next_is_a_at(creature_t *creature_p, uint8_t x, uint8_t y, object_is_a is_a_p);
+
+/**
+ * Returns the first creature in the creature list within rect x1, y1, x2, y2 and is_a function returns true
+ * 
+ * @param x1                dungeon x1 position
+ * @param y1                dungeon y1 position
+ * @param x2                dungeon x2 position
+ * @param y2                dungeon y2 position
+ * @param is_a_p            pointer to is_a function to test
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_first_is_a_within_rect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, creature_is_a is_a_p);
+
+/**
+ * Returns the next creature in the creature list within rect x1, y1, x2, y2 and is_a function returns true
+ *
+ * @param creature_p        pointer to previously returned creature from list 
+ * @param x1                dungeon x1 position
+ * @param y1                dungeon y1 position
+ * @param x2                dungeon x2 position
+ * @param y2                dungeon y2 position
+ * @param is_a_p            pointer to is_a function to test
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_next_is_a_within_rect(creature_t *creature_p, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, creature_is_a is_a_p);
+
+/**
+ * Returns the first creature in the creature list within rect x1, y1, x2, y2 and is_a2 function returns true
+ * 
+ * @param x1                dungeon x1 position
+ * @param y1                dungeon y1 position
+ * @param x2                dungeon x2 position
+ * @param y2                dungeon y2 position
+ * @param agent_p           the agent creature 
+ * @param is_a2_p           pointer to is_a2 function to test
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_first_is_a2_within_rect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, creature_t *agent_p, creature_is_a2 is_a2_p);
+
+/**
+ * Returns the next creature in the creature list within rect x1, y1, x2, y2 and is_a2 function returns true
+ *
+ * @param creature_p        pointer to previously returned creature from list 
+ * @param x1                dungeon x1 position
+ * @param y1                dungeon y1 position
+ * @param x2                dungeon x2 position
+ * @param y2                dungeon y2 position
+ * @param agent_p           the agent creature 
+ * @param is_a2_p           pointer to is_a2 function to test
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_next_is_a2_within_rect(creature_t *creature_p, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, creature_t *agent_p, creature_is_a2 is_a2_p);
+
+/**
  * All creatures take a turn
  * 
  */
