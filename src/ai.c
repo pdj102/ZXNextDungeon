@@ -62,7 +62,7 @@ void ai_is_attacked(creature_t *target_p, creature_t *attacker_p)
 
     /* Map AI (bank 26) into ZX Spectrum 8k MMU slot 6 */
     /* Call banked code */ 
-    ZXN_WRITE_MMU6(26);    
+    ZXN_WRITE_MMU6(26);
     ai_is_attacked_b( target_p, attacker_p ); 
 
     /* restore previous bank */

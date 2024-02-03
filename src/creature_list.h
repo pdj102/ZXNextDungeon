@@ -158,6 +158,31 @@ creature_t *creature_list_first_is_a2_within_rect(uint8_t x1, uint8_t y1, uint8_
 creature_t *creature_list_next_is_a2_within_rect(creature_t *creature_p, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, creature_t *agent_p, creature_is_a2 is_a2_p);
 
 /**
+ * Returns the first creature in the creature list within square x +/- r, y +/- r and is_a2 function returns true
+ * 
+ * @param x1                dungeon x1 position
+ * @param y1                dungeon y1 position
+ * @param r                 range r. square is 2r
+ * @param agent_p           the agent creature 
+ * @param is_a2_p           pointer to is_a2 function to test
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_first_is_a2_within_square(uint8_t x, uint8_t y, uint8_t r, creature_t *agent_p, creature_is_a2 is_a2_p);
+
+/**
+ * Returns the next creature in the creature list within square x +/- r, y +/- r and is_a2 function returns true
+ *
+ * @param creature_p        pointer to previously returned creature from list 
+ * @param x1                dungeon x1 position
+ * @param y1                dungeon y1 position
+ * @param r                 range 2. square is 2r
+ * @param agent_p           the agent creature 
+ * @param is_a2_p           pointer to is_a2 function to test
+ * @return *creature_t      pointer to next creature or 0 if no more creatures
+ */
+creature_t *creature_list_next_is_a2_within_square(creature_t *creature_p, uint8_t x, uint8_t y, uint8_t r, creature_t *agent_p, creature_is_a2 is_a2_p);
+
+/**
  * All creatures take a turn
  * 
  */

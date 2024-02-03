@@ -21,7 +21,7 @@
 
 typedef enum {PHYSICAL, ITEM, CREATURE} object_class_e;
 
-typedef enum {
+typedef enum object_type_s {
     // Physical
     DOOR,
     CHEST,
@@ -47,7 +47,7 @@ typedef enum {
 
     } object_type_e;
 
-typedef enum {
+typedef enum object_subtype_s {
 
     // Physical
     DOOR_OPEN,

@@ -18,10 +18,17 @@
  * types
  ***************************************************/
 
-typedef enum {
-    NO_STATE, DEAD,                 // Misc
-    SLEEPING, AWAKE, ATTACKING,     // Creatures
-    GUARDING                        // Plants
+typedef enum ai_state_s {
+    NO_STATE,
+    DEAD,
+    SLEEPING, 
+    AWAKE, 
+    ATTACKING_MELEE, 
+    ATTACKING_RANGED,
+    ATTACKING_NO_TARGET,
+    HUNTING,
+    GUARDING, 
+    FLEEING
 } ai_state_t;
 
 #define CONDITION_NONE              1 << 0

@@ -141,6 +141,18 @@ $(OBJDIR)/ai_bank.o: $(SRCDIR)/ai_bank.c $(SRCDIR)/ai_bank.h $(PRAGMA_FILE)
 # - ai_pathfind_bank.o 
 $(OBJDIR)/ai_pathfind_bank.o: $(SRCDIR)/ai_pathfind_bank.c $(SRCDIR)/ai_pathfind_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
+# - ai_attacking_melee_bank.o 
+$(OBJDIR)/ai_attacking_melee_bank.o: $(SRCDIR)/ai_attacking_melee_bank.c $(SRCDIR)/ai_attacking_melee_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<	
+# - ai_attacking_ranged_bank.o 
+$(OBJDIR)/ai_attacking_ranged_bank.o: $(SRCDIR)/ai_attacking_ranged_bank.c $(SRCDIR)/ai_attacking_ranged_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<		
+# - ai_guarding_bank.o 
+$(OBJDIR)/ai_guarding_bank.o: $(SRCDIR)/ai_guarding_bank.c $(SRCDIR)/ai_guarding_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
+# - ai_sleeping_bank.o 
+$(OBJDIR)/ai_sleeping_bank.o: $(SRCDIR)/ai_sleeping_bank.c $(SRCDIR)/ai_sleeping_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<			
 
 # ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 

@@ -14,6 +14,7 @@
 #include "creature.h"
 
 #include "globaldata.h"
+#include "globaldata_defines.h"
 
 /***************************************************
  * private types
@@ -195,6 +196,32 @@ creature_t *creature_list_next_is_a2_within_rect(creature_t *creature_p, uint8_t
         }
     }
     return 0;
+}
+
+creature_t *creature_list_first_is_a2_within_square(uint8_t x, uint8_t y, uint8_t r, creature_t *agent_p, creature_is_a2 is_a2_p)
+{
+    uint8_t x1, x2, y1, y2;
+
+    // clamp to dungeon size
+    x1 = ( x < r) ? 0 : x - r;                                                  // x1 minimum 0
+    y1 = ( y < r) ? 0 : y - r;                                                  // y1 minimum 0 
+    x2 = ( x > DUNGEONMAP_WIDTH - 1 - r ) ? DUNGEONMAP_WIDTH - 1 : x + r;       // x2 maximum is DUNGEON_WIDTH - 1
+    y2 = ( y > DUNGEONMAP_HEIGHT - 1 - r ) ? DUNGEONMAP_HEIGHT - 1 : y + r;     // y2 maximum is DUNGEON_HEIGHT - 1
+
+    return creature_list_first_is_a2_within_rect(x1, y1, x2, y2, agent_p, is_a2_p);
+}
+
+creature_t *creature_list_next_is_a2_within_square(creature_t *creature_p, uint8_t x, uint8_t y, uint8_t r, creature_t *agent_p, creature_is_a2 is_a2_p)
+{
+    uint8_t x1, x2, y1, y2;
+
+    // clamp to dungeon size
+    x1 = ( x < r) ? 0 : x - r;                                                  // x1 minimum 0
+    y1 = ( y < r) ? 0 : y - r;                                                  // y1 minimum 0 
+    x2 = ( x > DUNGEONMAP_WIDTH - 1 - r ) ? DUNGEONMAP_WIDTH - 1 : x + r;       // x2 maximum is DUNGEON_WIDTH - 1
+    y2 = ( y > DUNGEONMAP_HEIGHT - 1 - r ) ? DUNGEONMAP_HEIGHT - 1 : y + r;     // y2 maximum is DUNGEON_HEIGHT - 1
+
+    return creature_list_next_is_a2_within_rect(creature_p, x1, y1, x2, y2, agent_p, is_a2_p);
 }
 
 void creature_list_update_all( void )
