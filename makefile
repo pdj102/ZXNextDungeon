@@ -138,8 +138,8 @@ $(OBJDIR)/ui_stats_bank.o: $(SRCDIR)/ui_stats_bank.c $(SRCDIR)/ui_stats_bank.h $
 # - ai_bank.o
 $(OBJDIR)/ai_bank.o: $(SRCDIR)/ai_bank.c $(SRCDIR)/ai_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
-# - ai_pathfind_bank.o 
-$(OBJDIR)/ai_pathfind_bank.o: $(SRCDIR)/ai_pathfind_bank.c $(SRCDIR)/ai_pathfind_bank.h $(PRAGMA_FILE)
+# - ai_pathfind_breadth_first_search_bank.o 
+$(OBJDIR)/ai_pathfind_breadth_first_search_bank.o: $(SRCDIR)/ai_pathfind_breadth_first_search_bank.c $(SRCDIR)/ai_pathfind_breadth_first_search_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
 # - ai_attacking_melee_bank.o 
 $(OBJDIR)/ai_attacking_melee_bank.o: $(SRCDIR)/ai_attacking_melee_bank.c $(SRCDIR)/ai_attacking_melee_bank.h $(PRAGMA_FILE)

@@ -2,14 +2,14 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief AI pathfinding
+    @brief AI pathfinding - breadth first search
 
     Code is banked do not call directly
 
  ***************************************************/
 
-#ifndef AI_PATHFIND_BANK_H 
-    #define AI_PATHFIND_BANK_H 
+#ifndef AI_PATHFIND_BREADTH_FIRST_SEARCH_BANK_H 
+    #define AI_PATHFIND_BREADTH_FIRST_SEARCH_BANK_H 
 
 #include <inttypes.h>
 
@@ -37,7 +37,7 @@ typedef struct
  *
  * @return void
  */
-void ai_pathfind_b(uint8_t x, uint8_t y);
+void ai_pathfind_breadth_first_search_b(uint8_t x, uint8_t y);
 
 /**
  * @brief Returns the direction towards the player as determined by the last call to ai_pathfind()

@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief AI pathfinding
+    @brief AI pathfinding - breadth first search
 
     Code is banked do not call directly
 
@@ -10,7 +10,7 @@
 
 #pragma output CRT_ORG_CODE = 0xC000
 
-#include "ai_pathfind_bank.h"
+#include "ai_pathfind_breadth_first_search_bank.h"
 
 #include <stdint.h>
 
@@ -65,7 +65,7 @@ extern uint8_t min_y;
  * functions
  ***************************************************/
 
-void ai_pathfind_b(uint8_t x, uint8_t y)
+void ai_pathfind_breadth_first_search_b(uint8_t x, uint8_t y)
 {
     coord_t current;
     coord_t next;
@@ -80,9 +80,9 @@ void ai_pathfind_b(uint8_t x, uint8_t y)
 
     // Limit the bounds of the path finding to a maximum of 10 x 10 squares around the player
     if (x<10) { min_x = 0; } else { min_x = x - 10; }
-    if (x> DUNGEONMAP_WIDTH - 10) { max_x = DUNGEONMAP_WIDTH; } else { max_x = x + 10; }
+    if (x> DUNGEONMAP_WIDTH - 1 - 10) { max_x = DUNGEONMAP_WIDTH - 1; } else { max_x = x + 10; }
     if (y<10) { min_y = 0; } else { min_y = y - 10; }
-    if (y> DUNGEONMAP_HEIGHT - 10) { max_y = DUNGEONMAP_HEIGHT; } else { max_y = y + 10; }
+    if (y> DUNGEONMAP_HEIGHT - 1 - 10) { max_y = DUNGEONMAP_HEIGHT - 1; } else { max_y = y + 10; }
 
     // clear previous path information (currently only within limits of new path)
     // todo - faster to memcopy 0 over the array?

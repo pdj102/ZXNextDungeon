@@ -7,12 +7,12 @@
 
  ***************************************************/
 
-#ifndef AI_PATHFIND_H 
-    #define AI_PATHFIND_H 
+#ifndef AI_PATHFIND_BREADTH_FIRST_SEARCH_H 
+    #define AI_PATHFIND_BREADTH_FIRST_SEARCH_H
 
 #include <inttypes.h>
 
-#include "ai_pathfind_bank.h"
+#include "ai_pathfind_breadth_first_search_bank.h"
 
 /***************************************************
  * types
@@ -31,7 +31,7 @@
  *
  * @return void
  */
-void ai_pathfind(uint8_t x, uint8_t y);
+void ai_pathfind_breadth_first_search(uint8_t x, uint8_t y);
 
 /**
  * @brief Returns the direction towards the player as determined by the last call to ai_pathfind()
