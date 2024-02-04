@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief AI pathfinding - breadth first search
+    @brief AI pathfinding - fast a star
 
     Code is banked do not call directly
 
@@ -10,7 +10,7 @@
 
 #pragma output CRT_ORG_CODE = 0xC000
 
-#include "ai_pathfind_breadth_first_search_bank.h"
+#include "ai_pathfind_fast_a_star_bank.h"
 
 #include <stdint.h>
 
@@ -22,10 +22,10 @@
 #include "globaldata_defines.h"
 
 #include "text.h"
-#include "text_token.h"
 
 
 #define FRONTIER_SIZE   100
+
 
 /***************************************************
  * private types
@@ -61,7 +61,7 @@ extern uint8_t min_y;
  * functions
  ***************************************************/
 
-void ai_pathfind_breadth_first_search_b(uint8_t x, uint8_t y)
+void ai_pathfind_fast_a_star_b(uint8_t x, uint8_t y, uint8_t goal_x, uint8_t goal_y)
 {
     coord_t current;
     coord_t next;

@@ -84,7 +84,7 @@ void ai_attacking_melee_b(creature_t *attacker_p)
     }    
 
     // Move towards target
-    d = ai_pathfind_direction_to_player_b( attacker_p->obj_p->x, attacker_p->obj_p->y );
+    d = ai_pathfind_direction_b( attacker_p->obj_p->x, attacker_p->obj_p->y );
 
     switch (d)
     {

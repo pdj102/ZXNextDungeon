@@ -7,11 +7,12 @@
 
  ***************************************************/
 
-#ifndef AI_PATHFIND_BREADTH_FIRST_SEARCH_H 
-    #define AI_PATHFIND_BREADTH_FIRST_SEARCH_H
+#ifndef AI_PATHFIND_H 
+    #define AI_PATHFIND_H
 
 #include <inttypes.h>
 
+#include "ai_pathfind_bank.h"
 #include "ai_pathfind_breadth_first_search_bank.h"
 
 /***************************************************
@@ -38,8 +39,12 @@ void ai_pathfind_breadth_first_search(uint8_t x, uint8_t y);
  *
  * @return direction_t
  */
-direction_t ai_pathfind_direction_to_player(uint8_t x, uint8_t y);
+direction_t ai_pathfind_direction(uint8_t x, uint8_t y);
 
+/**
+ * @brief Displays the current path based on last call to ai_pathfind*
+ * 
+ */
 void ai_pathfind_print( void );
 
 #endif

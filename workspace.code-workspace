@@ -54,7 +54,8 @@
 			"player_inventory_bank.h": "c",
 			"player_wield_bank.h": "c",
 			"creature_destroy.h": "c",
-			"creature_damage.h": "c"
+			"creature_damage.h": "c",
+			"ai_pathfind_breadth_first_search_bank.h": "c"
 		}
 	}
 }
