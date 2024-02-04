@@ -9,17 +9,35 @@ PUBLIC _reached
 
 PUBLIC _frontier
 
-PUBLIC _x_offset
+PUBLIC _start_coord
+PUBLIC _goal_coord
+PUBLIC _current_coord
+PUBLIC _tmp_coord
 
-PUBLIC _y_offset
-
-PUBLIC _neighbor
+PUBLIC _tail_priority
 
 PUBLIC _max_x
 PUBLIC _min_x
 PUBLIC _max_y
 PUBLIC _min_y
 
+PUBLIC _neighbor
+
+PUBLIC _priority_queue
+PUBLIC _queue_head
+PUBLIC _queue_tail
+PUBLIC _queue_count
+
+; bounded priority queue - 21 queues * 10 elements * 2 bytes
+._priority_queue
+ds 21 * 10 * 2
+
+._queue_head
+ds 21 
+._queue_tail
+ds 21 
+._queue_count
+ds 21 
 
 ; Frontier 100 elements * 2 bytes 
 ._frontier
@@ -38,13 +56,21 @@ ds 1
 ._frontier_count
 ds 1
 
-._x_offset
-ds 1
+._tmp_coord
+ds 2
 
-._y_offset
-ds 1
+._start_coord
+ds 2
+
+._goal_coord
+ds 2
+._current_coord
+ds 2
 
 ._neighbor
+ds 1
+
+._tail_priority
 ds 1
 
 ._max_x

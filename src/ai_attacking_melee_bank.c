@@ -16,6 +16,7 @@
 
 #include "ai_bank.h"
 #include "ai_pathfind_bank.h"
+#include "ai_pathfind_fast_a_star_bank.h"
 
 #include "creature.h"
 #include "creature_move.h"
@@ -84,6 +85,9 @@ void ai_attacking_melee_b(creature_t *attacker_p)
     }    
 
     // Move towards target
+    ai_pathfind_fast_a_star_b(attacker_p->obj_p->x, attacker_p->obj_p->y, target_p->obj_p->x, target_p->obj_p->y);
+
+
     d = ai_pathfind_direction_b( attacker_p->obj_p->x, attacker_p->obj_p->y );
 
     switch (d)

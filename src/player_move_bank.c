@@ -17,18 +17,7 @@
 #include "player.h"
 #include "player_move_bank.h"
 
-#include "ai_pathfind_breadth_first_search.h"
-
 #include "globaldata.h"
-
-#include "text.h"
-#include "text_token.h"
-
-#include "object.h"
-#include "object_list.h"
-#include "object_move.h"
-
-#include "object_dungeon_list.h"
 
 #include "creature.h"
 #include "creature_move.h"
@@ -60,8 +49,5 @@ void player_move_b(int8_t dx, int8_t dy)
     if (creature_move_by(globaldata.player.player_creature_p, dx, dy))
     {
         globaldata.player.player_creature_p->energy = 0;
-        //update AI path
-        ai_pathfind_breadth_first_search(globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y);
-        // ai_pathfind_print();
     }
 }

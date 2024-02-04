@@ -13,7 +13,9 @@
 #include "ai_pathfind_fast_a_star_bank.h"
 
 #include <stdint.h>
+#include <input.h>              // Functions for Reading Keyboards, Joysticks and Mice
 
+#include "ai_bank.h"            // manhattan
 #include "ai_pathfind_bank.h"
 
 #include "dungeonmap.h"
@@ -24,8 +26,8 @@
 #include "text.h"
 
 
-#define FRONTIER_SIZE   100
-
+#define MAX_SIZE   10
+#define MAX_PRIORITY    20
 
 /***************************************************
  * private types
@@ -35,27 +37,32 @@
 /***************************************************
  * private function prototypes
  ***************************************************/
-static void push_frontier_b(coord_t *coord);
-static uint8_t pop_frontier_b(coord_t *coord); 
-static uint8_t get_next_neighbor_coord_b(coord_t *current, coord_t *next, direction_t *direction_from);
-static uint8_t get_next_neighbor_b(coord_t* current, coord_t *next, direction_t *direction_from);
+static void push_frontier_b(coord_t *coord, uint8_t priority);
+static uint8_t pop_frontier_b(coord_t *coord);
+static void update_neighbors_b(coord_t *coord);
 
 /***************************************************
  * private variables - static
  ***************************************************/
-// variables are defined in ai_pathfind_data.asm
-extern coord_t frontier[FRONTIER_SIZE];
+// use static variables for performance - variables are defined in ai_pathfind_data.asm
 
-extern uint8_t frontier_head;
-extern uint8_t frontier_tail;
-extern uint8_t frontier_count;
-extern uint8_t x_offset;
-extern uint8_t y_offset;
-extern uint8_t neighbor;
+extern coord_t priority_queue[MAX_SIZE][MAX_PRIORITY];
+extern uint8_t queue_head[MAX_PRIORITY];
+extern uint8_t queue_tail[MAX_PRIORITY];
+extern uint8_t queue_count[MAX_PRIORITY];
+
+extern coord_t start_coord;
+extern coord_t goal_coord;
+extern coord_t current_coord;
+extern coord_t tmp_coord;
+
+
 extern uint8_t max_x;
 extern uint8_t min_x;
 extern uint8_t max_y;
 extern uint8_t min_y;
+
+extern uint8_t tail_priority;
 
 /***************************************************
  * functions
@@ -63,16 +70,27 @@ extern uint8_t min_y;
 
 void ai_pathfind_fast_a_star_b(uint8_t x, uint8_t y, uint8_t goal_x, uint8_t goal_y)
 {
-    coord_t current;
-    coord_t next;
-    direction_t direction_from = NO_DIR;
- 
-    frontier_head = 0;
-    frontier_tail = 0;
-    frontier_count = 0;
 
-    next.x = x;
-    next.y = y;
+    direction_t direction_from;
+    unsigned int key;
+
+    goal_coord.x = goal_x;
+    goal_coord.y = goal_y;
+    start_coord.x = x;
+    start_coord.y = y;
+
+    current_coord.x = x;
+    current_coord.y = y;
+    direction_from = NO_DIR;
+
+    tail_priority = 0;
+
+    for (uint8_t priority = 0; priority < MAX_PRIORITY; priority++)
+    {
+        queue_count[priority] = 0;
+        queue_head[priority] = 0;
+        queue_tail[priority] = 0;
+    }
 
     // Limit the bounds of the path finding to a maximum of 10 x 10 squares around the player
     if (x<10) { min_x = 0; } else { min_x = x - 10; }
@@ -80,7 +98,7 @@ void ai_pathfind_fast_a_star_b(uint8_t x, uint8_t y, uint8_t goal_x, uint8_t goa
     if (y<10) { min_y = 0; } else { min_y = y - 10; }
     if (y> DUNGEONMAP_HEIGHT - 1 - 10) { max_y = DUNGEONMAP_HEIGHT - 1; } else { max_y = y + 10; }
 
-    // clear previous path information (currently only within limits of new path)
+    // clear previous path information (current_coordly only within limits of new path)
     // todo - faster to memcopy 0 over the array?
     for(x = min_x; x < max_x; x++)
     {
@@ -91,137 +109,162 @@ void ai_pathfind_fast_a_star_b(uint8_t x, uint8_t y, uint8_t goal_x, uint8_t goa
         }
     }
 
+    text_printf("A* %u,", (unsigned char) start_coord.x);
+    text_printf("%u ", (unsigned char) start_coord.y);
+    text_printf("%u,", (unsigned char) goal_coord.x);
+    text_printf("%u\n", (unsigned char) goal_coord.y);
 
 
-    push_frontier_b(&next);
 
-    mark_reached_b(&next, direction_from);
 
-    while(pop_frontier_b(&current))
+    push_frontier_b(&current_coord, 0);
+    mark_reached_b(&current_coord, direction_from);
+
+    while(pop_frontier_b(&current_coord))
     {
-        neighbor = 0;
-        // TODO add limit to depth of search 
         // TODO handle blocking objects (object mark map?)
         // TODO Intelligent vs non-intelligent can open doors so not blocked
 
-        while (get_next_neighbor_b(&current, &next, &direction_from))  
+        if (current_coord.x == goal_coord.x && current_coord.y == goal_coord.y)
         {
-                             
-            if(!is_reached_b(&next))
-            {
-                push_frontier_b(&next);
-                mark_reached_b(&next, direction_from);           
-            }
+            break;
         }
+
+        update_neighbors_b(&current_coord);
+
+        ai_pathfind_print_b();
+        while ((key = in_inkey()) == 0) ;   // loop while no key pressed
+        in_wait_nokey();    // wait no key  
     } 
 }
 
-void push_frontier_b(coord_t *coord)
+void push_frontier_b(coord_t *coord, uint8_t priority)
 {
-    if (frontier_count == FRONTIER_SIZE)
+    uint8_t head;
+
+    // Do not push if  priority is greater or equal to max priority
+    if (priority >= MAX_PRIORITY)
     {
+        text_printf("DEBUG - Priority exceeds bounds");
+        return;
+    }
+    
+    // Do not push if queue[priority] is full
+    if (queue_count[priority] == MAX_SIZE)
+    {
+        text_printf("DEBUG - queue is full");
         return;
     }
 
-    frontier[frontier_head].x = coord->x;
-    frontier[frontier_head].y = coord->y;
-    frontier_head++;
-    frontier_count++;
-    if (frontier_head == FRONTIER_SIZE)
+    head = queue_head[priority];
+
+    // push onto priority queue
+    priority_queue[head][priority].x = coord->x;
+    priority_queue[head][priority].y = coord->y;
+
+    queue_head[priority]++;
+    queue_count[priority]++;
+
+    text_printf("Push %u,", (unsigned char) coord->x);
+    text_printf("%u ", (unsigned char) coord->y);
+    text_printf("p:%u\n", (unsigned char) priority);
+
+    // if head has reached end of array wrap to 0
+    if (queue_head[priority] == MAX_SIZE)
     {
-        frontier_head = 0;
+        queue_head[priority] = 0;
+    }
+
+    // set tail_priority to priority if lower 
+    if (priority < tail_priority)
+    {
+        tail_priority = priority;
     }
 }
 
 uint8_t pop_frontier_b(coord_t *coord)
 {
-    if (frontier_count == 0)
-    {   
-        return 0;
+    uint8_t tail; 
+
+    // if no more entiries in tail_queue find next priority queue with an entry
+    while (queue_count[tail_priority] == 0)
+    {
+        tail_priority++;
+        if (tail_priority == MAX_PRIORITY)
+        {
+            // if reached max priority queue there are no more entries 
+            return 0;
+        }
     }
     
-    coord->x = frontier[frontier_tail].x;
-    coord->y = frontier[frontier_tail].y;
-    frontier_tail++;
-    frontier_count--;    
+    tail = queue_tail[tail_priority];
 
-    if (frontier_tail == FRONTIER_SIZE)
+    // pop entry from tail queue
+    coord->x = priority_queue[tail][tail_priority].x;
+    coord->y = priority_queue[tail][tail_priority].y;
+
+    text_printf("Pop  %u,", (unsigned char) coord->x);
+    text_printf("%u ", (unsigned char) coord->y);
+    text_printf("p:%u\n", (unsigned char) tail_priority);
+
+    queue_tail[tail_priority]++;
+    queue_count[tail_priority]--;  
+
+    // if tail has reached end of array wrap to 0
+    if (queue_tail[tail_priority] == MAX_SIZE)
     {
-        frontier_tail = 0;
+        queue_tail[tail_priority] = 0;
     }
 
     return 1;
 }
 
 
-uint8_t get_next_neighbor_b(coord_t* current, coord_t *next, direction_t *direction_from)
+void update_neighbors_b(coord_t *coord)
 {
-    uint8_t blocked;
-    
-    while (get_next_neighbor_coord_b(current, next, direction_from) )
-    // while there is another neighbour
-    {
-        // is it blocked?
-        blocked = dungeonmap_tile_is_blocked(next->x, next->y);
-        if (!blocked) {
-            // not blocked return it
-            return 1;
-        }
-    };
+    uint8_t cost;
 
-    // no more neighbours
-    return 0;
-}
+    // north
+    tmp_coord.x = coord->x;
+    tmp_coord.y = (coord->y > min_y) ? coord->y - 1 : min_y;
 
-uint8_t get_next_neighbor_coord_b(coord_t *current, coord_t *next, direction_t *direction_from)
-{
-    next->x = current->x;
-    next->y = current->y;
-
-    // down
-    if (neighbor == 0)
+    if (!is_reached_b(&tmp_coord))
     {
-        if (next->y+1 < max_y)
-        {
-            next->y++;
-            *direction_from = N;
-        }
-        neighbor++;
-        return 1;
-    } else if (neighbor == 1)
-    // right
-    {
-        if (next->x+1 < max_x)
-        {
-            next->x++;
-            *direction_from = W;            
-        }
-        neighbor++;
-        return 1;
-    } else if (neighbor == 2)
-    // up
-    {
-        if (next->y-1 >= min_y)
-        {
-            next->y--;
-            *direction_from = S;              
-        }
-        neighbor++; 
-        return 1;       
-    } else if (neighbor == 3)
-    // left
-    {
-        if (next->x-1 >= min_x)
-        {
-            next->x--;
-            *direction_from = E;           
-        }
-        neighbor++;
-        return 1;
-    } else 
-    // no more neighbors
-    {
-        // messages_println("NO MORE NEIGHBORS");
-        return 0;
+        cost = distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+        push_frontier_b(&tmp_coord, cost);
+        mark_reached_b(&tmp_coord, S);  
     }
+
+    // south
+    tmp_coord.x = coord->x;
+    tmp_coord.y = (coord->y < max_y) ? coord->y + 1 : max_y;
+
+    if (!is_reached_b(&tmp_coord))
+    {
+        cost = distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+        push_frontier_b(&tmp_coord, cost);
+        mark_reached_b(&tmp_coord, N);  
+    }
+
+    // west
+    tmp_coord.x = (coord->x > min_x) ? coord->x - 1 : min_x;
+    tmp_coord.y = coord->y;
+
+    if (!is_reached_b(&tmp_coord))
+    {
+        cost = distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+        push_frontier_b(&tmp_coord, cost);
+        mark_reached_b(&tmp_coord, E);  
+    }    
+
+    // east
+    tmp_coord.x = (coord->x < max_x) ? coord->x + 1 : max_x;
+    tmp_coord.y = coord->y;
+
+    if (!is_reached_b(&tmp_coord))
+    {
+        cost = distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+        push_frontier_b(&tmp_coord, cost);
+        mark_reached_b(&tmp_coord, W);  
+    }        
 }

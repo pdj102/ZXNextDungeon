@@ -25,7 +25,7 @@
 #include "text_token.h"
 
 
-#define FRONTIER_SIZE   100
+#define MAX_SIZE   100
 
 /***************************************************
  * private types
@@ -44,13 +44,11 @@ static uint8_t get_next_neighbor_b(coord_t* current, coord_t *next, direction_t 
  * private variables - static
  ***************************************************/
 // variables are defined in ai_pathfind_data.asm
-extern coord_t frontier[FRONTIER_SIZE];
+extern coord_t frontier[MAX_SIZE];
 
 extern uint8_t frontier_head;
 extern uint8_t frontier_tail;
 extern uint8_t frontier_count;
-extern uint8_t x_offset;
-extern uint8_t y_offset;
 extern uint8_t neighbor;
 extern uint8_t max_x;
 extern uint8_t min_x;
@@ -118,7 +116,7 @@ void ai_pathfind_breadth_first_search_b(uint8_t x, uint8_t y)
 
 void push_frontier_b(coord_t *coord)
 {
-    if (frontier_count == FRONTIER_SIZE)
+    if (frontier_count == MAX_SIZE)
     {
         return;
     }
@@ -127,7 +125,7 @@ void push_frontier_b(coord_t *coord)
     frontier[frontier_head].y = coord->y;
     frontier_head++;
     frontier_count++;
-    if (frontier_head == FRONTIER_SIZE)
+    if (frontier_head == MAX_SIZE)
     {
         frontier_head = 0;
     }
@@ -145,7 +143,7 @@ uint8_t pop_frontier_b(coord_t *coord)
     frontier_tail++;
     frontier_count--;    
 
-    if (frontier_tail == FRONTIER_SIZE)
+    if (frontier_tail == MAX_SIZE)
     {
         frontier_tail = 0;
     }

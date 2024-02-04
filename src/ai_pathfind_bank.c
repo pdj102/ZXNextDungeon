@@ -59,9 +59,9 @@ void ai_pathfind_print_b( void )
     uint8_t y;
     direction_t direction_from;
 
-    for(x = 0; x < 40; x++)
+    for(x = 0; x < 20; x++)
     {
-        for (y = 0; y < 40; y++)
+        for (y = 0; y < 20; y++)
         {
                 direction_from = ai_pathfind_direction_b(x, y);
 
