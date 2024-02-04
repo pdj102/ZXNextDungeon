@@ -13,6 +13,8 @@
 
 #include <inttypes.h>
 
+#include "globaldata_defines.h"
+
 /***************************************************
  * types
  ***************************************************/
@@ -26,7 +28,8 @@ typedef struct coord_s
 
 typedef struct path_s
 {
-    uint8_t reached;    
+    uint8_t     total_cost;
+    uint8_t     cost_so_far;
     direction_t reached_from;
 } path_t;
 
@@ -34,7 +37,7 @@ typedef struct path_s
  * variable declarations
  ***************************************************/
 // variables are defined in ai_pathfind_data.asm
-extern path_t reached[40][40];
+extern path_t reached[DUNGEONMAP_WIDTH][DUNGEONMAP_HEIGHT];
 
 /***************************************************
  * function prototypes
@@ -53,9 +56,11 @@ direction_t ai_pathfind_direction_b(uint8_t x, uint8_t y);
  * @brief marks x,y as reached from direction
  * 
  * @param coord 
- * @param direction_from 
+ * @param direction_from
+ * @param total_cost        cost so far plus reaminging distance to goal. Must be 1 or higher
+ * @param cost_so_far       cost of path so far from start
  */
-void mark_reached_b(coord_t *coord, direction_t direction_from);
+void mark_reached_b(coord_t *coord, direction_t direction_from, uint8_t total_cost, uint8_t cost_so_far);
 
 /**
  * @brief returns true if x, y reached 

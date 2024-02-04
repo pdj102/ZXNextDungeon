@@ -126,7 +126,7 @@ void init_game( void )
     creature_create(BEAST_SNAKE, 10, 2);
 
     // snake 2
-    creature_create(BEAST_SNAKE, 12, 2);
+    // creature_create(BEAST_SNAKE, 12, 2);
 
     // withering weed
     creature_create(PLANT_WITHERWEED, 4, 3);

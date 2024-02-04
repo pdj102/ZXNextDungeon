@@ -70,7 +70,7 @@ void player_init_b( void )
     creature_t *creature_p;
 
     // Create a level 1 humanoid crreature
-    creature_p = creature_create(HUMANOID_HUMAN, 2, 2);
+    creature_p = creature_create(HUMANOID_HUMAN, 5, 5);
 
     // Change from AI to player
     creature_p->ai_or_player = PLAYER;

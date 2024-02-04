@@ -26,7 +26,7 @@
 #include "text.h"
 
 
-#define MAX_SIZE   10
+#define MAX_SIZE        20
 #define MAX_PRIORITY    20
 
 /***************************************************
@@ -39,7 +39,7 @@
  ***************************************************/
 static void push_frontier_b(coord_t *coord, uint8_t priority);
 static uint8_t pop_frontier_b(coord_t *coord);
-static void update_neighbors_b(coord_t *coord);
+static void update_neighbors_b( void );
 
 /***************************************************
  * private variables - static
@@ -56,6 +56,8 @@ extern coord_t goal_coord;
 extern coord_t current_coord;
 extern coord_t tmp_coord;
 
+extern uint8_t     tmp_cost_so_far;
+extern uint8_t     tmp_total_cost;
 
 extern uint8_t max_x;
 extern uint8_t min_x;
@@ -68,19 +70,22 @@ extern uint8_t tail_priority;
  * functions
  ***************************************************/
 
-void ai_pathfind_fast_a_star_b(uint8_t x, uint8_t y, uint8_t goal_x, uint8_t goal_y)
+void ai_pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y)
 {
-
     direction_t direction_from;
-    unsigned int key;
 
-    goal_coord.x = goal_x;
-    goal_coord.y = goal_y;
-    start_coord.x = x;
-    start_coord.y = y;
+    // unsigned int key;
 
-    current_coord.x = x;
-    current_coord.y = y;
+    uint8_t x, y;
+
+    // flip origin and goal around as the resultant path is walked backwards
+    goal_coord.x = origin_x;
+    goal_coord.y = origin_y;
+    start_coord.x = goal_x;
+    start_coord.y = goal_y;
+
+    current_coord.x = start_coord.x;
+    current_coord.y = start_coord.y;
     direction_from = NO_DIR;
 
     tail_priority = 0;
@@ -92,33 +97,36 @@ void ai_pathfind_fast_a_star_b(uint8_t x, uint8_t y, uint8_t goal_x, uint8_t goa
         queue_tail[priority] = 0;
     }
 
-    // Limit the bounds of the path finding to a maximum of 10 x 10 squares around the player
-    if (x<10) { min_x = 0; } else { min_x = x - 10; }
-    if (x> DUNGEONMAP_WIDTH - 1 - 10) { max_x = DUNGEONMAP_WIDTH - 1; } else { max_x = x + 10; }
-    if (y<10) { min_y = 0; } else { min_y = y - 10; }
-    if (y> DUNGEONMAP_HEIGHT - 1 - 10) { max_y = DUNGEONMAP_HEIGHT - 1; } else { max_y = y + 10; }
+    // Limit the bounds of the path finding to a maximum of 10 x 10 squares around the start
+    if (start_coord.x<10) { min_x = 0; } else { min_x = start_coord.x - 10; }
+    if (start_coord.x> DUNGEONMAP_WIDTH - 1 - 10) { max_x = DUNGEONMAP_WIDTH - 1; } else { max_x = start_coord.x + 10; }
+    if (start_coord.y<10) { min_y = 0; } else { min_y = start_coord.y - 10; }
+    if (start_coord.y> DUNGEONMAP_HEIGHT - 1 - 10) { max_y = DUNGEONMAP_HEIGHT - 1; } else { max_y = start_coord.y + 10; }
 
-    // clear previous path information (current_coordly only within limits of new path)
+    // clear previous path information 
     // todo - faster to memcopy 0 over the array?
     for(x = min_x; x < max_x; x++)
     {
         for (y = min_y; y < max_y; y++)
         {
-            reached[x][y].reached = 0;
+            reached[x][y].cost_so_far = 0;
+            reached[x][y].total_cost = 255;
             reached[x][y].reached_from = NO_DIR;
         }
     }
 
+    /*
     text_printf("A* %u,", (unsigned char) start_coord.x);
     text_printf("%u ", (unsigned char) start_coord.y);
     text_printf("%u,", (unsigned char) goal_coord.x);
     text_printf("%u\n", (unsigned char) goal_coord.y);
+    */
 
-
-
+    tmp_cost_so_far = 0;
+    tmp_total_cost = tmp_cost_so_far + distance_manhattan_b(start_coord.x, start_coord.y, goal_coord.x, goal_coord.y);
 
     push_frontier_b(&current_coord, 0);
-    mark_reached_b(&current_coord, direction_from);
+    mark_reached_b(&current_coord, direction_from, tmp_total_cost, tmp_cost_so_far);
 
     while(pop_frontier_b(&current_coord))
     {
@@ -127,15 +135,12 @@ void ai_pathfind_fast_a_star_b(uint8_t x, uint8_t y, uint8_t goal_x, uint8_t goa
 
         if (current_coord.x == goal_coord.x && current_coord.y == goal_coord.y)
         {
+            // text_printf("A* found path\n");
             break;
         }
-
-        update_neighbors_b(&current_coord);
-
-        ai_pathfind_print_b();
-        while ((key = in_inkey()) == 0) ;   // loop while no key pressed
-        in_wait_nokey();    // wait no key  
+        update_neighbors_b();
     } 
+  
 }
 
 void push_frontier_b(coord_t *coord, uint8_t priority)
@@ -165,9 +170,11 @@ void push_frontier_b(coord_t *coord, uint8_t priority)
     queue_head[priority]++;
     queue_count[priority]++;
 
+    /*
     text_printf("Push %u,", (unsigned char) coord->x);
     text_printf("%u ", (unsigned char) coord->y);
     text_printf("p:%u\n", (unsigned char) priority);
+    */
 
     // if head has reached end of array wrap to 0
     if (queue_head[priority] == MAX_SIZE)
@@ -203,9 +210,11 @@ uint8_t pop_frontier_b(coord_t *coord)
     coord->x = priority_queue[tail][tail_priority].x;
     coord->y = priority_queue[tail][tail_priority].y;
 
+    /*
     text_printf("Pop  %u,", (unsigned char) coord->x);
     text_printf("%u ", (unsigned char) coord->y);
     text_printf("p:%u\n", (unsigned char) tail_priority);
+    */
 
     queue_tail[tail_priority]++;
     queue_count[tail_priority]--;  
@@ -220,51 +229,67 @@ uint8_t pop_frontier_b(coord_t *coord)
 }
 
 
-void update_neighbors_b(coord_t *coord)
+void update_neighbors_b( void )
 {
-    uint8_t cost;
+
+    tmp_cost_so_far = reached[current_coord.x][current_coord.y].cost_so_far + 1; 
 
     // north
-    tmp_coord.x = coord->x;
-    tmp_coord.y = (coord->y > min_y) ? coord->y - 1 : min_y;
+    tmp_coord.x = current_coord.x;
+    tmp_coord.y = (current_coord.y > min_y) ? current_coord.y - 1 : min_y;
 
-    if (!is_reached_b(&tmp_coord))
+    if (!dungeonmap_tile_is_blocked(tmp_coord.x, tmp_coord.y) )
     {
-        cost = distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
-        push_frontier_b(&tmp_coord, cost);
-        mark_reached_b(&tmp_coord, S);  
+        // A* cost is cost of path so far + distance to goal
+        tmp_total_cost = tmp_cost_so_far + distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+
+        // if cost is less than previous visit to the square
+        if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
+        {
+            push_frontier_b(&tmp_coord, tmp_total_cost);
+            mark_reached_b(&tmp_coord, S, tmp_total_cost, tmp_cost_so_far);  
+        }
     }
 
     // south
-    tmp_coord.x = coord->x;
-    tmp_coord.y = (coord->y < max_y) ? coord->y + 1 : max_y;
+    tmp_coord.x = current_coord.x;
+    tmp_coord.y = (current_coord.y < max_y) ? current_coord.y + 1 : max_y;
 
-    if (!is_reached_b(&tmp_coord))
+if (!dungeonmap_tile_is_blocked(tmp_coord.x, tmp_coord.y) )
     {
-        cost = distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
-        push_frontier_b(&tmp_coord, cost);
-        mark_reached_b(&tmp_coord, N);  
+        tmp_total_cost = tmp_cost_so_far + distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+        if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
+        {        
+            push_frontier_b(&tmp_coord, tmp_total_cost);
+            mark_reached_b(&tmp_coord, N, tmp_total_cost, tmp_cost_so_far); 
+        }
     }
 
     // west
-    tmp_coord.x = (coord->x > min_x) ? coord->x - 1 : min_x;
-    tmp_coord.y = coord->y;
+    tmp_coord.x = (current_coord.x > min_x) ? current_coord.x - 1 : min_x;
+    tmp_coord.y = current_coord.y;
 
-    if (!is_reached_b(&tmp_coord))
+if (!dungeonmap_tile_is_blocked(tmp_coord.x, tmp_coord.y) )
     {
-        cost = distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
-        push_frontier_b(&tmp_coord, cost);
-        mark_reached_b(&tmp_coord, E);  
+        tmp_total_cost = tmp_cost_so_far + distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+        if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
+        {
+            push_frontier_b(&tmp_coord, tmp_total_cost);
+            mark_reached_b(&tmp_coord, E, tmp_total_cost, tmp_cost_so_far); 
+        }
     }    
 
     // east
-    tmp_coord.x = (coord->x < max_x) ? coord->x + 1 : max_x;
-    tmp_coord.y = coord->y;
+    tmp_coord.x = (current_coord.x < max_x) ? current_coord.x + 1 : max_x;
+    tmp_coord.y = current_coord.y;
 
-    if (!is_reached_b(&tmp_coord))
+if (!dungeonmap_tile_is_blocked(tmp_coord.x, tmp_coord.y) )
     {
-        cost = distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
-        push_frontier_b(&tmp_coord, cost);
-        mark_reached_b(&tmp_coord, W);  
+        tmp_total_cost = tmp_cost_so_far + distance_manhattan_b(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+        if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
+        {
+            push_frontier_b(&tmp_coord, tmp_total_cost);
+            mark_reached_b(&tmp_coord, W, tmp_total_cost, tmp_cost_so_far); 
+        }
     }        
 }

@@ -41,15 +41,16 @@ direction_t ai_pathfind_direction_b(uint8_t x, uint8_t y)
     return (reached[x][y].reached_from);
 }
 
-void mark_reached_b(coord_t *coord, direction_t direction_from)
+void mark_reached_b(coord_t *coord, direction_t direction_from, uint8_t total_cost, uint8_t cost_so_far)
 {
-    reached[coord->x][coord->y].reached = 1 ;
+    reached[coord->x][coord->y].total_cost = total_cost;
+    reached[coord->x][coord->y].cost_so_far = cost_so_far;
     reached[coord->x][coord->y].reached_from = direction_from;
 }
 
 uint8_t is_reached_b(coord_t *coord)
 {
-    return ( reached[coord->x][coord->y].reached );
+    return ( reached[coord->x][coord->y].total_cost );
 }
 
 

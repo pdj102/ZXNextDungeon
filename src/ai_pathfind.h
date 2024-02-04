@@ -13,7 +13,6 @@
 #include <inttypes.h>
 
 #include "ai_pathfind_bank.h"
-#include "ai_pathfind_breadth_first_search_bank.h"
 
 /***************************************************
  * types
@@ -27,12 +26,7 @@
  * function prototypes
  ***************************************************/
 
-/**
- * @brief Calculates the path towards the player from every reachable dungeon tile using breadth first search
- *
- * @return void
- */
-void ai_pathfind_breadth_first_search(uint8_t x, uint8_t y);
+void ai_pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
 
 /**
  * @brief Returns the direction towards the player as determined by the last call to ai_pathfind()
