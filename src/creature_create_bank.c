@@ -112,7 +112,7 @@ uint8_t creature_create_base_speed_b(object_subtype_e subtype)
       
     // BEAST
     case BEAST_SNAKE:
-        return 10;
+        return 5;
 
     // OOZE
 

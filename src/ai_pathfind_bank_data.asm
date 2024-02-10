@@ -10,6 +10,7 @@ PUBLIC _next_coord
 PUBLIC _tmp_coord
 
 PUBLIC _tail_priority
+PUBLIC _priority_offset
 
 PUBLIC _max_x
 PUBLIC _min_x
@@ -60,6 +61,8 @@ ds 2
 ds 1
 
 ._tail_priority
+ds 1
+._priority_offset
 ds 1
 
 ._max_x
