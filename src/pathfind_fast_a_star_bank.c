@@ -149,6 +149,7 @@ uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_
         while ((key = in_inkey()) == 0) ;   // loop while no key pressed
         in_wait_nokey();    // wait no key              
         */
+        
     } 
 
         text_printf("path NOT found\n");

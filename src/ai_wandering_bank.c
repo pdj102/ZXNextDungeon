@@ -13,6 +13,7 @@
 #include "ai_wandering_bank.h"
 
 #include <stdint.h>
+#include <stdlib.h>             // rand()
 
 #include "ai_bank.h"
 
@@ -64,24 +65,29 @@ void ai_wandering_b(creature_t *creature_p)
 {
     direction_t d;
 
-    // No goto location - set goto location?
+    // #1 No goto location - set goto location?
     if (creature_p->ai.goto_x == 0)
     {
-        creature_p->ai.goto_x = 45;
-        creature_p->ai.goto_y = 5;
+        do
+        {
+            creature_p->ai.goto_x = rand() % 50;
+            creature_p->ai.goto_y = rand() % 50;
+        } while (!pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, creature_p->ai.goto_x, creature_p->ai.goto_y));
     }
 
-    // creature_move_dir(creature_p, 3);
-    // creature_move_by(creature_p, 0, 1);
-    // object_move_by(creature_p->obj_p, 1, 0);
-
-    pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, creature_p->ai.goto_x, creature_p->ai.goto_y);
-
+    // #2 Move towards goto location
     d = pathfind_direction( creature_p->obj_p->x, creature_p->obj_p->y );
 
-    creature_move_dir(creature_p, d);
+    if (!creature_move_dir(creature_p, d))
+    {
+        // #3 If unable to move towards goto location select a new goto location
+        creature_p->ai.goto_x == 0;
+    }
 
-    // todo 3
-    // todo 4
+    // #4 
+    if ((creature_p->obj_p->x == creature_p->ai.goto_x) && (creature_p->obj_p->y == creature_p->ai.goto_y))
+    {
+        creature_p->ai.goto_x = 0;
+    }
 
 }

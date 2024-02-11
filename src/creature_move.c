@@ -60,6 +60,7 @@ uint8_t creature_move_dir(creature_t *creature_p, direction_t d)
         text_printf("E");
         return creature_move_by(creature_p, 1, 0);
     default:
-        return 0;
+        break;
     }
+    return 0;
 }
