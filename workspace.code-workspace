@@ -60,7 +60,8 @@
 			"ai_pathfind_fast_a_star_bank.h": "c",
 			"ai_guarding_bank.h": "c",
 			"ai_bank.h": "c",
-			"ai_attacking_melee_bank.h": "c"
+			"ai_attacking_melee_bank.h": "c",
+			"pathfind_fast_a_star_bank.h": "c"
 		}
 	}
 }

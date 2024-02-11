@@ -73,7 +73,7 @@ extern uint8_t priority_offset;
  * functions
  ***************************************************/
 
-void pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y)
+uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y)
 {
     direction_t direction_from;
 
@@ -139,19 +139,20 @@ void pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, 
 
         if (current_coord.x == goal_coord.x && current_coord.y == goal_coord.y)
         {
-            text_printf("A* found path\n");
-            break;
+            text_printf("path found\n");
+            return 1;
         }
         update_neighbors_b();
 
+        /*
         pathfind_print_b();
         while ((key = in_inkey()) == 0) ;   // loop while no key pressed
         in_wait_nokey();    // wait no key              
+        */
     } 
-        
-    
-            
-  
+
+        text_printf("path NOT found\n");
+        return 0;   
 }
 
 /**

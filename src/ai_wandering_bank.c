@@ -67,7 +67,7 @@ void ai_wandering_b(creature_t *creature_p)
     // No goto location - set goto location?
     if (creature_p->ai.goto_x == 0)
     {
-        creature_p->ai.goto_x = 20;
+        creature_p->ai.goto_x = 45;
         creature_p->ai.goto_y = 5;
     }
 
@@ -78,23 +78,8 @@ void ai_wandering_b(creature_t *creature_p)
     pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, creature_p->ai.goto_x, creature_p->ai.goto_y);
 
     d = pathfind_direction( creature_p->obj_p->x, creature_p->obj_p->y );
-    switch (d)
-    {
-    case N:
-        text_printf("N\n");
-        break;
-    case S:
-        text_printf("N\n");
-        break;        
-    case W:
-        text_printf("W\n");
-        break;
-    case E:
-        text_printf("E\n");
-        break;                
-    }
-    text_printf("Name %t\n", creature_p->obj_p->name_token);
-    // creature_move_dir(creature_p, d);
+
+    creature_move_dir(creature_p, d);
 
     // todo 3
     // todo 4

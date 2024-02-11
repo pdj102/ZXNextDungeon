@@ -31,6 +31,6 @@
  *
  * @return void
  */
-void pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
+uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
 
 #endif

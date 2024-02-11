@@ -26,7 +26,7 @@
  * function prototypes
  ***************************************************/
 
-void pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
+uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
 
 /**
  * @brief Returns the direction towards the player as determined by the last call to pathfind()

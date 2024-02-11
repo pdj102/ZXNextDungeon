@@ -15,9 +15,10 @@
 
 #include "pathfind_fast_a_star_bank.h"
 
-void pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y)
+uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y)
 {
     uint8_t current_bank;
+    uint8_t path_found;
 
     /* Remember current bank*/
     current_bank = ZXN_READ_MMU6();
@@ -28,10 +29,12 @@ void pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, ui
     ZXN_WRITE_MMU7(28);        
 
     /* Call banked code */     
-    pathfind_fast_a_star_b(origin_x, origin_y, goal_x, goal_y);
+    path_found = pathfind_fast_a_star_b(origin_x, origin_y, goal_x, goal_y);
 
     /* restore previous bank */
     ZXN_WRITE_MMU6(current_bank);
+
+    return path_found;
 }
 
 direction_t pathfind_direction(uint8_t x, uint8_t y)

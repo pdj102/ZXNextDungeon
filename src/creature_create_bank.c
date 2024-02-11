@@ -466,8 +466,18 @@ ai_state_t creature_create_base_ai_b(object_subtype_e subtype)
 {
     switch (subtype)
     {
+    //HUMANOID
+    // BEAST
     case BEAST_SNAKE:
         return WANDERING;
+
+    // OOZE
+    // PLANT     
+    case PLANT_WITHERWEED:
+        return GUARDING;        
+        
+    // UNDEAD
+
     default:
         return WANDERING;
     }
