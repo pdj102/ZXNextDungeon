@@ -29,14 +29,14 @@ PUBLIC _queue_count
 
 ; bounded priority queue - 21 queues * 10 elements * 2 bytes
 ._priority_queue
-ds 21 * 20 * 2
+ds 30 * 20 * 2
 
 ._queue_head
-ds 21 
+ds 30 
 ._queue_tail
-ds 21 
+ds 30 
 ._queue_count
-ds 21 
+ds 30 
 
 
 ; Path finding map - 50 * 50 array of 3 bytes

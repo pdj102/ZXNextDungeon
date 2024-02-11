@@ -27,7 +27,7 @@
 
 
 #define MAX_SIZE        20
-#define MAX_PRIORITY    20
+#define MAX_PRIORITY    30
 
 /***************************************************
  * private types
