@@ -2,21 +2,21 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief AI pathfinding
+    @brief Pathfinding - fast a star
 
+    Code is banked do not call directly
 
  ***************************************************/
 
-#ifndef AI_PATHFIND_H 
-    #define AI_PATHFIND_H
+#ifndef PATHFIND_FAST_A_STAR_BANK_H 
+    #define PATHFIND_FAST_A_STAR_BANK_H 
 
 #include <inttypes.h>
-
-#include "ai_pathfind_bank.h"
 
 /***************************************************
  * types
  ***************************************************/
+
 
 /***************************************************
  * variable declarations
@@ -26,19 +26,11 @@
  * function prototypes
  ***************************************************/
 
-void ai_pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
-
 /**
- * @brief Returns the direction towards the player as determined by the last call to ai_pathfind()
+ * @brief Calculates the path to goal using fast a star search
  *
- * @return direction_t
+ * @return void
  */
-direction_t ai_pathfind_direction(uint8_t x, uint8_t y);
-
-/**
- * @brief Displays the current path based on last call to ai_pathfind*
- * 
- */
-void ai_pathfind_print( void );
+void pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
 
 #endif

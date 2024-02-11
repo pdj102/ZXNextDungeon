@@ -17,7 +17,7 @@
 
 #include "ai_attacking_melee_bank.h"
 #include "ai_guarding_bank.h"
-#include "ai_pathfind_bank.h"
+#include "ai_wandering_bank.h"
 
 #include "creature.h"
 #include "creature_list.h"
@@ -55,6 +55,10 @@ void ai_turn_b( creature_t *creature_p )
         case GUARDING:
             ai_guarding_b(creature_p);
             return;
+
+        case WANDERING:
+            ai_wandering_b(creature_p);
+            return;            
 
         case ATTACKING_MELEE:
             ai_attacking_melee_b(creature_p);
@@ -166,10 +170,4 @@ void ai_is_attacked_b(creature_t *target_p, creature_t *attacker_p)
     }
 }
 
-uint8_t distance_manhattan_b(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2)
-{
-    uint8_t x = x1 > x2 ? x1 - x2 : x2 - x1;
-    uint8_t y  = y1 > y2 ? y1 - y2 : y2 - y1;
 
-    return x + y;
-}

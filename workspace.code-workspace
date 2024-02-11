@@ -57,7 +57,10 @@
 			"creature_damage.h": "c",
 			"ai_pathfind_breadth_first_search_bank.h": "c",
 			"ai_pathfind_bank.h": "c",
-			"ai_pathfind_fast_a_star_bank.h": "c"
+			"ai_pathfind_fast_a_star_bank.h": "c",
+			"ai_guarding_bank.h": "c",
+			"ai_bank.h": "c",
+			"ai_attacking_melee_bank.h": "c"
 		}
 	}
 }

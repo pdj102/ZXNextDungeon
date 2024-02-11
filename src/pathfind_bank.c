@@ -2,7 +2,7 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief AI pathfinding - breadth first search
+    @brief Pathfinding - breadth first search
 
     Code is banked do not call directly
 
@@ -10,11 +10,12 @@
 
 #pragma output CRT_ORG_CODE = 0xC000
 
-#include "ai_pathfind_bank.h"
+#include "pathfind_bank.h"
 
 #include <stdint.h>
 
 #include "text.h"
+#include "util.h"
 
 
 /***************************************************
@@ -36,35 +37,34 @@
  * functions
  ***************************************************/
 
-direction_t ai_pathfind_direction_b(uint8_t x, uint8_t y)
+direction_t pathfind_direction_b(uint8_t x, uint8_t y)
 {
     return (reached[x][y].reached_from);
 }
 
-void mark_reached_b(coord_t *coord, direction_t direction_from, uint8_t total_cost, uint8_t cost_so_far)
+void pathfind_mark_reached_b(coord_t *coord, direction_t direction_from, uint8_t total_cost, uint8_t cost_so_far)
 {
     reached[coord->x][coord->y].total_cost = total_cost;
     reached[coord->x][coord->y].cost_so_far = cost_so_far;
     reached[coord->x][coord->y].reached_from = direction_from;
 }
 
-uint8_t is_reached_b(coord_t *coord)
+uint8_t pathfind_is_reached_b(coord_t *coord)
 {
     return ( reached[coord->x][coord->y].total_cost );
 }
 
-
-void ai_pathfind_print_b( void )
+void pathfind_print_b( void )
 {
     uint8_t x;
     uint8_t y;
     direction_t direction_from;
 
-    for(x = 0; x < 20; x++)
+    for(x = 0; x < 25; x++)
     {
-        for (y = 0; y < 20; y++)
+        for (y = 0; y < 25; y++)
         {
-                direction_from = ai_pathfind_direction_b(x, y);
+                direction_from = pathfind_direction_b(x, y);
 
                 switch (direction_from)
                 {

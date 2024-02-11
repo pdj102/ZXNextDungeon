@@ -4,7 +4,6 @@
 
     @brief The creature code - move action
 
-    Code is banked do not call directly
 
  ***************************************************/
 #include "creature_move.h"
@@ -14,6 +13,8 @@
 #include "creature.h"
 
 #include "object_move.h"
+
+#include "text.h"
 
 
 /***************************************************
@@ -43,4 +44,22 @@ uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy)
     // TODO deal with not being able to move e.g. due to an effect or status
     
     return object_move_by(creature_p->obj_p, dx, dy);
+}
+
+uint8_t creature_move_dir(creature_t *creature_p, direction_t d)
+{
+    switch (d)
+    {
+    case N:
+       return creature_move_by(creature_p, 0, -1);
+    case S:
+        return creature_move_by(creature_p, 0, 1);
+    case W:
+        return creature_move_by(creature_p, -1, 0);               
+    case E:
+        text_printf("E");
+        return creature_move_by(creature_p, 1, 0);
+    default:
+        return 0;
+    }
 }

@@ -1,7 +1,5 @@
-SECTION PAGE_26 
+SECTION PAGE_27
 org 0xc000
-
-PUBLIC _reached
 
 PUBLIC _start_coord
 PUBLIC _goal_coord
@@ -38,11 +36,6 @@ ds 30
 ._queue_count
 ds 30 
 
-
-; Path finding map - 50 * 50 array of 3 bytes
-; Must match size of dungeon map
-._reached
-ds 50*50*3
 
 ._tmp_coord
 ds 2

@@ -36,8 +36,6 @@
 #include "player.h"
 #include "player_calc_stats.h"
 
-#include "ai_pathfind.h"
-
 #include "event.h"
 #include "event_list.h"
 

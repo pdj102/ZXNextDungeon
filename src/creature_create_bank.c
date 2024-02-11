@@ -93,7 +93,11 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
 
     // TODO Handle if x, y position is blocked
     
+    // initialise ai
     creature_p->ai.state = creature_create_base_ai_b(obj_subtype);
+    creature_p->ai.target = 0;
+    creature_p->ai.goto_x = 0;
+    creature_p->ai.goto_y = 0;
 
     return creature_p;
 }
@@ -463,9 +467,9 @@ ai_state_t creature_create_base_ai_b(object_subtype_e subtype)
     switch (subtype)
     {
     case BEAST_SNAKE:
-        return GUARDING;
+        return WANDERING;
     default:
-        return GUARDING;
+        return WANDERING;
     }
 }
 

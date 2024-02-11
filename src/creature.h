@@ -26,6 +26,7 @@ typedef enum ai_state_s {
     ATTACKING_MELEE, 
     ATTACKING_RANGED,
     ATTACKING_NO_TARGET,
+    WANDERING,
     HUNTING,
     GUARDING, 
     FLEEING
@@ -43,8 +44,10 @@ struct creature_t;
 
 typedef struct ai_s
 {
-    ai_state_t      state;
+    ai_state_t              state;
     struct creature_s      *target;
+    uint8_t                 goto_x;
+    uint8_t                 goto_y;
 } ai_t;
 
 typedef enum {AI, PLAYER } ai_or_player_e;

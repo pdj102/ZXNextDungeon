@@ -2,21 +2,26 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief The creature code - move action
-
-    Code is banked do not call directly
+    @brief Useful utils
 
  ***************************************************/
 
-#ifndef CREATURE_MOVE_H 
-    #define CREATURE_MOVE_H 
+#ifndef UTIL_H 
+    #define UTIL_H 
 
-#include "creature.h"
-#include "util.h"
+#include <inttypes.h>
 
 /***************************************************
  * types
  ***************************************************/
+typedef enum direction_e {NO_DIR, N, NE, E, SE, S, SW, W, NW} direction_t;
+
+typedef struct coord_s
+{
+    uint8_t x;
+    uint8_t y;
+} coord_t;
+
 
 /***************************************************
  * variable declarations
@@ -27,17 +32,9 @@
  ***************************************************/
 
 /**
- * Creature move action
- *
- * @return void
+ * @brief returns manhattan distance
+ * 
  */
-uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy);
-
-/**
- * Creature move action
- *
- * @return void
- */
-uint8_t creature_move_dir(creature_t *creature_p, direction_t d);
+uint8_t util_distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2);
 
 #endif

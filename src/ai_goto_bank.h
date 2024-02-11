@@ -2,17 +2,16 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief The creature code - move action
+    @brief AI code - guarding state
 
     Code is banked do not call directly
 
  ***************************************************/
 
-#ifndef CREATURE_MOVE_H 
-    #define CREATURE_MOVE_H 
+#ifndef AI_GOTO_BANK_H 
+    #define AI_GOTO_BANK_H 
 
 #include "creature.h"
-#include "util.h"
 
 /***************************************************
  * types
@@ -27,17 +26,20 @@
  ***************************************************/
 
 /**
- * Creature move action
- *
- * @return void
+ * @brief Set creatures goto target location
+ * 
+ * @param creature_p 
+ * @param x 
+ * @param y 
+ * @return uint8_t 
  */
-uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy);
+uint8_t ai_set_goto_b(creature_t *creature_p, uint8_t x, uint8_t y);
 
 /**
- * Creature move action
- *
+ * AI takes turn
+ * 
  * @return void
  */
-uint8_t creature_move_dir(creature_t *creature_p, direction_t d);
+uint8_t ai_goto_b( creature_t *creature_p);
 
 #endif

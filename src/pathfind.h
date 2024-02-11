@@ -2,17 +2,17 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief The creature code - move action
+    @brief AI pathfinding
 
-    Code is banked do not call directly
 
  ***************************************************/
 
-#ifndef CREATURE_MOVE_H 
-    #define CREATURE_MOVE_H 
+#ifndef PATHFIND_H 
+    #define PATHFIND_H
 
-#include "creature.h"
-#include "util.h"
+#include <inttypes.h>
+
+#include "pathfind_bank.h"
 
 /***************************************************
  * types
@@ -26,18 +26,19 @@
  * function prototypes
  ***************************************************/
 
-/**
- * Creature move action
- *
- * @return void
- */
-uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy);
+void pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
 
 /**
- * Creature move action
+ * @brief Returns the direction towards the player as determined by the last call to pathfind()
  *
- * @return void
+ * @return direction_t
  */
-uint8_t creature_move_dir(creature_t *creature_p, direction_t d);
+direction_t pathfind_direction(uint8_t x, uint8_t y);
+
+/**
+ * @brief Displays the current path based on last call to pathfind*
+ * 
+ */
+void pathfind_print( void );
 
 #endif

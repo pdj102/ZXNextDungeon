@@ -2,29 +2,24 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief AI pathfinding - general utils
+    @brief Pathfinding - general utils
 
     Code is banked do not call directly
 
  ***************************************************/
 
-#ifndef AI_PATHFIND_BANK_H 
-    #define AI_PATHFIND_BANK_H 
+#ifndef PATHFIND_BANK_H 
+    #define PATHFIND_BANK_H 
 
 #include <inttypes.h>
 
 #include "globaldata_defines.h"
 
+#include "util.h"
+
 /***************************************************
  * types
  ***************************************************/
-typedef enum direction_e {NO_DIR, N, NE, E, SE, S, SW, W, NW} direction_t;
-
-typedef struct coord_s
-{
-    uint8_t x;
-    uint8_t y;
-} coord_t;
 
 typedef struct path_s
 {
@@ -36,7 +31,7 @@ typedef struct path_s
 /***************************************************
  * variable declarations
  ***************************************************/
-// variables are defined in ai_pathfind_data.asm
+// variables are defined in pathfind_data.asm
 extern path_t reached[DUNGEONMAP_WIDTH][DUNGEONMAP_HEIGHT];
 
 /***************************************************
@@ -44,13 +39,13 @@ extern path_t reached[DUNGEONMAP_WIDTH][DUNGEONMAP_HEIGHT];
  ***************************************************/
 
 /**
- * @brief returns direction from x,y based on last call to ai_pathfind*
+ * @brief returns direction from x,y based on last call to pathfind*
  * 
  * @param x 
  * @param y 
  * @return * direction_t 
  */
-direction_t ai_pathfind_direction_b(uint8_t x, uint8_t y);
+direction_t pathfind_direction_b(uint8_t x, uint8_t y);
 
 /**
  * @brief marks x,y as reached from direction
@@ -60,7 +55,7 @@ direction_t ai_pathfind_direction_b(uint8_t x, uint8_t y);
  * @param total_cost        cost so far plus reaminging distance to goal. Must be 1 or higher
  * @param cost_so_far       cost of path so far from start
  */
-void mark_reached_b(coord_t *coord, direction_t direction_from, uint8_t total_cost, uint8_t cost_so_far);
+void pathfind_mark_reached_b(coord_t *coord, direction_t direction_from, uint8_t total_cost, uint8_t cost_so_far);
 
 /**
  * @brief returns true if x, y reached 
@@ -68,12 +63,12 @@ void mark_reached_b(coord_t *coord, direction_t direction_from, uint8_t total_co
  * @param coord 
  * @return uint8_t 
  */
-uint8_t is_reached_b(coord_t *coord);
+uint8_t pathfind_is_reached_b(coord_t *coord);
 
 /**
  * @brief displays the current path calaculated by the last call to path_find*
  * 
  */
-void ai_pathfind_print_b( void );
+void pathfind_print_b( void );
 
 #endif

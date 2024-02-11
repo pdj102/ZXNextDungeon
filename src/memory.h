@@ -38,13 +38,15 @@
     23      |   ? (Do not use. Using this page causes a crash)
     24      |   Player code
     25      |   UI
-    26      |   AI code 
+    26      |   AI code
+    27      |   Pathfinding code 
 
     MMU 7 - List of banked pages:
 
     Page    |   Description
     --------|-----------------------------------------------------
-    19      |   reserved for dungeon map generator 
+    19      |   reserved for dungeon map generator
+    28      |   pathfinding data 
 
 
  ***************************************************/

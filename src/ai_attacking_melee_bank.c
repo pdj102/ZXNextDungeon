@@ -15,12 +15,12 @@
 #include <stdint.h>
 
 #include "ai_bank.h"
-#include "ai_pathfind_bank.h"
-#include "ai_pathfind_fast_a_star_bank.h"
 
 #include "creature.h"
 #include "creature_move.h"
 #include "creature_melee_strike.h"
+
+#include "util.h"
 
 /***************************************************
  * private types
@@ -60,7 +60,6 @@
  */
 void ai_attacking_melee_b(creature_t *attacker_p)
 {
-    direction_t d;
     uint8_t distance;
     creature_t *target_p;
 
@@ -75,7 +74,7 @@ void ai_attacking_melee_b(creature_t *attacker_p)
 
     // Melee strike if adjacent 
     // Distance to target
-    distance = distance_manhattan_b(attacker_p->obj_p->x, attacker_p->obj_p->y, target_p->obj_p->x, target_p->obj_p->y);
+    distance = util_distance_manhattan(attacker_p->obj_p->x, attacker_p->obj_p->y, target_p->obj_p->x, target_p->obj_p->y);
 
     // In range of melee strike (adjacent either up, down, left or right)
     if ( distance== 1)
@@ -85,6 +84,8 @@ void ai_attacking_melee_b(creature_t *attacker_p)
     }    
 
     // Move towards target
+    // TODO chase target
+    /*
     ai_pathfind_fast_a_star_b(attacker_p->obj_p->x, attacker_p->obj_p->y, target_p->obj_p->x, target_p->obj_p->y);
 
 
@@ -109,6 +110,7 @@ void ai_attacking_melee_b(creature_t *attacker_p)
     default:
         break;
     }
+    */
 }
 
 void ai_lost_target_b( creature_t *creature_p )

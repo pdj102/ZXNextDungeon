@@ -2,35 +2,38 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief AI pathfinding - fast a star
-
-    Code is banked do not call directly
+    @brief Useful utils
 
  ***************************************************/
 
-#ifndef AI_PATHFIND_FAST_A_STAR_BANK_H 
-    #define AI_PATHFIND_FAST_A_STAR_BANK_H 
+#include "util.h"
 
-#include <inttypes.h>
+#include <stdint.h>
+
 
 /***************************************************
- * types
+ * private types
  ***************************************************/
 
 
 /***************************************************
- * variable declarations
+ * private function prototypes
  ***************************************************/
+
 
 /***************************************************
- * function prototypes
+ * private variables - static
  ***************************************************/
 
-/**
- * @brief Calculates the path to goal using fast a star search
- *
- * @return void
- */
-void ai_pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y);
 
-#endif
+/***************************************************
+ * functions
+ ***************************************************/
+
+uint8_t util_distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2)
+{
+    uint8_t x = x1 > x2 ? x1 - x2 : x2 - x1;
+    uint8_t y  = y1 > y2 ? y1 - y2 : y2 - y1;
+
+    return x + y;
+}

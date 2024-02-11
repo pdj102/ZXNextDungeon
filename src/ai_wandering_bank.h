@@ -2,17 +2,16 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief The creature code - move action
+    @brief AI code - wandering
 
     Code is banked do not call directly
 
  ***************************************************/
 
-#ifndef CREATURE_MOVE_H 
-    #define CREATURE_MOVE_H 
+#ifndef AI_WANDERING_BANK_H 
+    #define AI_WANDERING_BANK_H 
 
 #include "creature.h"
-#include "util.h"
 
 /***************************************************
  * types
@@ -27,17 +26,10 @@
  ***************************************************/
 
 /**
- * Creature move action
- *
+ * AI takes turn
+ * 
  * @return void
  */
-uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy);
-
-/**
- * Creature move action
- *
- * @return void
- */
-uint8_t creature_move_dir(creature_t *creature_p, direction_t d);
+void ai_wandering_b(creature_t *creature_p);
 
 #endif

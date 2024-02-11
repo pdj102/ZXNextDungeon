@@ -15,7 +15,7 @@
 #include <stdint.h>
 
 #include "ai_bank.h"
-#include "ai_pathfind_bank.h"
+#include "pathfind_bank.h"
 
 #include "creature.h"
 #include "creature_list.h"

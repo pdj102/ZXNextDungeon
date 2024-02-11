@@ -138,15 +138,6 @@ $(OBJDIR)/ui_stats_bank.o: $(SRCDIR)/ui_stats_bank.c $(SRCDIR)/ui_stats_bank.h $
 # - ai_bank.o
 $(OBJDIR)/ai_bank.o: $(SRCDIR)/ai_bank.c $(SRCDIR)/ai_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
-# - ai_pathfind_bank.o 
-$(OBJDIR)/ai_pathfind_bank.o: $(SRCDIR)/ai_pathfind_bank.c $(SRCDIR)/ai_pathfind_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<		
-# - ai_pathfind_breadth_first_search_bank.o 
-$(OBJDIR)/ai_pathfind_breadth_first_search_bank.o: $(SRCDIR)/ai_pathfind_breadth_first_search_bank.c $(SRCDIR)/ai_pathfind_breadth_first_search_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
-# - ai_pathfind_fast_a_star_bank.o 
-$(OBJDIR)/ai_pathfind_fast_a_star_bank.o: $(SRCDIR)/ai_pathfind_fast_a_star_bank.c $(SRCDIR)/ai_pathfind_fast_a_star_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<	
 # - ai_attacking_melee_bank.o 
 $(OBJDIR)/ai_attacking_melee_bank.o: $(SRCDIR)/ai_attacking_melee_bank.c $(SRCDIR)/ai_attacking_melee_bank.h $(PRAGMA_FILE)
 	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<	
@@ -158,7 +149,26 @@ $(OBJDIR)/ai_guarding_bank.o: $(SRCDIR)/ai_guarding_bank.c $(SRCDIR)/ai_guarding
 	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
 # - ai_sleeping_bank.o 
 $(OBJDIR)/ai_sleeping_bank.o: $(SRCDIR)/ai_sleeping_bank.c $(SRCDIR)/ai_sleeping_bank.h $(PRAGMA_FILE)
-	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<			
+	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<
+# - ai_goto_bank.o 
+$(OBJDIR)/ai_goto_bank.o: $(SRCDIR)/ai_goto_bank.c $(SRCDIR)/ai_goto_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<	
+# - ai_wandering_bank.o 
+$(OBJDIR)/ai_wandering_bank.o: $(SRCDIR)/ai_wandering_bank.c $(SRCDIR)/ai_wandering_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_26 --constsegPAGE_26 -o $@ $<	
+
+# ####################################################################################################################################
+# PAGE_27
+# Target for Pathfinding code
+# - pathfind_bank.o 
+$(OBJDIR)/pathfind_bank.o: $(SRCDIR)/pathfind_bank.c $(SRCDIR)/pathfind_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_27 --constsegPAGE_27 -o $@ $<		
+# - pathfind_breadth_first_search_bank.o 
+$(OBJDIR)/pathfind_breadth_first_search_bank.o: $(SRCDIR)/pathfind_breadth_first_search_bank.c $(SRCDIR)/pathfind_breadth_first_search_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_27 --constsegPAGE_27 -o $@ $<
+# - pathfind_fast_a_star_bank.o 
+$(OBJDIR)/pathfind_fast_a_star_bank.o: $(SRCDIR)/pathfind_fast_a_star_bank.c $(SRCDIR)/pathfind_fast_a_star_bank.h $(PRAGMA_FILE)
+	$(CC) $(CFLAGS) --codesegPAGE_27 --constsegPAGE_27 -o $@ $<				
 
 # ####################################################################################################################################
 # target for *.o : dependency is *.c and *.h 

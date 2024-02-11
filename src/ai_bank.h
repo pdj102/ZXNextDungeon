@@ -57,6 +57,6 @@ uint8_t ai_is_enemy_b(creature_t *attacker_p, creature_t *target_p);
  * @param y2 
  * @return uint8_t manhatten distance
  */
-uint8_t distance_manhattan_b(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2);
+uint8_t util_distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2);
 
 #endif
