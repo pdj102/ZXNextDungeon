@@ -129,6 +129,12 @@ void init_game( void )
     // withering weed
     creature_create(PLANT_WITHERWEED, 4, 3);
 
+    // slime ooze
+    creature_create(OOZE_SLIME, 15, 5);
+
+    // grey ooze
+    creature_create(OOZE_GREY, 5, 23);    
+
     object_t *healing_obj_p = object_create(POTION_HEALING, 2, 5);
     object_dungeon_list_add(healing_obj_p);
 

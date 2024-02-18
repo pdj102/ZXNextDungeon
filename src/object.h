@@ -22,7 +22,7 @@
 typedef enum {PHYSICAL, ITEM, CREATURE} object_class_e;
 
 typedef enum object_type_s {
-    // Physical
+    // Physical 
     DOOR,
     CHEST,
     TRAP,
@@ -56,36 +56,71 @@ typedef enum object_subtype_s {
 
     TRAP_NOISE,
 
-    // Items
+    // =========== Items =============
+    
+    // food
     FOOD_BREAD,
 
+    // Potions
     POTION_HEALING,
     POTION_SPEED,
 
+    // melee weapons
+    MELEE_WEAPON_CLUB,
+    MELEE_WEAPON_DAGGER,
+    MELEE_WEAPON_AXE,
+    MELEE_WEAPON_SHORT_SWORD,
+    MELEE_WEAPON_LONG_SWORD,
+    MELEE_WEAPON_GREAT_SWORD,    
+
+    // ranged weapons
+    RANGED_WEAPON_SLING,
+    RANGED_WEAPON_DART,
+    RANGED_WEAPON_SHORTBOW,
+    RANGED_WEAPON_LONGBOW,
+    RANGED_WEAPON_CROSSBOW,    
+
+    // armour
+    ARMOUR_PADDED,
+    ARMOUR_LEATHER,
+    ARMOUR_STUDDED_LEATHER,
+    ARMOUR_CHAIN_SHIRT,
+    ARMOUR_SCALE_MAIL,
+    ARMOUR_HALF_PLATE,
+    ARMOUR_RING_MAIL,
+    ARMOUR_CHAIN_MAIL, 
+    ARMOUR_SPLINT,
+    ARMOUR_PLATE,
+
+    // rings
+    RING_HP,
+    RING_SPEED,
+
+    // scrolls
     SCROLL_FIREBALL,
 
-    MELEE_WEAPON_SWORD,
-
-    RANGED_WEAPON_SLING,
-
-    ARMOUR_LEATHER,
-
-    RING_HP,
 
     WAND_FIREBALL,
     
-    // Creatures
+    // =========== Creatures =============
+
+    // humanoid
     HUMANOID_PLAYER, 
-    
     HUMANOID_HUMAN,
 
+    // Beast
     BEAST_SNAKE,
 
+    // Ooze
+    OOZE_GREY,
     OOZE_SLIME,
 
+    // plant
     PLANT_WITHERWEED,
 
+    // undead
     UNDEAD_SKELETON
+    
     } object_subtype_e;
 
 

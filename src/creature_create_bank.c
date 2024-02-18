@@ -118,6 +118,9 @@ uint8_t creature_create_base_speed_b(object_subtype_e subtype)
         return 5;
 
     // OOZE
+    case OOZE_GREY:
+    case OOZE_SLIME:
+        return 3;
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -148,6 +151,10 @@ uint8_t creature_create_base_hp_b(object_subtype_e subtype)
         return 4;
 
     // OOZE
+    case OOZE_GREY:
+        return 22;
+    case OOZE_SLIME:
+        return 45;    
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -178,6 +185,10 @@ uint8_t creature_create_base_magic_b(object_subtype_e subtype)
         return 0;
 
     // OOZE
+    case OOZE_GREY:
+        return 0;
+    case OOZE_SLIME:
+        return 0;
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -207,6 +218,10 @@ uint8_t creature_create_base_ac_b(object_subtype_e subtype)
         return 13;
 
     // OOZE
+    case OOZE_GREY:
+        return 8;
+    case OOZE_SLIME:
+        return 8;    
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -236,6 +251,10 @@ uint8_t creature_create_base_str_b(object_subtype_e subtype)
         return 2;
 
     // OOZE
+    case OOZE_GREY:
+        return 12;
+    case OOZE_SLIME:
+        return 15;
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -265,6 +284,10 @@ uint8_t creature_create_base_dex_b(object_subtype_e subtype)
         return 16;
 
     // OOZE
+    case OOZE_GREY:
+        return 6;
+    case OOZE_SLIME:
+        return 6;
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -294,6 +317,10 @@ uint8_t creature_create_base_con_b(object_subtype_e subtype)
         return 11;
 
     // OOZE
+    case OOZE_GREY:
+        return 16;
+    case OOZE_SLIME:
+        return 14;
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -323,6 +350,10 @@ uint8_t creature_create_base_inte_b(object_subtype_e subtype)
         return 1;
 
     // OOZE
+    case OOZE_GREY:
+        return 1;
+    case OOZE_SLIME:
+        return 2;
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -352,6 +383,10 @@ uint8_t creature_create_base_wis_b(object_subtype_e subtype)
         return 10;
 
     // OOZE
+    case OOZE_GREY:
+        return 6;
+    case OOZE_SLIME:
+        return 6;
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -382,6 +417,10 @@ uint8_t creature_create_base_cha_b(object_subtype_e subtype)
         return 3;
 
     // OOZE
+    case OOZE_GREY:
+        return 2;
+    case OOZE_SLIME:
+        return 1;
 
     // PLANTS
     case PLANT_WITHERWEED:
@@ -420,6 +459,22 @@ creature_attack_t creature_create_base_melee_b(object_subtype_e subtype)
         return a;
 
     // OOZE
+    case OOZE_GREY:
+        a.damage_type = BLUDGEONGING;
+        a.damage_roll.n = 1;
+        a.damage_roll.d = 6;
+        a.damage_roll.mod = 1;
+        a.attack_bonus = 3;
+        a.damage_bonus = 0;        
+        return a;
+    case OOZE_SLIME:
+        a.damage_type = BLUDGEONGING;
+        a.damage_roll.n = 2;
+        a.damage_roll.d = 6;
+        a.damage_roll.mod = 2;
+        a.attack_bonus = 4;
+        a.damage_bonus = 0;         
+    
     
     // PLANT
     case PLANT_WITHERWEED:
@@ -460,9 +515,6 @@ creature_attack_t creature_create_base_ranged_b(object_subtype_e subtype)
         return a;
     }
 }
-
-
-
 
 void creature_create_reset_base_stats_b(creature_t *creature_p)
 {

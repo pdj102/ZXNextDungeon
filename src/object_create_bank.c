@@ -135,6 +135,26 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->blocking = 0;
             break;
 
+        case OOZE_GREY:
+            obj_ptr->class = CREATURE;
+            obj_ptr->type = OOZE;
+            obj_ptr->subtype = OOZE_GREY;
+            obj_ptr->name_token = 130;              
+            obj_ptr->tilemap_tile.tile_attr = PALETTE_BLUE;
+            obj_ptr->tilemap_tile.tile_id = 'o';
+            obj_ptr->blocking = 0;
+            break;
+
+        case OOZE_SLIME:
+            obj_ptr->class = CREATURE;
+            obj_ptr->type = OOZE;
+            obj_ptr->subtype = OOZE_SLIME;
+            obj_ptr->name_token = 131;              
+            obj_ptr->tilemap_tile.tile_attr = PALETTE_GREEN;
+            obj_ptr->tilemap_tile.tile_id = 'o';
+            obj_ptr->blocking = 0;
+            break;
+
         case POTION_SPEED:
             obj_ptr->class = ITEM;
             obj_ptr->type = POTION;

@@ -193,6 +193,10 @@ ai_state_t ai_base_state_b(object_subtype_e subtype)
         return WANDERING;
 
     // OOZE
+    case OOZE_GREY:
+    case OOZE_SLIME:
+        return WANDERING;
+        
     // PLANT     
     case PLANT_WITHERWEED:
         return GUARDING;        

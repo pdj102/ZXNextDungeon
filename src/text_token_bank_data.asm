@@ -74,7 +74,7 @@ ds 25, "DART"                       ; 51
 ds 25, "SHORTBOW"                   ; 52
 ds 25, "LONG BOW"                   ; 53
 ds 25, "CROSS BOW"                  ; 54
-ds 25, "GREAT SWORD"                ; 55
+ds 25, ""                           ; 55
 ds 25, ""                           ; 56
 ds 25, ""                           ; 57
 ds 25, ""                           ; 58
@@ -83,7 +83,7 @@ ds 25, ""                           ; 59
 ; armour 60 - 69
 ds 25, "PADDED ARMOUR"              ; 60
 ds 25, "LEATHER ARMOUR"             ; 61
-ds 25, "SUDDED LEATHER ARMOUR"      ; 62
+ds 25, "STUDDED LEATHER ARMOUR"      ; 62
 ds 25, "CHAIN SHIRT ARMOUR"         ; 63
 ds 25, "SCALE MAIL ARMOUR"          ; 64
 ds 25, "HALF PLATE ARMOUR"          ; 65
@@ -165,8 +165,8 @@ ds 25, ""                           ; 128
 ds 25, ""                           ; 129
 
 ; ooze creature 130 - 139
-ds 25, "SLIME"                      ; 130
-ds 25, ""                           ; 131
+ds 25, "Grey ooze"                  ; 130
+ds 25, "Slime ooze"                 ; 131
 ds 25, ""                           ; 132
 ds 25, ""                           ; 133
 ds 25, ""                           ; 134
