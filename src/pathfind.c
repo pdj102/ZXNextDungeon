@@ -15,7 +15,7 @@
 
 #include "pathfind_fast_a_star_bank.h"
 
-uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y)
+uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y, uint8_t mem_page)
 {
     uint8_t current_bank;
     uint8_t path_found;
@@ -23,10 +23,10 @@ uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x,
     /* Remember current bank*/
     current_bank = ZXN_READ_MMU6();
 
-    /* Map AI (bank 27) into ZX Spectrum 8k MMU slot 6 */
+    /* Map pathfding code (bank 27) into ZX Spectrum 8k MMU slot 6 */
     ZXN_WRITE_MMU6(27);
-    /* Map AI data (bank 28) into ZX Spectrum 8k MMU slot 7 */
-    ZXN_WRITE_MMU7(28);        
+    /* Map pathfinding data page into ZX Spectrum 8k MMU slot 7 */
+    ZXN_WRITE_MMU7(mem_page);        
 
     /* Call banked code */     
     path_found = pathfind_fast_a_star_b(origin_x, origin_y, goal_x, goal_y);
@@ -37,7 +37,7 @@ uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x,
     return path_found;
 }
 
-direction_t pathfind_direction(uint8_t x, uint8_t y)
+direction_t pathfind_direction(uint8_t x, uint8_t y, uint8_t mem_page)
 {
     uint8_t current_bank;
 
@@ -46,10 +46,10 @@ direction_t pathfind_direction(uint8_t x, uint8_t y)
     /* Remember current bank*/
     current_bank = ZXN_READ_MMU6();
 
-    /* Map AI (bank 27) into ZX Spectrum 8k MMU slot 6 */
+    /* Map pathfding code (bank 27) into ZX Spectrum 8k MMU slot 6 */
     ZXN_WRITE_MMU6(27);
-    /* Map AI data (bank 28) into ZX Spectrum 8k MMU slot 7 */
-    ZXN_WRITE_MMU7(28);        
+    /* Map pathfinding data page into ZX Spectrum 8k MMU slot 7 */
+    ZXN_WRITE_MMU7(mem_page);        
 
     /* Call banked code */      
     c = pathfind_direction_b(x, y);
@@ -59,17 +59,17 @@ direction_t pathfind_direction(uint8_t x, uint8_t y)
     return c;
 }
 
-void pathfind_print( void )
+void pathfind_print( uint8_t mem_page )
 {
     uint8_t current_bank;
 
     /* Remember current bank*/
     current_bank = ZXN_READ_MMU6();
 
-    /* Map AI (bank 27) into ZX Spectrum 8k MMU slot 6 */
+    /* Map pathfding code (bank 27) into ZX Spectrum 8k MMU slot 6 */
     ZXN_WRITE_MMU6(27);
-    /* Map AI data (bank 28) into ZX Spectrum 8k MMU slot 7 */
-    ZXN_WRITE_MMU7(28);        
+    /* Map pathfinding data page into ZX Spectrum 8k MMU slot 7 */
+    ZXN_WRITE_MMU7(mem_page);         
 
     /* Call banked code */    
     pathfind_print_b();

@@ -11,6 +11,8 @@
 #ifndef AI_BANK_H 
     #define AI_BANK_H 
 
+#include "ai.h"
+
 #include "creature.h"
 
 /***************************************************
@@ -32,21 +34,28 @@
  * 
  * @return void
  */
-void ai_turn_b( creature_t *creature_p );
+void ai_turn_b( ai_t *ai_p );
 
 /**
  * Notify AI of attack by another creature
  * 
  * @return void
  */
-void ai_is_attacked_b(creature_t *target_p, creature_t *attacker_p);
+void ai_is_attacked_b( ai_t *ai_p, creature_t *attacker_p);
 
 /**
  * Returns true if creature is an enemy
  * 
  * @return void
  */
-uint8_t ai_is_enemy_b(creature_t *attacker_p, creature_t *target_p);
+uint8_t ai_is_enemy_b( ai_t *ai_p, creature_t *target_p);
+
+/**
+ * Returns base ai state of AI for object subtype
+ * 
+ * @return ai_state_t
+ */
+ai_state_t ai_base_state_b(object_subtype_e subtype);
 
 /**
  * @brief calculate manhatten distance

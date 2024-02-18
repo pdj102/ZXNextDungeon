@@ -50,6 +50,7 @@ void creature_init( void )
     {
         globaldata.creatures[i].free = 1;
         globaldata.creatures[i].next = 0;
+        globaldata.creatures[i].index = i;
     }
 }
 
@@ -63,7 +64,7 @@ void creature_turn(creature_t *creature_p)
         switch (creature_p->ai_or_player )
         {
         case AI:
-            ai_turn(creature_p);
+            ai_turn(&globaldata.ai[creature_p->index]);
             break;
         case PLAYER:
             player_turn();
@@ -94,7 +95,7 @@ void creature_free(creature_t *creature_p)
 
 void creature_delete(creature_t *creature_p)
 {
-    #ifdef DEBUG_ERROR
+    #ifdef DEBUG
         if (creature_p->obj_p->free != 1)
         {
             // Fatal error detected - creature object has not been deleted before deleting the creature

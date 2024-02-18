@@ -57,7 +57,6 @@ uint8_t creature_move_dir(creature_t *creature_p, direction_t d)
     case W:
         return creature_move_by(creature_p, -1, 0);               
     case E:
-        text_printf("E");
         return creature_move_by(creature_p, 1, 0);
     default:
         break;

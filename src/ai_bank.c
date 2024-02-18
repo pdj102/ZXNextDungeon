@@ -15,12 +15,15 @@
 #include <stdint.h>
 #include <stdlib.h>         // abs()
 
+#include "ai.h"
 #include "ai_attacking_melee_bank.h"
 #include "ai_guarding_bank.h"
 #include "ai_wandering_bank.h"
 
 #include "creature.h"
 #include "creature_list.h"
+
+#include "object.h"
 
 #include "text.h"
 
@@ -43,25 +46,29 @@
  * functions
  ***************************************************/
 
-void ai_turn_b( creature_t *creature_p )
+void ai_turn_b( ai_t *ai_p )
 {
+    creature_t *creature_p = ai_p->creature_p;
+
+    text_printf("AI turn: %t\n", creature_p->obj_p->name_token);
+
     creature_p->energy = 0;
 
-    switch (creature_p->ai.state)
+    switch (ai_p->state)
     {
         case SLEEPING:
             return;
 
         case GUARDING:
-            ai_guarding_b(creature_p);
+            ai_guarding_b(ai_p);
             return;
 
         case WANDERING:
-            ai_wandering_b(creature_p);
+            ai_wandering_b(ai_p);
             return;            
 
         case ATTACKING_MELEE:
-            ai_attacking_melee_b(creature_p);
+            ai_attacking_melee_b(ai_p);
             return;
 
         case ATTACKING_RANGED:
@@ -87,8 +94,10 @@ void ai_turn_b( creature_t *creature_p )
     }
 }
 
-uint8_t ai_is_enemy_b(creature_t *attacker_p, creature_t *target_p)
+uint8_t ai_is_enemy_b(ai_t *ai_p, creature_t *target_p)
 {
+    creature_t *attacker_p = ai_p->creature_p;
+
     // Ignore self
     if (attacker_p == target_p)
     {
@@ -140,26 +149,29 @@ uint8_t ai_is_enemy_b(creature_t *attacker_p, creature_t *target_p)
  * 
  * @return void
  */
-void ai_is_attacked_b(creature_t *target_p, creature_t *attacker_p)
+void ai_is_attacked_b(ai_t *ai_p, creature_t *attacker_p)
 {
+
+    creature_t *target_p = ai_p->creature_p;
+
     // Has the creature been killed?
     if (target_p->hp == 0)
     {
-        target_p->ai.state = DEAD;
+        ai_p->state = DEAD;
     }
 
-    switch (target_p->ai.state)
+    switch (ai_p->state)
     {
         case SLEEPING:
             text_printf("%t WAKES UP\n", (unsigned int) target_p->obj_p->name_token);
-            target_p->ai.state = ATTACKING_MELEE;
-            target_p->ai.target = attacker_p;        
+            ai_p->state = ATTACKING_MELEE;
+            ai_p->target = attacker_p;        
         case AWAKE:
-            target_p->ai.state = ATTACKING_MELEE;
-            target_p->ai.target = attacker_p;
+            ai_p->state = ATTACKING_MELEE;
+            ai_p->target = attacker_p;
             break;
         case GUARDING:
-            target_p->ai.target = attacker_p;
+            ai_p->target = attacker_p;
             break;
         case ATTACKING_MELEE:
             // TODO - possibly change target if attacker is different to current target
@@ -171,3 +183,23 @@ void ai_is_attacked_b(creature_t *target_p, creature_t *attacker_p)
 }
 
 
+ai_state_t ai_base_state_b(object_subtype_e subtype)
+{
+    switch (subtype)
+    {
+    //HUMANOID
+    // BEAST
+    case BEAST_SNAKE:
+        return WANDERING;
+
+    // OOZE
+    // PLANT     
+    case PLANT_WITHERWEED:
+        return GUARDING;        
+        
+    // UNDEAD
+
+    default:
+        return WANDERING;
+    }
+}

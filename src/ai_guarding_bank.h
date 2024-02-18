@@ -11,7 +11,7 @@
 #ifndef AI_GUARDING_BANK_H 
     #define AI_GUARDING_BANK_H 
 
-#include "creature.h"
+#include "ai.h"
 
 /***************************************************
  * types
@@ -30,6 +30,6 @@
  * 
  * @return void
  */
-void ai_guarding_b(creature_t *attacker_p);
+void ai_guarding_b(ai_t *ai_p);
 
 #endif

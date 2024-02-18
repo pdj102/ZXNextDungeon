@@ -11,7 +11,8 @@
 #ifndef AI_ATTACKING_MELEE_BANK_H 
     #define AI_ATTACKING_MELEE_BANK_H 
 
-#include "creature.h"
+#include "ai.h"
+
 
 /***************************************************
  * types
@@ -30,6 +31,6 @@
  * 
  * @return void
  */
-void ai_attacking_melee_b(creature_t *attacker_p);
+void ai_attacking_melee_b(ai_t *ai_p);
 
 #endif

@@ -17,6 +17,7 @@
 
 #include "ai.h"
 
+#include "globaldata.h"
 #include "dice.h"
 
 #include "text.h"
@@ -68,7 +69,7 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
     // Notify AI of attack
     if (target_p->ai_or_player == AI)
     {
-        ai_is_attacked(target_p, attacker_p);
+        ai_is_attacked(&globaldata.ai[target_p->index], attacker_p);
     }
     return 1;
 }

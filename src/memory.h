@@ -46,7 +46,7 @@
     Page    |   Description
     --------|-----------------------------------------------------
     19      |   reserved for dungeon map generator
-    28      |   pathfinding data 
+    80 - 95 |   Pathfind data. 1 page per creature 
 
 
  ***************************************************/

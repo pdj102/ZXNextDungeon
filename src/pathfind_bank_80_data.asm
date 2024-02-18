@@ -1,4 +1,4 @@
-SECTION PAGE_28
+SECTION PAGE_80
 org 0xe000
 
 PUBLIC _reached

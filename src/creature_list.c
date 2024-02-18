@@ -12,6 +12,7 @@
 #include "text.h"
 
 #include "creature.h"
+#include "ai.h"
 
 #include "globaldata.h"
 #include "globaldata_defines.h"
@@ -171,13 +172,13 @@ creature_t *creature_list_next_is_a_within_rect(creature_t *creature_p, uint8_t 
     return 0;
 }
 
-creature_t *creature_list_first_is_a2_within_rect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, creature_t *agent_p, creature_is_a2 is_a2_p)
+creature_t *creature_list_first_is_a2_within_rect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ai_t *ai_p, creature_is_a2 is_a2_p)
 {
     creature_t *creature_p = creature_list_first_within_rect(x1, y1, x2, y2);
 
     while( creature_p )
     {
-        if (is_a2_p(agent_p, creature_p))
+        if (is_a2_p(ai_p, creature_p))
         {
             return creature_p;
         }
@@ -186,11 +187,11 @@ creature_t *creature_list_first_is_a2_within_rect(uint8_t x1, uint8_t y1, uint8_
     return 0;
 }
 
-creature_t *creature_list_next_is_a2_within_rect(creature_t *creature_p, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, creature_t *agent_p, creature_is_a2 is_a2_p)
+creature_t *creature_list_next_is_a2_within_rect(creature_t *creature_p, uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, ai_t *ai_p, creature_is_a2 is_a2_p)
 {
     while ( creature_p = creature_list_next_within_rect(creature_p, x1, y1, x2, y2) )
     {
-        if (is_a2_p(agent_p, creature_p))
+        if (is_a2_p(ai_p, creature_p))
         {
             return creature_p;
         }
@@ -198,7 +199,7 @@ creature_t *creature_list_next_is_a2_within_rect(creature_t *creature_p, uint8_t
     return 0;
 }
 
-creature_t *creature_list_first_is_a2_within_square(uint8_t x, uint8_t y, uint8_t r, creature_t *agent_p, creature_is_a2 is_a2_p)
+creature_t *creature_list_first_is_a2_within_square(uint8_t x, uint8_t y, uint8_t r, ai_t *ai_p, creature_is_a2 is_a2_p)
 {
     uint8_t x1, x2, y1, y2;
 
@@ -208,10 +209,10 @@ creature_t *creature_list_first_is_a2_within_square(uint8_t x, uint8_t y, uint8_
     x2 = ( x > DUNGEONMAP_WIDTH - 1 - r ) ? DUNGEONMAP_WIDTH - 1 : x + r;       // x2 maximum is DUNGEON_WIDTH - 1
     y2 = ( y > DUNGEONMAP_HEIGHT - 1 - r ) ? DUNGEONMAP_HEIGHT - 1 : y + r;     // y2 maximum is DUNGEON_HEIGHT - 1
 
-    return creature_list_first_is_a2_within_rect(x1, y1, x2, y2, agent_p, is_a2_p);
+    return creature_list_first_is_a2_within_rect(x1, y1, x2, y2, ai_p, is_a2_p);
 }
 
-creature_t *creature_list_next_is_a2_within_square(creature_t *creature_p, uint8_t x, uint8_t y, uint8_t r, creature_t *agent_p, creature_is_a2 is_a2_p)
+creature_t *creature_list_next_is_a2_within_square(creature_t *creature_p, uint8_t x, uint8_t y, uint8_t r, ai_t *ai_p, creature_is_a2 is_a2_p)
 {
     uint8_t x1, x2, y1, y2;
 
@@ -221,7 +222,7 @@ creature_t *creature_list_next_is_a2_within_square(creature_t *creature_p, uint8
     x2 = ( x > DUNGEONMAP_WIDTH - 1 - r ) ? DUNGEONMAP_WIDTH - 1 : x + r;       // x2 maximum is DUNGEON_WIDTH - 1
     y2 = ( y > DUNGEONMAP_HEIGHT - 1 - r ) ? DUNGEONMAP_HEIGHT - 1 : y + r;     // y2 maximum is DUNGEON_HEIGHT - 1
 
-    return creature_list_next_is_a2_within_rect(creature_p, x1, y1, x2, y2, agent_p, is_a2_p);
+    return creature_list_next_is_a2_within_rect(creature_p, x1, y1, x2, y2, ai_p, is_a2_p);
 }
 
 void creature_list_update_all( void )

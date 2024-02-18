@@ -15,7 +15,9 @@
 #include <stdint.h>
 #include <stdlib.h>             // rand()
 
+#include "ai.h"
 #include "ai_bank.h"
+#include "ai_goto_bank.h"
 
 #include "creature.h"
 #include "creature_move.h"
@@ -61,33 +63,40 @@
  * 4) If reached goto location select a new goto location
  * 
  */
-void ai_wandering_b(creature_t *creature_p)
+void ai_wandering_b( ai_t *ai_p )
 {
-    direction_t d;
+
+    goto_result_t r;
+
+    creature_t *creature_p = ai_p->creature_p;
 
     // #1 No goto location - set goto location?
-    if (creature_p->ai.goto_x == 0)
+    if (ai_p->goto_x == 0)
     {
         do
         {
-            creature_p->ai.goto_x = rand() % 50;
-            creature_p->ai.goto_y = rand() % 50;
-        } while (!pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, creature_p->ai.goto_x, creature_p->ai.goto_y));
+            ai_set_goto_b( ai_p, rand() % DUNGEONMAP_WIDTH, rand() % DUNGEONMAP_HEIGHT);
+        } while (!pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page));
     }
 
     // #2 Move towards goto location
-    d = pathfind_direction( creature_p->obj_p->x, creature_p->obj_p->y );
+    r = ai_goto_b(ai_p);
 
-    if (!creature_move_dir(creature_p, d))
+    switch (r)
     {
-        // #3 If unable to move towards goto location select a new goto location
-        creature_p->ai.goto_x == 0;
-    }
-
-    // #4 
-    if ((creature_p->obj_p->x == creature_p->ai.goto_x) && (creature_p->obj_p->y == creature_p->ai.goto_y))
-    {
-        creature_p->ai.goto_x = 0;
+    case GOTO_FAIL:
+        text_printf("Wandering - fail\n");
+        ai_p->goto_x = 0;
+        break;
+    case GOTO_REACHED:
+        text_printf("Wandering - reached\n");
+        ai_p->goto_x = 0;
+        break;
+    case GOTO_SUCCESS:
+        text_printf("Wandering - success\n");
+        break;
+    default:
+        break;
     }
 
 }

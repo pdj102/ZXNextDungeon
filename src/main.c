@@ -168,7 +168,7 @@ int main( void )
 
     text_printf("Welcome to Dungeon!\n");
 
-    #ifdef DEBUG_ERROR
+    #ifdef DEBUG
         text_print_string("DEBUG: GLOBAL DATA SIZE:");
         uint16_t s;
         s = sizeof(globaldata_t);

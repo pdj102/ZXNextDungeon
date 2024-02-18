@@ -11,11 +11,13 @@
 #ifndef AI_GOTO_BANK_H 
     #define AI_GOTO_BANK_H 
 
-#include "creature.h"
+#include "ai.h"
 
 /***************************************************
  * types
  ***************************************************/
+
+typedef enum goto_result {GOTO_NA, GOTO_SUCCESS, GOTO_FAIL, GOTO_REACHED} goto_result_t;
 
 /***************************************************
  * variable declarations
@@ -33,13 +35,13 @@
  * @param y 
  * @return uint8_t 
  */
-uint8_t ai_set_goto_b(creature_t *creature_p, uint8_t x, uint8_t y);
+uint8_t ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y);
 
 /**
  * AI takes turn
  * 
  * @return void
  */
-uint8_t ai_goto_b( creature_t *creature_p);
+goto_result_t ai_goto_b( ai_t *ai_p );
 
 #endif

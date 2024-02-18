@@ -66,6 +66,6 @@ uint8_t creature_create_base_con_b(object_subtype_e subtype);
 uint8_t creature_create_base_inte_b(object_subtype_e subtype);
 uint8_t creature_create_base_wis_b(object_subtype_e subtype);
 uint8_t creature_create_base_cha_b(object_subtype_e subtype);
-ai_state_t creature_create_base_ai_b(object_subtype_e subtype);
+// ai_state_t creature_create_base_ai_b(object_subtype_e subtype);
 
 #endif

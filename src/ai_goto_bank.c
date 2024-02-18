@@ -49,29 +49,51 @@
  * 
  * @return  true if can reach target
  */
-uint8_t ai_set_goto_b(creature_t *creature_p, uint8_t x, uint8_t y)
+uint8_t ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y)
 {
-    creature_p->ai.goto_x = x;
-    creature_p->ai.goto_y = y;
+    ai_p->goto_x = x;
+    ai_p->goto_y = y;
     return 0;
 }
 
 
 
 /** 
- * @brief AI turn - goto
+ * @brief AI turn - Creature moves towards its target location
  * 
- * Behaviour
- * 
- * Creature moves towards its target location
  */
-uint8_t ai_goto_b(creature_t *creature_p)
+uint8_t ai_goto_b(ai_t *ai_p)
 {
     direction_t d;
 
-    pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, creature_p->ai.goto_x, creature_p->ai.goto_y );
-    d = pathfind_direction(creature_p->obj_p->x, creature_p->obj_p->y);
-    creature_move_dir(creature_p, d);
-    return 0;
+
+    // #1 Get direction from current path
+    d = pathfind_direction( ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->pathfind_page );
+
+    // #2 No direction then calculate a new path
+    if (d == NO_DIR)
+    {
+        if (!pathfind_fast_a_star(ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page))
+        {
+            // #3 Unable to find a path then fail. TODO dont hard fail if blocked due to creature in the way 
+            return GOTO_FAIL;
+        }
+    }
+
+    // #4 Attempt move along path
+    if (!creature_move_dir(ai_p->creature_p, d))
+    {
+        // #5 Failed to move then fail. TODO dont hard fail if blocked due to creature in the way 
+        return GOTO_FAIL;
+    }
+
+    // #6 Have the goal been reached?
+    if ((ai_p->creature_p->obj_p->x == ai_p->goto_x) && (ai_p->creature_p->obj_p->y == ai_p->goto_y))
+    {
+        return GOTO_REACHED;
+    }
+
+    // #6 Moved along path towards goal, return success
+    return GOTO_SUCCESS;
 }
 

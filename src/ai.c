@@ -11,6 +11,10 @@
 
 #include "ai_bank.h"
 
+#include "object.h"
+
+#include "creature.h"
+
 #include "globaldata.h"
 
 
@@ -31,8 +35,19 @@
  * functions
  ***************************************************/
 
+void ai_init( ai_t *ai_p, creature_t *creature_p )
+{
+    ai_p->creature_p = creature_p;
 
-void ai_turn( creature_t *creature_p )
+    ai_p->state = ai_base_state(creature_p->obj_p->subtype);
+    ai_p->target = 0;
+    ai_p->goto_x = 0;
+    ai_p->goto_y = 0;
+    ai_p->pathfind_page = 80 + creature_p->index;
+}
+
+
+void ai_turn( ai_t *ai_p )
 {
     uint8_t current_bank;
 
@@ -42,7 +57,7 @@ void ai_turn( creature_t *creature_p )
     /* Map AI (bank 26) into ZX Spectrum 8k MMU slot 6 */
     /* Call banked code */ 
     ZXN_WRITE_MMU6(26);    
-    ai_turn_b( creature_p ); 
+    ai_turn_b( ai_p ); 
 
     /* restore previous bank */
     ZXN_WRITE_MMU6(current_bank);
@@ -53,7 +68,7 @@ void ai_turn( creature_t *creature_p )
  * 
  * @return void
  */
-void ai_is_attacked(creature_t *target_p, creature_t *attacker_p)
+void ai_is_attacked(ai_t *ai_p, creature_t *attacker_p)
 {
     uint8_t current_bank;
 
@@ -63,8 +78,27 @@ void ai_is_attacked(creature_t *target_p, creature_t *attacker_p)
     /* Map AI (bank 26) into ZX Spectrum 8k MMU slot 6 */
     /* Call banked code */ 
     ZXN_WRITE_MMU6(26);
-    ai_is_attacked_b( target_p, attacker_p ); 
+    ai_is_attacked_b( ai_p, attacker_p ); 
 
     /* restore previous bank */
     ZXN_WRITE_MMU6(current_bank);
+}
+
+ai_state_t ai_base_state(object_subtype_e subtype)
+{
+    uint8_t current_bank;
+    ai_state_t ai_state;
+
+    /* Remember current bank*/
+    current_bank = ZXN_READ_MMU6();
+
+    /* Map AI (bank 26) into ZX Spectrum 8k MMU slot 6 */
+    /* Call banked code */ 
+    ZXN_WRITE_MMU6(26);
+    ai_state = ai_base_state_b( subtype ); 
+
+    /* restore previous bank */
+    ZXN_WRITE_MMU6(current_bank);    
+
+    return ai_state;
 }

@@ -58,17 +58,18 @@
  * TODO can't find target switch to attacking with no target
  * 
  */
-void ai_attacking_melee_b(creature_t *attacker_p)
+void ai_attacking_melee_b(ai_t *ai_p)
 {
     uint8_t distance;
+    creature_t *attacker_p = ai_p->creature_p;
     creature_t *target_p;
 
-    target_p = attacker_p->ai.target;
+    target_p = ai_p->target;
 
     // Is target dead?
     if (target_p->hp == 0)
     {
-        target_p->ai.state = ATTACKING_NO_TARGET;
+        ai_p->state = ATTACKING_NO_TARGET;
         return;
     }
 
@@ -113,9 +114,9 @@ void ai_attacking_melee_b(creature_t *attacker_p)
     */
 }
 
-void ai_lost_target_b( creature_t *creature_p )
+void ai_lost_target_b( ai_t *ai_p)
 {
     // TODO Add support for parties and select next target in party
-    creature_p->ai.state = AWAKE;
-    creature_p->ai.target = 0;      
+    ai_p->state = AWAKE;
+    ai_p->target = 0;      
 }

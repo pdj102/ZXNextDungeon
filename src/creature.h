@@ -12,25 +12,14 @@
 #include <stdint.h>
 
 #include "object.h"
+
 #include "dice.h"
 
 /***************************************************
  * types
  ***************************************************/
 
-typedef enum ai_state_s {
-    NO_STATE,
-    DEAD,
-    SLEEPING, 
-    AWAKE, 
-    ATTACKING_MELEE, 
-    ATTACKING_RANGED,
-    ATTACKING_NO_TARGET,
-    WANDERING,
-    HUNTING,
-    GUARDING, 
-    FLEEING
-} ai_state_t;
+
 
 #define CONDITION_NONE              1 << 0
 #define CONDITION_BLINDED           1 << 1
@@ -39,16 +28,6 @@ typedef enum ai_state_s {
 #define CONDITION_INCAPACITATED     1 << 4
 #define CONDITION_POISONED          1 << 5
 
-
-struct creature_t;
-
-typedef struct ai_s
-{
-    ai_state_t              state;
-    struct creature_s      *target;
-    uint8_t                 goto_x;
-    uint8_t                 goto_y;
-} ai_t;
 
 typedef enum {AI, PLAYER } ai_or_player_e;
 
@@ -65,15 +44,18 @@ typedef struct creature_attack_s
     uint8_t                 range;
 } creature_attack_t;
 
+extern struct ai_s;
+
 typedef struct creature_s
 {
-    void                    *next;              /**< creatures can be part of a list of creatures. Next pointer must be first 2 bytes in struct */
-    uint8_t                 free;               /**< 1 if creature slot is free */
+    void                    *next;              /** creatures can be part of a list of creatures. Next pointer must be first 2 bytes in struct */
+    uint8_t                 free;               /** 1 if creature slot is free */
+    uint8_t                 index;              /** Creature index */
     object_t                *obj_p;             /** all creatures have an associated object */
 
-    ai_or_player_e          ai_or_player;       /**< player or AI */
+    ai_or_player_e          ai_or_player;       /** player or AI */
 
-    uint8_t                 max_hp;             /**< max hp = base + any modifiers*/
+    uint8_t                 max_hp;             /** max hp = base + any modifiers*/
     uint8_t                 hp;                 /** current hp */
     uint8_t                 ac;
 
@@ -89,10 +71,8 @@ typedef struct creature_s
 
     uint8_t                 exp;
 
-    uint8_t                 max_mp;         /**< max magic points = base + any modifiers*/
-    uint8_t                 mp;             /**< current magic points */
-
-    ai_t                    ai;             /**< AI data*/
+    uint8_t                 max_mp;         /** max magic points = base + any modifiers*/
+    uint8_t                 mp;             /** current magic points */
 
     creature_attack_t      melee;
     creature_attack_t      ranged;
@@ -103,7 +83,6 @@ typedef struct creature_s
 
 // Typedef for creature is_a functions
 typedef uint8_t (*creature_is_a)(creature_t *);
-typedef uint8_t (*creature_is_a2)(creature_t *, creature_t *);
 
 /***************************************************
  * variable declarations

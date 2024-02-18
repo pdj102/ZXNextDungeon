@@ -11,7 +11,7 @@
 #ifndef AI_WANDERING_BANK_H 
     #define AI_WANDERING_BANK_H 
 
-#include "creature.h"
+#include "ai.h"
 
 /***************************************************
  * types
@@ -30,6 +30,6 @@
  * 
  * @return void
  */
-void ai_wandering_b(creature_t *creature_p);
+void ai_wandering_b(ai_t *ai_p);
 
 #endif

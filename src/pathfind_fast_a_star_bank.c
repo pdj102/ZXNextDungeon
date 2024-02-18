@@ -77,15 +77,14 @@ uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_
 {
     direction_t direction_from;
 
-    unsigned int key;
-
     uint8_t x, y;
 
-    //
+    #ifdef DEBUG_PATHFIND  
     text_printf("A* origin: %u ", origin_x);
     text_printf("%u ", origin_y);
     text_printf("goal: %u ", goal_x);
     text_printf("%u ", goal_y);
+    #endif
 
     // flip origin and goal around as the resultant path is walked backwards
     goal_coord.x = origin_x;
@@ -93,25 +92,17 @@ uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_
     start_coord.x = goal_x;
     start_coord.y = goal_y;
 
-
-    // set current to start of path. Direction to start is NO_DIR  
+    // set current coord to start of path. Direction to start is NO_DIR  
     current_coord.x = start_coord.x;
     current_coord.y = start_coord.y;
     direction_from = NO_DIR;
 
     init_priority_queue();
 
-    // Limit the bounds of the path finding to a maximum of 15 x 15 squares around the start
-    /*
-    if (start_coord.x<15) { min_x = 0; } else { min_x = start_coord.x - 15; }
-    if (start_coord.x> DUNGEONMAP_WIDTH - 1 - 15) { max_x = DUNGEONMAP_WIDTH - 1; } else { max_x = start_coord.x + 15; }
-    if (start_coord.y<15) { min_y = 0; } else { min_y = start_coord.y - 15; }
-    if (start_coord.y> DUNGEONMAP_HEIGHT - 1 - 15) { max_y = DUNGEONMAP_HEIGHT - 1; } else { max_y = start_coord.y + 15; }
-    */
-   min_x = 0;
-   max_x = 50;
-   min_y = 0;
-   max_y = 50;
+    min_x = 0;
+    max_x = DUNGEONMAP_WIDTH;
+    min_y = 0;
+    max_y = DUNGEONMAP_HEIGHT;
 
     // clear previous path information 
     // todo - faster to memcopy 0 over the array?
@@ -125,35 +116,41 @@ uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_
         }
     }
 
+    // calculate initial costs
     tmp_cost_so_far = 0;
     tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(start_coord.x, start_coord.y, goal_coord.x, goal_coord.y);
+
+    // set queue prioirty offet. Priority will only ever be equal or greater to this
     priority_offset = tmp_total_cost;
 
+    // push start coord onto froniter queue
     push_frontier_b(&current_coord, 0);
     pathfind_mark_reached_b(&current_coord, direction_from, tmp_total_cost, tmp_cost_so_far);
 
+    // while there are more coords in the froniter queue to explore
     while(pop_frontier_head_b(&current_coord))
     {
         // TODO handle blocking objects (object mark map?)
         // TODO Intelligent vs non-intelligent can open doors so not blocked
 
+        // Have we reached the goal coord?
         if (current_coord.x == goal_coord.x && current_coord.y == goal_coord.y)
         {
-            text_printf("path found\n");
+            #ifdef DEBUG_PATHFIND 
+                text_printf("path found\n");
+            #endif
+
             return 1;
         }
         update_neighbors_b();
-
-        /*
-        pathfind_print_b();
-        while ((key = in_inkey()) == 0) ;   // loop while no key pressed
-        in_wait_nokey();    // wait no key              
-        */
-        
     } 
 
+    // did not find a path to goal
+    #ifdef DEBUG_PATHFIND  
         text_printf("path NOT found\n");
-        return 0;   
+    #endif
+    
+    return 0;   
 }
 
 /**
@@ -188,14 +185,13 @@ void push_frontier_b(coord_t *coord, uint8_t priority)
     // Do not push if priority is greater or equal to max priority
     if (priority > MAX_PRIORITY - 1)
     {
-        text_printf("DEBUG - Priority exceeds bounds");
         return;
     }
     
     // Do not push if queue[priority] is full
     if (queue_count[priority] == MAX_SIZE - 1)
     {
-        text_printf("DEBUG - queue is full");
+        // text_printf("DEBUG - queue is full");
         return;
     }
 
@@ -207,13 +203,6 @@ void push_frontier_b(coord_t *coord, uint8_t priority)
 
     queue_head[priority]++;
     queue_count[priority]++;
-
-    /*
-    text_printf("Push %u,", (unsigned char) coord->x);
-    text_printf("%u ", (unsigned char) coord->y);
-    text_printf("p:%u", (unsigned char) priority);
-    text_printf("c:%u\n", (unsigned char) queue_count[priority]);
-    */
 
     // if head has reached end of array wrap to 0
     if (queue_head[priority] == MAX_SIZE)
@@ -254,14 +243,6 @@ uint8_t pop_frontier_head_b(coord_t *coord)
     queue_head[tail_priority]--;
     queue_count[tail_priority]--;      
 
-    /*
-    text_printf("Pop  %u,", (unsigned char) coord->x);
-    text_printf("%u ", (unsigned char) coord->y);
-    text_printf("p:%u", (unsigned char) tail_priority);  
-    text_printf("c:%u\n", (unsigned char) queue_count[tail_priority]);  
-    */
-
-
     // if head index has gone past end of array wrap to 0
     if (queue_head[tail_priority] == MAX_SIZE)
     {
@@ -287,19 +268,11 @@ uint8_t pop_frontier_tail_b(coord_t *coord)
         }
     }
     
-
-
     // pop entry from tail of queue
     tail = queue_tail[tail_priority];    
     coord->x = priority_queue[tail][tail_priority].x;
     coord->y = priority_queue[tail][tail_priority].y;
-
     
-    text_printf("Pop  %u,", (unsigned char) coord->x);
-    text_printf("%u ", (unsigned char) coord->y);
-    text_printf("p:%u\n", (unsigned char) tail_priority);
-    
-
     queue_tail[tail_priority]++;
     queue_count[tail_priority]--;  
 

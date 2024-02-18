@@ -19,6 +19,8 @@
 #include "object_create.h"
 #include "object_dungeon_list.h"
 
+#include "ai.h"
+
 #include "text.h"
 
 #include "globaldata.h"
@@ -94,10 +96,7 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
     // TODO Handle if x, y position is blocked
     
     // initialise ai
-    creature_p->ai.state = creature_create_base_ai_b(obj_subtype);
-    creature_p->ai.target = 0;
-    creature_p->ai.goto_x = 0;
-    creature_p->ai.goto_y = 0;
+    ai_init(&globaldata.ai[creature_p->index], creature_p);
 
     return creature_p;
 }
@@ -462,26 +461,7 @@ creature_attack_t creature_create_base_ranged_b(object_subtype_e subtype)
     }
 }
 
-ai_state_t creature_create_base_ai_b(object_subtype_e subtype)
-{
-    switch (subtype)
-    {
-    //HUMANOID
-    // BEAST
-    case BEAST_SNAKE:
-        return WANDERING;
 
-    // OOZE
-    // PLANT     
-    case PLANT_WITHERWEED:
-        return GUARDING;        
-        
-    // UNDEAD
-
-    default:
-        return WANDERING;
-    }
-}
 
 
 void creature_create_reset_base_stats_b(creature_t *creature_p)
