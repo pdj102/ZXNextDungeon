@@ -42,9 +42,13 @@ typedef struct ai_s
     creature_t              *creature_p;
 
     ai_state_t              state;
+
     struct creature_s      *target;
+
+    uint8_t                 goto_target;
     uint8_t                 goto_x;
     uint8_t                 goto_y;
+
     uint8_t                 pathfind_page;
 } ai_t;
 

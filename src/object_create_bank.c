@@ -142,7 +142,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->name_token = 130;              
             obj_ptr->tilemap_tile.tile_attr = PALETTE_BLUE;
             obj_ptr->tilemap_tile.tile_id = 'o';
-            obj_ptr->blocking = 0;
+            obj_ptr->blocking = 1;
             break;
 
         case OOZE_SLIME:
@@ -152,7 +152,7 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
             obj_ptr->name_token = 131;              
             obj_ptr->tilemap_tile.tile_attr = PALETTE_GREEN;
             obj_ptr->tilemap_tile.tile_id = 'o';
-            obj_ptr->blocking = 0;
+            obj_ptr->blocking = 1;
             break;
 
         case POTION_SPEED:

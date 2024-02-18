@@ -51,12 +51,11 @@
  */
 uint8_t ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y)
 {
+    ai_p->goto_target = 1;
     ai_p->goto_x = x;
     ai_p->goto_y = y;
     return 0;
 }
-
-
 
 /** 
  * @brief AI turn - Creature moves towards its target location
@@ -83,7 +82,13 @@ uint8_t ai_goto_b(ai_t *ai_p)
     // #4 Attempt move along path
     if (!creature_move_dir(ai_p->creature_p, d))
     {
-        // #5 Failed to move then fail. TODO dont hard fail if blocked due to creature in the way 
+        // #5 Failed to move then fail. 
+        // TODO differentiate between hard fail and soft fail 
+        // Hard fail = no path
+        // Soft fail = creature in the way, creature unable to move etc. Try another path.  
+        // Is the blockage a creature - is it an enemy? attack
+        // Is there another path?
+        
         return GOTO_FAIL;
     }
 

@@ -41,6 +41,7 @@ void ai_init( ai_t *ai_p, creature_t *creature_p )
 
     ai_p->state = ai_base_state(creature_p->obj_p->subtype);
     ai_p->target = 0;
+    ai_p->goto_target = 0;
     ai_p->goto_x = 0;
     ai_p->goto_y = 0;
     ai_p->pathfind_page = 80 + creature_p->index;
