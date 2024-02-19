@@ -74,22 +74,28 @@ uint8_t ai_goto_b(ai_t *ai_p)
     {
         if (!pathfind_fast_a_star(ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page))
         {
-            // #3 Unable to find a path then fail. TODO dont hard fail if blocked due to creature in the way 
-            return GOTO_FAIL;
+            // #3 Unable to find a path then hard fail no path. 
+            return GOTO_FAIL_NO_PATH;
         }
     }
 
     // #4 Attempt move along path
     if (!creature_move_dir(ai_p->creature_p, d))
     {
-        // #5 Failed to move then fail. 
+        // #5 Failed to move 
         // TODO differentiate between hard fail and soft fail 
         // Hard fail = no path
-        // Soft fail = creature in the way, creature unable to move etc. Try another path.  
+        // Soft fail = creature in the way, creature unable to move etc. 
         // Is the blockage a creature - is it an enemy? attack
         // Is there another path?
+
+        if (!pathfind_fast_a_star(ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page))
+        {
+            // #5.1 Unable to find a path then hard fail no path. 
+            return GOTO_FAIL_NO_PATH;
+        }
         
-        return GOTO_FAIL;
+        return GOTO_FAIL_NO_PATH;
     }
 
     // #6 Have the goal been reached?

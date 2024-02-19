@@ -59,10 +59,10 @@ uint8_t object_move_by(object_t *obj, int8_t dx, int8_t dy)
 uint8_t object_move_isblocked(uint8_t dungeon_x, uint8_t dungeon_y)
 {
     // check if move is blocked by dungeon map tile e.g. wall
-    if (dungeonmap_tile_is_blocked(dungeon_x, dungeon_y))
+    if (dungeonmap_tile_is_blocked(dungeon_x, dungeon_y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
     {
         return 1;
     }
-    // check if move is blocked by ablocking object e.g. a closed door
+    // check if move is blocked by a blocking object e.g. a closed door
     return object_dungeon_list_isblocking_at(dungeon_x, dungeon_y);
 }

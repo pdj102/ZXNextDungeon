@@ -16,9 +16,13 @@
 #include "globaldata_defines.h"
 
 
-
-#define FLAG_BLOCKIKNG 1 << 0
-
+// Tile flags 
+#define DGN_FLAG_BLK_ALL            1 << 0      // Blocks everything e.g. dungeon boundary wall
+#define DGN_FLAG_WALL               1 << 1      // A wall that blocks physical objects
+#define DGN_FLAG_FLOOR              1 << 2      // A floor that can be walked on 
+#define DGN_FLAG_HOLE               1 << 3      // A deep hole that can't be walked over
+#define DGN_FLAG_WATER              1 << 4      // Deep water that can't be walked over
+#define DGN_FLAG_CLOSED_DOOR        1 << 5      // A closed door that can be opened 
 
 
 /***************************************************
@@ -127,9 +131,11 @@ void dungeonmap_scroll(int8_t dx, int8_t dy);
  * 
  * @param dungeon_x x position
  * @param dungeon_y y position
+ * @param mask  blocking flags to check e.g. a walking creature would be blocked by DGN_FLAG_BLK_ALL | DGN_FLAG_BLK_WALL | DGN_FLAG_BLK_HOLE | DGN_FLAG_BLK_WATER | DGN_FLAG_BLK_DOOR
+ * 
  * @return 1 passable 0 impassable
  */
-uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y);
+uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t mask);
 
 
 

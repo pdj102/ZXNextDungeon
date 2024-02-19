@@ -113,8 +113,7 @@ void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y, const til
     }
 }
 
-uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y) 
+uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t mask)
 {
-    // NB no test for dungeon map limits. Assumes the map has a blocking outer wall
-    return dungeonmap->map[dungeon_x][dungeon_y].flags & (FLAG_BLOCKIKNG);
+    return dungeonmap->map[dungeon_x][dungeon_y].flags & (mask);
 }

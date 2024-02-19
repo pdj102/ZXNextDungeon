@@ -281,37 +281,37 @@ static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonm
     case FLOOR:
         m->tilemap_tile.tile_attr = PALETTE_PURPLE;
         m->tilemap_tile.tile_id = 1;
-        m->flags &= ~(FLAG_BLOCKIKNG);
+        m->flags = DGN_FLAG_FLOOR;
         break;
     case ROCK:
         m->tilemap_tile.tile_attr = PALETTE_ORANGE;
         m->tilemap_tile.tile_id = 0;
-        m->flags |= FLAG_BLOCKIKNG;
+        m->flags = DGN_FLAG_WALL;
         break;        
     case BRICKWALL:
         m->tilemap_tile.tile_attr = PALETTE_ORANGE;
         m->tilemap_tile.tile_id = 4;
-        m->flags |= FLAG_BLOCKIKNG;
+        m->flags = DGN_FLAG_WALL;
         break;
     case BRICKWALL_END:
         m->tilemap_tile.tile_attr = PALETTE_ORANGE;
         m->tilemap_tile.tile_id = 3;
-        m->flags |= FLAG_BLOCKIKNG;
+        m->flags = DGN_FLAG_WALL;
         break;        
     case STONEWALL:
         m->tilemap_tile.tile_attr = PALETTE_ORANGE;
         m->tilemap_tile.tile_id = 3;
-        m->flags |= FLAG_BLOCKIKNG;
+        m->flags = DGN_FLAG_WALL;
         break;
     case STONEWALL_END:
         m->tilemap_tile.tile_attr = PALETTE_ORANGE;
         m->tilemap_tile.tile_id = 2;
-        m->flags |= FLAG_BLOCKIKNG;
+        m->flags = DGN_FLAG_WALL;
         break;        
     default:
         m->tilemap_tile.tile_attr = 0;
         m->tilemap_tile.tile_id = 0;
-        m->flags |= FLAG_BLOCKIKNG;
+        m->flags = DGN_FLAG_BLK_ALL;
         break;
     }
 }

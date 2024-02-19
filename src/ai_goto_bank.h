@@ -17,7 +17,7 @@
  * types
  ***************************************************/
 
-typedef enum goto_result {GOTO_NA, GOTO_SUCCESS, GOTO_FAIL, GOTO_REACHED} goto_result_t;
+typedef enum goto_result {GOTO_NA, GOTO_SUCCESS, GOTO_FAIL_NO_PATH, GOTO_REACHED} goto_result_t;
 
 /***************************************************
  * variable declarations
