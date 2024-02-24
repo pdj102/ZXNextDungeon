@@ -12,8 +12,9 @@
 #include "object.h"
 #include "object_dungeon_list.h"
 #include "globaldata.h"
-// #include "tilemap.h"
 #include "dungeonmap.h"
+
+#include "util.h"
 
 /***************************************************
  * private types
@@ -39,14 +40,18 @@ void object_dungeon_list_init( void )
     p_forward_list_init(&globaldata.dungeon_object_list); 
 }
 
-void object_dungeon_list_add(object_t* obj_ptr)
+void object_dungeon_list_add(object_t *const obj_ptr)
 {
+    util_assert(obj_ptr->next == 0);        // assert object is not a member of a linked list 
+
     p_forward_list_push_front(&globaldata.dungeon_object_list, obj_ptr);
 }
 
-uint8_t object_dungeon_list_remove(object_t* obj_ptr)
+uint8_t object_dungeon_list_remove(object_t *const obj_ptr)
 {
     p_forward_list_remove(&globaldata.dungeon_object_list, obj_ptr);
+    obj_ptr->next = 0;       // Set linked list *next to NULL to indicate object is safe to delete
+
     return 1;
 }
 
@@ -83,7 +88,7 @@ object_t *object_dungeon_list_first( void )
     return p_forward_list_front(&globaldata.dungeon_object_list);
 }
 
-object_t *object_dungeon_list_next(object_t *obj_ptr)
+object_t *object_dungeon_list_next(object_t *const obj_ptr)
 {
     return p_forward_list_next(obj_ptr);
 }

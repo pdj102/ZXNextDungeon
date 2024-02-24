@@ -14,6 +14,8 @@
 #include "object.h"
 #include "text.h"
 
+#include "util.h"
+
 /***************************************************
  * private types
  ***************************************************/
@@ -35,6 +37,8 @@
 
 uint8_t object_list_add(object_t* obj_p, object_t* container_obj_p)
 {
+    util_assert(obj_p->next == 0);        // assert object is not a member of a linked list 
+
     p_forward_list_push_front(&container_obj_p->obj_list, obj_p);
     return 1;
 }
@@ -43,6 +47,8 @@ uint8_t object_list_add(object_t* obj_p, object_t* container_obj_p)
 uint8_t object_list_remove(object_t* obj_p, object_t* container_obj_p)
 {
     p_forward_list_remove(&container_obj_p->obj_list, obj_p);
+    obj_p->next = 0;       // Set linked list *next to NULL to indicate object is safe to delete
+
     return 1;
 }
 

@@ -62,7 +62,7 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
     // get a free creature slot
     if ( ! (creature_p = creature_getfree()) )
     {
-        object_delete(obj_p);
+        object_free(obj_p);
 
         #ifdef DEBUG_ERROR
             text_printf("ERROR: NO FREE CREATURE SLOT");

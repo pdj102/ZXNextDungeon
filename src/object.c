@@ -15,6 +15,8 @@
 #include "tilemap.h"
 #include "dungeonmap.h"
 
+#include "util.h"
+
 /***************************************************
  * private types
  ***************************************************/
@@ -58,21 +60,11 @@ object_t* object_getfree( void )
     return 0;
 }
 
-void object_free(object_t *obj_p)
+void object_free(object_t *const obj_p)
 {
-       obj_p->free = 1;
-}
+    util_assert(obj_p->free != 1);      // assert object is not marked free
+    util_assert(obj_p->next == 0);      // assert object linked list pointer is NULL 
 
-void object_delete(object_t *obj_p)
-{
-    // destroy objects contained by this object
-    object_t *obj_ptr = object_list_first(obj_p);
+    obj_p->free = 1;                    // free the creature slot
 
-    while (obj_ptr)
-    {
-        object_delete(obj_ptr);
-        obj_ptr = object_list_next(obj_ptr);
-    }
-    // free the object
-    object_free(obj_p);
 }

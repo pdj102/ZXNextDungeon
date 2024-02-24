@@ -98,6 +98,7 @@ void text_putc(char c);
  *  %t   token string ID (uint_8t)
  *  %u   uint8_t
  *  %d   int8_t
+ *  %s   *unsigned char null terminated string 
  * 
  * @param *text text to print
  * @param ...   parameters   

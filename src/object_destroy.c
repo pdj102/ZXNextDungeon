@@ -10,6 +10,7 @@
 #include "object_destroy.h"
 
 #include "object.h"
+#include "object_list.h"
 #include "object_dungeon_list.h"
 
 /***************************************************
@@ -36,8 +37,16 @@ uint8_t object_destroy_is(object_t *obj_p)
 
 uint8_t object_destroy(object_t *obj_p)
 {
-    object_dungeon_list_remove(obj_p);
-    object_delete(obj_p);
+    object_dungeon_list_remove(obj_p);          // remove object from list of dungeon objects
+    object_free(obj_p);                         // mark object slot as free
 
+    // destroy any objects contained by this object
+    object_t *obj_ptr = object_list_first(obj_p);
+
+    while (obj_ptr)
+    {
+        object_destroy(obj_ptr);
+        obj_ptr = object_list_first(obj_p);     // get next using list_first instead of list_next as destroying an object resets its link list pointer to NULL and cannot be used
+    }
     return 1;
 }

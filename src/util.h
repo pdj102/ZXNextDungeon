@@ -11,6 +11,7 @@
 
 #include <inttypes.h>
 
+
 /***************************************************
  * types
  ***************************************************/
@@ -51,5 +52,15 @@ uint8_t util_distance_manhattan(uint8_t x1, uint8_t y1,uint8_t x2, uint8_t y2);
  */
 void util_return_area_xy_r(uint8_t x, uint8_t y, uint8_t r, uint8_t *x1, uint8_t *y1, uint8_t *x2, uint8_t *y2);
 
+
+void util_assert_f(const char *message, const char *file, unsigned line);
+
+#ifdef NDEBUG
+    #define util_assert(_Expression) ((void)0)
+#else /* !defined (NDEBUG) */
+    #define util_assert(_Expression) if (!(_Expression)) util_assert_f(#_Expression,__FILE__,__LINE__);
+#endif /* !defined (NDEBUG) */
+
+#include <assert.h>
 
 #endif

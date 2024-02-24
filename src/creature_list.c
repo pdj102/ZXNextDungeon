@@ -49,6 +49,8 @@ void creature_list_add(creature_t *creature_p)
 uint8_t creature_list_remove(creature_t *creature_p)
 {
     p_forward_list_remove(&globaldata.creature_list, creature_p);
+    creature_p->next = 0;       // Set linked list *next to NULL to indicate creature is safe to delete
+
     return 1;
 }
 

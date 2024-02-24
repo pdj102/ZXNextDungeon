@@ -108,13 +108,13 @@ void creature_init( void );
 creature_t* creature_getfree( void );
 
 /**
- * Delete a creature 
+ * Mark a creature slot as free
  * 
- * NB creature's object needs to be deleted separately 
+ * NB creatures should be destroyed using creature_destroy()
  * 
- * @param   *creature_p  Crature to destroy
+ * @param   *creature_p  Creature to mark free
  */
-void creature_delete(creature_t *creature_p);
+void creature_free(creature_t *const creature_p);
 
 /**
  * Creature turn
@@ -122,7 +122,7 @@ void creature_delete(creature_t *creature_p);
  * 
  * @param   *creature_p  
  */
-void creature_turn(creature_t *creature_p);
+void creature_turn(creature_t *const creature_p);
 
 
 #endif

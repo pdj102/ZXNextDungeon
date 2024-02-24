@@ -11,6 +11,7 @@
 
 #include "object.h"
 #include "object_list.h"
+#include "object_destroy.h"
 
 #include "creature.h"
 
@@ -49,7 +50,7 @@ uint8_t object_quaff(creature_t *creature_p, object_t *obj_p)
         creature_p->hp++;
 
         object_list_remove(obj_p, creature_p->obj_p);
-        object_delete(obj_p);
+        object_destroy(obj_p);
 
         return 1;
     default:

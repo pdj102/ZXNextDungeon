@@ -180,22 +180,13 @@ object_t* object_getfree( void );
 // object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y);
 
 /**
- * Delete an object and all its contained objects
+ * Free an object slot 
  * 
- * The object must have been removed from any object lists before calling delete
+ * NB objects should be destroyed by calling object_destroyed() 
  * 
- * @param   *obj_p  Object to destroy
+ * @param   *obj_p  Object to mark free
  */
-void object_delete(object_t *obj_p);
-
-/**
- * Free an object
- * 
- * Marks an object slot as free for use 
- * 
- * @param   *obj_p  Object to free
- */
-// void object_free(object_t *obj_p);
+void object_free(object_t *const obj_p);
 
 
 #endif

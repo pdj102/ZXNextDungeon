@@ -42,7 +42,7 @@ void object_dungeon_list_init( void );
  * 
  * @return uint8_t  1 success 0 fail
  */
-void object_dungeon_list_add(object_t* obj_ptr);
+void object_dungeon_list_add(object_t *const obj_ptr);
 
 /**
  * Remove the object from the list of dungeon objects
@@ -51,7 +51,7 @@ void object_dungeon_list_add(object_t* obj_ptr);
  * 
  * @return uint8_t  1 success 0 fail
  */
-uint8_t object_dungeon_list_remove(object_t* obj_ptr);
+uint8_t object_dungeon_list_remove(object_t *const obj_ptr);
 
 /**
  * Check if an object is blocking dungeon x, y

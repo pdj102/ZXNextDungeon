@@ -12,6 +12,8 @@
 
 #include "globaldata_defines.h"
 
+#include "text.h"
+
 
 /***************************************************
  * private types
@@ -47,4 +49,10 @@ void util_return_area_xy_r(uint8_t x, uint8_t y, uint8_t r, uint8_t *x1, uint8_t
     *y1 = ( y < r) ? 0 : y - r;                                                  // y1 minimum 0 
     *x2 = ( x > DUNGEONMAP_WIDTH - 1 - r ) ? DUNGEONMAP_WIDTH - 1 : x + r;       // x2 maximum is DUNGEON_WIDTH - 1
     *y2 = ( y > DUNGEONMAP_HEIGHT - 1 - r ) ? DUNGEONMAP_HEIGHT - 1 : y + r;     // y2 maximum is DUNGEON_HEIGHT - 1
+}
+
+
+void util_assert_f(const char *message, const char *file, unsigned line)
+{
+    text_printf("ASSET FAIL: %s %s ", message, file);
 }

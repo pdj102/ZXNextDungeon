@@ -100,7 +100,7 @@ void ai_wandering_b( ai_t *ai_p )
 
     switch (r)
     {
-    case GOTO_FAIL:
+    case GOTO_FAIL_NO_PATH:
         text_printf(" - fail\n");
         ai_p->goto_target = 0;
         break;

@@ -22,6 +22,8 @@
 
 #include "ai.h"
 
+#include "util.h"
+
 #define MAX_ENERGY  100
 
 /***************************************************
@@ -54,7 +56,7 @@ void creature_init( void )
     }
 }
 
-void creature_turn(creature_t *creature_p)
+void creature_turn(creature_t *const creature_p)
 {
     // Increase creature's energy by its speed. Clamp to MAX_ENERGY
     creature_p->energy = (creature_p->speed <= MAX_ENERGY - creature_p->energy ? creature_p->energy + creature_p->speed : MAX_ENERGY );
@@ -88,20 +90,11 @@ creature_t* creature_getfree( void )
     return 0;
 }
 
-void creature_free(creature_t *creature_p)
+void creature_free(creature_t *const creature_p)
 {
-       creature_p->free = 1;
-}
+    util_assert(creature_p->free != 1);      // assert creature is not already marked free
+    util_assert(creature_p->next == 0);      // assert creature linked list pointer is NULL 
 
-void creature_delete(creature_t *creature_p)
-{
-    #ifdef DEBUG
-        if (creature_p->obj_p->free != 1)
-        {
-            // Fatal error detected - creature object has not been deleted before deleting the creature
-            text_printf("DEBUG: CREATURE OBJ NOT FREE\n");
-        }
-    #endif
     // free the creature slot
-    creature_free(creature_p);
+    creature_p->free = 1;
 }

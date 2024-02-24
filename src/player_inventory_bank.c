@@ -57,7 +57,6 @@ void player_inventory_list_b( void )
     unsigned int key;    
 
 
-    // obj_p = object_list_first(globaldata.player.player_creature_p->obj_p);
     obj_p = object_list_first_is(globaldata.player.player_creature_p->obj_p, not_wielding_b );
     
     if (!obj_p)
@@ -77,7 +76,7 @@ void player_inventory_list_b( void )
 
         index++;
         // obj_p = object_list_next(obj_p);
-        obj_p = object_list_next_is(globaldata.player.player_creature_p->obj_p, not_wielding_b );
+        obj_p = object_list_next_is(obj_p, not_wielding_b );
     }
 
     text_printf("\n Press any key\n");

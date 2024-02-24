@@ -41,6 +41,8 @@
 
 #include "ui_stats.h"
 
+#include "util.h"
+
 #include "adt/p_forward_list.h"
 
 /***************************************************
@@ -167,21 +169,21 @@ void init_game( void )
 
 int main( void )
 {
-    init_game();
- 
-    dungeonmap_generate();
-
-
-    text_printf("Welcome to Dungeon!\n");
 
     #ifdef DEBUG
         text_print_string("DEBUG: GLOBAL DATA SIZE:");
-        uint16_t s;
-        s = sizeof(globaldata_t);
-        text_print_uint16(s);
+
+        text_print_uint16(sizeof(globaldata_t));
         text_print_string("\n");
     #endif
 
+    util_assert(sizeof(globaldata_t) < (16 * 1024));     // check global data struct is less than 16KiB and fits in MMU slots 0 and 1
+
+    init_game();
+ 
+    dungeonmap_generate();    
+
+    text_printf("Welcome to Dungeon!\n");
     ui_display_hp_mp();
     ui_display_stats();
 

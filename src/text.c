@@ -126,7 +126,11 @@ void text_printf(const char *text, ...)
 
             case 'c':   // unsigned char
             text_putc( (unsigned char) va_arg(ptr, unsigned char) );
-            break;            
+            break;
+
+            case 's':   // string
+            text_print_string( (const char*) va_arg(ptr, const char*) );
+            break;                       
 
             default:
             text_putc('*');
