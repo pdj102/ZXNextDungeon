@@ -41,6 +41,29 @@ void dungeonmap_init( void )
     dungeonmap_setwindow(0, 0, 24, 24);    
 }
 
+void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrain_type_t terrain_id)
+{
+    dungeonmap_tile_t *const m = &(globaldata.dungeonmap.map[dungeon_x][dungeon_y]);
+
+    m->terrain_id = terrain_id;
+    m->flags = terrain[terrain_id].default_flags;
+}
+
+void dungeonmap_tile_flag_set(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag)
+{
+    globaldata.dungeonmap.map[dungeon_x][dungeon_y].flags |= flag;
+}
+
+void dungeonmap_tile_flag_clear(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag)
+{
+    globaldata.dungeonmap.map[dungeon_x][dungeon_y].flags &= (~flag);
+}
+
+uint8_t dungeonmap_tile_flag_test(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag)
+{
+    return globaldata.dungeonmap.map[dungeon_x][dungeon_y].flags & flag;
+}
+
 void dungeonmap_scroll(int8_t dx, int8_t dy )
 {
     int8_t tmp_x;

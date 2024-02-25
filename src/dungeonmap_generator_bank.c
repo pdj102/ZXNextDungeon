@@ -40,9 +40,6 @@ static void line_vertical_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint
 
 static void create_room_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
-static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrain_type_t terrain_id);
-
-
 /***************************************************
  * Private variables - static
  * private variables in banked code not supported by z88dk. Place them in asm file
@@ -71,7 +68,7 @@ static void rect_fill_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonm
     // TODO check bounds
     for (y = y1; y <= y2; y++ ) {
         for (x = x1; x <= x2; x++)
-            dungeonmap_set_tile_b(x, y, terrain_id);
+            dungeonmap_set_tile(x, y, terrain_id);
     }
 }
 
@@ -84,15 +81,15 @@ static void rect_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_te
     //top and bottom lines
     for (x = x1; x <= x2; x++ )
     {
-            dungeonmap_set_tile_b(x, y1, terrain_id);
-            dungeonmap_set_tile_b(x, y2, terrain_id);
+            dungeonmap_set_tile(x, y1, terrain_id);
+            dungeonmap_set_tile(x, y2, terrain_id);
     }
     // left and right lines
     
     for (y = y1; y <= y2; y++ )
     {
-            dungeonmap_set_tile_b(x1, y, terrain_id);
-            dungeonmap_set_tile_b(x2, y, terrain_id);
+            dungeonmap_set_tile(x1, y, terrain_id);
+            dungeonmap_set_tile(x2, y, terrain_id);
     }
     
 }
@@ -111,7 +108,7 @@ static void line_horizontal_b(uint8_t x1, uint8_t y1, uint8_t x2, dungeonmap_ter
     // TODO check bounds
     for (x = x1; x <= x2; x++ )
     {
-            dungeonmap_set_tile_b(x, y1, terrain_id);
+            dungeonmap_set_tile(x, y1, terrain_id);
     }
 
 }
@@ -130,7 +127,7 @@ static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_terra
     // TODO check bounds
     for (y = y1; y <= y2; y++ )
     {
-            dungeonmap_set_tile_b(x1, y, terrain_id);
+            dungeonmap_set_tile(x1, y, terrain_id);
     }
 
 }
@@ -268,14 +265,6 @@ static void create_room_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
     rect_fill_b(x1, y1, x2, y2, TERRAIN_FLOOR);
     // line_horizontal_b(x1, y1 + 1, x2, BRICKWALL);
     rect_b(x1, y1, x2, y2, TERRAIN_STONEWALL);
-}
-
-static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrain_type_t terrain_id)
-{
-    dungeonmap_tile_t *const m = &(globaldata.dungeonmap.map[dungeon_x][dungeon_y]);
-
-    m->terrain_id = terrain_id;
-    m->flags = terrain[terrain_id].default_flags;
 }
 
 /**

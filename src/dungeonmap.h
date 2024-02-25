@@ -108,6 +108,39 @@ void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y, const til
  */
 void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrain_type_t tile_type);
 
+/**
+ * Set flag at dungeon position x, y
+ * 
+ * @param dungeon_x x position
+ * @param dungeon_y y position
+ * @param uint8_t flag;
+ * 
+ * @return void
+ */
+void dungeonmap_tile_flag_set(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag);
+
+/**
+ * Reset flag at dungeon position x, y
+ * 
+ * @param dungeon_x x position
+ * @param dungeon_y y position
+ * @param uint8_t flag;
+ * 
+ * @return void
+ */
+void dungeonmap_tile_flag_clear(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag);
+
+/**
+ * Test flag at dungeon position x, y
+ * 
+ * @param dungeon_x x position
+ * @param dungeon_y y position
+ * @param uint8_t flag;
+ * 
+ * @return void
+ */
+uint8_t dungeonmap_tile_flag_test(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag);
+
 
 /**
  * Move dungeon window by dx dy
