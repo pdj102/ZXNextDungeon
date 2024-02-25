@@ -17,7 +17,8 @@
 
 #include "object.h"
 #include "object_create.h"
-#include "object_dungeon_list.h"
+#include "object_move.h"
+#include "dungeonmap_list.h"
 
 #include "ai.h"
 
@@ -50,7 +51,7 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
     object_t *obj_p;
 
     // create an object
-    if ( ! (obj_p = object_create(obj_subtype, x, y) ) )
+    if ( ! (obj_p = object_create(obj_subtype, 0, 0) ) )
     {
         #ifdef DEBUG_ERROR
             text_printf("ERROR: NO FREE OBJECT SLOT");
@@ -73,7 +74,8 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
 
     // Setup object
     obj_p->creature_p = creature_p;         // set object to point to creature
-    object_dungeon_list_add(obj_p);         // add object to dungeon list of objects as all creatures are on the map
+    dungeonmap_list_add(obj_p);             // add object to dungeon list of objects as all creatures are on the map
+    object_move_place(obj_p, x, y);         // Move object onto dungeon map
 
     // Setup creature common attributes
     creature_p->free = 0;                   // mark creature as in use

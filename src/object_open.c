@@ -11,7 +11,6 @@
 
 #include "object.h"
 #include "object_list.h"
-#include "object_dungeon_list.h"
 #include "object_destroy.h"
 #include "object_drop.h"
 

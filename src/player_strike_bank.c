@@ -27,8 +27,6 @@
 #include "object_strike.h"
 #include "object_destroy.h"
 
-#include "object_dungeon_list.h"
-
 #include "creature.h"
 #include "creature_list.h"
 #include "creature_melee_strike.h"

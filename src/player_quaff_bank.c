@@ -25,7 +25,6 @@
 #include "object_list.h"
 #include "object_quaff.h"
 
-#include "object_dungeon_list.h"
 
 #include "creature.h"
 

@@ -2,12 +2,12 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief @brief Dungeon list of objects
+    @brief @brief Dungeon map list of objects
 
  ***************************************************/
 
-#ifndef OBJECT_DUNGEON_LIST_H 
-    #define OBJECT_DUNGEON_LIST_H 
+#ifndef DUNGEONMAP_LIST_H 
+    #define DUNGEONMAP_LIST_H 
 
 #include <stdint.h>
 
@@ -32,7 +32,7 @@
  * 
  * @return void
  */
-void object_dungeon_list_init( void );
+void dungeonmap_list_init( void );
 
 /**
  * Add the object to the list of dungeon objects
@@ -42,7 +42,7 @@ void object_dungeon_list_init( void );
  * 
  * @return uint8_t  1 success 0 fail
  */
-void object_dungeon_list_add(object_t *const obj_ptr);
+void dungeonmap_list_add(object_t *const obj_ptr);
 
 /**
  * Remove the object from the list of dungeon objects
@@ -51,7 +51,7 @@ void object_dungeon_list_add(object_t *const obj_ptr);
  * 
  * @return uint8_t  1 success 0 fail
  */
-uint8_t object_dungeon_list_remove(object_t *const obj_ptr);
+uint8_t dungeonmap_list_remove(object_t *const obj_ptr);
 
 /**
  * Check if an object is blocking dungeon x, y
@@ -61,28 +61,28 @@ uint8_t object_dungeon_list_remove(object_t *const obj_ptr);
  * 
  * @return 1 if object blocking or 0
  */
-uint8_t object_dungeon_list_isblocking_at(uint8_t x, uint8_t y);
+uint8_t dungeonmap_list_isblocking_at(uint8_t x, uint8_t y);
 
 /**
  * Draws all the objects to the graphics tile map
  * 
  * @return void
  */
-void object_dungeon_list_drawall( void );
+void dungeonmap_list_drawall( void );
 
 /**
  * Returns the first object in the dungeon object list
  * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_dungeon_list_first( void );
+object_t *dungeonmap_list_first( void );
 
 /**
  * Returns the next object in the dungeon object list
  * 
  * @return *object_t    pointer to next object or 0 if no more objects
  */
-object_t *object_dungeon_list_next(object_t *obj_ptr);
+object_t *dungeonmap_list_next(object_t *obj_ptr);
 
 /**
  * Returns the first object in dungeon object list at position x, y
@@ -92,7 +92,7 @@ object_t *object_dungeon_list_next(object_t *obj_ptr);
  * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_dungeon_list_first_at(uint8_t x, uint8_t y);
+object_t *dungeonmap_list_first_at(uint8_t x, uint8_t y);
 
 /**
  * Returns the next object in dungeon object list at position x, y
@@ -103,7 +103,7 @@ object_t *object_dungeon_list_first_at(uint8_t x, uint8_t y);
  * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y);
+object_t *dungeonmap_list_next_at(object_t *obj_p, uint8_t x, uint8_t y);
 
 /**
  * Returns the first object in dungeon object list of a requested type at position x, y
@@ -117,7 +117,7 @@ object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y);
  * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_dungeon_list_first_is_at(uint8_t x, uint8_t y, object_is_a);
+object_t *dungeonmap_list_first_is_at(uint8_t x, uint8_t y, object_is_a);
 
 /**
  * Returns the next object in dungeon object list of a requested type at position x, y
@@ -129,7 +129,7 @@ object_t *object_dungeon_list_first_is_at(uint8_t x, uint8_t y, object_is_a);
  * 
  * @return *object_t    pointer to first object or 0 if no objects
  */
-object_t *object_dungeon_list_next_is_at(object_t *obj_p, uint8_t x, uint8_t y, object_is_a);
+object_t *dungeonmap_list_next_is_at(object_t *obj_p, uint8_t x, uint8_t y, object_is_a);
 
 
 

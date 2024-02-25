@@ -11,7 +11,7 @@
 
 #include "object.h"
 #include "object_list.h"
-#include "object_dungeon_list.h"
+#include "dungeonmap_list.h"
 
 /***************************************************
  * private types
@@ -37,7 +37,7 @@ uint8_t object_destroy_is(object_t *obj_p)
 
 uint8_t object_destroy(object_t *obj_p)
 {
-    object_dungeon_list_remove(obj_p);          // remove object from list of dungeon objects
+    dungeonmap_list_remove(obj_p);          // remove object from list of dungeon objects
     object_free(obj_p);                         // mark object slot as free
 
     // destroy any objects contained by this object

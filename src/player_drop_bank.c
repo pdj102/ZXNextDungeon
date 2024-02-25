@@ -27,8 +27,6 @@
 #include "object_list.h"
 #include "object_drop.h"
 
-#include "object_dungeon_list.h"
-
 #include "creature.h"
 
 

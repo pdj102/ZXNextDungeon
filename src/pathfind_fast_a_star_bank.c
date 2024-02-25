@@ -294,7 +294,7 @@ void update_neighbors_b(void)
     tmp_coord.x = current_coord.x;
     tmp_coord.y = (current_coord.y > min_y) ? current_coord.y - 1 : min_y;
 
-    if (!dungeonmap_tile_is_blocked(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+    if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
     {
         // A* cost is cost of path so far + distance to goal
         tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
@@ -311,7 +311,7 @@ void update_neighbors_b(void)
     tmp_coord.x = current_coord.x;
     tmp_coord.y = (current_coord.y < max_y) ? current_coord.y + 1 : max_y;
 
-    if (!dungeonmap_tile_is_blocked(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+    if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
     {
         tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
         if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
@@ -325,7 +325,7 @@ void update_neighbors_b(void)
     tmp_coord.x = (current_coord.x > min_x) ? current_coord.x - 1 : min_x;
     tmp_coord.y = current_coord.y;
 
-    if (!dungeonmap_tile_is_blocked(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+    if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
     {
         tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
         if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
@@ -339,7 +339,7 @@ void update_neighbors_b(void)
     tmp_coord.x = (current_coord.x < max_x) ? current_coord.x + 1 : max_x;
     tmp_coord.y = current_coord.y;
 
-    if (!dungeonmap_tile_is_blocked(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+    if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
     {
         tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
         if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)

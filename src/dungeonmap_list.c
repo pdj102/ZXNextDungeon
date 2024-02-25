@@ -2,15 +2,17 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Dungeon list of objects
+    @brief Dungeon map list of objects
 
 **************************************************/
+
+#include "dungeonmap_list.h"
 
 #include <stdint.h>
 #include <adt/p_forward_list.h>
 
 #include "object.h"
-#include "object_dungeon_list.h"
+
 #include "globaldata.h"
 #include "dungeonmap.h"
 
@@ -35,19 +37,19 @@ typedef void (*object_is_a_t)( void);
  * functions
  ***************************************************/
 
-void object_dungeon_list_init( void )
+void dungeonmap_list_init( void )
 {
     p_forward_list_init(&globaldata.dungeon_object_list); 
 }
 
-void object_dungeon_list_add(object_t *const obj_ptr)
+void dungeonmap_list_add(object_t *const obj_ptr)
 {
     util_assert(obj_ptr->next == 0);        // assert object is not a member of a linked list 
 
     p_forward_list_push_front(&globaldata.dungeon_object_list, obj_ptr);
 }
 
-uint8_t object_dungeon_list_remove(object_t *const obj_ptr)
+uint8_t dungeonmap_list_remove(object_t *const obj_ptr)
 {
     p_forward_list_remove(&globaldata.dungeon_object_list, obj_ptr);
     obj_ptr->next = 0;       // Set linked list *next to NULL to indicate object is safe to delete
@@ -55,9 +57,15 @@ uint8_t object_dungeon_list_remove(object_t *const obj_ptr)
     return 1;
 }
 
-uint8_t object_dungeon_list_isblocking_at(uint8_t x, uint8_t y)
+uint8_t dungeonmap_list_isblocking_at(uint8_t x, uint8_t y)
 {
     object_t *object_ptr;
+
+    // Check for object present flag at dungeon tile x, y
+    if (!dungeonmap_tile_flag_test(x, y, DGN_FLAG_OBJECT))
+    {
+        return 0;
+    }
 
     for (object_ptr = p_forward_list_front(&globaldata.dungeon_object_list); object_ptr; object_ptr = p_forward_list_next(object_ptr))
     {
@@ -73,7 +81,7 @@ uint8_t object_dungeon_list_isblocking_at(uint8_t x, uint8_t y)
     return 0;
 }
 
-void object_dungeon_list_drawall( void )
+void dungeonmap_list_drawall( void )
 {
     object_t *obj_ptr;
 
@@ -83,21 +91,27 @@ void object_dungeon_list_drawall( void )
     }    
 }
 
-object_t *object_dungeon_list_first( void )
+object_t *dungeonmap_list_first( void )
 {
     return p_forward_list_front(&globaldata.dungeon_object_list);
 }
 
-object_t *object_dungeon_list_next(object_t *const obj_ptr)
+object_t *dungeonmap_list_next(object_t *const obj_ptr)
 {
     return p_forward_list_next(obj_ptr);
 }
 
-object_t *object_dungeon_list_first_at(uint8_t x, uint8_t y)
+object_t *dungeonmap_list_first_at(uint8_t x, uint8_t y)
 {
     object_t *obj_p;
 
-    for (obj_p = object_dungeon_list_first(); obj_p; obj_p = object_dungeon_list_next(obj_p))
+    // Check for object present flag at dungeon tile x, y
+    if (!dungeonmap_tile_flag_test(x, y, DGN_FLAG_OBJECT))
+    {
+        return 0;
+    }    
+
+    for (obj_p = dungeonmap_list_first(); obj_p; obj_p = dungeonmap_list_next(obj_p))
     {
         if (obj_p->x == x && obj_p->y == y)
         {
@@ -107,9 +121,9 @@ object_t *object_dungeon_list_first_at(uint8_t x, uint8_t y)
     return 0;
 }
 
-object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y)
+object_t *dungeonmap_list_next_at(object_t *obj_p, uint8_t x, uint8_t y)
 {
-    while (obj_p = object_dungeon_list_next(obj_p))
+    while (obj_p = dungeonmap_list_next(obj_p))
     {
         if (obj_p->x == x && obj_p->y == y)
         {
@@ -119,9 +133,9 @@ object_t *object_dungeon_list_next_at(object_t *obj_p, uint8_t x, uint8_t y)
     return 0;
 }
 
-object_t *object_dungeon_list_first_is_at(uint8_t x, uint8_t y, object_is_a is_a_p)
+object_t *dungeonmap_list_first_is_at(uint8_t x, uint8_t y, object_is_a is_a_p)
 {
-    object_t *obj_p = object_dungeon_list_first_at(x, y);
+    object_t *obj_p = dungeonmap_list_first_at(x, y);
 
     while( obj_p )
     {
@@ -129,14 +143,14 @@ object_t *object_dungeon_list_first_is_at(uint8_t x, uint8_t y, object_is_a is_a
         {
             return obj_p;
         }
-        obj_p = object_dungeon_list_next_at(obj_p, x, y);
+        obj_p = dungeonmap_list_next_at(obj_p, x, y);
     }
     return 0;
 }
 
-object_t *object_dungeon_list_next_is_at(object_t *obj_p, uint8_t x, uint8_t y, object_is_a is_a_p)
+object_t *dungeonmap_list_next_is_at(object_t *obj_p, uint8_t x, uint8_t y, object_is_a is_a_p)
 {
-    while ( obj_p = object_dungeon_list_next_at(obj_p, x, y) )
+    while ( obj_p = dungeonmap_list_next_at(obj_p, x, y) )
     {
         if (is_a_p(obj_p))
         {

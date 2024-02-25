@@ -11,7 +11,7 @@
 
 #include "object.h"
 #include "object_list.h"
-#include "object_dungeon_list.h"
+#include "dungeonmap_list.h"
 
 /***************************************************
  * private types
@@ -42,7 +42,7 @@ uint8_t object_pickup_is(object_t *obj)
 
 uint8_t object_pickup(object_t *obj_topickup, object_t *obj_container)
 {
-    object_dungeon_list_remove(obj_topickup);
+    dungeonmap_list_remove(obj_topickup);
     object_list_add(obj_topickup, obj_container);
 
     return 1;

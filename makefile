@@ -14,7 +14,8 @@ C_OPT_FLAGS=-SO3 --max-allocs-per-node200000
 # C_OPT_FLAGS=-SO3 
 
 # Compile with new library using SDCC
-CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -compiler=sdcc -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE) -DDEBUG -DDEBUG_PATHFIND
+# -DDEBUG_PATHFIND
+CFLAGS=$(TARGET) $(VERBOSITY) -c $(C_OPT_FLAGS) -compiler=sdcc -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE) -DDEBUG 
 LDFLAGS=$(TARGET) $(VERBOSITY) -clib=sdcc_iy -pragma-include:$(PRAGMA_FILE)
 ASFLAGS=$(TARGET) $(VERBOSITY) -c
 

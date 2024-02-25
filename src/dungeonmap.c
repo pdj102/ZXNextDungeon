@@ -138,8 +138,3 @@ void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y, const til
         tilemap_set_tile(screen_x, screen_y, tile);
     }
 }
-
-uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t mask)
-{
-    return dungeonmap->map[dungeon_x][dungeon_y].flags & (mask);
-}

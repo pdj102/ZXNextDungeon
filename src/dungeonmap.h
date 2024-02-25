@@ -151,17 +151,5 @@ uint8_t dungeonmap_tile_flag_test(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t 
  */
 void dungeonmap_scroll(int8_t dx, int8_t dy);
 
-/**
- * Returns 1 if dungeon map tile is blocked else 0
- * 
- * @param dungeon_x x position
- * @param dungeon_y y position
- * @param mask  blocking flags to check e.g. a walking creature would be blocked by DGN_FLAG_BLK_ALL | DGN_FLAG_BLK_WALL | DGN_FLAG_BLK_HOLE | DGN_FLAG_BLK_WATER | DGN_FLAG_BLK_DOOR
- * 
- * @return 1 passable 0 impassable
- */
-uint8_t dungeonmap_tile_is_blocked(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t mask);
-
-
 
 #endif

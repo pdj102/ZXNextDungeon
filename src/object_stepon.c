@@ -10,7 +10,7 @@
 #include "object_stepon.h"
 
 #include "object.h"
-#include "object_dungeon_list.h"
+#include "dungeonmap_list.h"
 #include "text.h"
 
 /***************************************************
@@ -54,7 +54,7 @@ void *object_stepon_all(uint8_t x, uint8_t y)
 {
     object_t *obj_p;
 
-    for (obj_p = object_dungeon_list_first_at(x, y); obj_p; obj_p = object_dungeon_list_next_at(obj_p, x, y))
+    for (obj_p = dungeonmap_list_first_at(x, y); obj_p; obj_p = dungeonmap_list_next_at(obj_p, x, y))
     {
         if (object_stepon_is(obj_p))
         {

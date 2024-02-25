@@ -51,14 +51,8 @@ object_t* object_create_b(object_subtype_e subtype, uint8_t x, uint8_t y)
     obj_ptr->next = 0;    
     p_forward_list_init(&(obj_ptr->obj_list));
     obj_ptr->subtype = subtype;
-    obj_ptr->x = 0;     // ensure inital x position is a valid position on map
-    obj_ptr->y = 0;     // ensure inital y position is a valid position on map
-
-    // move object to x, y
-    if (!object_move_to(obj_ptr, x, y))
-    {
-        return 0;
-    }
+    obj_ptr->x = x;     
+    obj_ptr->y = y;
 
     switch (subtype)
     {

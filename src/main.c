@@ -22,7 +22,7 @@
 
 #include "object.h"
 #include "object_list.h"
-#include "object_dungeon_list.h"
+#include "dungeonmap_list.h"
 #include "object_create.h"
 #include "object_move.h"
 #include "object_destroy.h"
@@ -68,6 +68,8 @@ uint8_t call_back(object_t *obj_p);
 
 void init_game( void )
 {
+    event_t *tmp_event_p;  
+
     /* set CPU speed 28MHz */
     ZXN_WRITE_REG(REG_TURBO_MODE, 0b00000011);
 
@@ -108,7 +110,7 @@ void init_game( void )
 
     dungeonmap_init();
     object_init();
-    object_dungeon_list_init();
+    dungeonmap_list_init();
 
     event_init();
     event_list_init();    
@@ -116,11 +118,9 @@ void init_game( void )
     creature_init();
     creature_list_init();
 
-    event_t *tmp_event_p;  
-
-    // player
-
     player_init();
+
+    dungeonmap_generate();
 
     // snake 1
     creature_create(BEAST_SNAKE, 10, 2);
@@ -137,26 +137,32 @@ void init_game( void )
     // grey ooze
     creature_create(OOZE_GREY, 5, 23);    
 
-    object_t *healing_obj_p = object_create(POTION_HEALING, 2, 5);
-    object_dungeon_list_add(healing_obj_p);
+    object_t *healing_obj_p = object_create(POTION_HEALING, 0, 0);
+    // todo dungeonmap_addobject()
+    dungeonmap_list_add(healing_obj_p);
+    object_move_place(healing_obj_p, 2, 5);
 
-    object_t *door_obj_p = object_create(DOOR_CLOSED, 4, 7);      
-    object_dungeon_list_add(door_obj_p);
+    object_t *door_obj_p = object_create(DOOR_CLOSED, 0, 0);
+    dungeonmap_list_add(door_obj_p);
+    object_move_place(door_obj_p, 4, 7);
 
-    object_t *chest_obj_p = object_create(CHEST_LARGE, 4, 4);
-    object_dungeon_list_add(chest_obj_p);
+    object_t *chest_obj_p = object_create(CHEST_LARGE, 0, 0);
+    dungeonmap_list_add(chest_obj_p);
+    object_move_place(chest_obj_p, 4, 4);
 
-    object_t *speed_obj_p = object_create(POTION_SPEED, 5, 5);
+    object_t *speed_obj_p = object_create(POTION_SPEED, 0, 0);
     object_list_add(speed_obj_p, chest_obj_p);
 
-    object_t *speed2_obj_p = object_create(POTION_SPEED, 5, 5);
+    object_t *speed2_obj_p = object_create(POTION_SPEED, 0, 0);
     object_list_add(speed2_obj_p, chest_obj_p);    
    
-    object_t *trap_obj_p = object_create(TRAP_NOISE, 1, 2);      
-    object_dungeon_list_add(trap_obj_p);
+    object_t *trap_obj_p = object_create(TRAP_NOISE, 0, 0);      
+    dungeonmap_list_add(trap_obj_p);
+    object_move_place(trap_obj_p, 1, 2);
 
-    object_t *ring_obj_p = object_create(RING_HP, 3, 2);      
-    object_dungeon_list_add(ring_obj_p);
+    object_t *ring_obj_p = object_create(RING_HP, 0, 0);      
+    dungeonmap_list_add(ring_obj_p);
+    object_move_place(ring_obj_p, 3, 2);
 
     tmp_event_p = event_create_object_cb(object_open, door_obj_p, 5);
     event_list_add(tmp_event_p);
@@ -176,7 +182,7 @@ int main( void )
 
     init_game();
  
-    dungeonmap_generate();
+
 
     #ifdef DEBUG
         text_print_string("DEBUG: GLOBAL DATA SIZE:");
@@ -192,7 +198,7 @@ int main( void )
     while (1)
     {
         dungeonmap_draw();
-        object_dungeon_list_drawall();
+        dungeonmap_list_drawall();
 
         event_list_update_all();
 

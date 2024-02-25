@@ -25,7 +25,7 @@
 #include "object_list.h"
 #include "object_open.h"
 
-#include "object_dungeon_list.h"
+#include "dungeonmap_list.h"
 
 #include "creature.h"
 
@@ -65,7 +65,7 @@ void player_open_b( void )
     x = globaldata.player.player_creature_p->obj_p->x + dx;
     y = globaldata.player.player_creature_p->obj_p->y + dy;
 
-    if ( obj_p = object_dungeon_list_first_is_at(x, y, object_open_is))
+    if ( obj_p = dungeonmap_list_first_is_at(x, y, object_open_is))
     {
         globaldata.player.player_creature_p->energy = 0;
 

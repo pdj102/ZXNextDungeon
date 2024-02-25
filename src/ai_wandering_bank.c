@@ -129,7 +129,7 @@ uint8_t ai_wandering_new_loc_b( ai_t *ai_p )
             x = rand() % DUNGEONMAP_WIDTH;
             y = rand() % DUNGEONMAP_HEIGHT;
 
-            if (!dungeonmap_tile_is_blocked(x, y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+            if (!dungeonmap_tile_flag_test(x, y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
             {
                 success = pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, x, y, ai_p->pathfind_page);
             }

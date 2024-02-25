@@ -40,8 +40,6 @@
 #include "object.h"
 #include "object_list.h"
 
-#include "object_dungeon_list.h"
-
 #include "creature.h"
 #include "creature_create.h"
 

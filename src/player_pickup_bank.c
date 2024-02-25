@@ -26,7 +26,7 @@
 #include "object_list.h"
 #include "object_pickup.h"
 
-#include "object_dungeon_list.h"
+#include "dungeonmap_list.h"
 
 #include "creature.h"
 
@@ -55,7 +55,7 @@ void player_pickup_b( void )
 {
     object_t *obj_p;
 
-    if ( obj_p = object_dungeon_list_first_is_at(globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y, object_pickup_is))
+    if ( obj_p = dungeonmap_list_first_is_at(globaldata.player.player_creature_p->obj_p->x, globaldata.player.player_creature_p->obj_p->y, object_pickup_is))
     {
         globaldata.player.player_creature_p->energy = 0;
 
