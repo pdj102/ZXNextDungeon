@@ -27,9 +27,20 @@
  ***************************************************/
 
 /**
+ * Move creature to position x, y if not blocked by a dungeon wall or objects
+ *
+ * @param creature_p pointer to creature to move
+ * @param x move to dungeon x position
+ * @param y move to dungeon y position
+ * 
+ * @return uint8_t  1 if action successful or 0 failed
+ */
+uint8_t creature_move_to(creature_t *creature_p, uint8_t x, uint8_t y);
+
+/**
  * Creature move action
  *
- * @return void
+* @return 1 on sucess 0 on fail
  */
 uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy);
 

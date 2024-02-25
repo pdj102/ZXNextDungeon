@@ -36,6 +36,17 @@
  * functions
  ***************************************************/
 
+uint8_t creature_move_to(creature_t *creature_p, uint8_t x, uint8_t y)
+{
+    // Creature attempts move so decrease energy 
+    creature_p->energy = 0;
+
+    // TODO deal with not being able to move e.g. due to an effect or status
+    
+    return object_move_to(creature_p->obj_p, x, y);
+}
+
+
 uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy)
 {
     // Creature attempts move so decrease energy 

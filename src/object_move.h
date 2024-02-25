@@ -44,7 +44,7 @@ uint8_t object_move_is(object_t *obj);
  * 
  * @return uint8_t  1 if action successful or 0 failed
  */
-uint8_t object_move(object_t *obj, uint8_t x, uint8_t y);
+uint8_t object_move_to(object_t *obj_p, uint8_t x, uint8_t y);
 
 /**
  * Move object by delta x, y if not blocked by a dungeon wall or objects

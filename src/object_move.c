@@ -35,7 +35,8 @@ uint8_t object_move_is(object_t *obj)
     // TODO return false for non movable objects
     return 1;
 }
-uint8_t object_move(object_t *obj, uint8_t x, uint8_t y)
+
+uint8_t object_move_to(object_t *obj_p, uint8_t x, uint8_t y)
 {
     if (object_move_isblocked(x, y))
     {
@@ -44,8 +45,8 @@ uint8_t object_move(object_t *obj, uint8_t x, uint8_t y)
 
     // TODO test if object is moveable
 
-    obj->x = x;
-    obj->y = y;
+    obj_p->x = x;
+    obj_p->y = y;
 
     object_stepon_all(x, y);
     return 1;
@@ -53,7 +54,7 @@ uint8_t object_move(object_t *obj, uint8_t x, uint8_t y)
 
 uint8_t object_move_by(object_t *obj, int8_t dx, int8_t dy)
 {
-    return object_move(obj, obj->x + dx, obj->y + dy);
+    return object_move_to(obj, obj->x + dx, obj->y + dy);
 }
 
 uint8_t object_move_isblocked(uint8_t dungeon_x, uint8_t dungeon_y)
