@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#include "dungeonmap_terrain.h"
+
 #include "globaldata.h"
 #include "tilemap.h"
 #include "tile_defns.h"
@@ -89,7 +91,8 @@ void dungeonmap_draw( void )
 
     for (uint8_t screen_y = 0; screen_y < dungeonmap->window_h ; screen_y++) {
         for (uint8_t screen_x = 0; screen_x < dungeonmap->window_w; screen_x++) {
-            tilemap_set_tile(screen_x, screen_y, &(dungeonmap->map[dungeon_x][dungeon_y].tilemap_tile));
+            // tilemap_set_tile(screen_x, screen_y, &(dungeonmap->map[dungeon_x][dungeon_y].terrain.tilemap_tile));
+            tilemap_set_tile(screen_x, screen_y, &terrain[dungeonmap->map[dungeon_x][dungeon_y].terrain_id].tilemap_tile);
             dungeon_x++;
         }
         dungeon_x = dungeonmap->window_x;

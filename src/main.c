@@ -170,18 +170,20 @@ void init_game( void )
 int main( void )
 {
 
-    #ifdef DEBUG
-        text_print_string("DEBUG: GLOBAL DATA SIZE:");
 
-        text_print_uint16(sizeof(globaldata_t));
-        text_print_string("\n");
-    #endif
 
     util_assert(sizeof(globaldata_t) < (16 * 1024));     // check global data struct is less than 16KiB and fits in MMU slots 0 and 1
 
     init_game();
  
-    dungeonmap_generate();    
+    dungeonmap_generate();
+
+    #ifdef DEBUG
+        text_print_string("DEBUG: GLOBAL DATA SIZE:");
+
+        text_print_uint16(sizeof(globaldata_t));
+        text_print_string("\n");
+    #endif    
 
     text_printf("Welcome to Dungeon!\n");
     ui_display_hp_mp();

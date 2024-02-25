@@ -14,6 +14,8 @@
 #include "dungeonmap_generator_bank.h"
 
 #include "dungeonmap.h"
+#include "dungeonmap_terrain.h"
+
 #include "globaldata.h"
         
 
@@ -27,20 +29,18 @@
  * private function prototypes - static
  ***************************************************/
 
-static void rect_fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, dungeonmap_tile_type_e tile);
+static void rect_fill_b(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t dungeon_w, uint8_t dungeon_h, dungeonmap_terrain_type_t terrain_id);
 
-static void rect_b(uint8_t x1, uint8_t y1, uint8_t w, uint8_t h, dungeonmap_tile_type_e tile);
+static void rect_b(uint8_t x1, uint8_t y1, uint8_t w, uint8_t h, dungeonmap_terrain_type_t terrain_id);
 
-static void line_horizontal_b(uint8_t x1, uint8_t y1, uint8_t x2, dungeonmap_tile_type_e tile);
-static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_tile_type_e tile);
-static void line_horizontal_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile_type);
-static void line_vertical_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile_type);
+static void line_horizontal_b(uint8_t x1, uint8_t y1, uint8_t x2, dungeonmap_terrain_type_t terrain_id);
+static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_terrain_type_t terrain_id);
+static void line_horizontal_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_terrain_type_t terrain_id);
+static void line_vertical_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_terrain_type_t terrain_id);
 
 static void create_room_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
-
-
-static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type);
+static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrain_type_t terrain_id);
 
 
 /***************************************************
@@ -64,18 +64,18 @@ extern struct room_s room_nodes[];
  * functions definitions
  ***************************************************/
 
-static void rect_fill_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile)
+static void rect_fill_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_terrain_type_t terrain_id)
 {
     uint8_t x, y;
 
     // TODO check bounds
     for (y = y1; y <= y2; y++ ) {
         for (x = x1; x <= x2; x++)
-            dungeonmap_set_tile_b(x, y, tile);
+            dungeonmap_set_tile_b(x, y, terrain_id);
     }
 }
 
-static void rect_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile)
+static void rect_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_terrain_type_t terrain_id)
 {
     uint8_t x, y;
 
@@ -84,20 +84,20 @@ static void rect_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_ti
     //top and bottom lines
     for (x = x1; x <= x2; x++ )
     {
-            dungeonmap_set_tile_b(x, y1, tile);
-            dungeonmap_set_tile_b(x, y2, tile);
+            dungeonmap_set_tile_b(x, y1, terrain_id);
+            dungeonmap_set_tile_b(x, y2, terrain_id);
     }
     // left and right lines
     
     for (y = y1; y <= y2; y++ )
     {
-            dungeonmap_set_tile_b(x1, y, tile);
-            dungeonmap_set_tile_b(x2, y, tile);
+            dungeonmap_set_tile_b(x1, y, terrain_id);
+            dungeonmap_set_tile_b(x2, y, terrain_id);
     }
     
 }
 
-static void line_horizontal_b(uint8_t x1, uint8_t y1, uint8_t x2, dungeonmap_tile_type_e tile)
+static void line_horizontal_b(uint8_t x1, uint8_t y1, uint8_t x2, dungeonmap_terrain_type_t terrain_id)
 {
     uint8_t x;
 
@@ -111,12 +111,12 @@ static void line_horizontal_b(uint8_t x1, uint8_t y1, uint8_t x2, dungeonmap_til
     // TODO check bounds
     for (x = x1; x <= x2; x++ )
     {
-            dungeonmap_set_tile_b(x, y1, tile);
+            dungeonmap_set_tile_b(x, y1, terrain_id);
     }
 
 }
 
-static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_tile_type_e tile)
+static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_terrain_type_t terrain_id)
 {
     uint8_t y;
 
@@ -130,7 +130,7 @@ static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_tile_
     // TODO check bounds
     for (y = y1; y <= y2; y++ )
     {
-            dungeonmap_set_tile_b(x1, y, tile);
+            dungeonmap_set_tile_b(x1, y, terrain_id);
     }
 
 }
@@ -147,7 +147,7 @@ static void line_vertical_b(uint8_t x1, uint8_t y1, uint8_t y2, dungeonmap_tile_
  * @param y2
  * @param tile_type 
  */
-static void line_horizontal_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile_type)
+static void line_horizontal_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_terrain_type_t terrain_id)
 {
     uint8_t x_mid;
     uint8_t ty, tx;
@@ -163,9 +163,9 @@ static void line_horizontal_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, ui
     x_mid = x1 + ((x2 - x1) / 2);
     // y_mid = y1 + ((y2 - y1) / 2);
 
-    line_horizontal_b(x1, y1, x_mid, tile_type);
-    line_vertical_b(x_mid, y1, y2, tile_type);
-    line_horizontal_b(x_mid, y2, x2, tile_type);
+    line_horizontal_b(x1, y1, x_mid, terrain_id);
+    line_vertical_b(x_mid, y1, y2, terrain_id);
+    line_horizontal_b(x_mid, y2, x2, terrain_id);
 }
 
 /**
@@ -177,7 +177,7 @@ static void line_horizontal_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, ui
  * @param y2 
  * @param tile_type
  */
-static void line_vertical_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_tile_type_e tile_type)
+static void line_vertical_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, dungeonmap_terrain_type_t terrain_id)
 {
     uint8_t y_mid;
     uint8_t ty, tx;
@@ -193,9 +193,9 @@ static void line_vertical_right_angle_b(uint8_t x1, uint8_t y1, uint8_t x2, uint
     // x_mid = x1 + ((x2 - x1) / 2);
     y_mid = y1 + ((y2 - y1) / 2);
 
-    line_vertical_b(x1, y1, y_mid, tile_type);
-    line_horizontal_b(x1, y_mid, x2, tile_type);
-    line_vertical_b(x2, y_mid, y2, tile_type);    
+    line_vertical_b(x1, y1, y_mid, terrain_id);
+    line_horizontal_b(x1, y_mid, x2, terrain_id);
+    line_vertical_b(x2, y_mid, y2, terrain_id);    
 
 }
 
@@ -215,19 +215,19 @@ static void create_horizontal_corridor_b(uint8_t x1, uint8_t y1, uint8_t x2, uin
     x_mid = x1 + ((x2 - x1) / 2);
     
     // top wall
-    line_horizontal_b(x1, y1 - 1, x_mid + 1, STONEWALL);
-    line_vertical_b(x_mid + 1, y1 - 1, y2 - 1, STONEWALL);
-    line_horizontal_b(x_mid + 1, y2 - 1, x2, STONEWALL);
+    line_horizontal_b(x1, y1 - 1, x_mid + 1, TERRAIN_STONEWALL);
+    line_vertical_b(x_mid + 1, y1 - 1, y2 - 1, TERRAIN_STONEWALL);
+    line_horizontal_b(x_mid + 1, y2 - 1, x2, TERRAIN_STONEWALL);
 
     // corridor
-    line_horizontal_b(x1, y1, x_mid, FLOOR);
-    line_vertical_b(x_mid, y1, y2, FLOOR);
-    line_horizontal_b(x_mid, y2, x2, FLOOR);
+    line_horizontal_b(x1, y1, x_mid, TERRAIN_FLOOR);
+    line_vertical_b(x_mid, y1, y2, TERRAIN_FLOOR);
+    line_horizontal_b(x_mid, y2, x2, TERRAIN_FLOOR);
 
     // top wall
-    line_horizontal_b(x1, y1 + 1, x_mid - 1, STONEWALL);
-    line_vertical_b(x_mid - 1, y1 + 1, y2 + 1, STONEWALL);
-    line_horizontal_b(x_mid - 1, y2 + 1, x2, STONEWALL);    
+    line_horizontal_b(x1, y1 + 1, x_mid - 1, TERRAIN_STONEWALL);
+    line_vertical_b(x_mid - 1, y1 + 1, y2 + 1, TERRAIN_STONEWALL);
+    line_horizontal_b(x_mid - 1, y2 + 1, x2, TERRAIN_STONEWALL);    
 }
 
 
@@ -248,72 +248,34 @@ static void create_vertical_corridor_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8
     y_mid = y1 + ((y2 - y1) / 2);
 
     // left wall
-    line_vertical_b(x1 - 1,     y1,     y_mid - 1,      STONEWALL);
-    line_horizontal_b(x1 - 1,   y_mid - 1,  x2 - 1,     STONEWALL);
-    line_vertical_b(x2 - 1,     y_mid - 1,  y2,         STONEWALL);    
+    line_vertical_b(x1 - 1,     y1,     y_mid - 1,      TERRAIN_STONEWALL);
+    line_horizontal_b(x1 - 1,   y_mid - 1,  x2 - 1,     TERRAIN_STONEWALL);
+    line_vertical_b(x2 - 1,     y_mid - 1,  y2,         TERRAIN_STONEWALL);    
 
     // floor wall
-    line_vertical_b(x1,     y1,     y_mid,  FLOOR);
-    line_horizontal_b(x1,   y_mid,  x2,     FLOOR);
-    line_vertical_b(x2,     y_mid,  y2,     FLOOR);
+    line_vertical_b(x1,     y1,     y_mid,  TERRAIN_FLOOR);
+    line_horizontal_b(x1,   y_mid,  x2,     TERRAIN_FLOOR);
+    line_vertical_b(x2,     y_mid,  y2,     TERRAIN_FLOOR);
 
     // right wall
-    line_vertical_b(x1 + 1,     y1,         y_mid + 1,      STONEWALL);
-    line_horizontal_b(x1 + 1,   y_mid + 1,  x2 + 1,     STONEWALL);
-    line_vertical_b(x2 + 1,     y_mid + 1,  y2,         STONEWALL);            
+    line_vertical_b(x1 + 1,     y1,         y_mid + 1,      TERRAIN_STONEWALL);
+    line_horizontal_b(x1 + 1,   y_mid + 1,  x2 + 1,     TERRAIN_STONEWALL);
+    line_vertical_b(x2 + 1,     y_mid + 1,  y2,         TERRAIN_STONEWALL);            
 }
 
 static void create_room_b(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
 {
-    rect_fill_b(x1, y1, x2, y2, FLOOR);
+    rect_fill_b(x1, y1, x2, y2, TERRAIN_FLOOR);
     // line_horizontal_b(x1, y1 + 1, x2, BRICKWALL);
-    rect_b(x1, y1, x2, y2, STONEWALL);
+    rect_b(x1, y1, x2, y2, TERRAIN_STONEWALL);
 }
 
-static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type)
+static void dungeonmap_set_tile_b(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrain_type_t terrain_id)
 {
     dungeonmap_tile_t *const m = &(globaldata.dungeonmap.map[dungeon_x][dungeon_y]);
 
-    m->tile = tile_type;
-
-    switch (tile_type)
-    {
-    case FLOOR:
-        m->tilemap_tile.tile_attr = PALETTE_PURPLE;
-        m->tilemap_tile.tile_id = 1;
-        m->flags = DGN_FLAG_FLOOR;
-        break;
-    case ROCK:
-        m->tilemap_tile.tile_attr = PALETTE_ORANGE;
-        m->tilemap_tile.tile_id = 0;
-        m->flags = DGN_FLAG_WALL;
-        break;        
-    case BRICKWALL:
-        m->tilemap_tile.tile_attr = PALETTE_ORANGE;
-        m->tilemap_tile.tile_id = 4;
-        m->flags = DGN_FLAG_WALL;
-        break;
-    case BRICKWALL_END:
-        m->tilemap_tile.tile_attr = PALETTE_ORANGE;
-        m->tilemap_tile.tile_id = 3;
-        m->flags = DGN_FLAG_WALL;
-        break;        
-    case STONEWALL:
-        m->tilemap_tile.tile_attr = PALETTE_ORANGE;
-        m->tilemap_tile.tile_id = 3;
-        m->flags = DGN_FLAG_WALL;
-        break;
-    case STONEWALL_END:
-        m->tilemap_tile.tile_attr = PALETTE_ORANGE;
-        m->tilemap_tile.tile_id = 2;
-        m->flags = DGN_FLAG_WALL;
-        break;        
-    default:
-        m->tilemap_tile.tile_attr = 0;
-        m->tilemap_tile.tile_id = 0;
-        m->flags = DGN_FLAG_BLK_ALL;
-        break;
-    }
+    m->terrain_id = terrain_id;
+    m->flags = terrain[terrain_id].default_flags;
 }
 
 /**
@@ -392,7 +354,7 @@ void dungeonmap_generate_b( void )
     srand(0);
 
     // clear the dungeon map to all rock
-    rect_fill_b(0, 0, DUNGEONMAP_WIDTH - 1, DUNGEONMAP_HEIGHT - 1, ROCK);
+    rect_fill_b(0, 0, DUNGEONMAP_WIDTH - 1, DUNGEONMAP_HEIGHT - 1, TERRAIN_ROCK);
 
     // populate the rooms list. 
     create_rooms_binary_space_partition( 15 );
@@ -413,11 +375,11 @@ void dungeonmap_generate_b( void )
         if (room_nodes[r].split == 1)
         {
             
-            line_vertical_b(room_nodes[2*r].x1 + 2, room_nodes[2*r].y2, room_nodes[(2*r)+1].y1, FLOOR);            
+            line_vertical_b(room_nodes[2*r].x1 + 2, room_nodes[2*r].y2, room_nodes[(2*r)+1].y1, TERRAIN_FLOOR);            
         }
         else
         {
-            line_horizontal_b(room_nodes[2*r].x2, room_nodes[2*r].y1 + 2, room_nodes[(2*r)+1].x1, FLOOR);
+            line_horizontal_b(room_nodes[2*r].x2, room_nodes[2*r].y1 + 2, room_nodes[(2*r)+1].x1, TERRAIN_FLOOR);
         }
     }
 
@@ -427,11 +389,11 @@ void dungeonmap_generate_b( void )
         if (room_nodes[r].split == 1)
         {
             
-            line_vertical_b(room_nodes[2*r].x1 + 2, room_nodes[2*r].y2, room_nodes[(2*r)+1].y1, FLOOR);            
+            line_vertical_b(room_nodes[2*r].x1 + 2, room_nodes[2*r].y2, room_nodes[(2*r)+1].y1, TERRAIN_FLOOR);            
         }
         else
         {
-            line_horizontal_b(room_nodes[2*r].x2, room_nodes[2*r].y1 + 2, room_nodes[(2*r)+1].x1, FLOOR);
+            line_horizontal_b(room_nodes[2*r].x2, room_nodes[2*r].y1 + 2, room_nodes[(2*r)+1].x1, TERRAIN_FLOOR);
         }
     } 
     
@@ -442,11 +404,11 @@ void dungeonmap_generate_b( void )
         if (room_nodes[r].split == 1)
         {
             
-            line_vertical_b(room_nodes[2*r].x1 + 2, room_nodes[2*r].y2, room_nodes[(2*r)+1].y1, FLOOR);            
+            line_vertical_b(room_nodes[2*r].x1 + 2, room_nodes[2*r].y2, room_nodes[(2*r)+1].y1, TERRAIN_FLOOR);            
         }
         else
         {
-            line_horizontal_b(room_nodes[2*r].x2, room_nodes[2*r].y1 + 2, room_nodes[(2*r)+1].x1, FLOOR);
+            line_horizontal_b(room_nodes[2*r].x2, room_nodes[2*r].y1 + 2, room_nodes[(2*r)+1].x1, TERRAIN_FLOOR);
         }
     }        
 
@@ -456,11 +418,11 @@ void dungeonmap_generate_b( void )
         if (room_nodes[r].split == 1)
         {
             
-            line_vertical_b(room_nodes[2*r].x1 + 2, room_nodes[2*r].y2, room_nodes[(2*r)+1].y1, FLOOR);            
+            line_vertical_b(room_nodes[2*r].x1 + 2, room_nodes[2*r].y2, room_nodes[(2*r)+1].y1, TERRAIN_FLOOR);            
         }
         else
         {
-            line_horizontal_b(room_nodes[2*r].x2, room_nodes[2*r].y1 + 2, room_nodes[(2*r)+1].x1, FLOOR);
+            line_horizontal_b(room_nodes[2*r].x2, room_nodes[2*r].y1 + 2, room_nodes[(2*r)+1].x1, TERRAIN_FLOOR);
         }
     }        
 

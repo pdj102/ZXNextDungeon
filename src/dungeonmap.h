@@ -11,32 +11,24 @@
 
 #include <stdint.h>
 
+#include "dungeonmap_terrain.h"
 #include "tilemap.h"
 
 #include "globaldata_defines.h"
 
 
-// Tile flags 
-#define DGN_FLAG_BLK_ALL            1 << 0      // Blocks everything e.g. dungeon boundary wall
-#define DGN_FLAG_WALL               1 << 1      // A wall that blocks physical objects
-#define DGN_FLAG_FLOOR              1 << 2      // A floor that can be walked on 
-#define DGN_FLAG_HOLE               1 << 3      // A deep hole that can't be walked over
-#define DGN_FLAG_WATER              1 << 4      // Deep water that can't be walked over
-#define DGN_FLAG_CLOSED_DOOR        1 << 5      // A closed door that can be opened 
+
 
 
 /***************************************************
  * types
  ***************************************************/
 
-typedef enum dungeonmap_tile_type {FLOOR, ROCK, BRICKWALL, BRICKWALL_END, STONEWALL, STONEWALL_END } dungeonmap_tile_type_e;
-
 // Dungeon map tile 
 typedef struct dungeonmap_tile_s
 {
-    tilemap_tile_t          tilemap_tile;
-    dungeonmap_tile_type_e  tile;
-    uint8_t                 flags;
+    dungeonmap_terrain_type_t   terrain_id;
+    uint8_t                     flags;
 } dungeonmap_tile_t;
 
 // Dungeon map data structure
@@ -114,7 +106,7 @@ void dungeonmap_draw_single_tile(uint8_t dungeon_x, uint8_t dungeon_y, const til
  * @param tile_type type of tile to set
  * @return void
  */
-void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_tile_type_e tile_type);
+void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrain_type_t tile_type);
 
 
 /**

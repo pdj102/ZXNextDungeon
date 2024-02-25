@@ -27,6 +27,33 @@
 #define MIRROR_Y                0b00000100
 #define ROTATE                  0b00000010
 
+#define TILE_ID_ROCK            0
+#define TILE_ID_FLOOR           1
+#define TILE_ID_STONEWALL_END   2
+#define TILE_ID_STONEWALL       3
+#define TILE_ID_BRICKWALL_1     4
+#define TILE_ID_BRICKWALL_2     5
+#define TILE_ID_BRICKWALL_TORCH 6
+#define TILE_ID_BRICKWALL_3     7
+#define TILE_ID_POTION          8
+#define TILE_ID_LONG_SWORD      9
+#define TILE_ID_SHORT_SWORD     10
+#define TILE_ID_CLUB            11
+#define TILE_ID_SLING           12
+#define TILE_ID_ARROW           13
+#define TILE_ID_BOW             14
+#define TILE_ID_CROSSBOW        15
+#define TILE_ID_ARMOUR          16
+#define TILE_ID_RING            17
+#define TILE_ID_OPENDOOR        18
+#define TILE_ID_CLOSEDDOOR      19
+#define TILE_ID_CHEST           20
+#define TILE_ID_TRAP            21
+#define TILE_ID_SNAKE           128
+#define TILE_ID_HUMAN           129
+#define TILE_ID_PLANT           130
+
+
 /***************************************************
  * public types
  ***************************************************/
