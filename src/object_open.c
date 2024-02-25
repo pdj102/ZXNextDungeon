@@ -14,6 +14,8 @@
 #include "object_destroy.h"
 #include "object_drop.h"
 
+#include "dungeonmap.h"
+
 /***************************************************
  * private types
  ***************************************************/
@@ -30,9 +32,9 @@
  * functions
  ***************************************************/
 
-uint8_t object_open_is(object_t *obj)
+uint8_t object_open_is(object_t *obj_p)
 {
-    switch (obj->subtype)
+    switch (obj_p->subtype)
     {
     case DOOR_CLOSED:
     case CHEST_LARGE:
@@ -42,18 +44,19 @@ uint8_t object_open_is(object_t *obj)
     }
 }
 
-uint8_t object_open(object_t *obj)
+uint8_t object_open(object_t *obj_p)
 {
-    switch (obj->subtype)
+    switch (obj_p->subtype)
     {
     case DOOR_CLOSED:
-        obj->subtype=DOOR_OPEN;
-        obj->tilemap_tile.tile_id=18;
-        obj->blocking = 0;
+        obj_p->subtype=DOOR_OPEN;
+        obj_p->tilemap_tile.tile_id=18;
+        obj_p->blocking = 0;
+        dungeonmap_setobjflags(obj_p->x, obj_p->y);
         break;
     case CHEST_LARGE:
-        object_drop_all(obj);
-        object_destroy(obj);
+        object_drop_all(obj_p);
+        object_destroy(obj_p);
         break;
     default:
         return 0;

@@ -26,8 +26,8 @@
 #define DGN_FLAG_FLOOR              (uint8_t) 1 << 2      // A floor that can be walked on 
 #define DGN_FLAG_HOLE               (uint8_t) 1 << 3      // A deep hole that can't be walked over
 #define DGN_FLAG_WATER              (uint8_t) 1 << 4      // Deep water that can't be walked over
-#define DGN_FLAG_CLOSED_DOOR        (uint8_t) 1 << 5      // A closed door that can be opened
-#define DGN_FLAG_OBJECT             (uint8_t) 1 << 7      // Object flag
+#define DGN_FLAG_BLK_OBJECT         (uint8_t) 1 << 6      // A blocking object such as a closed door
+#define DGN_FLAG_OBJECT             (uint8_t) 1 << 7      // Object presence flag
 
 typedef enum dungeonmap_terrain_type_e {TERRAIN_FLOOR, TERRAIN_ROCK, TERRAIN_BRICKWALL, TERRAIN_STONEWALL, TERRAIN_STONEWALL_END, TERRAIN_MAX } dungeonmap_terrain_type_t;
 

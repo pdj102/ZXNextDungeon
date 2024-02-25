@@ -141,6 +141,15 @@ void dungeonmap_tile_flag_clear(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t fl
  */
 uint8_t dungeonmap_tile_flag_test(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag);
 
+/**
+ * Sets the object flags at dungeon position x, y
+ * 
+ * @param dungeon_x x position
+ * @param dungeon_y y position
+ * 
+ * @return void
+ */
+void dungeonmap_setobjflags(uint8_t x, uint8_t y);
 
 /**
  * Move dungeon window by dx dy

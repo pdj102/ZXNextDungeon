@@ -10,6 +10,7 @@
 #include <stdint.h>
 
 #include "dungeonmap_terrain.h"
+#include "dungeonmap_list.h"
 
 #include "globaldata.h"
 #include "tilemap.h"
@@ -47,6 +48,33 @@ void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrai
 
     m->terrain_id = terrain_id;
     m->flags = terrain[terrain_id].default_flags;
+}
+
+void dungeonmap_setobjflags(uint8_t x, uint8_t y)
+{
+    // Are there any objects at x, y?
+    if (!dungeonmap_list_first_at(x, y))
+    {
+        // No objects present - clear object flags
+        dungeonmap_tile_flag_clear(x, y, DGN_FLAG_OBJECT | DGN_FLAG_BLK_OBJECT);
+    }
+    else
+    {
+        // Objects are present - set object flag
+        dungeonmap_tile_flag_set(x, y, DGN_FLAG_OBJECT);
+
+        // Any blocking objects? 
+        if (dungeonmap_list_isblocking_at(x, y))
+        {
+            // Set blocking object flag
+            dungeonmap_tile_flag_set(x, y, DGN_FLAG_BLK_OBJECT);
+        }
+        else
+        {
+            // Clear blocking object flag
+            dungeonmap_tile_flag_clear(x, y, DGN_FLAG_BLK_OBJECT);
+        }
+    }
 }
 
 void dungeonmap_tile_flag_set(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag)
