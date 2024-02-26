@@ -6,6 +6,7 @@ PUBLIC _goal_coord
 PUBLIC _current_coord
 PUBLIC _next_coord
 PUBLIC _tmp_coord
+PUBLIC _tmp_dir
 
 PUBLIC _tail_priority
 PUBLIC _priority_offset
@@ -36,9 +37,11 @@ ds 30
 ._queue_count
 ds 30 
 
-
 ._tmp_coord
 ds 2
+
+._tmp_dir
+ds 1
 
 ._start_coord
 ds 2

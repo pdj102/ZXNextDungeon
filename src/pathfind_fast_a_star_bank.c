@@ -42,6 +42,7 @@ static void push_frontier_b(coord_t *coord, uint8_t priority);
 static uint8_t pop_frontier_head_b(coord_t *coord);
 static uint8_t pop_frontier_tail_b(coord_t *coord);
 static void update_neighbors_b( void );
+static void update_tile_b(void);
 
 /***************************************************
  * private variables - static
@@ -57,6 +58,7 @@ extern coord_t start_coord;
 extern coord_t goal_coord;
 extern coord_t current_coord;
 extern coord_t tmp_coord;
+extern direction_t tmp_dir;
 
 extern uint8_t     tmp_cost_so_far;
 extern uint8_t     tmp_total_cost;
@@ -291,61 +293,57 @@ void update_neighbors_b(void)
     tmp_cost_so_far = reached[current_coord.x][current_coord.y].cost_so_far + 1;
 
     // north
-    tmp_coord.x = current_coord.x;
-    tmp_coord.y = (current_coord.y > min_y) ? current_coord.y - 1 : min_y;
-
-    if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+    if (current_coord.y > min_y)
     {
-        // A* cost is cost of path so far + distance to goal
-        tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
+        tmp_coord.y = current_coord.y - 1;
+        tmp_coord.x = current_coord.x;
+        tmp_dir = S;
 
-        // if cost is less than previous visit to the square
-        if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
-        {
-            push_frontier_b(&tmp_coord, tmp_total_cost - priority_offset);
-            pathfind_mark_reached_b(&tmp_coord, S, tmp_total_cost, tmp_cost_so_far);
-        }
+        update_tile_b();
     }
 
     // south
-    tmp_coord.x = current_coord.x;
-    tmp_coord.y = (current_coord.y < max_y) ? current_coord.y + 1 : max_y;
-
-    if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+    if (current_coord.y < max_y)
     {
-        tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
-        if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
-        {
-            push_frontier_b(&tmp_coord, tmp_total_cost - priority_offset);
-            pathfind_mark_reached_b(&tmp_coord, N, tmp_total_cost, tmp_cost_so_far);
-        }
+        tmp_coord.y = current_coord.y + 1;
+        tmp_coord.x = current_coord.x;
+        tmp_dir = N;
+
+        update_tile_b();
     }
 
     // west
-    tmp_coord.x = (current_coord.x > min_x) ? current_coord.x - 1 : min_x;
-    tmp_coord.y = current_coord.y;
-
-    if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+    if (current_coord.x > min_x)
     {
-        tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
-        if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
-        {
-            push_frontier_b(&tmp_coord, tmp_total_cost - priority_offset);
-            pathfind_mark_reached_b(&tmp_coord, E, tmp_total_cost, tmp_cost_so_far);
-        }
-    }
+        tmp_coord.y = current_coord.y;
+        tmp_coord.x = current_coord.x - 1;
+        tmp_dir = E;
+
+        update_tile_b();
+    }    
+
 
     // east
-    tmp_coord.x = (current_coord.x < max_x) ? current_coord.x + 1 : max_x;
-    tmp_coord.y = current_coord.y;
+    if (current_coord.x < max_x)
+    {
+        tmp_coord.y = current_coord.y;
+        tmp_coord.x = current_coord.x + 1;
+        tmp_dir = W;
 
+        update_tile_b();
+    }
+}
+
+void update_tile_b(void)
+{
     if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
     {
         tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
         if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)
         {
             push_frontier_b(&tmp_coord, tmp_total_cost - priority_offset);
-            pathfind_mark_reached_b(&tmp_coord, W, tmp_total_cost, tmp_cost_so_far);
+            pathfind_mark_reached_b(&tmp_coord, tmp_dir, tmp_total_cost, tmp_cost_so_far);
         }
     }
+
 }
