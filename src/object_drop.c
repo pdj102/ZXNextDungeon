@@ -12,7 +12,7 @@
 #include "object.h"
 #include "object_place.h"
 #include "object_list.h"
-#include "dungeonmap_list.h"
+
 #include "text.h"
 
 /***************************************************

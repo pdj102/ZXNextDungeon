@@ -13,9 +13,6 @@
 #include "object_list.h"
 #include "object_remove.h"
 
-#include "dungeonmap.h"
-#include "dungeonmap_list.h"
-
 /***************************************************
  * private types
  ***************************************************/

@@ -5,9 +5,10 @@
     @brief Game object action - remove
 
 **************************************************/
-#include <stdint.h>
 
 #include "object_remove.h"
+
+#include <stdint.h>
 
 #include "object.h"
 

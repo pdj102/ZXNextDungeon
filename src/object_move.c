@@ -10,9 +10,10 @@
 #include "object_move.h"
 
 #include "object.h"
-#include "dungeonmap_list.h"
 #include "object_stepon.h"
+
 #include "dungeonmap.h"
+
 
 /***************************************************
  * private types
