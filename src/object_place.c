@@ -2,16 +2,16 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game object action - destroy
+    @brief Game object action - place
 
 **************************************************/
 #include <stdint.h>
 
-#include "object_destroy.h"
+#include "object_place.h"
 
 #include "object.h"
-#include "object_list.h"
-#include "object_remove.h"
+#include "object_move.h"
+#include "object_stepon.h"
 
 #include "dungeonmap.h"
 #include "dungeonmap_list.h"
@@ -32,27 +32,22 @@
  * functions
  ***************************************************/
 
-uint8_t object_destroy_is(object_t *obj_p)
+
+void object_place(object_t *const obj_p, uint8_t x, uint8_t y)
 {
-    // Everything can be destroyed
-    return 1;
-}
+    // Place object
+    obj_p->x = x;
+    obj_p->y = y;    
 
-uint8_t object_destroy(object_t *obj_p)
-{
-    // Remove the object from the map
-    object_remove(obj_p);
+    // Add object to dungeon map list
+    dungeonmap_list_add(obj_p);
 
-    // mark object slot as free
-    object_free(obj_p);                         
+    // Set dungeon map tile object present flag at new location
+    dungeonmap_tile_flag_set(x, y, DGN_FLAG_OBJECT);
 
-    // destroy any objects contained by this object
-    object_t *obj_ptr = object_list_first(obj_p);
+    // If object is blocking set dungeon map tile blocking object flag 
+    if (obj_p->blocking) { dungeonmap_tile_flag_set(x, y, DGN_FLAG_BLK_OBJECT); }    
 
-    while (obj_ptr)
-    {
-        object_destroy(obj_ptr);
-        obj_ptr = object_list_first(obj_p);     // get next using list_first instead of list_next as destroying an object resets its link list pointer to NULL and cannot be used
-    }
-    return 1;
+    // Trigger any step_on events
+    object_stepon_all(x, y);
 }

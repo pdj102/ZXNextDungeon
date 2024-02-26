@@ -49,7 +49,14 @@ uint8_t object_move_to(object_t *const obj_p, uint8_t x, uint8_t y)
     // TODO test if object is moveable
 
     // Move object
-    object_move_place(obj_p, x, y);
+    obj_p->x = x;
+    obj_p->y = y;
+
+    // Set dungeon map tile object present flag at new location
+    dungeonmap_tile_flag_set(x, y, DGN_FLAG_OBJECT);
+
+    // If object is blocking set dungeon map tile blocking object flag 
+    if (obj_p->blocking) { dungeonmap_tile_flag_set(x, y, DGN_FLAG_BLK_OBJECT); }    
 
     // Reset the object flags at the old location 
     dungeonmap_setobjflags(tmp_x, tmp_y);
@@ -60,17 +67,6 @@ uint8_t object_move_to(object_t *const obj_p, uint8_t x, uint8_t y)
     return 1;
 }
 
-void object_move_place(object_t *const obj_p, uint8_t x, uint8_t y)
-{
-    obj_p->x = x;
-    obj_p->y = y;
-
-    // Set dungeon map tile object present flag at new location
-    dungeonmap_tile_flag_set(x, y, DGN_FLAG_OBJECT);
-
-    // If object is blocking set dungeon map tile blocking object flag 
-    if (obj_p->blocking) { dungeonmap_tile_flag_set(x, y, DGN_FLAG_BLK_OBJECT); }    
-}
 
 uint8_t object_move_by(object_t *obj, int8_t dx, int8_t dy)
 {

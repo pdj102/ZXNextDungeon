@@ -17,7 +17,7 @@
 
 #include "object.h"
 #include "object_create.h"
-#include "object_move.h"
+#include "object_place.h"
 #include "dungeonmap_list.h"
 
 #include "ai.h"
@@ -74,8 +74,9 @@ creature_t* creature_create_b(object_subtype_e obj_subtype, uint8_t x, uint8_t y
 
     // Setup object
     obj_p->creature_p = creature_p;         // set object to point to creature
-    dungeonmap_list_add(obj_p);             // add object to dungeon list of objects as all creatures are on the map
-    object_move_place(obj_p, x, y);         // Move object onto dungeon map
+
+    // Place object on dungeon map
+    object_place(obj_p, x, y);
 
     // Setup creature common attributes
     creature_p->free = 0;                   // mark creature as in use

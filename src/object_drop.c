@@ -10,7 +10,7 @@
 #include "object_drop.h"
 
 #include "object.h"
-#include "object_move.h"
+#include "object_place.h"
 #include "object_list.h"
 #include "dungeonmap_list.h"
 #include "text.h"
@@ -40,9 +40,7 @@ uint8_t object_drop_is(object_t *obj)
 uint8_t object_drop(object_t *obj_todrop, object_t *obj_container_ptr)
 {
     object_list_remove(obj_todrop, obj_container_ptr);
-    // todo dungeonmap_addobject()
-    dungeonmap_list_add(obj_todrop);    
-    object_move_place(obj_todrop, obj_container_ptr->x, obj_container_ptr->y); 
+    object_place(obj_todrop, obj_container_ptr->x, obj_container_ptr->y); 
 
     return 1;
 }

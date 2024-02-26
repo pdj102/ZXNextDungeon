@@ -49,19 +49,6 @@ uint8_t object_move_is(object_t *obj);
 uint8_t object_move_to(object_t *obj_p, uint8_t x, uint8_t y);
 
 /**
- * Places an object in the dungeon. Does not check if blocked 
- * 
- * Use when creating objects, droping objects etc 
- *
- * @param *obj pointer to object to move
- * @param x move to dungeon x position
- * @param y move to dungeon y position
- * 
- * @return uint8_t  1 if action successful or 0 failed
- */
-void object_move_place(object_t *obj_p, uint8_t x, uint8_t y);
-
-/**
  * Move object by delta x, y if not blocked by a dungeon wall or objects
  * 
  * @return uint8_t  1 if action successful or 0 failed

@@ -11,6 +11,8 @@
 
 #include "object.h"
 #include "object_list.h"
+#include "object_remove.h"
+
 #include "dungeonmap_list.h"
 
 /***************************************************
@@ -42,7 +44,7 @@ uint8_t object_pickup_is(object_t *obj)
 
 uint8_t object_pickup(object_t *obj_topickup, object_t *obj_container)
 {
-    dungeonmap_list_remove(obj_topickup);
+    object_remove(obj_topickup);
     object_list_add(obj_topickup, obj_container);
 
     return 1;

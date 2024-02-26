@@ -25,6 +25,7 @@
 #include "dungeonmap_list.h"
 #include "object_create.h"
 #include "object_move.h"
+#include "object_place.h"
 #include "object_destroy.h"
 #include "object_pickup.h"
 #include "object_open.h"
@@ -139,16 +140,13 @@ void init_game( void )
 
     object_t *healing_obj_p = object_create(POTION_HEALING, 0, 0);
     // todo dungeonmap_addobject()
-    dungeonmap_list_add(healing_obj_p);
-    object_move_place(healing_obj_p, 2, 5);
+    object_place(healing_obj_p, 2, 5);
 
     object_t *door_obj_p = object_create(DOOR_CLOSED, 0, 0);
-    dungeonmap_list_add(door_obj_p);
-    object_move_place(door_obj_p, 4, 7);
+    object_place(door_obj_p, 4, 7);
 
     object_t *chest_obj_p = object_create(CHEST_LARGE, 0, 0);
-    dungeonmap_list_add(chest_obj_p);
-    object_move_place(chest_obj_p, 4, 4);
+    object_place(chest_obj_p, 4, 4);
 
     object_t *speed_obj_p = object_create(POTION_SPEED, 0, 0);
     object_list_add(speed_obj_p, chest_obj_p);
@@ -157,12 +155,10 @@ void init_game( void )
     object_list_add(speed2_obj_p, chest_obj_p);    
    
     object_t *trap_obj_p = object_create(TRAP_NOISE, 0, 0);      
-    dungeonmap_list_add(trap_obj_p);
-    object_move_place(trap_obj_p, 1, 2);
+    object_place(trap_obj_p, 1, 2);
 
     object_t *ring_obj_p = object_create(RING_HP, 0, 0);      
-    dungeonmap_list_add(ring_obj_p);
-    object_move_place(ring_obj_p, 3, 2);
+    object_place(ring_obj_p, 3, 2);
 
     tmp_event_p = event_create_object_cb(object_open, door_obj_p, 5);
     event_list_add(tmp_event_p);
