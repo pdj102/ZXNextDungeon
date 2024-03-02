@@ -26,7 +26,7 @@ typedef enum ai_state_s {
     NO_STATE,
     DEAD,
     SLEEPING, 
-    AWAKE, 
+    RESTING, 
     ATTACKING_MELEE, 
     ATTACKING_RANGED,
     ATTACKING_NO_TARGET,
@@ -36,16 +36,27 @@ typedef enum ai_state_s {
     FLEEING
 } ai_state_t;
 
+typedef enum ai_sub_state_s {
+    NO_SUB_STATE,
+    GOTO_NO_TARGET_SET,
+    GOTO_NO_PATH_SET,
+    GOTO_PATH_SET,
+    GOTO_TARGET_REACHED,
+    GOTO_NO_PATH_FOUND,
+    WANDERING_NO_TARGET_FOUND
+
+} ai_sub_state_t;
+
 
 typedef struct ai_s
 {
     creature_t              *creature_p;
 
     ai_state_t              state;
+    ai_sub_state_t          sub_state;
 
     struct creature_s      *target;
 
-    uint8_t                 goto_target;
     uint8_t                 goto_x;
     uint8_t                 goto_y;
 

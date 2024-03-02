@@ -62,11 +62,21 @@ void ai_guarding_b( ai_t *ai_p)
     switch (attacker_p->obj_p->type)
     {
     case PLANTS:
-        target_p = creature_list_first_is_a2_within_rect(attacker_p->obj_p->x - 1, attacker_p->obj_p->y - 1, attacker_p->obj_p->x + 1, attacker_p->obj_p->y + 1, ai_p, ai_is_enemy_b); // NB +/1 never outside dugneaon map
+        // NB +/-1 never outside dugneaon map
+        target_p = creature_list_first_is_a2_within_rect(attacker_p->obj_p->x - 1, attacker_p->obj_p->y - 1, attacker_p->obj_p->x + 1, attacker_p->obj_p->y + 1, ai_p, ai_is_enemy_b); 
         // target_p = 0; // TODO implement AI version
         if (target_p)
         {
+            #ifdef DEBUG_AI
+                text_printf("guarding - attack\n");
+            #endif
             creature_melee_strike(attacker_p, target_p);
+        }
+        else
+        {
+            #ifdef DEBUG_AI
+                text_printf("guarding - do nothing\n");
+            #endif
         }
         break;
 

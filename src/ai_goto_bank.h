@@ -17,7 +17,7 @@
  * types
  ***************************************************/
 
-typedef enum goto_result {GOTO_NA, GOTO_SUCCESS, GOTO_FAIL_NO_PATH, GOTO_REACHED} goto_result_t;
+// typedef enum goto_result {GOTO_RESULT_NA, GOTO_RESULT_SUCCESS, GOTO_RESULT_FAIL_NO_PATH, GOTO_RESULT_REACHED} goto_result_t;
 
 /***************************************************
  * variable declarations
@@ -27,21 +27,44 @@ typedef enum goto_result {GOTO_NA, GOTO_SUCCESS, GOTO_FAIL_NO_PATH, GOTO_REACHED
  * function prototypes
  ***************************************************/
 
-/**
- * @brief Set creatures goto target location
+/** 
+ * @brief set goto target 
  * 
- * @param creature_p 
- * @param x 
- * @param y 
- * @return uint8_t 
+ * Sets ai sub_state to GOTO_NO_PATH_SET
+ * 
+ * @param *ai_p     pointer to ai
+ * @param x         goto x
+ * @param y         goto y
  */
-uint8_t ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y);
+void ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y);
 
 /**
- * AI takes turn
+ * @brief try to move towards goto target
+ * 
+ * @param *ai_p     pointer to ai
  * 
  * @return void
  */
-goto_result_t ai_goto_b( ai_t *ai_p );
+void ai_goto_b( ai_t *ai_p );
+
+/**
+ * @brief Construct a new ai goto setpath 
+ * 
+ * If a path is found, sets ai sub_state to GOTO_PATH_SET
+ * If no path found, sets ai sub_state to GOTO_PATH_ERROR
+ * 
+ * @param *ai_p     pointer to ai
+ */
+void ai_goto_setpath_b(ai_t *ai_p);
+
+/**
+ * @brief Attempt to move toward goto target
+ * 
+ * On success, sets ai sub_state to GOTO_PATH_SET
+ * On failure, sets ai sub_state to GOTO_NO_PATH_SET
+ * 
+ * @param *ai_p     pointer to ai
+ */
+void ai_goto_move_b(ai_t *ai_p);
 
 #endif

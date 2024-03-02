@@ -50,13 +50,24 @@ void ai_turn_b( ai_t *ai_p )
 {
     creature_t *creature_p = ai_p->creature_p;
 
-    text_printf("AI turn: %t\n", creature_p->obj_p->name_token);
+    #ifdef DEBUG_AI
+        text_printf("AI: %t ", creature_p->obj_p->name_token);
+    #endif
 
     creature_p->energy = 0;
 
     switch (ai_p->state)
     {
         case SLEEPING:
+            #ifdef DEBUG_AI
+                text_printf("\n");
+            #endif
+            return;
+
+        case RESTING:
+            #ifdef DEBUG_AI
+                text_printf("\n");
+            #endif
             return;
 
         case GUARDING:
@@ -166,7 +177,7 @@ void ai_is_attacked_b(ai_t *ai_p, creature_t *attacker_p)
             text_printf("%t WAKES UP\n", (unsigned int) target_p->obj_p->name_token);
             ai_p->state = ATTACKING_MELEE;
             ai_p->target = attacker_p;        
-        case AWAKE:
+        case RESTING:
             ai_p->state = ATTACKING_MELEE;
             ai_p->target = attacker_p;
             break;

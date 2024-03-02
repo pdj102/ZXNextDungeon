@@ -42,7 +42,7 @@
 /***************************************************
  * private variables - static
  ***************************************************/
-uint8_t ai_wandering_new_loc_b( ai_t *ai_p );
+void ai_wandering_new_loc_b( ai_t *ai_p );
 
 /***************************************************
  * functions
@@ -57,90 +57,82 @@ uint8_t ai_wandering_new_loc_b( ai_t *ai_p );
  * Behaviour
  * AI will wander the dungeon randomly
  * 
- * 1) If target has no goto location select a randon new goto location
- * 
- * 2) If no target exit
- * 
- * 3) Move torwards goto location
- * 
- * 4) If unable to get to goto location select a new goto location
- * 
- * 5) If reached goto location select a new goto location
- * 
  */
-void ai_wandering_b( ai_t *ai_p )
+void ai_wandering_b(ai_t *ai_p)
 {
-    goto_result_t r;
-
     creature_t *creature_p = ai_p->creature_p;
 
-    text_printf("Wandering");
-
-    // #1 No goto location - set goto location?
-    if (ai_p->goto_target == 0)
+    switch (ai_p->sub_state)
     {
-        if (ai_wandering_new_loc_b(ai_p))
-        {
-            text_printf(" - new loc");
-        }
-        else
-        {
-            text_printf(" - failed new loc");
-        }
-    }
-
-    // #2 if no target 
-    if (!ai_p->goto_target)
-    {
-        return;
-    }
-
-    // #3 Move towards goto location
-    r = ai_goto_b(ai_p);
-
-    switch (r)
-    {
-    case GOTO_FAIL_NO_PATH:
-        text_printf(" - fail\n");
-        ai_p->goto_target = 0;
+    case NO_SUB_STATE:
+    case GOTO_NO_TARGET_SET:
+    case GOTO_TARGET_REACHED:
+        ai_wandering_new_loc_b(ai_p);
         break;
-    case GOTO_REACHED:
-        text_printf(" - reached\n");
-        ai_p->goto_target = 0;
+
+    case GOTO_NO_PATH_SET:
+    case GOTO_PATH_SET:
+        ai_goto_b(ai_p);
+        #ifdef DEBUG_AI
+            text_printf("wandering - move\n");
+        #endif        
         break;
-    case GOTO_SUCCESS:
-        text_printf(" - success\n");
+
+    case GOTO_NO_PATH_FOUND:
+        ai_p->sub_state = GOTO_NO_TARGET_SET;
+
+        #ifdef DEBUG_AI
+            text_printf("wandering - no path found\n");
+        #endif
         break;
+
+    case WANDERING_NO_TARGET_FOUND:
+        ai_p->state = RESTING;
+
+        #ifdef DEBUG_AI
+            text_printf("wandering - no target found\n");
+        #endif
+        break;
+
     default:
         break;
     }
 }
 
-uint8_t ai_wandering_new_loc_b( ai_t *ai_p )
+void ai_wandering_new_loc_b(ai_t *ai_p)
 {
     uint8_t try = 0;
     uint8_t success = 0;
     uint8_t x, y;
-    
+
     creature_t *creature_p = ai_p->creature_p;
 
-        do
+    do
+    {
+        x = rand() % DUNGEONMAP_WIDTH;
+        y = rand() % DUNGEONMAP_HEIGHT;
+
+        if (!dungeonmap_tile_flag_test(x, y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
         {
-            x = rand() % DUNGEONMAP_WIDTH;
-            y = rand() % DUNGEONMAP_HEIGHT;
+            success = pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, x, y, ai_p->pathfind_page);
+        }
+        ++try;
+    } while (!success && try < 5);
 
-            if (!dungeonmap_tile_flag_test(x, y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
-            {
-                success = pathfind_fast_a_star(creature_p->obj_p->x, creature_p->obj_p->y, x, y, ai_p->pathfind_page);
-            }
+    if (success)
+    {
+        ai_set_goto_b(ai_p, x, y);
 
-            if (success)
-            {
-                ai_set_goto_b( ai_p, x, y);
-            }
+        #ifdef DEBUG_AI
+                text_printf("wandering - new loc - ok\n");
+        #endif
+    }
+    else
+    {
+        ai_p->state = WANDERING_NO_TARGET_FOUND;
 
-            ++try;
-        } while (!success && try < 5);
-
-        return success;
+        #ifdef DEBUG_AI
+                text_printf("wandering - new loc - fail\n");
+        #endif
+    }
 }

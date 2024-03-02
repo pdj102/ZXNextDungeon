@@ -133,17 +133,20 @@ void init_game( void )
     creature_create(PLANT_WITHERWEED, 4, 3);
 
     // slime ooze
-    creature_create(OOZE_SLIME, 15, 5);
+    creature_create(OOZE_SLIME, 2, 11);
 
     // grey ooze
-    creature_create(OOZE_GREY, 5, 23);    
+    creature_create(OOZE_GREY, 4, 10);    
 
     object_t *healing_obj_p = object_create(POTION_HEALING, 0, 0);
     // todo dungeonmap_addobject()
     object_place(healing_obj_p, 2, 5);
 
-    object_t *door_obj_p = object_create(DOOR_CLOSED, 0, 0);
-    object_place(door_obj_p, 4, 7);
+    object_t *door1_obj_p = object_create(DOOR_CLOSED, 0, 0);
+    object_place(door1_obj_p, 13, 2);
+
+    object_t *door2_obj_p = object_create(DOOR_CLOSED, 0, 0);
+    object_place(door2_obj_p, 2, 13);    
 
     object_t *chest_obj_p = object_create(CHEST_LARGE, 0, 0);
     object_place(chest_obj_p, 4, 4);
@@ -160,8 +163,8 @@ void init_game( void )
     object_t *ring_obj_p = object_create(RING_HP, 0, 0);      
     object_place(ring_obj_p, 3, 2);
 
-    tmp_event_p = event_create_object_cb(object_open, door_obj_p, 5);
-    event_list_add(tmp_event_p);
+    // tmp_event_p = event_create_object_cb(object_open, door_obj_p, 5);
+    // event_list_add(tmp_event_p);
 
     tmp_event_p = event_create_object_cb(object_open, chest_obj_p, 6);
     event_list_add(tmp_event_p);    

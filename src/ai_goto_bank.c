@@ -40,71 +40,73 @@
  * functions
  ***************************************************/
 
-/** 
- * @brief AI turn - goto
- * 
- * Behaviour
- * 
- * Creature moves towards its target location
- * 
- * @return  true if can reach target
- */
-uint8_t ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y)
+void ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y)
 {
-    ai_p->goto_target = 1;
     ai_p->goto_x = x;
     ai_p->goto_y = y;
-    return 0;
+    ai_p->sub_state = GOTO_NO_PATH_SET;
 }
 
-/** 
- * @brief AI turn - Creature moves towards its target location
- * 
- */
-uint8_t ai_goto_b(ai_t *ai_p)
+void ai_goto_b(ai_t *ai_p)
+{
+    switch (ai_p->sub_state)
+    {
+    case GOTO_NO_PATH_SET:
+        ai_goto_setpath_b(ai_p);
+        break;
+    case GOTO_PATH_SET:
+        ai_goto_move_b(ai_p);
+        break;
+    case GOTO_NO_PATH_FOUND:
+    case GOTO_TARGET_REACHED:
+    default:
+        break;
+    }
+}
+
+void ai_goto_setpath_b(ai_t * ai_p)
+{
+    if (!pathfind_fast_a_star(ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page))
+    {
+        ai_p->sub_state = GOTO_PATH_SET;
+
+    }
+    else
+    {
+        #ifdef DEBUG_AI
+            text_printf("!");
+        #endif        
+        ai_p->sub_state = GOTO_NO_PATH_FOUND;
+    }
+}
+
+void ai_goto_move_b(ai_t * ai_p)
 {
     direction_t d;
 
-
-    // #1 Get direction from current path
+    // Get direction from current path
     d = pathfind_direction( ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->pathfind_page );
 
-    // #2 No direction then calculate a new path
+    // If no direction information set, change state to no path set
     if (d == NO_DIR)
     {
-        if (!pathfind_fast_a_star(ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page))
-        {
-            // #3 Unable to find a path then hard fail no path. 
-            return GOTO_FAIL_NO_PATH;
-        }
+        ai_p->sub_state = GOTO_NO_PATH_SET;
+        return;
     }
 
-    // #4 Attempt move along path
+    // Attempt move along path
     if (!creature_move_dir(ai_p->creature_p, d))
     {
-        // #5 Failed to move 
-        // TODO differentiate between hard fail and soft fail 
-        // Hard fail = no path
-        // Soft fail = creature in the way, creature unable to move etc. 
-        // Is the blockage a creature - is it an enemy? attack
-        // Is there another path?
-
-        if (!pathfind_fast_a_star(ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page))
-        {
-            // #5.1 Unable to find a path then hard fail no path. 
-            return GOTO_FAIL_NO_PATH;
-        }
+        // Unable to move along path
+        // TODO can we open a door?
         
-        return GOTO_FAIL_NO_PATH;
+        ai_p->sub_state = GOTO_NO_PATH_SET;
+        return;
     }
 
-    // #6 Have the goal been reached?
+    // Has target location been reached?
     if ((ai_p->creature_p->obj_p->x == ai_p->goto_x) && (ai_p->creature_p->obj_p->y == ai_p->goto_y))
     {
-        return GOTO_REACHED;
+        ai_p->sub_state = GOTO_TARGET_REACHED;
     }
-
-    // #6 Moved along path towards goal, return success
-    return GOTO_SUCCESS;
 }
-
