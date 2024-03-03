@@ -114,18 +114,18 @@ void player_turn_b( void )
     switch(toupper(key)) {
         
         case 54:  // down
-            player_move_b(0, 1);
+            player_move_b(S);
             break;
         case 55:  // up
-            player_move_b(0, -1);
+            player_move_b(N);
             break;
 
         case 53:  // left
-            player_move_b(-1, 0);
+            player_move_b(W);
             break;
 
         case 56:  // right
-            player_move_b(1, 0);
+            player_move_b(E);
             break;
 
         case 'O':  // open

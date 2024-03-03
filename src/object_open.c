@@ -32,7 +32,7 @@
  * functions
  ***************************************************/
 
-uint8_t object_open_is(object_t *obj_p)
+uint8_t object_open_is(const object_t *obj_p)
 {
     switch (obj_p->subtype)
     {

@@ -14,6 +14,8 @@
 #include "object.h"
 #include "creature.h"
 
+#include "util.h"
+
 /***************************************************
  * types
  ***************************************************/
@@ -31,6 +33,6 @@
  *
  * @return void
  */
-void player_move_b(int8_t dx, int8_t dy);
+void player_move_b(direction_t d);
 
 #endif

@@ -39,7 +39,7 @@
  * functions
  ***************************************************/
 
-uint8_t creature_action_melee_strike_dir(creature_t *attacker_p, direction_t d)
+creature_t *creature_action_melee_strike_dir(creature_t *attacker_p, direction_t d)
 {
     int8_t dx, dy;
 
@@ -48,9 +48,9 @@ uint8_t creature_action_melee_strike_dir(creature_t *attacker_p, direction_t d)
     return creature_action_melee_strike_d(attacker_p, dx, dy);
 }
 
-uint8_t creature_action_melee_strike_d(creature_t *attacker_p, int8_t dx, int8_t dy)
+creature_t *creature_action_melee_strike_d(creature_t *attacker_p, int8_t dx, int8_t dy)
 {
-    creature_t *target_p;
+    creature_t *target_p = 0;
     uint8_t x, y;
 
     x = attacker_p->obj_p->x + dx;
@@ -59,12 +59,11 @@ uint8_t creature_action_melee_strike_d(creature_t *attacker_p, int8_t dx, int8_t
     if ( target_p = creature_list_first_is_a_at(x, y, object_strike_is))
     {
         creature_action_melee_strike(attacker_p, target_p);
-        return 1;
     }
-    return 0;
+    return target_p;
 }
 
-uint8_t creature_action_melee_strike(creature_t *attacker_p, creature_t *target_p)
+void creature_action_melee_strike(creature_t *attacker_p, creature_t *target_p)
 {
     uint8_t attack_roll;
     uint8_t damage_roll;
@@ -97,6 +96,5 @@ uint8_t creature_action_melee_strike(creature_t *attacker_p, creature_t *target_
     {
         ai_is_attacked(&globaldata.ai[target_p->index], attacker_p);
     }
-    return 1;
 }
 

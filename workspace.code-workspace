@@ -67,7 +67,9 @@
 			"dungeonmap_list.h": "c",
 			"object_stepon.h": "c",
 			"creature_action_melee_strike.h": "c",
-			"creature_move.h": "c"
+			"creature_move.h": "c",
+			"util.h": "c",
+			"creature_action_close.h": "c"
 		}
 	}
 }

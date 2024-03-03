@@ -2,14 +2,14 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Game creature action - melee strike
+    @brief Game creature action - open
 
-    Creature attempts a melee strike on another creature
+    Creature attempts a open an object
 
  ***************************************************/
 
-#ifndef CREATURE_ACTION_MELEE_STRIKE_H 
-    #define CREATURE_ACTION_MELEE_STRIKE_H 
+#ifndef CREATURE_ACTION_OPEN_H 
+    #define CREATURE_ACTION_OPEN_H 
 
 #include <stdint.h>
 
@@ -31,34 +31,25 @@
  ***************************************************/
 
 /**
- * Attempt a melee strike
+ * Attempt open
  * 
  * @param attacker_p    creature_t
  * @param d             direction_t
  *
- * @return creature_t if action successful or 0 failed
+ * @return object_t if action successful or 0 failed
  */
-creature_t *creature_action_melee_strike_dir(creature_t *attacker_p, direction_t d);
+object_t *creature_action_open_dir(creature_t *creature_p, direction_t d);
 
 /**
- * Attempt a melee strike
+ * Attempt open
  * 
  * @param attacker_p    creature_t
  * @param dx            dx
  * @param dy            dy
  *
- * @return creature_t if action successful or 0 failed
+ * @return object_t if action successful or 0 failed
  */
-creature_t *creature_action_melee_strike_d(creature_t *attacker_p, int8_t dx, int8_t dy);
+object_t *creature_action_open_d(creature_t *creature_p, int8_t dx, int8_t dy);
 
-/**
- * Attempt a melee strike
- *
- * @param *attacker attacking creature
- * @param *target target creature
- * 
- * @return 1 if action successful or 0 failed
- */
-void creature_action_melee_strike(creature_t *attacker, creature_t *target);
 
 #endif

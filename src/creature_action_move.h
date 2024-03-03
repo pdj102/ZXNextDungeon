@@ -27,7 +27,31 @@
  ***************************************************/
 
 /**
- * Move creature to position x, y if not blocked by a dungeon wall or objects
+ * @brief Attempt to move in direction
+ * 
+ * @param creature_p    creature_t
+ * @param d             direction_t
+ *
+ * @return 1 if action successful or 0 failed
+ */
+uint8_t creature_action_move_dir(creature_t *creature_p, direction_t d);
+
+/**
+ * @brief Attempt to move by dx dy
+ * 
+ * @param creature_p    creature_t
+ * @param dx
+ * @param dy
+ *
+ * @return 1 if action successful or 0 failed
+ */
+uint8_t creature_action_move_by(creature_t *creature_p, int8_t dx, int8_t dy);
+
+/**
+ * @brief Move creature to position x, y if not blocked by a dungeon wall or objects
+ * 
+ * Move the creature to position x, y
+ * Creature must already be placed on the map 
  *
  * @param creature_p pointer to creature to move
  * @param x move to dungeon x position
@@ -36,19 +60,5 @@
  * @return uint8_t  1 if action successful or 0 failed
  */
 uint8_t creature_action_move_to(creature_t *creature_p, uint8_t x, uint8_t y);
-
-/**
- * Creature move action
- *
-* @return 1 on sucess 0 on fail
- */
-uint8_t creature_action_move_by(creature_t *creature_p, int8_t dx, int8_t dy);
-
-/**
- * Creature move action
- *
- * @return void
- */
-uint8_t creature_action_move_dir(creature_t *creature_p, direction_t d);
 
 #endif

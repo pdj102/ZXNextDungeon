@@ -19,18 +19,13 @@
 
 #include "globaldata.h"
 
+#include "creature.h"
+#include "creature_action_close.h"
+
 #include "text.h"
 #include "text_token.h"
 
-#include "object.h"
-#include "object_list.h"
-#include "object_close.h"
-
-#include "dungeonmap_list.h"
-
-#include "creature.h"
-
-
+#include "util.h"
 
 /***************************************************
  * private types
@@ -51,6 +46,22 @@
  * functions
  ***************************************************/
 
+void player_close_b( void )
+{
+    const direction_t d = get_dir_or_cancel_b();
+
+    if (d == NO_DIR)
+    {
+        return;
+    }
+
+    if ( ! creature_action_close_dir(globaldata.player.player_creature_p, d) )
+    {
+        text_printf("Nothing to close here\n");
+    }
+}
+
+/*
 void player_close_b( void )
 {
     int8_t dx, dy;
@@ -78,3 +89,4 @@ void player_close_b( void )
     }
     text_printf("Nothing to close here\n");
 }
+*/

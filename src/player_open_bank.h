@@ -11,9 +11,6 @@
 #ifndef PLAYER_OPEN_BANK_H 
     #define PLAYER_OPEN_BANK_H 
 
-#include "object.h"
-#include "creature.h"
-
 /***************************************************
  * types
  ***************************************************/

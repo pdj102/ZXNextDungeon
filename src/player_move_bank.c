@@ -22,6 +22,8 @@
 #include "creature.h"
 #include "creature_action_move.h"
 
+#include "util.h"
+
 
 /***************************************************
  * private types
@@ -42,12 +44,7 @@
  * functions
  ***************************************************/
 
-void player_move_b(int8_t dx, int8_t dy)
+void player_move_b(direction_t d)
 {
-    // TODO call creature move and deal with not being able to move e.g. due to an effect or status
-
-    if (creature_action_move_by(globaldata.player.player_creature_p, dx, dy))
-    {
-        globaldata.player.player_creature_p->energy = 0;
-    }
+    creature_action_move_dir(globaldata.player.player_creature_p, d);
 }

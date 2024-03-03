@@ -33,7 +33,7 @@
  * 
  * @return uint8_t  1 if closeable or 0 if not
  */
-uint8_t object_close_is(const object_t *obj);
+uint8_t object_close_is(const object_t *obj_p);
 
 /**
  * Close object if closeable
@@ -42,7 +42,7 @@ uint8_t object_close_is(const object_t *obj);
  * 
  * @return uint8_t 1 if action successful or 0 failed
  */
-uint8_t object_close(object_t *obj);
+uint8_t object_close(object_t *obj_p);
 
 
 #endif

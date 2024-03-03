@@ -18,18 +18,13 @@
 
 #include "globaldata.h"
 
-#include "text.h"
-#include "text_token.h"
-
-#include "object.h"
-#include "object_list.h"
-#include "object_open.h"
-
 #include "dungeonmap_list.h"
 
 #include "creature.h"
+#include "creature_action_open.h"
 
-
+#include "text.h"
+#include "text_token.h"
 
 /***************************************************
  * private types
@@ -52,6 +47,19 @@
 
 void player_open_b( void )
 {
+    const direction_t d = get_dir_or_cancel_b();
+
+    if (d == NO_DIR)
+    {
+        return;
+    }
+
+    if ( ! creature_action_open_dir(globaldata.player.player_creature_p, d) )
+    {
+        text_printf("Nothing to open here\n");
+    }
+}
+/*    
     int8_t dx, dy;
     uint8_t x, y;
 
@@ -77,4 +85,4 @@ void player_open_b( void )
         }
     }
     text_printf("Nothing to open here\n");
-}
+*/

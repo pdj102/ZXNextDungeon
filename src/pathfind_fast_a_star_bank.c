@@ -336,6 +336,8 @@ void update_neighbors_b(void)
 
 void update_tile_b(void)
 {
+    //TODO DGN_FLAG_BLK_OBJECT
+    
     if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
     {
         tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
