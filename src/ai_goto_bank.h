@@ -30,32 +30,37 @@
 /** 
  * @brief set goto target 
  * 
- * Sets ai sub_state to GOTO_NO_PATH_SET
+ * If a path is found, sets ai sub_state to GOTO_PATH_SET
+ * If no path found, sets ai sub_state to GOTO_NO_PATH_FOUND
  * 
  * @param *ai_p     pointer to ai
  * @param x         goto x
  * @param y         goto y
+ * 
+ * @return          1 on success 0 on fail
  */
-void ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y);
+uint8_t ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y);
 
 /**
  * @brief try to move towards goto target
  * 
  * @param *ai_p     pointer to ai
  * 
- * @return void
+ * @return          1 on success 0 on fail
  */
-void ai_goto_b( ai_t *ai_p );
+uint8_t ai_goto_b( ai_t *ai_p );
 
 /**
  * @brief Construct a new ai goto setpath 
  * 
  * If a path is found, sets ai sub_state to GOTO_PATH_SET
- * If no path found, sets ai sub_state to GOTO_PATH_ERROR
+ * If no path found, sets ai sub_state to GOTO_NO_PATH_FOUND
  * 
  * @param *ai_p     pointer to ai
+ *  
+ * @return          1 on success 0 on fail
  */
-void ai_goto_setpath_b(ai_t *ai_p);
+uint8_t ai_goto_setpath_b(ai_t *ai_p);
 
 /**
  * @brief Attempt to move toward goto target

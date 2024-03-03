@@ -117,6 +117,6 @@ void ai_attacking_melee_b(ai_t *ai_p)
 void ai_lost_target_b( ai_t *ai_p)
 {
     // TODO Add support for parties and select next target in party
-    ai_p->state = AWAKE;
+    ai_p->state = RESTING;
     ai_p->target = 0;      
 }

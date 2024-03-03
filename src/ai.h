@@ -43,7 +43,6 @@ typedef enum ai_sub_state_s {
     GOTO_PATH_SET,
     GOTO_TARGET_REACHED,
     GOTO_NO_PATH_FOUND,
-    WANDERING_NO_TARGET_FOUND
 
 } ai_sub_state_t;
 
