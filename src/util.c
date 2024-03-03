@@ -51,6 +51,33 @@ void util_return_area_xy_r(uint8_t x, uint8_t y, uint8_t r, uint8_t *x1, uint8_t
     *y2 = ( y > DUNGEONMAP_HEIGHT - 1 - r ) ? DUNGEONMAP_HEIGHT - 1 : y + r;     // y2 maximum is DUNGEON_HEIGHT - 1
 }
 
+void util_dir_to_dxdy(direction_t d, int8_t *dx, int8_t *dy)
+{
+    switch (d)
+    {
+    case N:
+        *dx = 0;
+        *dy = -1;
+        break;
+    case S:
+        *dx = 0;
+        *dy = 1;
+        break;
+    case W:
+        *dx = -1;
+        *dy = 0;
+        break;
+    case E:
+        *dx = 1;
+        *dy = 0;
+        break;
+    default:
+        *dx = 0;
+        *dy = 0;
+        break;
+    }
+}
+
 
 void util_assert_f(const char *message, const char *file, unsigned line)
 {

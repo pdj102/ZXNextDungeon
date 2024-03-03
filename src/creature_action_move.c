@@ -6,7 +6,7 @@
 
 
  ***************************************************/
-#include "creature_move.h"
+#include "creature_action_move.h"
 
 #include <stdint.h>
 
@@ -36,7 +36,7 @@
  * functions
  ***************************************************/
 
-uint8_t creature_move_to(creature_t *creature_p, uint8_t x, uint8_t y)
+uint8_t creature_action_move_to(creature_t *creature_p, uint8_t x, uint8_t y)
 {
     // Creature attempts move so decrease energy 
     creature_p->energy = 0;
@@ -47,7 +47,7 @@ uint8_t creature_move_to(creature_t *creature_p, uint8_t x, uint8_t y)
 }
 
 
-uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy)
+uint8_t creature_action_move_by(creature_t *creature_p, int8_t dx, int8_t dy)
 {
     // Creature attempts move so decrease energy 
     creature_p->energy = 0;
@@ -57,18 +57,18 @@ uint8_t creature_move_by(creature_t *creature_p, int8_t dx, int8_t dy)
     return object_move_by(creature_p->obj_p, dx, dy);
 }
 
-uint8_t creature_move_dir(creature_t *creature_p, direction_t d)
+uint8_t creature_action_move_dir(creature_t *creature_p, direction_t d)
 {
     switch (d)
     {
     case N:
-       return creature_move_by(creature_p, 0, -1);
+       return creature_action_move_by(creature_p, 0, -1);
     case S:
-        return creature_move_by(creature_p, 0, 1);
+        return creature_action_move_by(creature_p, 0, 1);
     case W:
-        return creature_move_by(creature_p, -1, 0);               
+        return creature_action_move_by(creature_p, -1, 0);               
     case E:
-        return creature_move_by(creature_p, 1, 0);
+        return creature_action_move_by(creature_p, 1, 0);
     default:
         break;
     }

@@ -21,8 +21,8 @@
 
 #include "creature.h"
 #include "creature_list.h"
-#include "creature_melee_strike.h"
-#include "creature_damage.h"
+#include "creature_action_melee_strike.h"
+#include "creature_take_damage.h"
 
 #include "text.h"
 
@@ -70,7 +70,7 @@ void ai_guarding_b( ai_t *ai_p)
             #ifdef DEBUG_AI
                 text_printf("guarding - attack\n");
             #endif
-            creature_melee_strike(attacker_p, target_p);
+            creature_action_melee_strike(attacker_p, target_p);
         }
         else
         {

@@ -18,7 +18,7 @@
 #include "pathfind.h"
 
 #include "creature.h"
-#include "creature_move.h"
+#include "creature_action_move.h"
 
 #include "text.h"
 #include "util.h"
@@ -50,10 +50,12 @@ uint8_t ai_set_goto_b(ai_t *ai_p, uint8_t x, uint8_t y)
 
 uint8_t ai_goto_b(ai_t *ai_p)
 {
+    /*
     if (ai_p->sub_state == GOTO_NO_PATH_SET)
     {
         ai_goto_setpath_b(ai_p);
     }
+    */
 
     if (ai_p->sub_state == GOTO_PATH_SET)
     {
@@ -91,24 +93,22 @@ void ai_goto_move_b(ai_t * ai_p)
     // Get direction from current path
     d = pathfind_direction( ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->pathfind_page );
 
-    // If no direction information set, change state to no path set
+    // If no path information, try and recalculate path
     if (d == NO_DIR)
     {
-        ai_p->sub_state = GOTO_NO_PATH_SET;
+        ai_goto_setpath_b(ai_p);
         return;
     }
 
     // Attempt move along path
-    if (!creature_move_dir(ai_p->creature_p, d))
+    if (!creature_action_move_dir(ai_p->creature_p, d))
     {
-        // Unable to move along path
-        // TODO can we open a door?
-        
-        ai_p->sub_state = GOTO_NO_PATH_SET;
-
+        // Unable to move along path, try and resolve
         #ifdef DEBUG_AI
             text_printf(" blocked\n");
         #endif 
+
+
 
         return;
     }

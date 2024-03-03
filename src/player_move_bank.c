@@ -20,7 +20,7 @@
 #include "globaldata.h"
 
 #include "creature.h"
-#include "creature_move.h"
+#include "creature_action_move.h"
 
 
 /***************************************************
@@ -46,7 +46,7 @@ void player_move_b(int8_t dx, int8_t dy)
 {
     // TODO call creature move and deal with not being able to move e.g. due to an effect or status
 
-    if (creature_move_by(globaldata.player.player_creature_p, dx, dy))
+    if (creature_action_move_by(globaldata.player.player_creature_p, dx, dy))
     {
         globaldata.player.player_creature_p->energy = 0;
     }

@@ -34,14 +34,16 @@
 #include "globaldata.h"
 #include "globaldata_defines.h"
 
-#include "text.h"
-#include "text_token.h"
-
 #include "object.h"
 #include "object_list.h"
 
 #include "creature.h"
 #include "creature_create.h"
+
+#include "text.h"
+#include "text_token.h"
+
+#include "util.h"
 
 
 /***************************************************
@@ -184,7 +186,7 @@ void player_turn_b( void )
     }
 }
 
-uint8_t get_dir_or_cancel_b(int8_t *dx, int8_t *dy)
+direction_t get_dir_or_cancel_b( void )
 {
     unsigned int key;
 
@@ -195,27 +197,19 @@ uint8_t get_dir_or_cancel_b(int8_t *dx, int8_t *dy)
     {
 
     case 54: // down
-        *dx = 0;
-        *dy = 1;
-        return 1;
+        return S;
 
     case 55: // up
-        *dx = 0;
-        *dy = -1;
-        return 1;
+        return N;
 
     case 53: // left
-        *dx = -1;
-        *dy = 0;
-        return 1;
+        return W;
 
     case 56: // right
-        *dx = 1;
-        *dy = 0;
-        return 1;
+        return E;
 
     default:
-        return 0;
+        return NO_DIR;
     }
 }
 

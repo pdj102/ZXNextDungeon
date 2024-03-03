@@ -8,8 +8,8 @@
 
  ***************************************************/
 
-#ifndef CREATURE_DAMAGE_H 
-    #define CREATURE_DAMAGE_H 
+#ifndef CREATURE_TAKE_DAMAGE_H 
+    #define CREATURE_TAKE_DAMAGE_H 
 
 #include <stdint.h>
 
@@ -38,6 +38,6 @@
  * 
  * @return uint8_t actual damage applied
  */
-uint8_t creature_damage(creature_t *target_p, uint8_t base_damage, damage_type_t type);
+uint8_t creature_take_damage(creature_t *target_p, uint8_t base_damage, damage_type_t type);
 
 #endif

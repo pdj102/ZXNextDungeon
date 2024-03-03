@@ -8,19 +8,20 @@
 
  ***************************************************/
 
+#include "creature_action_melee_strike.h"
+
 #include <stdint.h>
 
-#include "creature_melee_strike.h"
+#include "object_strike.h"
 
 #include "creature.h"
-#include "creature_damage.h"
-
-#include "ai.h"
+#include "creature_list.h"
+#include "creature_take_damage.h"
 
 #include "globaldata.h"
 #include "dice.h"
-
 #include "text.h"
+#include "util.h"
 
 /***************************************************
  * private types
@@ -38,7 +39,32 @@
  * functions
  ***************************************************/
 
-uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
+uint8_t creature_action_melee_strike_dir(creature_t *attacker_p, direction_t d)
+{
+    int8_t dx, dy;
+
+    util_dir_to_dxdy(d, &dx, &dy);
+
+    return creature_action_melee_strike_d(attacker_p, dx, dy);
+}
+
+uint8_t creature_action_melee_strike_d(creature_t *attacker_p, int8_t dx, int8_t dy)
+{
+    creature_t *target_p;
+    uint8_t x, y;
+
+    x = attacker_p->obj_p->x + dx;
+    y = attacker_p->obj_p->y + dy;
+
+    if ( target_p = creature_list_first_is_a_at(x, y, object_strike_is))
+    {
+        creature_action_melee_strike(attacker_p, target_p);
+        return 1;
+    }
+    return 0;
+}
+
+uint8_t creature_action_melee_strike(creature_t *attacker_p, creature_t *target_p)
 {
     uint8_t attack_roll;
     uint8_t damage_roll;
@@ -63,7 +89,7 @@ uint8_t creature_melee_strike(creature_t *attacker_p, creature_t *target_p)
     
         // TODO manage negative damage bonus. Minimum damage roll is be zero
         damage_roll = dice_roll(&target_p->melee.damage_roll) + attacker_p->melee.damage_bonus;
-        creature_damage(target_p, damage_roll, attacker_p->melee.damage_type);
+        creature_take_damage(target_p, damage_roll, attacker_p->melee.damage_type);
     }
 
     // Notify AI of attack

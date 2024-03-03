@@ -17,8 +17,8 @@
 #include "ai_bank.h"
 
 #include "creature.h"
-#include "creature_move.h"
-#include "creature_melee_strike.h"
+#include "creature_action_move.h"
+#include "creature_action_melee_strike.h"
 
 #include "util.h"
 
@@ -80,7 +80,7 @@ void ai_attacking_melee_b(ai_t *ai_p)
     // In range of melee strike (adjacent either up, down, left or right)
     if ( distance== 1)
     {
-        creature_melee_strike(attacker_p, target_p);
+        creature_action_melee_strike(attacker_p, target_p);
         return;
     }    
 
@@ -97,16 +97,16 @@ void ai_attacking_melee_b(ai_t *ai_p)
     case NO_DIR:
         break;
     case N:
-        creature_move_by(attacker_p, 0, -1);
+        creature_action_move_by(attacker_p, 0, -1);
         break;
     case S:
-        creature_move_by(attacker_p, 0, 1);
+        creature_action_move_by(attacker_p, 0, 1);
         break;
     case W:
-        creature_move_by(attacker_p, -1, 0);
+        creature_action_move_by(attacker_p, -1, 0);
         break;
     case E:
-        creature_move_by(attacker_p, 1, 0);
+        creature_action_move_by(attacker_p, 1, 0);
         break;
     default:
         break;

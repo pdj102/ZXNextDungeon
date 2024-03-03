@@ -14,6 +14,8 @@
 #include "object.h"
 #include "creature.h"
 
+#include "util.h"
+
 /***************************************************
  * types
  ***************************************************/
@@ -27,20 +29,25 @@
  ***************************************************/
 
 /**
- * Init the player
+ * @brief Init the player
  *
  * @return void
  */
 void player_init_b( void );
 
 /**
- * Player takes turn
+ * @brief Player takes turn
  * 
  * @return void
  */
 void player_turn_b( void );
 
-uint8_t get_dir_or_cancel_b(int8_t *dx, int8_t *dy);
+/**
+ * @brief   Get a direction
+ * 
+ * @return direction_t
+ */
+direction_t get_dir_or_cancel_b( void );
 
 object_t *select_object_from_inventory_b( object_is_a is_a_p );
 

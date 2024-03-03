@@ -8,12 +8,14 @@
 
  ***************************************************/
 
-#ifndef CREATURE_MELEE_STRIKE_H 
-    #define CREATURE_MELEE_STRIKE_H 
+#ifndef CREATURE_ACTION_MELEE_STRIKE_H 
+    #define CREATURE_ACTION_MELEE_STRIKE_H 
 
 #include <stdint.h>
 
 #include "creature.h"
+
+#include "util.h"
 
 /***************************************************
  * types
@@ -30,12 +32,33 @@
 
 /**
  * Attempt a melee strike
+ * 
+ * @param attacker_p    creature_t
+ * @param d             direction_t
+ *
+ * @return 1 if action successful or 0 failed
+ */
+uint8_t creature_action_melee_strike_dir(creature_t *attacker_p, direction_t d);
+
+/**
+ * Attempt a melee strike
+ * 
+ * @param attacker_p    creature_t
+ * @param dx            dx
+ * @param dy            dy
+ *
+ * @return 1 if action successful or 0 failed
+ */
+uint8_t creature_action_melee_strike_d(creature_t *attacker_p, int8_t dx, int8_t dy);
+
+/**
+ * Attempt a melee strike
  *
  * @param *attacker attacking creature
  * @param *target target creature
  * 
- * @return uint8_t  1 if action successful or 0 failed
+ * @return 1 if action successful or 0 failed
  */
-uint8_t creature_melee_strike(creature_t *attacker, creature_t *target);
+uint8_t creature_action_melee_strike(creature_t *attacker, creature_t *target);
 
 #endif

@@ -24,14 +24,11 @@
 
 #include "object.h"
 #include "object_list.h"
-#include "object_strike.h"
+
 #include "object_destroy.h"
 
 #include "creature.h"
-#include "creature_list.h"
-#include "creature_melee_strike.h"
-#include "creature_damage.h"
-#include "creature_destroy.h"
+#include "creature_action_melee_strike.h"
 
 /***************************************************
  * private types
@@ -54,26 +51,14 @@
 
 void player_strike_b( void )
 {
-    int8_t dx, dy;
-    uint8_t x, y;
+    const direction_t d = get_dir_or_cancel_b();
 
-    creature_t *target_p;
-
-    if (! (get_dir_or_cancel_b(&dx, &dy)) )
+    if (d == NO_DIR)
     {
         return;
     }
 
-    x = globaldata.player.player_creature_p->obj_p->x + dx;
-    y = globaldata.player.player_creature_p->obj_p->y + dy;
-
-    if ( target_p = creature_list_first_is_a_at(x, y, object_strike_is))
-    {
-        globaldata.player.player_creature_p->energy = 0;
-
-        creature_melee_strike(globaldata.player.player_creature_p, target_p);
-    }
-    else
+    if ( ! creature_action_melee_strike_dir(globaldata.player.player_creature_p, d) )
     {
         text_printf("Nothing to strike here\n");
     }

@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-#include "creature_damage.h"
+#include "creature_take_damage.h"
 
 #include "creature.h"
 #include "creature_destroy.h"
@@ -33,7 +33,7 @@
  * functions
  ***************************************************/
 
-uint8_t creature_damage(creature_t *target_p, uint8_t base_damage, damage_type_t type)
+uint8_t creature_take_damage(creature_t *target_p, uint8_t base_damage, damage_type_t type)
 {
     uint8_t damage;
     uint16_t damage_token;
