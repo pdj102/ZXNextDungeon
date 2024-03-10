@@ -22,7 +22,7 @@
 #include "dungeonmap.h"
 
 #include "creature.h"
-#include "creature_move.h"
+#include "creature_action_move.h"
 
 #include "object_move.h"
 
@@ -110,8 +110,11 @@ void ai_wandering_new_loc_b(ai_t *ai_p)
 
     do
     {
-        x = rand() % DUNGEONMAP_WIDTH;
-        y = rand() % DUNGEONMAP_HEIGHT;
+       // x = rand() % DUNGEONMAP_WIDTH;
+       // y = rand() % DUNGEONMAP_HEIGHT;
+
+        x = rand() % 15;
+        y = rand() % 15;
 
         if (ai_set_goto_b(ai_p, x, y))
         {

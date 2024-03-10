@@ -20,6 +20,8 @@
 #include "creature.h"
 #include "creature_action_move.h"
 
+#include "dungeonmap_terrain.h"
+
 #include "text.h"
 #include "util.h"
 
@@ -72,7 +74,9 @@ uint8_t ai_goto_b(ai_t *ai_p)
 
 uint8_t ai_goto_setpath_b(ai_t * ai_p)
 {
-    if (pathfind_fast_a_star(ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page))
+    uint8_t flags = DGN_FLAG_BLK_ALL | DGN_FLAG_WALL;
+
+    if (pathfind_fast_a_star(ai_p->creature_p->obj_p->x, ai_p->creature_p->obj_p->y, ai_p->goto_x, ai_p->goto_y, ai_p->pathfind_page, flags))
     {
         ai_p->sub_state = GOTO_PATH_SET;
 

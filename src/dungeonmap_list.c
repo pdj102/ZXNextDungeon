@@ -121,6 +121,20 @@ object_t *dungeonmap_list_first_at(uint8_t x, uint8_t y)
     return 0;
 }
 
+object_t *dungeonmap_list_first_at_ignore_flag(uint8_t x, uint8_t y)
+{
+    object_t *obj_p;
+
+    for (obj_p = dungeonmap_list_first(); obj_p; obj_p = dungeonmap_list_next(obj_p))
+    {
+        if (obj_p->x == x && obj_p->y == y)
+        {
+            return obj_p;
+        }
+    }
+    return 0;
+}
+
 object_t *dungeonmap_list_next_at(object_t *obj_p, uint8_t x, uint8_t y)
 {
     while (obj_p = dungeonmap_list_next(obj_p))

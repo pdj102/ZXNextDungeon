@@ -2,35 +2,33 @@
     Dungeon - ZX Spectrum Next 
     @author Paul Johnson
 
-    @brief Pathfinding - fast a star
+    @brief Game creature action - wait
 
-    Code is banked do not call directly
+    Creature does nothing for a turn
 
  ***************************************************/
 
-#ifndef PATHFIND_FAST_A_STAR_BANK_H 
-    #define PATHFIND_FAST_A_STAR_BANK_H 
-
-#include <inttypes.h>
+#include "creature_action_wait.h"
 
 /***************************************************
- * types
- ***************************************************/
-
-
-/***************************************************
- * variable declarations
+ * private types
  ***************************************************/
 
 /***************************************************
- * function prototypes
+ * private function prototypes
  ***************************************************/
 
-/**
- * @brief Calculates the path to goal using fast a star search
- *
- * @return 1 if path if found to goal or 0
- */
-uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y, uint8_t f);
+/***************************************************
+ * private variables - static
+ ***************************************************/
 
-#endif
+/***************************************************
+ * functions
+ ***************************************************/
+
+void creature_action_wait(creature_t *creature_p)
+{
+    // reduce creatures energy 
+    creature_p->energy = 0;    
+}
+

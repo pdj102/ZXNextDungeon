@@ -59,6 +59,9 @@ void ai_guarding_b( ai_t *ai_p)
     creature_t *target_p;
     creature_t *attacker_p = ai_p->creature_p;
 
+    // reduce creatures energy 
+    attacker_p->energy = 0;     
+
     switch (attacker_p->obj_p->type)
     {
     case PLANTS:

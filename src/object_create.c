@@ -32,8 +32,6 @@
  * functions
  ***************************************************/
 
-
-// TO DO move into  bank code for creating objects 
 object_t* object_create(object_subtype_e subtype, uint8_t x, uint8_t y)
 {
     uint8_t current_bank;

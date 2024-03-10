@@ -52,29 +52,46 @@ void dungeonmap_set_tile(uint8_t dungeon_x, uint8_t dungeon_y, dungeonmap_terrai
 
 void dungeonmap_setobjflags(uint8_t x, uint8_t y)
 {
-    // Are there any objects at x, y?
-    if (!dungeonmap_list_first_at(x, y))
-    {
-        // No objects present - clear object flags
-        dungeonmap_tile_flag_clear(x, y, DGN_FLAG_OBJECT | DGN_FLAG_BLK_OBJECT);
-    }
-    else
-    {
-        // Objects are present - set object flag
-        dungeonmap_tile_flag_set(x, y, DGN_FLAG_OBJECT);
+    object_t *obj_p;
 
-        // Any blocking objects? 
-        if (dungeonmap_list_isblocking_at(x, y))
-        {
-            // Set blocking object flag
-            dungeonmap_tile_flag_set(x, y, DGN_FLAG_BLK_OBJECT);
-        }
-        else
-        {
-            // Clear blocking object flag
-            dungeonmap_tile_flag_clear(x, y, DGN_FLAG_BLK_OBJECT);
-        }
+    uint8_t flags = 0;
+
+    // clear all object flags at x, y
+    dungeonmap_tile_flag_clear(x, y, DGN_FLAG_OBJECT | DGN_FLAG_BLK_OBJECT | DGN_FLAG_CLOSED_DOOR); 
+
+    // Find first object at x, y. Do not check flag
+    obj_p = dungeonmap_list_first_at_ignore_flag(x, y);
+
+    // if no objects at x, y return
+    if (!obj_p)
+    {
+        return;
     }
+
+    // Set the object flag
+    flags = flags | DGN_FLAG_OBJECT;
+
+    // iterate all objects at x, y to determine blocking flags
+    do
+    {
+        if (obj_p->blocking == 1)
+        {
+            if (obj_p->subtype != DOOR_CLOSED)
+            {
+                // Set blocking object flag for all objects except openable closed doors
+                flags = flags | DGN_FLAG_BLK_OBJECT;
+                    text_printf("B");
+            }
+            else
+            {
+                // Set special case flag for openable closed doors
+                flags = flags | DGN_FLAG_CLOSED_DOOR;
+            }
+        }
+    } while (obj_p = dungeonmap_list_next_at(obj_p, x, y));
+    
+    // set object flags at x, y
+    dungeonmap_tile_flag_set(x, y, flags);
 }
 
 void dungeonmap_tile_flag_set(uint8_t dungeon_x, uint8_t dungeon_y, uint8_t flag)

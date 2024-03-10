@@ -26,6 +26,8 @@ PUBLIC _queue_head
 PUBLIC _queue_tail
 PUBLIC _queue_count
 
+PUBLIC _flags
+
 ; bounded priority queue - 21 queues * 10 elements * 2 bytes
 ._priority_queue
 ds 30 * 20 * 2
@@ -74,4 +76,7 @@ ds 1
 ds 1
 
 ._tmp_cost_so_far
+ds 1
+
+._flags
 ds 1

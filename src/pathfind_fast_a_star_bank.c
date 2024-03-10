@@ -71,11 +71,13 @@ extern uint8_t min_y;
 extern uint8_t tail_priority;
 extern uint8_t priority_offset;
 
+extern uint8_t flags;
+
 /***************************************************
  * functions
  ***************************************************/
 
-uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y)
+uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y, uint8_t f)
 {
     direction_t direction_from;
 
@@ -98,6 +100,9 @@ uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_
     current_coord.x = start_coord.x;
     current_coord.y = start_coord.y;
     direction_from = NO_DIR;
+
+    // set static flags variable
+    flags = f;
 
     init_priority_queue();
 
@@ -151,6 +156,10 @@ uint8_t pathfind_fast_a_star_b(uint8_t origin_x, uint8_t origin_y, uint8_t goal_
     #ifdef DEBUG_PATHFIND  
         text_printf("path NOT found\n");
     #endif
+
+    // pathfind_print_b();
+    // while (1)
+    // {}
     
     return 0;   
 }
@@ -336,9 +345,9 @@ void update_neighbors_b(void)
 
 void update_tile_b(void)
 {
-    //TODO DGN_FLAG_BLK_OBJECT
-    
-    if (!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL))
+    // If tile is not blocked or is goal (goal is the monsters own location and can always be reached)
+    if ((!dungeonmap_tile_flag_test(tmp_coord.x, tmp_coord.y, DGN_FLAG_BLK_ALL | DGN_FLAG_WALL | DGN_FLAG_BLK_OBJECT)) ||
+        (tmp_coord.x == goal_coord.x && tmp_coord.y == goal_coord.y))
     {
         tmp_total_cost = tmp_cost_so_far + util_distance_manhattan(tmp_coord.x, tmp_coord.y, goal_coord.x, goal_coord.y);
         if (tmp_total_cost < reached[tmp_coord.x][tmp_coord.y].total_cost)

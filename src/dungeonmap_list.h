@@ -95,6 +95,18 @@ object_t *dungeonmap_list_next(object_t *obj_ptr);
 object_t *dungeonmap_list_first_at(uint8_t x, uint8_t y);
 
 /**
+ * Returns the first object in dungeon object list at position x, y
+ * 
+ * Is slow as it does not check the dungeon map object flag
+ * 
+ * @param x dungeon x position
+ * @param y dungeon y position
+ * 
+ * @return *object_t    pointer to first object or 0 if no objects
+ */
+object_t *dungeonmap_list_first_at_ignore_flag(uint8_t x, uint8_t y);
+
+/**
  * Returns the next object in dungeon object list at position x, y
  * 
  * @param *obj_p    previous object at x, y

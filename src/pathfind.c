@@ -15,7 +15,7 @@
 
 #include "pathfind_fast_a_star_bank.h"
 
-uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y, uint8_t mem_page)
+uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x, uint8_t goal_y, uint8_t mem_page, uint8_t flags)
 {
     uint8_t current_bank;
     uint8_t path_found;
@@ -29,7 +29,7 @@ uint8_t pathfind_fast_a_star(uint8_t origin_x, uint8_t origin_y, uint8_t goal_x,
     ZXN_WRITE_MMU7(mem_page);        
 
     /* Call banked code */     
-    path_found = pathfind_fast_a_star_b(origin_x, origin_y, goal_x, goal_y);
+    path_found = pathfind_fast_a_star_b(origin_x, origin_y, goal_x, goal_y, flags);
 
     /* restore previous bank */
     ZXN_WRITE_MMU6(current_bank);

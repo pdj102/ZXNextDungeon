@@ -22,6 +22,7 @@
 
 #include "creature.h"
 #include "creature_list.h"
+#include "creature_action_wait.h"
 
 #include "object.h"
 
@@ -54,19 +55,23 @@ void ai_turn_b( ai_t *ai_p )
         text_printf("AI: %t ", creature_p->obj_p->name_token);
     #endif
 
-    creature_p->energy = 0;
+    // creature_p->energy = 0;
 
     switch (ai_p->state)
     {
         case SLEEPING:
+            // TODO implement AI sleeping - e.g. react to sound and waking up
+            creature_action_wait(ai_p->creature_p);
             #ifdef DEBUG_AI
-                text_printf("\n");
+                text_printf("sleep\n");
             #endif
             return;
 
         case RESTING:
-            #ifdef DEBUG_AI
-                text_printf("\n");
+            // TODO implement AI resting - e.g. reacting to sounds or seeing an enemy
+            creature_action_wait(ai_p->creature_p);        
+            #ifdef DEBUG_AI            
+                text_printf("rest\n");
             #endif
             return;
 

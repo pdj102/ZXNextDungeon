@@ -139,14 +139,13 @@ void init_game( void )
     creature_create(OOZE_GREY, 4, 10);    
 
     object_t *healing_obj_p = object_create(POTION_HEALING, 0, 0);
-    // todo dungeonmap_addobject()
     object_place(healing_obj_p, 2, 5);
 
     object_t *door1_obj_p = object_create(DOOR_CLOSED, 0, 0);
-    object_place(door1_obj_p, 13, 2);
+    //object_place(door1_obj_p, 13, 2);
 
     object_t *door2_obj_p = object_create(DOOR_CLOSED, 0, 0);
-    object_place(door2_obj_p, 2, 13);    
+    //object_place(door2_obj_p, 2, 13);    
 
     object_t *chest_obj_p = object_create(CHEST_LARGE, 0, 0);
     object_place(chest_obj_p, 4, 4);
